@@ -28,7 +28,7 @@ In diesem findest Du ein Demo-Verzeichnis. Der Name dieses Ordners, ist der zuk√
 
 Im Demo-Ordner sind zwei Dateien: feed.cfg und 001.epi. Das nicht syntaktisch zu nennende Prinzip dieser Dateien ist identisch:
 
-#: ist ein Kommentar nicht den ":" vergessen!
+\#: ist ein Kommentar nicht den ":" vergessen!
 
 Attribute werden wie folgt notiert
 
