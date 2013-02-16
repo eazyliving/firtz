@@ -82,7 +82,7 @@
 			if (file_exists(dirname($configfile)."/".$slug.".css")) {
 				$attr['sitecss']=$main->get('BASEURL')."/feeds/".$slug."/".$slug.".css";
 			} else {
-				$attr['sitecss']=$main->get('BASEURL').'/css/bootstrap.min.css';
+				$attr['sitecss']='./../../css/bootstrap.min.css';
 			}
 			
 			if (file_exists(dirname($configfile)."/".$slug.".html")) {
