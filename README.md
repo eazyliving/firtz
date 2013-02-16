@@ -30,10 +30,13 @@ Im Demo-Ordner sind zwei Dateien: feed.cfg und 001.epi. Das nicht syntaktisch zu
 
 \#: ist ein Kommentar nicht den ":" vergessen!
 
-Attribute werden wie folgt notiert
+Attribute werden wie folgt notiert:
 
 attribute:
+
 value
+
+Achtet bitte darauf, dass die Attribut-Zeile alleine steht. Leerzeilen werden ignoriert, es sei denn, es geht um eine Textfeld wie summary.
 
 An's Ende der Konfiguration kannst Du in einer neuen Zeile ein "---end---" setzen, alles dahinter wird ignoriert. Du kannst da Notizen oder Müll unterbringen ;) Ich werde das hier im Moment noch nicht weiter ausbreiten. Schau in die Dateien und spiel damit rum.
 
