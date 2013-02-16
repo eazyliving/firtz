@@ -35,7 +35,7 @@ $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bitto
 
 
 
-$main->route('GET /@feed/@audio',
+$main->route('GET|HEAD /@feed/@audio',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -50,7 +50,7 @@ $main->route('GET /@feed/@audio',
 	}
 );
 
-$main->route('GET /@feed',
+$main->route('GET|HEAD /@feed',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
