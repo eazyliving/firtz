@@ -5,14 +5,14 @@
 		<h3 data-pwp="title">{{@item.title}}</h3>
 		<h4 data-pwp="subtitle">{{@item.description}}</h4>
 		<div data-pwp="summary">
-			{{@item.article | raw}}
+			<p>{{@item.article | raw}}</p>
 		</div>
 		
 		<check if="{{@item.chapters}}">
 			<div data-pwp="chapters">
 				<repeat group="@item.chapters" value="@chapter">
 					{{@chapter.time}} {{@chapter.name}}
-					<!-- -->
+
 				</repeat>
 			</div>
 		</check>
