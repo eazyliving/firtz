@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss 
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:psc="http://podlove.org/simple-chapters"
+version="2.0">
+
+	<channel>
+		<title>{{@feedattr.title | raw}}</title>
+			<link>{{@feedattr.link | raw}}</link>
+			<description>{{@feedattr.description | raw}}</description>
+			
+			<check if="{{@feedattr.alternate}}">
+				
+					<repeat group="@feedattr.alternate" value="@alttype">
+						<atom:link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
+					</repeat>
+				
+			</check>
+			
+			<check if="{{@feedattr.flattrid}}">
+				
+					<atom:link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}" type="text/html" />
+				
+			</check>
+			
+			
+			
+	</channel>
+
+</rss>

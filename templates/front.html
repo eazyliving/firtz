@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="{{ substr(@feedattr.language,0,2) }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{@feedattr.title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{@feedattr.description}}">
+    <meta name="author" content="{{@feedattr.author}}">
+
+
+    <link href="{{@feedattr.sitecss}}" rel="stylesheet">
+	
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      } 
+    </style>
+    <link href="{{@BASEURL}}css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
+    <link rel="shortcut icon" href="./favicon.png">
+	</head>
+
+	<script src="{{@BASEURL}}js/jquery.js"></script>
+
+	<!-- Piwik --> 
+	<script type="text/javascript">
+	var pkBaseURL = (("https:" == document.location.protocol) ? "https://schallrauch.hoersuppe.de/piwik/" : "http://schallrauch.hoersuppe.de/piwik/");
+	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+	</script><script type="text/javascript">
+	try {
+	var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
+	piwikTracker.trackPageView();
+	piwikTracker.enableLinkTracking();
+	} catch( err ) {}
+	</script><noscript><p><img src="http://schallrauch.hoersuppe.de/piwik/piwik.php?idsite=2" style="border:0" alt="" /></p></noscript>
+	<!-- End Piwik Tracking Code --> 
+ 
+  <body>
+
+    <div class="container-narrow">
+
+      <hr>
+      <div class="row-fluid marketing">
+
+		<repeat group="@feeds" value="@feed">
+		
+			<div class="media">
+				<a class="pull-left" href="show/{{@feed.slug}}">
+					<img class="media-object" src="{{@feed.image}}" width=100>
+				</a>
+				<div class="media-body">
+					<h4>{{@feed.description}}</h4>
+				</div>
+			</div>
+		</repeat>
+        
+      </div>
+
+   
+
+      
+
+    </div>
+	
+	
+    <script src="{{@BASEURL}}js/bootstrap.min.js"></script>
+	
+	
+  </body>
+</html>
+
+

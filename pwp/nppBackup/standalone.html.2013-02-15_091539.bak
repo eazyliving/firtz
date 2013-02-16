@@ -1,0 +1,31 @@
+
+	<audio id="player-{{@item.slug}}">
+		<repeat group="@item.audiofiles" item="@audio">
+			<source src="{{@audio.link}}" type="{{@audio.type}}"></source>
+		</repeat>
+		<h3 data-pwp="title">PWP001 – Lorem ipsum dolor sit amet</h3>
+		<h4 data-pwp="subtitle">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</h4>
+		<div data-pwp="summary">
+			<p>Summary and even links <a href="https://github.com/gerritvanaaken/podlove-web-player">Podlove Web Player</a> 
+Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+			<p>Nullam id dolor id nibh ultricies vehicula ut id elit. Nulla vitae elit libero, a pharetra augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+		</div>
+		<div data-pwp="chapters">
+			00:00:00.000 Chapter One title
+			00:00:01.000 Chapter Two with <a href="#">hyperlink</a>
+			00:00:01.500 Chapter Three
+		</div>
+	</audio>
+
+	<script>
+		$('#testplayer').podlovewebplayer({
+			duration: '00:02.500',
+			poster: 'samples/coverimage.png',
+			alwaysShowHours: true,
+			startVolume: 0.8,
+			width: 'auto',
+			summaryVisible: false,
+			timecontrolsVisible: false,
+			chaptersVisible: true	
+		});
+	</script>

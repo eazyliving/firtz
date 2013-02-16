@@ -1,0 +1,35 @@
+	<audio id="player-{{@item.slug}}">
+		<repeat group="@item.audiofiles" value="@audio">
+			<source src="{{@audio.link}}" type="{{@audio.type}}"></source>
+		</repeat>
+		<h3 data-pwp="title">{{@item.title}}</h3>
+		<h4 data-pwp="subtitle">{{@item.description}}</h4>
+		<div data-pwp="summary">
+			{{@item.article | raw}}
+		</div>
+		
+		<check if="{{@item.chapters}}">
+			<div data-pwp="chapters">
+				<repeat group="@item.chapters" value="@chapter">
+					{{@chapter.time}} {{@chapter.name}}
+					<!-- -->
+				</repeat>
+			</div>
+		</check>
+	
+	</audio>
+
+	<script>
+		$(document).ready( function() {
+			$('#player-{{@item.slug}}').podlovewebplayer({
+				duration: '{{@item.duration}}',
+				poster: '{{@item.image}}',
+				alwaysShowHours: true,
+				startVolume: 0.8,
+				width: 'auto',
+				summaryVisible: false,
+				timecontrolsVisible: false,
+				chaptersVisible: true	
+			});
+		});
+	</script>

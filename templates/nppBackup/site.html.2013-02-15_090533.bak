@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="{{ substr(@feedattr.language,0,2) }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{@feedattr.title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+   
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
+
+	<!-- <link href="../pwp/libs/mediaelement/build/mediaelementplayer.min.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="../pwp/libs/fontawesome/css/font-awesome.min.css" rel="stylesheet" media="screen" type="text/css" />-->
+    <link href="../pwp/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+	
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}"">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}"">
+                    <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}"">
+                                   <link rel="shortcut icon" href="./favicon.png">
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
+        </ul>
+        <h3 class="muted">{{@feedattr.title}}</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+        <h1>{{@feedattr.title}}</h1>
+        <p class="lead">{{@feedattr.description}}</p>
+      </div>
+
+      <hr>
+      <div class="row-fluid marketing">
+        
+	
+			<repeat group="@items" value="@item">
+				<div class="span6">
+					<div class="media">
+						<a class="pull-left" href="#">
+							<img width=64 height=64 class="media-object" src="{{@item.image}}">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">{{@item.title}}</h4>
+						</div>
+					</div>
+				</div>
+			</repeat>
+	
+        
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; {{@feedattr.author}}</p>
+      </div>
+
+    </div>
+	
+	<script src="../pwp/libs/html5shiv.js"></script>
+    <script src="../pwp/libs/jquery-1.9.1.min.js"></script>
+    <script src="../pwp/libs/mediaelement/build/mediaelement-and-player.min.js"></script>
+    <script src="../pwp/podlove-web-player.js"></script>
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

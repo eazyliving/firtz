@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss 
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:psc="http://podlove.org/simple-chapters"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+version="2.0">
+
+	<channel>
+		<title>{{@feedattr.title | raw}}</title>
+		<link>{{@feedattr.link | raw}}</link>
+		<description>{{@feedattr.description | raw}}</description>
+		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}" />
+		
+		<check if="{{@feedattr.alternate}}">
+				<repeat group="@feedattr.alternate" value="@alttype">
+					<check if="{{@feedattr.audioformat != @alttype}}">
+					<atom:link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
+					</check>
+				</repeat>
+		</check>
+		
+		<check if="{{@feedattr.flattrid}}">
+				<atom:link rel="payment" title="Flattr this!"
+					href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}" type="text/html" />
+		</check>
+		<generator>{{@generator}}</generator>
+		
+		<image>
+			<url>{{@feedattr.image}}</url>
+			<title>{{@feedattr.title | raw}}</title>
+			<link>{{@feedattr.link | raw}}</link>
+			<width>144</width>
+			<height>144</height>
+		</image>
+		
+		<itunes:author>{{@feedattr.author | raw}}</itunes:author>
+		<itunes:summary>{{@feedattr.summary | raw}}</itunes:summary>
+		<itunes:image href="{{@feedattr.image}}" />
+		<itunes:subtitle>{{@feedattr.description | raw}}</itunes:subtitle>
+		<itunes:keywords>{{@feedattr.keywords | raw}}</itunes:keywords>
+		<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
+		<language>{{@feedattr.language}}</language>
+	
+		<itunes:owner>
+			<itunes:email>{{@feedattr.email | raw}}</itunes:email>
+			<itunes:name>{{@feedattr.author | raw}}</itunes:name>
+		</itunes:owner>
+		<check if="{{@feedattr.categories}}">
+			<repeat group="@feedattr.categories" value="@category">
+				<itunes:category text="{{@category.a}}"<check if="{{@category.b}}"><true>>
+					<itunes:category text="{{@category.b}}"/>
+				</itunes:category>
+					</true>
+					<false>/>
+					</false>
+				</check>
+			</repeat>
+		</check>
+		
+		<check if="{{@items}}">
+		<repeat group="@items" value="@item">
+			<item>
+			<title>{{@item.title | raw}}</title>
+			<link>{{@item.pagelink}}</link>
+			<pubDate>{{@item.pubDate}}</pubDate>
+			<guid isPermaLink="false">{{@item.guid}}</guid>
+			<description>{{@item.description | raw}}</description>
+			<content:encoded><![CDATA[{{@item.article | raw}}]]></content:encoded>
+			<check if="{{@feedattr.flattrid}}">
+				<atom:link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}" type="text/html" />
+			</check>
+			
+			<check if="{{@item.chapters}}">
+				<psc:chapters version="1.1">
+				<repeat group="@item.chapters" value="@chapter">
+					<psc:chapter start="{{@chapter.time}}" title="{{@chapter.name | raw}}"/>
+				</repeat>	
+				</psc:chapters>
+			</check>
+			<enclosure url="{{ @item.enclosure.link }}" length="{{@item.enclosure.length}}" type="{{ @item.enclosure.type }}" />
+			<check if="{{@item.duration}}">
+				<itunes:duration>{{@item.duration}}</itunes:duration>
+			</check>
+			
+			<itunes:subtitle>{{@item.description | raw}}</itunes:subtitle>
+			<itunes:summary>{{@item.summary | raw}}</itunes:summary>
+			<itunes:keywords>{{@item.keywords | raw}}</itunes:keywords>
+			<itunes:author>{{@feedattr.author}}</itunes:author>
+			<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
+			
+			</item>
+		</repeat>
+		</check>
+		
+			
+	</channel>
+
+</rss>

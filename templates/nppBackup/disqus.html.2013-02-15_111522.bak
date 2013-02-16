@@ -1,0 +1,16 @@
+<div id="disqus_thread-{{@item.slug}}"></div>
+<script type="text/javascript">
+	var disqus_shortname = 'cbednarek';
+    var disqus_identifier = '{{@item.slug}}';
+    var disqus_title = '{{@item.title}}';
+    var disqus_url = '{{@feedattr.link}}';
+    
+	var disqus_developer = 1; // developer mode is on
+
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>

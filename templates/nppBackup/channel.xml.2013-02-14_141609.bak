@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss 
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:psc="http://podlove.org/simple-chapters"
+version="2.0">
+
+	<channel>
+		<title>{{@feedattr.title | raw}}</title>
+			<link>{{@feedattr.link | raw}}</link>
+			<description>{{@feedattr.description | raw}}</description>
+			
+			<check if="{{@feedattr.alternate | raw}}">
+				<true>
+				
+				</true>
+			</check>
+	</channel>
+
+</rss>
+	

@@ -1,0 +1,48 @@
+	<audio id="player-{{@item.slug}}">
+		<repeat group="@item.audiofiles" value="@audio">
+			<source src="{{@audio.link}}" type="{{@audio.type}}"></source>
+		</repeat>
+		<h3 data-pwp="title">{{@item.title}}</h3>
+		<h4 data-pwp="subtitle">{{@item.description}}</h4>
+		<div data-pwp="summary">
+			{{@item.article | raw}}
+		</div>
+		
+		<check if="{{@item.chapters}}">
+			<div data-pwp="chapters">
+				<repeat group="@item.chapters" value="@chapter">
+					{{@chapter.time}} {{@chapter.name}}
+					<!-- -->
+				</repeat>
+			</div>
+		</check>
+	
+	</audio>
+
+	<script>
+		$(document).ready( function() {
+			$('#player-{{@item.slug}}').podlovewebplayer({
+				duration: '{{@item.duration}}',
+				poster: '{{@item.image}}',
+				alwaysShowHours: true,
+				startVolume: 0.8,
+				width: 'auto',
+				summaryVisible: false,
+				timecontrolsVisible: false,
+				chaptersVisible: true	
+			});
+		});
+	</script>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+	var disqus_shortname = 'cbednarek';
+	var disqus_developer = 1; // developer mode is on
+
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>

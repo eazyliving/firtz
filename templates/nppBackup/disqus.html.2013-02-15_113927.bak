@@ -1,0 +1,5 @@
+<div>
+   <a href="#" onclick="loadDisqus(jQuery(this), '{{@item.guid}}', '{{@item.link}}');">
+      Show comments
+   </a>
+</div>

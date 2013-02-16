@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss 
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:psc="http://podlove.org/simple-chapters"
+version="2.0">
+
+	<channel>
+		<title>{{@feedattr.title}}</title>
+			<link>{{@feedattr.link}}</link>
+			<description>{{@feedattr.description}}</description>
+			
+			<check if="{{@feedattr.alternate}}">
+				<true>
+				
+				</true>
+			</check>
+	</channel>
+
+</rss>
+		<atom:link rel="alternate" type="application/rss+xml" title="Der Lautsprecher (AAC Audio)" href="http://der-lautsprecher.de/feed/m4a/" />
+	<atom:link rel="alternate" type="application/rss+xml" title="Der Lautsprecher (Ogg Vorbis Audio)" href="http://der-lautsprecher.de/feed/oga/" />
+	<atom:link rel="alternate" type="application/rss+xml" title="Der Lautsprecher (Ogg Opus Audio)" href="http://der-lautsprecher.de/feed/opus/" />
+	<atom:link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id=243&amp;url=http%3A%2F%2Fder-lautsprecher.de%2F&amp;language=de_DE&amp;category=audio&amp;title=Der+Lautsprecher&amp;description=Ein+Podcast+%C3%BCber+das+Senden+und+Empfangen+werden&amp;tags=podcast%2C+der+lautsprecher%2C+podcasting%2C+tim+pritlove%2C+metaebene" type="text/html" />
+	<generator>Podlove Podcast Publisher v1.3.22-alpha</generator>
+	<itunes:author>Metaebene Personal Media</itunes:author>
+	<itunes:summary>Der Lautsprecher ist ein Podcast über das Senden und Empfangen werden. Er versucht, Wissen zusammenzutragen, das nützlich sein könnte, beim Gestalten eigener Sendungen und Formate beim Lösen der damit verbundenen technischen Probleme. Der Lautsprecher ist ein Projekt von Tim Pritlove.</itunes:summary>
+
+	
+	
+	<itunes:image href="http://meta.metaebene.me/media/lautsprecher/der-lautsprecher-logo-600x600.jpg" />
+	<itunes:subtitle>Der Lautsprecher spricht über das Sprechen, das Senden und das Verstanden werden</itunes:subtitle>
+	<itunes:keywords>podcasting,broadcasting,internet,streaming</itunes:keywords>
+	<itunes:block>no</itunes:block>
+	<itunes:explicit>no</itunes:explicit>
+	<language>de-DE</language>
+	<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/DerLautsprecher" />
+	
+	<itunes:owner>
+		<itunes:email>tim@pritlove.org</itunes:email>
+	</itunes:owner>
+	<itunes:category text="Technology">
+	<itunes:category text="Podcasting" />
+	</itunes:category>
