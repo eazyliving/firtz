@@ -61,19 +61,6 @@
 
   <script src="{{@BASEURL}}js/jquery.js"></script>
 
-  <!-- Piwik --> 
-<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://schallrauch.hoersuppe.de/piwik/" : "http://schallrauch.hoersuppe.de/piwik/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script><noscript><p><img src="http://schallrauch.hoersuppe.de/piwik/piwik.php?idsite=2" style="border:0" alt="" /></p></noscript>
-<!-- End Piwik Tracking Code --> 
- 
   <body>
 
     <div class="container-narrow">
@@ -81,19 +68,14 @@ piwikTracker.enableLinkTracking();
       <div class="masthead">
 		
         <ul class="nav nav-pills pull-right">
-		   <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">subscribe <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <repeat group="@feedattr.audioformats" value="@format">
-					<li><a href="{{@feedattr.baserel}}{{@format}}/">{{@format}}</a></li>
-                  </repeat>
-				  <check if="{{@feedattr.itunes}}">
-					<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
-                  </check>
-                  
-                </ul>
-              </li>
-		<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
+			<repeat group="@feedattr.audioformats" value="@format">
+				<li><a href="{{@feedattr.baserel}}{{@format}}/">{{@format}}</a></li>
+			</repeat>
+			<check if="{{@feedattr.itunes}}">
+				<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
+			</check>
+					
+			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
         </ul>
         <h3 class="muted">{{@feedattr.title}}</h3>
       </div>
@@ -143,7 +125,7 @@ piwikTracker.enableLinkTracking();
 	<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>
     <script src="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelement-and-player.min.js"></script>
     <script src="{{@BASEURL}}pwp/podlove-web-player.js"></script>
-    <script src="{{@BASEURL}}js/bootstrap.min.js"></script>
+    
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"></include>
 	</check>
