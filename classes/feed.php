@@ -119,13 +119,11 @@
 			$itemfiles = glob($this->feedDir.'/*.epi');
 			$this->episode_slugs=array();
 
-		
 			foreach ( $itemfiles as $EPISODEFILE ) {
-			
 				$slug = basename($EPISODEFILE,'.epi');
 				$this->episode_slugs[]=$slug;
 			}
-			
+			rsort($this->episode_slugs);
 		
 		}
 		
