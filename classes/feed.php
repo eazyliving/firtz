@@ -129,12 +129,12 @@
 		
 		}
 		
-		public function renderRSS2($audioformat = '') {
+		public function renderRSS2($audioformat = '',$ret=false) {
 		
 			$main = $this->main;
 			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
-
+			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$audioformat;
 			$main->set('feedattr',$this->attr);
 
 			$items=array();
@@ -144,11 +144,14 @@
 				$items[]=$item;
 			}
 			$main->set('items',$items);
-			echo Template::instance()->render('rss2.xml','application/xml');
-			
+			if ($ret===false) {
+				echo Template::instance()->render('rss2.xml','application/xml');
+			} else {
+				return Template::instance()->render('rss2.xml');
+			}
 		}
 		
-		public function renderHTML() {
+		public function renderHTML($ret=false) {
 		
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
@@ -159,8 +162,12 @@
 				foreach ($this->episodes as $episode) $items[]=$episode->item;
 			}
 			$main->set('items',$items);
-			echo Template::instance()->render('site.html');
 			
+			if ($ret===false) {
+				echo Template::instance()->render('site.html');
+			} else {
+				return Template::instance()->render('site.html');
+			}
 		}
 	}
 	

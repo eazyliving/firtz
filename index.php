@@ -95,14 +95,23 @@ function ($main,$params) {
 	}
 );
 
-
-
 $main->route('GET /',
 	function($main,$params) {
-		echo "Nothing here, friend!";
+		
+		$feeds = array();
+		foreach ($main->get('feeds') as $slug) {
+			$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
+			$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
+			$feed = new feed($main,$slug,$FEEDCONFIG);
+			$feeds[]=$feed->attr;
+			$main->set('frontlanguage',substr($feed->attr['language'],0,2));
+			$main->set('fronttitle',$feed->attr['title']);
+			$main->set('frontauthor',$feed->attr['author']);
+		}
+		$main->set('frontfeeds',$feeds);
+		echo Template::instance()->render('front.html');
 	}
 );
-
 
 
 $main->run();
