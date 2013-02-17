@@ -11,7 +11,7 @@ Du hast offensichtlich den Drang, entweder diesen Kram hier auszuprobieren, oder
 Was auch immer Dich dazu bewogen hat, firtz auszuprobieren: Gute Idee :)
 
 Worum geht es?
-Um einen Podcast zu veröffentlichen, reichen im Grunde zwei Dinge: Audiodateien im Web und irgendwo eine XML-Datei, die den Feed beschreibt. Alles andere ist Beiwerk, das mehr oder minder nötig und arbgeitsintensiv ist.
+Um einen Podcast zu veröffentlichen, reichen im Grunde zwei Dinge: Audiodateien im Web und irgendwo eine XML-Datei, die den Feed beschreibt. Alles andere ist Beiwerk, das mehr oder minder nötig und arbeitsintensiv ist.
 
 Warum aber an vielen Stellen so viel Arbeit machen, so viel Ballast herumschleppen? Wieso ein Wordpress, wenn man alle zwei Monate mal was veröffentlicht? Wieso eine SQL-Datenbank für fünf Artikel in einem Jahr? Wieso sich den Kopf zerbrechen über die Installation diverser Plugins, wenn es ein paar KByte XML tun?
 
@@ -28,12 +28,15 @@ In diesem findest Du ein Demo-Verzeichnis. Der Name dieses Ordners, ist der zuk�
 
 Im Demo-Ordner sind zwei Dateien: feed.cfg und 001.epi. Das nicht syntaktisch zu nennende Prinzip dieser Dateien ist identisch:
 
-#: ist ein Kommentar nicht den ":" vergessen!
+\#: ist ein Kommentar nicht den ":" vergessen!
 
-Attribute werden wie folgt notiert
+Attribute werden wie folgt notiert:
 
 attribute:
+
 value
+
+Achtet bitte darauf, dass die Attribut-Zeile alleine steht. Leerzeilen werden ignoriert, es sei denn, es geht um eine Textfeld wie summary.
 
 An's Ende der Konfiguration kannst Du in einer neuen Zeile ein "---end---" setzen, alles dahinter wird ignoriert. Du kannst da Notizen oder Müll unterbringen ;) Ich werde das hier im Moment noch nicht weiter ausbreiten. Schau in die Dateien und spiel damit rum.
 
