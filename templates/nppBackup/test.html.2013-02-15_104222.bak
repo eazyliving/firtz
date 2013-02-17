@@ -1,4 +1,0 @@
-<repeat group="@testarr" value="@item">
-	<include href="part1.html">
-	<include href="part2.html">
-</repeat>

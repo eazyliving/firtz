@@ -1,5 +1,0 @@
-<div>
-   <a style="cursor:pointer;" onclick="loadDisqus(jQuery(this), '{{@item.guid}}', '{{@item.link}}');">
-      Show comments
-   </a>
-</div>
