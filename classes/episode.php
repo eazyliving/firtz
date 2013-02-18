@@ -58,7 +58,7 @@
 					} else {
 						$item[$thisattr] = array ( 'link' => $audio[0] , 'length' => 0, 'type' => $mimetype );
 					}
-					$item['audiofiles'][]=$item[$thisattr];
+					$item['audiofiles'][$thisattr]=$item[$thisattr];
 					
 				} else {
 					if ($thisattr!="") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;

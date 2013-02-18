@@ -95,6 +95,13 @@
 		<repeat group="@items" value="@item">
 			<a href="<check if="{{@singlepage==false}}">{{@feedattr.slug}}/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
 			<include href="podlove-player.html"/>
+			<p>
+				Download:
+			
+				<repeat group="@item.audiofiles" value="@audiofile" key="@audiotype">
+					<a href="{{@audiofile.link}}">{{@audiotype}}</a>
+				</repeat>
+			</p>
 			<check if="{{@feedattr.flattrid}}">
 				<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}};popout=0&amp;button=compact"
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">

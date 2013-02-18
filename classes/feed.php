@@ -100,16 +100,24 @@
 			$main = $this->main;
 			if ($slug=="") {
 				foreach ($this->episode_slugs as $slug) {
-	
 					$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
-				
 					$this->episodes[$episode->item['slug']]= $episode;
-					
 				}
 			} else {
 				$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
 				$this->episodes[$episode->item['slug']]= $episode;
 			}
+			
+			function sortByPubDate($a,$b) {
+				
+				return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
+			
+			}
+			
+			# Sort episodes by pubDate
+			uasort($this->episodes,'sortByPubDate');
+			
+			
 		}
 		
 		
