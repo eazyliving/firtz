@@ -13,8 +13,6 @@
 			
 			$item['pagelink'] = $main->get('BASEURL').'/show/'.$feedattrs['slug']."/".$slug;
 			
-			
-			$item['pubDate'] = strftime ("%a, %d %b %Y %H:%M:%S %z" , filemtime($ITEMFILE));
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			foreach ($feedattrs['audioformats'] as $format) {
@@ -75,6 +73,15 @@
 
 			if ($item['image']=="") $item['image']=$feedattrs['image'];
 			
+			if ($item['date']!="") {
+				$pubDate = strtotime($item['date']);
+				if ($pubDate===false) $pubDate = filectime($ITEMFILE);
+			} else {
+				$pubDate = filectime($ITEMFILE);
+			}
+			
+			$item['pubDate'] = strftime ("%a, %d %b %Y %H:%M:%S %z" , $pubDate);
+
 			
 			if ($feedattrs['flattrid']!="") {
 				$item['flattrdescription'] = rawurlencode($item['description']);
@@ -88,16 +95,17 @@
 		
 		public function renderRSS2($audioformat) {
 		
-			global $main;
+			$main = $this->main;
 			
 			$this->item['enclosure']=$this->item[$audioformat];
 			
 			$main->set('item',$this->item);
 			return Template::instance()->render('rss2_item.xml','application/xml');
 		}
+		
 		public function renderHTML() {
 		
-			global $main;
+			$main = $this->main;
 			
 			$main->set('item',$this->item);
 			echo Template::instance()->render('html_item.html');
