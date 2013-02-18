@@ -154,11 +154,12 @@
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
 			
-			if ($main->exists('epi')) {
-				$items= array ( $this->episodes[$main->get('epi')] );
+			if ($main->exists('epi') && $main->get('epi')!="") {
+				$items = array ( $this->episodes[$main->get('epi')]->item );
 			} else {
 				foreach ($this->episodes as $episode) $items[]=$episode->item;
 			}
+		
 			$main->set('items',$items);
 			
 			if ($ret===false) {
