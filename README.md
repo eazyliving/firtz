@@ -59,3 +59,4 @@ Es sind jetzt schon features drin, die ich nicht erwähnt habe. Neue sind schon 
 Melde Dich. Entweder unter info@hoersuppe.de oder auf Twitter an @the_firtz!
 
 Weil's wichtig ist: Ich habe dieses Zeug mit fatfree framework (https://github.com/bcosca/fatfree) und bootstrap (http://twitter.github.com/bootstrap/) zusammengeschraubt.
+Weiterhin hilft der Podlove Webplayer (https://github.com/gerritvanaaken/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
