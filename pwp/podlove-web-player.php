@@ -8,7 +8,7 @@
 Plugin Name: Podlove Web Player
 Plugin URI: http://podlove.org/podlove-web-player/
 Description: Video and audio plugin for WordPress built on the MediaElement.js HTML5 media player library.
-Author: Gerrit van Aaken and others
+Author: Gerrit van Aaken and Simon Waldherr
 Version: 2.0.2
 Author URI: http://praegnanz.de
 License: GPLv3, MIT
@@ -37,12 +37,12 @@ if ( // Prevent conflicts with already running versions of PWP
 
 
 /* global-ish init variables */
+$pluginpath = explode( "/", __FILE__ );
+$plugindir = '/' . $pluginpath[ count( $pluginpath ) - 2 ] . '/';
 
 $podlovewebplayer_index = 1;
-define( 'PODLOVEWEBPLAYER_DIR', plugin_dir_url(__FILE__) );
-define( 'PODLOVEWEBPLAYER_PATH', plugin_dir_path(__FILE__) );
+define( 'PODLOVEWEBPLAYER_DIR', WP_PLUGIN_URL . $plugindir );
 define( 'PODLOVEWEBPLAYER_MEJS_DIR', PODLOVEWEBPLAYER_DIR . 'libs/mediaelement/build/' );
-
 
 /* Activation and De-Activation */
 
@@ -58,7 +58,7 @@ register_deactivation_hook( __FILE__, 'podlovewebplayer_remove' );
 
 /* create custom plugin settings menu */
 
-include_once( PODLOVEWEBPLAYER_PATH . 'settings.php' );
+include_once( WP_PLUGIN_DIR . $plugindir . 'settings.php' );
 
 
 /* embed javascript files */
@@ -252,33 +252,28 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 
 	// ------------------- prepare podlove meta info (enriched player)
 
-	$richplayer = "";
-	$titlepre = "";
-	$titlepost = "";
-
-	if ( $permalink ) {
-		$titlepre = '<a href="'.$permalink.'">';
-		$titlepost = '</a>';
-	}
-	if ( $title ) {
-		$richplayer .= '<h3 data-pwp="title">'.$titlepre.$title.$titlepost.'</h3>';
-	}
-	if ($subtitle ) {
-		$richplayer .= '<h4 data-pwp="subtitle">'.$subtitle.'</h4>';
-	}
-	if ( $summary ) {
-		$richplayer .= '<div data-pwp="summary">'.$summary.'</div>';
-	}
-	if ( $chapters = podlovewebplayer_render_chapters( $chapters ) ) {
-		$richplayer .= '<div data-pwp="chapters">'.$chapters.'</div>';
-	}
-
+	$fallback = "";
 
 	// ------------------- prepare podlove call inits
 
 	$init_options = "";
 	if ( $poster ) {
-		$init_options .= "\n  poster: '" . htmlspecialchars($poster) . "',";
+		$init_options .= "\n  poster: '" . htmlspecialchars($poster, ENT_QUOTES) . "',";
+	}
+	if ( $title ) {
+		$init_options .= "\n  title: '" . htmlspecialchars($title, ENT_QUOTES) . "',";
+	}
+	if ( $permalink ) {
+		$init_options .= "\n  permalink: '" . $permalink . "',";
+	}
+	if ( $subtitle ) {
+		$init_options .= "\n  subtitle: '" . htmlspecialchars($subtitle, ENT_QUOTES) . "',";
+	}
+	if ( $chapters ) {
+		$init_options .= "\n  chapters: '" . podlovewebplayer_render_chapters($chapters) . "',";
+	}
+	if ( $summary ) {
+		$init_options .= "\n  summary: '" . ereg_replace("\r?\n", "'\n".'+"\n"+\'', htmlspecialchars($summary, ENT_QUOTES)) . "',";
 	}
 	if ( $duration ) {
 		$init_options .= "\n  duration: '" . $duration . "',";
@@ -316,7 +311,7 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 	$return = <<<_end_
 	<{$tag_name} id="podlovewebplayer_{$podlovewebplayer_index}" {$dimensions} controls {$attributes_string}>
 		{$sources_string}
-		{$richplayer}
+		{$fallback}
 	</{$tag_name}>
 _end_;
 	$return .= "\n\n<script>jQuery('#podlovewebplayer_{$podlovewebplayer_index}').podlovewebplayer({{$init_options}});</script>\n";
@@ -341,6 +336,7 @@ function podlovewebplayer_render_chapters( $input ) {
 			$chapters = $chapters[0];
 		}
 	}
+	$chapters = ereg_replace("\r?\n", "'\n".'+"\n"+\'', htmlspecialchars($chapters, ENT_QUOTES));
 	return $chapters;
 }
 
@@ -393,7 +389,7 @@ function podlovewebplayer_get_enclosed( $post_id ) {
 	return $pung;
 }
 
-function podlovewebplayer_enclosure( $content ) {
+function podlovewebplayer_enclosures( $content ) {
 	global $post;
 	$wp_options = get_option('podlovewebplayer_options');
 	if ( $enclosures = podlovewebplayer_get_enclosed( $post->ID ) // do we have enclosures in this post?
@@ -435,7 +431,7 @@ function podlovewebplayer_enclosure( $content ) {
 $wp_options = get_option('podlovewebplayer_options');
 if( !@is_feed() && isset( $wp_options['enclosure_detect'] ) ) {
 	// fire auto-detect script before regular shortcode, which has prio 11
-	add_filter( 'the_content', 'podlovewebplayer_enclosure', 10 );
+	add_filter( 'the_content', 'podlovewebplayer_enclosures', 10 );
 }
 
 
