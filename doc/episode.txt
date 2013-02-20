@@ -1,0 +1,56 @@
+Die Episodendateien beschreiben einzelne Episoden im Feed des Podcasts. Einige Informationen können der Feedkonfiguration entnommen werden und müssen hier nicht mehr oder nur optional angegeben werden.
+
+Für die Notation gilt das Format der Feedkonfiguration: Kommentaren wird ein '#:' vorangestellt. Einem Attributnamen folgt ein ':' und ein Zeilenumbruch.
+Alle nach einem Attribut folgenden Zeilen sind Werte dieses Attributes:
+
+------------------------------------------------------------------------------------------
+title: Titel der Episode
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+date: Optional das Veröffentlichungsdatum der Episode in der Notation "YYYY-MM-DD HH:MM:SS".
+Wird das Datum weggelassen, erzeugt sich das Veröffentlichungsdatum aus dem Datum der letzten Änderung der Konfigurationsdatei.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+description: Kurze Beschreibung der Episode, Subheadline
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+article: Ausführliche Beschreibung / Artikel zum Inhalt der Episode. Dieser Text wird auch im Player der Webseite angezeigt und darf HTML enthalten.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+keywords: Kommagetrennte Stichwörter, die den Inhalt der Episode beschreiben
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+duration: Dauer der Episode in der Notation 'HH:MM:SS'. Wird diese Angabe weggelassen, wird die Dauer mit 00:00:00 angegeben,
+was für den Hörer allerdings unschön ist.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+image: optional die URL zu einem Bild nur für diese Episode. Wird dies weggelassen, wird das Bild aus der Feedkonfiguration übernommen.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+chapters: Kapitel der Episode. Die Notation folgt dem Simple Chapter Standard von Podlove (http://podlove.org/simple-chapters/):
+	HH:MM:SS Kurze Beschreibung des Kapitels 
+	
+Link und Bild für Kapitel werden aktuell noch nicht unterstützt.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+Die eigentlichen Audiodateien werden in der Episode analog zu den in der Feedkonfiguration unter 'formats' angegebenen Formaten konfiguriert.
+Jedes im Feed konfigurierte Format muss hier mit einer URL zum Download der Folge versehen werden. Werden also m4a, mp3 und opus im Feed konfiguriert,
+müssen hier beispielhaft diese drei Dateien angegeben werden:
+
+mp3:
+http://podcast.hoersuppe.de/fz001.mp3 13302075
+
+m4a:
+http://podcast.hoersuppe.de/fz001.m4a 9360499
+
+opus:
+http://podcast.hoersuppe.de/fz001.opus 6905080
+------------------------------------------------------------------------------------------
