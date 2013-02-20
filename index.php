@@ -4,7 +4,7 @@ ini_set('auto_detect_line_endings',true);
 
 $main=require('lib/base.php');
 
-
+$main->set('TEMP',sys_get_temp_dir());
 $main->set('FEEDDIR','./feeds');
 $main->set('UI','templates/');
 $main->set('version',0);
@@ -33,7 +33,11 @@ $main->set('itemattr',array('title','description','link','guid','article','payme
 
 $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webm'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg'));
 
-
+/*
+	
+	direct call for a specified feed/audio-combination
+	
+*/
 
 $main->route('GET|HEAD /@feed/@audio',
 	function ($main,$params) {
@@ -50,6 +54,11 @@ $main->route('GET|HEAD /@feed/@audio',
 	}
 );
 
+/*
+	get the main feed (audioformat according to formats: attribute in feed.cfg
+	
+*/
+
 $main->route('GET|HEAD /@feed',
 	function ($main,$params) {
 		$slug = $params['feed'];
@@ -64,6 +73,12 @@ $main->route('GET|HEAD /@feed',
 		$feed->renderRSS2();
 	}
 );
+
+/*
+	web page mode, complete page
+	paging mode comes next
+
+*/
 
 $main->route('GET /show/@feed',
 	function ($main,$params) {
@@ -80,6 +95,12 @@ $main->route('GET /show/@feed',
 	}
 );
 
+/*
+	
+	web page mode, single page for episode
+	
+*/
+
 $main->route('GET /show/@feed/@epi',
 function ($main,$params) {
 		$slug = $params['feed'];
@@ -94,6 +115,12 @@ function ($main,$params) {
 		$feed->renderHTML();
 	}
 );
+
+/*
+	main page without any parameters
+	simple list of available podcasts (web page)
+   
+*/
 
 $main->route('GET /',
 	function($main,$params) {
@@ -112,6 +139,8 @@ $main->route('GET /',
 		echo Template::instance()->render('front.html');
 	}
 );
+
+
 
 $main->run();
 
