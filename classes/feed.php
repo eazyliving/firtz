@@ -135,9 +135,32 @@
 		
 		}
 		
+		public function runExt($main,$audioformat='',$extension) {
+		
+			$main = $this->main;
+			
+			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
+			$this->attr['audioformat']=$audioformat;
+			$this->attr['self']=$main->get('BASEURL').$extension->slug."/".$this->attr['slug']."/".$audioformat;
+			$main->set('feedattr',$this->attr);
+
+			$items=array();
+			foreach ($this->episodes as $episode) {
+				$item = $episode->item;
+				$item['enclosure'] = $item[$audioformat];
+				$items[]=$item;
+			}
+			$main->set('items',$items);
+			
+			echo Template::instance()->render($extension->template['file'],$extension->template['type']);
+			
+		}
+		
+		
 		public function renderRSS2($audioformat = '',$ret=false) {
 		
 			$main = $this->main;
+			
 			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
 			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$audioformat;
