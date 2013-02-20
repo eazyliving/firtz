@@ -7,6 +7,14 @@ firtz 0.2
 
 Podcastpublishing mit EDLIN
 
++++ ACHTUNG +++ 
+
+Das hier ist unterhalb 1.0. Könnte an beta nennen, klingt nur doof heutzutage.
+Solltest Du damit einen Podcast veröffentlichen wollen: Sei gewarnt, es wird schmerzhaft, denn ich garantiere Dir nicht, dass die Handhabung bleibt wie sie ist.
+Ordnernamen, Ordnerorte, Dateinamen, Formate können und werden sich ändern. Solltest Du nicht experiementierfreudig sein, warte lieber noch ein oder zwei Wochen oder frag mich ruhig persönlich.
+
++++ ACHTUNG +++
+
 Du hast offensichtlich den Drang, entweder diesen Kram hier auszuprobieren, oder einen Podcast aus der Taufe zu heben.
 Was auch immer Dich dazu bewogen hat, firtz auszuprobieren: Gute Idee :)
 
