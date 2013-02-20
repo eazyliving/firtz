@@ -15,7 +15,7 @@ version="2.0">
 		<check if="{{@feedattr.alternate}}">
 				<repeat group="@feedattr.alternate" value="@alttype">
 					<check if="{{@feedattr.audioformat != @alttype}}">
-					<atom:link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
+					<atom:link rel="alternate" type="application/rss+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
 					</check>
 				</repeat>
 		</check>
