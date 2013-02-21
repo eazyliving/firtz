@@ -218,16 +218,6 @@ $main->route('GET /',
 	}
 );
 
-$main->route('GET /m',
-	function($main,$params) {
-
-		$a1 = array('001'=>'');
-		$a2 = array('002'=>'fasel','001'=>'bla');
-		
-		print_r(array_intersect_key($a1,$a2));
-	}
-);
-
 
 $main->run();
 
