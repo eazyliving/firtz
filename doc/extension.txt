@@ -1,0 +1,19 @@
+Extensions für firtz
+
+Erweiterungen dienen derzeit nur dem Ändern der Ausgabe eines Feeds.
+Als Beispiel dient eine Erweiterung, die einen ATOM-Feed ausgibt.
+
+Erweiterungen liegen als Verzeichnisse im Ordner ext.
+Im Verzeichniss muss eine Datei "ext.cfg" liegen, die bisher folgende Attribute unterstützt:
+
+slug: URL-Slug der Erweiterung. Die Erweiterung wird mittels http://fasel.bla/$feed/$slug/* aufgerufen.
+
+arguments: Mittels Leerzeichen getrennte Liste der Argumente, wie sie auch im URL aufgeführt werden.
+Argumente im URL müssen entweder komplett angegeben werden oder ganz weggelassen. Die Argumente können in den Templates mittels {{@ARGNAME}} aufgerufen werden.
+
+Genauere Doku wird (muss!) folgen :)
+
+template: Das für diese Extension vorgesehen Template. Dieses Template muss sich im Ordner der Erweiterung befinden. Hinter dem Dateinamen kann ein mimetype gesetzt werden. Wird dieser weggelassen, wird text/html angenommen.
+
+Um eine Erweiterung im Ordner ext auszuschalten, reicht es, dem Ordnernamen ein "_" voranzustellen. Alle Ordner, die mit "_" beginnen, werden hier ignoriert.
+
