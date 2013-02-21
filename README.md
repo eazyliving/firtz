@@ -27,7 +27,9 @@ Deshalb firtz. firtz ist das Ergebnis von knapp einskommafünf Tagen "Arbeit", d
 
 Wie funktioniert das nun? Über Konfigurationsdateien. Eine für den Feed mit allgemeinen Daten und einer Datei für jede Episode mit den Details eben jener.
 
-Aber fangen wir vorne an. Was brauchst Du? Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig... ;) Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: php muss ausgeführt werden können. Datenbanken und anderen Kram braucht nicht.
+Aber fangen wir vorne an. Was brauchst Du? Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig... ;)
+Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: php muss ausgeführt werden können.
+Datenbanken und anderen Kram braucht nicht, allerdings muss der ausführende Nutzer des Webservers in der Lage, Verzeichnisse zu erzeugen und Dateien in diese hineinzuschreiben.
 
 Natürlich gibt's ein paar andere Bedingungen, aber die sehe ich als gegeben an. Z.B: Der Webserver, der das ausführt muss in den Ordner schreiben können, in dem firtz sich befindet...
 
