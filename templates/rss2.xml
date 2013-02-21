@@ -13,11 +13,11 @@ version="2.0">
 		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}" />
 		
 		<check if="{{@feedattr.alternate}}">
-				<repeat group="@feedattr.alternate" value="@alttype">
-					<check if="{{@feedattr.audioformat != @alttype}}">
-					<atom:link rel="alternate" type="application/rss+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
-					</check>
-				</repeat>
+			<repeat group="@feedattr.alternate" value="@alttype">
+				<check if="{{@feedattr.audioformat != @alttype}}">
+				<atom:link rel="alternate" type="application/rss+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
+				</check>
+			</repeat>
 		</check>
 		
 		<check if="{{@feedattr.flattrid}}">
@@ -83,6 +83,9 @@ version="2.0">
 				<itunes:duration>{{@item.duration}}</itunes:duration>
 			</check>
 			
+			<check if="{{@item.image}}">
+				<itunes:image href="{{@item.image}}" />
+			</check>
 			<itunes:subtitle>{{@item.description | raw}}</itunes:subtitle>
 			<itunes:summary>{{@item.summary | raw}}</itunes:summary>
 			<itunes:keywords>{{@item.keywords | raw}}</itunes:keywords>

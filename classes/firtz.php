@@ -35,7 +35,7 @@
 			if (!file_exists($main->get('BASEPATH').'ext/')) return;
 			
 			foreach (glob($main->get('BASEPATH').'ext/*',GLOB_ONLYDIR) as $dir) {
-				
+				if (substr(basename($dir),0,1)=="_") return;
 				$extension = new extension ($main,$dir);
 				
 				if ($extension===false) {

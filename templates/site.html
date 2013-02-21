@@ -91,9 +91,9 @@
 
       <hr>
       <div class="row-fluid marketing">
-
+	
 		<repeat group="@items" value="@item">
-			<a href="<check if="{{@singlepage==false}}">{{@feedattr.slug}}/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
+			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
 			<include href="podlove-player.html"/>
 			<p>
 				Download:
@@ -108,6 +108,7 @@
 				
 				</iframe>
 			</check>
+			
 			<check if="{{@feedattr.disqus}}">
 				<include href="disqus.html"/>
 			</check>

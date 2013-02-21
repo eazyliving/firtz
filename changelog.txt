@@ -1,0 +1,8 @@
+changelog:
+
+0.3 added first draft of extension class. atm only extends output templates (example: atom-extension. look into ext/atom/)
+	changed website URL from /show/$feed to $feed/show to keep consistancy
+	
+0.2 major and minor fuckups fixed. thanks to all contributors!
+
+0.1 let the world take a look

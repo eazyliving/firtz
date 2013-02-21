@@ -57,9 +57,9 @@ http://tollerneuerpodcast.de/demo/
 
 Wenn Du mehrere Audioformate nutzt, kannst Du auch z.B. http://tollerneuerpodcast.de/demo/mp3 nutzen.
 
-Eine Webseite gibt's ja auch als Bonus. Die kannst Du für diesen Feed so erreichen: http://tollerneuerpodcast.de/show/demo/
+Eine Webseite gibt's ja auch als Bonus. Die kannst Du für diesen Feed so erreichen: http://tollerneuerpodcast.de/demo/show
 Für jede Episode gibt's dann einen eigenen Player (podlove webplayer, großartige Sache!), flattr-Buttons und auch ein disqus-Thread, so denn disqus in der Konfiguration des Feeds angegeben wurde.
-Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (praktisch der Dateiname ohne Endung) angehangen wird: http://tollerneuerpodcst.de/show/demo/001
+Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (praktisch der Dateiname ohne Endung) angehangen wird: http://tollerneuerpodcst.de/demo/show/001
 
 So, das war's für's erste. Denke dran: Du bist im Grunde Betatester. Die 1.0 wird erreicht werden, wenn ich zufrieden bin. Also ~2015.
 Es sind jetzt schon features drin, die ich nicht erwähnt habe. Neue sind schon im Kopf, aber nicht ausgeführt. Und Du hast bestimmt auch welche!

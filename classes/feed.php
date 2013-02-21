@@ -98,6 +98,8 @@
 		public function loadEpisodes($slug = '') {
 			
 			$main = $this->main;
+			$maxPubDate = "";
+			
 			if ($slug=="") {
 				foreach ($this->episode_slugs as $slug) {
 					$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
@@ -108,16 +110,19 @@
 				$this->episodes[$episode->item['slug']]= $episode;
 			}
 			
-			function sortByPubDate($a,$b) {
-				
-				return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
-			
-			}
-			
 			# Sort episodes by pubDate
+			
+			function sortByPubDate($a,$b) {
+				return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
+			}
 			uasort($this->episodes,'sortByPubDate');
 			
-			
+			$lastupdate = 0;
+			foreach ($this->episodes as $episode) {
+				$update = strtotime($episode->item['pubDate']);
+				if ($update>$lastupdate) $lastupdate = $update;
+			}
+			$this->attr['lastupdate'] = date('c', $lastupdate);
 		}
 		
 		
@@ -135,13 +140,14 @@
 		
 		}
 		
-		public function runExt($main,$audioformat='',$extension) {
+		public function runExt($main,$extension) {
 		
 			$main = $this->main;
+			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$extension->slug."/".$main->get('audio');
+
+			$audioformat = ($main->get('audio')?:$this->attr['audioformats'][0]);
 			
-			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
-			$this->attr['self']=$main->get('BASEURL').$extension->slug."/".$this->attr['slug']."/".$audioformat;
 			$main->set('feedattr',$this->attr);
 
 			$items=array();
@@ -160,10 +166,10 @@
 		public function renderRSS2($audioformat = '',$ret=false) {
 		
 			$main = $this->main;
+			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$audioformat;
 			
 			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
-			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$audioformat;
 			$main->set('feedattr',$this->attr);
 
 			$items=array();

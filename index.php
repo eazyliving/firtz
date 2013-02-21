@@ -35,34 +35,87 @@ $main->set('extattr',array('slug','template','arguments'));
 
 $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webm'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg'));
 
-/*
-	
-	direct call for a specified feed/audio-combination
-	
-*/
-
 $firtz->loadAllTheExtensions();
+
 foreach ($firtz->extensions as $slug => $extension) {
 	$slug = $extension->slug;
-	$main->route("GET|HEAD /@feed/$slug/@audio",
+	$main->route("GET|HEAD /@feed/$slug/*",
 		function($main,$params) use ($slug) {
-		
-			$feedslug = $params['feed'];
-			if (!in_array($feedslug,$main->get('feeds'))) $main->error(404);
-			
-			$BASEPATH = $main->get('FEEDDIR').'/'.$feedslug;
-			$FEEDCONFIG = $BASEPATH.'/feed.cfg';
 			
 			$firtz = $main->get('firtz');
 			$extension = $firtz->extensions[$slug];
+			
+			$arguments = array();
+			$arguments_ext = $extension->arguments;
+			$arguments_get = explode("/",$params[2]);
+			
+			foreach ($arguments_get as $key=>$val) {
+				if (isset($arguments_ext[$key])) {
+					$argname = $arguments_ext[$key];
+					$arguments[$argname] = $val;
+					$main->set($argname,$val);
+				}
+			
+			}
+			
+			$extension->arguments=$arguments;
+			
+			$feedslug = $params['feed'];
+			if (!in_array($params['feed'],$main->get('feeds'))) $main->error(404);
+			
+			$BASEPATH = $main->get('FEEDDIR').'/'.$params['feed'];
+			$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+			
 			$feed = new feed($main,$feedslug,$FEEDCONFIG);
 			$feed->findEpisodes();
 			$feed->loadEpisodes();
-			$feed->runExt($main,$params['audio'],$extension);
+			$feed->runExt($main,$extension);
 		}
 	);
 
 }
+
+foreach ($firtz->extensions as $slug => $extension) {
+	$slug = $extension->slug;
+	$main->route("GET|HEAD /@feed/$slug",
+		function($main,$params) use ($slug) {
+			
+			$firtz = $main->get('firtz');
+			
+			$extension = $firtz->extensions[$slug];
+			
+			$arguments = array();
+			$arguments_ext = $extension->arguments;
+			
+			foreach ($arguments_ext as $argname) {
+				$arguments[$argname] = "";
+				$main->set($argname,"");
+			}
+			
+			$extension->arguments=$arguments;
+			
+			$feedslug = $params['feed'];
+			if (!in_array($params['feed'],$main->get('feeds'))) $main->error(404);
+			
+			$BASEPATH = $main->get('FEEDDIR').'/'.$params['feed'];
+			$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+			
+			$feed = new feed($main,$feedslug,$FEEDCONFIG);
+			$feed->findEpisodes();
+			$feed->loadEpisodes();
+			$feed->runExt($main,$extension);
+		}
+	);
+
+}
+
+
+
+/*
+	direct call for a specified feed/audio-combination
+	
+*/
+
 
 $main->route('GET|HEAD /@feed/@audio',
 	function ($main,$params) {
@@ -106,7 +159,7 @@ $main->route('GET|HEAD /@feed',
 
 */
 
-$main->route('GET /show/@feed',
+$main->route('GET /@feed/show',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -127,7 +180,7 @@ $main->route('GET /show/@feed',
 	
 */
 
-$main->route('GET /show/@feed/@epi',
+$main->route('GET /@feed/show/@epi',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);

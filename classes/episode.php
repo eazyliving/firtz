@@ -11,7 +11,7 @@
 			$mime = $main->get('mimetypes');
 			foreach ($main->get('itemattr') as $var) $item[$var]="";
 			
-			$item['pagelink'] = $main->get('BASEURL').'/show/'.$feedattrs['slug']."/".$slug;
+			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
 			
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
@@ -30,14 +30,17 @@
 					break;
 				}
 				if (substr($line,-1)==":" && ( in_array(substr($line,0,-1),$main->get('itemattr')) ||  in_array(substr($line,0,-1),$feedattrs['audioformats']) )) {
+					
 					$thisattr = substr($line,0,-1);
 					$item[$thisattr]="";
+				
 				} elseif ($thisattr=="chapters") {
 				
 					$sep = strpos ( $line, " " );
 					$time = substr($line,0,$sep);
 					$name = substr($line,$sep+1);
-					$item['chapters'][]=array('time'=>$time,'name'=>$name);
+					$item['chapters'][]=array('time'=>$time,'name'=>$name,'link'=>'','image'=>'');
+					
 				} elseif (in_array($thisattr,$feedattrs['audioformats'])) {
 				
 					$audio = explode ( " ",$line );

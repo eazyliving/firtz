@@ -36,8 +36,7 @@
 				
 				} else {
 					
-					if ($thisattr == "argument") {
-					
+					if ($thisattr == "arguments") {
 						foreach (explode(" ",$line) as $arg) {
 							$this->arguments[]=$arg;
 							$route.="@".$arg."/";
