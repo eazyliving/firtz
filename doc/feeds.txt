@@ -124,5 +124,44 @@ itunes: Ist der Podcast bereits bei iTunes erreichbar, hier der Link zur iTunes-
 disqus: Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter http://disqus.com/for-websites/ und https://disqus.com/admin/signup/
 ------------------------------------------------------------------------------------------
 
+Seit 0.4 gibt es Auphonic Support. Dazu muss bei den outgoing services im Preset einer Produktion lediglich die Ausgabedatei "Production Description" hinzugefügt werden. Bitte das Format "json" einstellen.
+In dieser Datei stehen alle nötigen Metadaten einer Folge, die dazu genutzt werden können, eine Episode aufzubauen. Aktuell ist nur die lokale Auphonic-Unterstützung implementiert.
+Das heißt, dass die Description-Datei auf dem Filesystem des Webservers liegen muss, auf dem firtz läuft. Die anderen Dateien hingegen können problemlos auf einem anderen Server liegen.
+Bei der Gelegenheit aktiviert gleich die Ausgabe des Cover-Images, das wird von firtz nämlich auch unterstützt.
+
+aktuell sind folgende Attribute im Zusammenhang mit Auphonic vorhanden:
+------------------------------------------------------------------------------------------
+auphonic-mode: full, exclusive, episode oder off
+
+full: alle Episoden, die mittels Auphonic gefunden werden UND die, die mittels .epi-Datei konfiguriert wurden werden angezeigt.
+Dateinamensgleichheit führt dazu, dass die Daten der .epi-Datei die Auphonic-Produktion überschreiben, soweit vorhanden.
+Es ist damit möglich, eine Auphonic-Produktion einzubinden und Daten per .epi hinzuzufügen, bzw. zu modifizieren.
+
+exclusive: Nur Auphonic-Produktionen werden angezeigt.
+
+episode: nur Auphonic-Produktionen werden angezeigt, zu denen auch eine namensgleiche .epi-Datei vorhanden ist.
+Dateinamensgleichheit führt dazu, dass die Daten der .epi-Datei die Auphonic-Produktion überschreiben, soweit vorhanden.
+
+off: nur .epi-Dateien werden angezeigt.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+auphonic-path:
+Der Pfad zu den lokal vorhandenen Auphonic-Produktionsdateien.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+auphonic-glob:
+Ein Matchpattern, mit denen die .json Produktionsdateien gefunden werden. *.json z.B. für alle.
+Sind im Pfad Dateien unterschiedlicher Feeds vorhanden, sollte das Pattern (und natürlich die Dateinamen!) entsprechend gewählt werden.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+auphonic-url:
+Im Remote-Modus, in dem die Produktionsdateien nicht per Filesystem zu finden sind, muss der URL zu diesen Daten angegeben werden.
+Die Dateien werden dann ausschließlich über konfigurierte namensgleiche .epi-Dateien zu finden sein, die dann auch leer sein können.
+Eine andere Idee, diese Dateien zu identifizieren hatte ich bisher nicht.
+------------------------------------------------------------------------------------------
+
 
 +++ UNBEDINGT BEACHTEN: Die Konfigurationsdatei muss in UTF8 vorliegen! +++
