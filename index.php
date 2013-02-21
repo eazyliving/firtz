@@ -21,7 +21,7 @@ $firtz = new firtz();
 
 $feeds = array();
 foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
-	$feeds[]=basename($dir);
+	if (substr(basename($dir),0,1)!="_") $feeds[]=basename($dir);
 }
 
 $main->set('feeds',$feeds);
@@ -195,6 +195,7 @@ $main->route('GET /@feed/show/@epi',
 /*
 	main page without any parameters
 	simple list of available podcasts (web page)
+	if single feed page, then redirect to web page
    
 */
 
@@ -202,8 +203,10 @@ $main->route('GET /',
 	function($main,$params) {
 
 		$feeds = array();
-
-		foreach ($main->get('feeds') as $slug) {
+		$allfeeds = $main->get('feeds');
+		if (sizeof($allfeeds)==1) $main->reroute('/'.$allfeeds[0].'/show/');
+		
+		foreach ($allfeeds as $slug) {
 			$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
 			$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
 			$feed = new feed($main,$slug,$FEEDCONFIG);
