@@ -9,7 +9,14 @@
 	
 	<updated>{{@feedattr.lastupdate}}</updated>
 
-	<link rel="alternate" type="text/html" href="{{@feedattr.link | raw}}" />
+	<check if="{{@feedattr.alternate}}">
+		<repeat group="@feedattr.alternate" value="@alttype">
+			<check if="{{@feedattr.audioformat != @alttype}}">
+			<link rel="alternate" type="application/atom+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}atom/{{@alttype}}/" />
+			</check>
+		</repeat>
+	</check>
+	
 	<id>{{@feedattr.self}}</id>
 	<link rel="self" type="application/atom+xml" href="{{@feedattr.self}}" />
 	<check if="{{@feedattr.flattrid}}">
@@ -40,6 +47,15 @@
 		<check if="{{@feedattr.flattrid}}">
 				<link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}" type="text/html" />
 		</check>
+		
+		<check if="{{@item.chapters}}">
+			<psc:chapters version="1.1"  xmlns:psc="http://podlove.org/simple-chapters">
+			<repeat group="@item.chapters" value="@chapter">
+				<psc:chapter start="{{@chapter.time}}" title="{{@chapter.name | raw}}"/>
+			</repeat>	
+			</psc:chapters>
+		</check>
+		
 		<link rel="enclosure" type="{{ @item.enclosure.type }}" href="{{ @item.enclosure.link }}" length="{{ @item.enclosure.length }}" />
 		
 	</entry>
