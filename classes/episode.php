@@ -4,24 +4,54 @@
 	
 		public $item=array();
 		public $main = "";
-		public function __construct($main,$ITEMFILE,$feedattrs,$slug) {
+	
+		public function parseAuphonic($main,$filename,$feedattrs) {
 			
-			$this->main = $main;
-			$item = array();
 			$mime = $main->get('mimetypes');
 			foreach ($main->get('itemattr') as $var) $item[$var]="";
 			
-			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
+			$thisattr = "";
 			
-			$item['slug'] = $slug;
-			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
-			foreach ($feedattrs['audioformats'] as $format) {
-				$item[$format]="";
-			}
+			$prod = json_decode(file_get_contents($filename,true));
+			if ($prod===false) return false;
 			
-			$thisattr="";
+			#echo "<pre>".print_r($prod->metadata->album,1);exit;
 			
-			$fh = fopen($ITEMFILE,'r');
+			#'title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date'
+
+			$item['title'] = $prod->metadata->title;
+			$item['description'] = $prod->metadata->subtitle;
+			$item['article'] = $prod->metadata->summary;
+			$item['duration'] = $prod->length_timestring;
+			$item['date']= date('r',strtotime($prod->creation_time));
+			$item['keywords'] = implode(",",$prod->metadata->tags);
+			foreach ($prod->chapters as $chapter) $item['chapters'][]=array('start'=>$chapter->start,'title'=>$chapter->title);
+			
+			
+			$services = array();
+			foreach ($prod->outgoing_services as $service) $services[$service->uuid]=$service->base_url;
+			foreach ($prod->output_files as $output) {
+				$service = $output->outgoing_services[0];
+				if ($output->format=="image") $item['image']=$services[$service].$output->filename;
+				if (in_array($output->ending,$feedattrs['audioformats'])) {
+					$mimetype = (array_key_exists($output->ending,$mime) ?  $mime[$output->ending] : "audio/mpeg");
+					$item[$output->ending] = array ( 'link' => $services[$service].$output->filename, 'length' => $output->size , 'type'=> $mimetype );
+					$item['audiofiles'][$output->ending]=$item[$output->ending];
+				}
+			}	
+			#echo "<pre>".print_r($item,1);exit;
+			return $item;
+		}
+	
+	
+		public function parseConfig($main,$filename,$feedattrs) {
+			
+			$mime = $main->get('mimetypes');
+			foreach ($main->get('itemattr') as $var) $item[$var]="";
+			
+			$thisattr = "";
+			$fh = fopen($filename,'r');
+			
 			while (!feof($fh)) {
 				$line = trim(fgets($fh));
 				if ( ( $line=="" && $thisattr!="article") || substr($line,0,2)=="#:") continue;
@@ -39,7 +69,7 @@
 					$sep = strpos ( $line, " " );
 					$time = substr($line,0,$sep);
 					$name = substr($line,$sep+1);
-					$item['chapters'][]=array('time'=>$time,'name'=>$name,'link'=>'','image'=>'');
+					$item['chapters'][]=array('start'=>$time,'title'=>$name,'link'=>'','image'=>'');
 					
 				} elseif (in_array($thisattr,$feedattrs['audioformats'])) {
 				
@@ -68,9 +98,44 @@
 				}
 				
 			}
-			fclose($fh);		
+			fclose($fh);
+			return $item;
+		}
+	
+		public function __construct($main,$ITEMFILE,$feedattrs,$slug,$auphonic=false) {
 			
-			if ($item['description']=="") $item['description'] = substr($item['article'],0,255);
+			
+			if (!file_exists($ITEMFILE)) {
+				$this->item=array();
+				return;
+			}
+			
+			
+			$this->main = $main;
+			$item = array();
+			
+			
+			foreach ($feedattrs['audioformats'] as $format) {
+				$item[$format]="";
+			}
+			
+			$thisattr="";
+			
+			if ($auphonic===false) {
+				$item = $this->parseConfig($main,$ITEMFILE,$feedattrs);
+			} else {
+				$item = $this->parseAuphonic($main,$ITEMFILE,$feedattrs);
+				if ($item===false) {
+					$this->item=array();
+					return;
+				}
+			}
+			
+			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
+			$item['slug'] = $slug;
+			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
+			
+			$item['description']=($item['description']?:substr($item['article'],0,255));
 			$item['summary'] = strip_tags($item['article']);
 			$item['article'] = nl2br($item['article']);
 
@@ -84,7 +149,6 @@
 			}
 			
 			$item['pubDate'] = strftime ("%a, %d %b %Y %H:%M:%S %z" , $pubDate);
-
 			
 			if ($feedattrs['flattrid']!="") {
 				$item['flattrdescription'] = rawurlencode($item['description']);
@@ -92,6 +156,8 @@
 				$item['flattrlink'] = rawurlencode($item['pagelink']);
 				$item['flattrtitle'] = rawurlencode($item['title']);
 			}
+				
+			usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
 				
 			$this->item=$item;
 		}

@@ -51,7 +51,7 @@
 		<check if="{{@item.chapters}}">
 			<psc:chapters version="1.1"  xmlns:psc="http://podlove.org/simple-chapters">
 			<repeat group="@item.chapters" value="@chapter">
-				<psc:chapter start="{{@chapter.time}}" title="{{@chapter.name | raw}}"/>
+				<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"/>
 			</repeat>	
 			</psc:chapters>
 		</check>

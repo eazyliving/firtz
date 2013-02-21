@@ -3,8 +3,12 @@
 	class feed {
 	
 		public $attr = array();
+		
 		public $episode_slugs = array();
+		public $auphonic_slugs = array();
+		
 		public $episodes = array();
+		
 		public $feedDir = "";
 		public $main = "";
 		
@@ -90,7 +94,7 @@
 			} else {
 				$main->set('sitetemplate','site.html');
 			}
-			
+			if ($attr['auphonic-mode']=="") $attr['auphonic-mode']='off';
 			$this->attr = $attr;
 			
 		}
@@ -99,17 +103,57 @@
 			
 			$main = $this->main;
 			$maxPubDate = "";
-			
-			if ($slug=="") {
-				foreach ($this->episode_slugs as $slug) {
-					$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
-					$this->episodes[$episode->item['slug']]= $episode;
-				}
-			} else {
-				$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
-				$this->episodes[$episode->item['slug']]= $episode;
+		
+			if ($slug!='') {
+				$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
+				$this->auphonic_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
 			}
 			
+			switch ($this->attr['auphonic-mode']) {
+				case "off":
+				case "":
+					foreach ($this->episode_slugs as $slug) {
+						$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
+						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+					}
+					break;
+			
+				case "full":
+					/* todo: overwrite episode attributes with data from config file */
+					foreach ($this->auphonic_slugs as $slug) {
+						$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
+						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+					}
+					
+					foreach ($this->episode_slugs as $slug) {
+						$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false);
+						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+					}
+					
+					break;
+			
+				case "exclusive": 
+					foreach ($this->auphonic_slugs as $slug) {
+						$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
+						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+					}
+					break;
+					
+				case "episodes": 
+					
+					/* todo: overwrite episode attributes with data from config file */
+					
+					foreach ($this->episode_slugs as $slug) {
+						if (in_array($slug,$this->auphonic_slugs)) {
+							$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
+							if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+						}
+					}
+					break;
+			}
+			
+			
+		
 			# Sort episodes by pubDate
 			
 			function sortByPubDate($a,$b) {
@@ -129,11 +173,41 @@
 		public function findEpisodes() {
 		
 			$items = array();
+			
+			if ($this->attr['auphonic-path']!="" && file_exists($this->attr['auphonic-path']) && $this->attr['auphonic-mode']!="" && $this->attr['auphonic-mode']!="off") {
+			
+				$auphonic_episodes = glob ($this->attr['auphonic-path']."/".$this->attr['auphonic-glob']);
+				foreach ($auphonic_episodes as $json) {
+				
+					$slug = basename ($json,'.json');
+					$this->auphonic_slugs[]=$slug;
+					
+				}
+				
+			}
+		
 			$itemfiles = glob($this->feedDir.'/*.epi');
 			$this->episode_slugs=array();
 
 			foreach ( $itemfiles as $EPISODEFILE ) {
 				$slug = basename($EPISODEFILE,'.epi');
+				
+				switch ($this->attr['auphonic-mode']) {
+						
+					case "episode": 
+						if (array_key_exists($slug,$this->auphonic)) $this->episode_slugs[]=$slug;
+						break;
+					
+					case "full": 
+					case "off":
+						$this->episode_slugs[]=$slug;
+						break;
+						
+					case "exclusive": 
+						break;
+					
+				}
+				
 				$this->episode_slugs[]=$slug;
 			}
 			rsort($this->episode_slugs);
@@ -173,7 +247,9 @@
 			$main->set('feedattr',$this->attr);
 
 			$items=array();
+			
 			foreach ($this->episodes as $episode) {
+			
 				$item = $episode->item;
 				$item['enclosure'] = $item[$audioformat];
 				$items[]=$item;
@@ -190,7 +266,7 @@
 		
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
-			
+			$items = array();
 			if ($main->exists('epi') && $main->get('epi')!="") {
 				$items = array ( $this->episodes[$main->get('epi')]->item );
 			} else {
