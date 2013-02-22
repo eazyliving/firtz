@@ -18,11 +18,13 @@
 				echo "Config for $slug not found (missing $configfile)";
 				die();
 			}
+			
 			$this->main = $main;
 			$this->feedDir=dirname($configfile);
 			
 			$attr=array();
 		
+			/* populate attributes */
 			foreach ($main->get('feedattr_default') as $var) $attr[$var]="";
 			
 			$fh = fopen($configfile,'r');
@@ -33,16 +35,22 @@
 			while (!feof($fh)) {
 				
 				$line = trim(fgets($fh));
+				
 				if ($line=="" || substr($line,0,2)=="#:") continue;
 				
 				if ($line=="---end---") {
 					break;
 				}
+				
+				/* a new attribute */
+				
 				if (substr($line,-1)==":" && in_array(substr($line,0,-1),$main->get('feedattr_default'))) {
 					$thisattr = substr($line,0,-1);
 					$attr[$thisattr]="";
 					
 				} elseif ($thisattr=="category") {
+					
+					/* append a category line */
 					
 					$thiscat = explode("->",$line);
 					if (sizeof($thiscat)>1) {
@@ -52,12 +60,17 @@
 					}
 					
 				} else {
+					/* concat a new line to existing attribute */
+					
 					if ($thisattr!="") $attr[$thisattr] .= ($attr[$thisattr]!="") ? "\n".$line : $line;
 				}
 				
 			}
+			
 			fclose($fh);
 		
+			/* sanitize data */
+			
 			$attr['categories']=$categories;
 			
 			$attr['slug']=$slug;
@@ -77,24 +90,32 @@
 			$attr['maintype']=$attr['audioformats'][0];
 			$attr['alternate']= $attr['audioformats'];
 			
+			/* fishy - might take a look into that */
 			$attr['baserel']="http://".$main->get('HOST')."/".$slug."/";
 			
-			if ($attr['image']!="") {
-				$image = new image($attr['image']);
-			}
-			
 			if (file_exists(dirname($configfile)."/".$slug.".css")) {
+				/*	yet undocumented ;) 
+					if a $slug.css file exists in feed directory, this one replaces the
+					standard bootstrap.css
+				*/
+				
 				$attr['sitecss']=$main->get('BASEURL')."/feeds/".$slug."/".$slug.".css";
 			} else {
 				$attr['sitecss']=$main->get('BASEURL').'/css/bootstrap.min.css';
 			}
 			
 			if (file_exists(dirname($configfile)."/".$slug.".html")) {
+				/*	yet undocumented and non working;) 
+					if a $slug.html file exists in feed directory, this one replaces the
+					standard site.html template
+				*/
 				$main->set('sitetemplate',$slug.".html");
 			} else {
 				$main->set('sitetemplate','site.html');
 			}
+			
 			if ($attr['auphonic-mode']=="") $attr['auphonic-mode']='off';
+			
 			$this->attr = $attr;
 			
 		}
@@ -105,11 +126,22 @@
 			$maxPubDate = "";
 		
 			if ($slug!='') {
+				
+				/*	reduce slugs array to this one episode
+					atm the only case this happens is calling /$feed/show/$episodeslug/
+					also to be used, when paging is implemented
+				*/
+				
 				$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
 				$this->auphonic_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
 			}
 			
+			/* handle loading of episodes depending on auphonic mode */
+			
 			switch ($this->attr['auphonic-mode']) {
+				
+				/* standard mode. just load all .epi files */
+				
 				case "off":
 				case "":
 					foreach ($this->episode_slugs as $slug) {
@@ -117,41 +149,71 @@
 						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
 					}
 					break;
-			
+				
+				/* full mode: load auphonic and epi files.
+					if there's an epi file whith the same name as an auphonic file,
+					the data in epi file overwrites attributes from auphonic.
+				*/
+				
 				case "full":
-					/* todo: overwrite episode attributes with data from config file */
+					
 					foreach ($this->auphonic_slugs as $slug) {
 						$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
-						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+						if ($episode->item) $this->episodes[$episode->item['slug']] = $episode;
 					}
 					
 					foreach ($this->episode_slugs as $slug) {
-						$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false);
-						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+						
+						if (!in_array($slug,$this->auphonic_slugs)) {
+							
+							/* exclusive .epi */	
+							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false);
+							if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+							
+						} else {
+						
+							/* auphonic with same slug exists. take values from epi to overwrite args in auphonic episode */
+						
+							$old_episode = $this->episodes[$slug];
+							#echo "<pre>".print_r($old_episode->item,1);exit;
+							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$old_episode->item);
+							if ($episode->item) $old_episode->item = $episode->item;
+							
+						}
 					}
 					
 					break;
-			
+				
+				/* exclusive mode: only auphonic files are read, epi ignored */
+				
 				case "exclusive": 
 					foreach ($this->auphonic_slugs as $slug) {
 						$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
 						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
 					}
 					break;
-					
+				
+				/*	episode mode: like full, but only auphonic episodes are loaded,
+					that also exist as episode files. epi data overwrites auphonic attributes
+					this is the standard mode, if auphonic is in remote mode
+				*/
+				
 				case "episodes": 
-					
-					/* todo: overwrite episode attributes with data from config file */
-					
+				
 					foreach ($this->episode_slugs as $slug) {
 						if (in_array($slug,$this->auphonic_slugs)) {
 							$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
 							if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+							
+							/* take values from epi to overwrite args in auphonic episode */
+							$epi_episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$episode->item);
+							if ($epi_episode->item) $episode->item = $epi_episode->item;;
+							
+							
 						}
 					}
 					break;
 			}
-			
 			
 		
 			# Sort episodes by pubDate
@@ -160,6 +222,8 @@
 				return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
 			}
 			uasort($this->episodes,'sortByPubDate');
+			
+			/* find the latest episode to fill in data in rss and atom feeds (<updated>) */
 			
 			$lastupdate = 0;
 			foreach ($this->episodes as $episode) {
@@ -172,10 +236,13 @@
 		
 		public function findEpisodes() {
 		
-			$items = array();
+			/*	find all auphonic and epi files
+				collect slugs and save them.
+				no loading, just finding to reduce load in case, not all episodes have to be displayed (web page single mode/pageing mode)
+			*/
 			
 			if ($this->attr['auphonic-path']!="" && file_exists($this->attr['auphonic-path']) && $this->attr['auphonic-mode']!="" && $this->attr['auphonic-mode']!="off") {
-			
+				/* get local auphonic files */
 				$auphonic_episodes = glob ($this->attr['auphonic-path']."/".$this->attr['auphonic-glob']);
 				foreach ($auphonic_episodes as $json) {
 				
@@ -186,36 +253,33 @@
 				
 			}
 		
-			$itemfiles = glob($this->feedDir.'/*.epi');
-			$this->episode_slugs=array();
+			/* find local epi files if not in auphonic exclusive mode */
+			
+			if ($this->attr['auphonic-mode']!='exclusive') {
+				$itemfiles = glob($this->feedDir.'/*.epi');
+				$this->episode_slugs=array();
 
-			foreach ( $itemfiles as $EPISODEFILE ) {
-				$slug = basename($EPISODEFILE,'.epi');
-				
-				switch ($this->attr['auphonic-mode']) {
-						
-					case "episode": 
-						if (array_key_exists($slug,$this->auphonic)) $this->episode_slugs[]=$slug;
-						break;
+				foreach ( $itemfiles as $EPISODEFILE ) {
+					$slug = basename($EPISODEFILE,'.epi');
 					
-					case "full": 
-					case "off":
+					if ($this->attr['auphonic-mode']!="episode") {
+						/* auphonic episode mode. if there's no identically names auphonic episode, keep hands off */
+						if (in_array($slug,$this->auphonic_slugs)) $this->episode_slugs[]=$slug;
+					} else {	
+						/* auphonic off, full */
 						$this->episode_slugs[]=$slug;
-						break;
-						
-					case "exclusive": 
-						break;
+					}
+					
 					
 				}
 				
-				$this->episode_slugs[]=$slug;
 			}
-			rsort($this->episode_slugs);
-		
 		}
 		
 		public function runExt($main,$extension) {
 		
+			/* execute template plugin */
+			
 			$main = $this->main;
 			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$extension->slug."/".$main->get('audio');
 
@@ -224,6 +288,7 @@
 			$this->attr['audioformat']=$audioformat;
 			$main->set('feedattr',$this->attr);
 
+			/* collect episodes */
 			$items=array();
 			foreach ($this->episodes as $episode) {
 				$item = $episode->item;
@@ -231,6 +296,8 @@
 				$items[]=$item;
 			}
 			$main->set('items',$items);
+			
+			/* render plugins template */
 			
 			echo Template::instance()->render($extension->template['file'],$extension->template['type']);
 			
@@ -239,6 +306,8 @@
 		
 		public function renderRSS2($audioformat = '',$ret=false) {
 		
+			/* render rss2 template */
+			
 			$main = $this->main;
 			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$audioformat;
 			
@@ -246,8 +315,8 @@
 			$this->attr['audioformat']=$audioformat;
 			$main->set('feedattr',$this->attr);
 
+			/* collect episodes */
 			$items=array();
-			
 			foreach ($this->episodes as $episode) {
 			
 				$item = $episode->item;
@@ -255,6 +324,10 @@
 				$items[]=$item;
 			}
 			$main->set('items',$items);
+			
+			/*	render or return template 
+				return rendered data will be used in clone mode, which will be used for static site clones
+			*/
 			if ($ret===false) {
 				echo Template::instance()->render('rss2.xml','application/xml');
 			} else {
@@ -263,18 +336,25 @@
 		}
 		
 		public function renderHTML($ret=false) {
-		
+			
+			/* render standard html template */
+			
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
+			
+			/* collect episodes */
 			$items = array();
 			if ($main->exists('epi') && $main->get('epi')!="") {
 				$items = array ( $this->episodes[$main->get('epi')]->item );
 			} else {
 				foreach ($this->episodes as $episode) $items[]=$episode->item;
 			}
-		
+			
 			$main->set('items',$items);
 			
+			/*	render or return template 
+				return rendered data will be used in clone mode, which will be used for static site clones
+			*/
 			if ($ret===false) {
 				echo Template::instance()->render('site.html');
 			} else {

@@ -7,6 +7,8 @@
 	
 		public function parseAuphonic($main,$filename,$feedattrs) {
 			
+			/* parse a json production description file */
+						
 			$mime = $main->get('mimetypes');
 			foreach ($main->get('itemattr') as $var) $item[$var]="";
 			
@@ -15,10 +17,6 @@
 			$prod = json_decode(file_get_contents($filename,true));
 			if ($prod===false) return false;
 			
-			#echo "<pre>".print_r($prod->metadata->album,1);exit;
-			
-			#'title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date'
-
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = $prod->metadata->subtitle;
 			$item['article'] = $prod->metadata->summary;
@@ -30,6 +28,7 @@
 			
 			$services = array();
 			foreach ($prod->outgoing_services as $service) $services[$service->uuid]=$service->base_url;
+			
 			foreach ($prod->output_files as $output) {
 				$service = $output->outgoing_services[0];
 				if ($output->format=="image") $item['image']=$services[$service].$output->filename;
@@ -39,33 +38,44 @@
 					$item['audiofiles'][$output->ending]=$item[$output->ending];
 				}
 			}	
-			#echo "<pre>".print_r($item,1);exit;
+			
 			return $item;
 		}
 	
 	
-		public function parseConfig($main,$filename,$feedattrs) {
+		public function parseConfig($main,$filename,$feedattrs,$item=array()) {
+			
+			/* parse an .epi file */
+			/* if item is given, it's a reparsing for overwriting data from an auphonic-episode */
 			
 			$mime = $main->get('mimetypes');
-			foreach ($main->get('itemattr') as $var) $item[$var]="";
+			if (sizeof($item)==0) foreach ($main->get('itemattr') as $var) $item[$var]="";
 			
 			$thisattr = "";
 			$fh = fopen($filename,'r');
 			
 			while (!feof($fh)) {
+				
 				$line = trim(fgets($fh));
+				
+				/* continue if comment or empty line. except for article attribute */
 				if ( ( $line=="" && $thisattr!="article") || substr($line,0,2)=="#:") continue;
 				
-				if ($line=="---end---") {
-					break;
-				}
+				if ($line=="---end---")	break;
+				
 				if (substr($line,-1)==":" && ( in_array(substr($line,0,-1),$main->get('itemattr')) ||  in_array(substr($line,0,-1),$feedattrs['audioformats']) )) {
-					
+				
+					/* new attribute starts */
+				
 					$thisattr = substr($line,0,-1);
 					$item[$thisattr]="";
 				
 				} elseif ($thisattr=="chapters") {
 				
+					/* a chapter line */
+					/* no link or image atm */
+					/* will have to separate with | or because of title attribute, which might contain white space */
+					
 					$sep = strpos ( $line, " " );
 					$time = substr($line,0,$sep);
 					$name = substr($line,$sep+1);
@@ -73,63 +83,97 @@
 					
 				} elseif (in_array($thisattr,$feedattrs['audioformats'])) {
 				
+					/* configured audio formats */
+					/* only audioformats allowed, that are configured in feed.cfg */
+					
 					$audio = explode ( " ",$line );
 				
 					if (!array_key_exists($thisattr,$mime)) {
+					
+						/* mimetype not found in presets */
+						
 						if (sizeof($audio)==3) {
-							$mimetype = $audio[2];
-						} else {
 							
+							/* maybe it's in the .epi? */
+							
+							$mimetype = $audio[2];
+							
+						} else {
+							/* fallback. hmpf */
 							$mimetype = "audio/mpeg";
 						}
 					} else {
+					
+						/* everything went better than expected */
+					
 						$mimetype = $mime[$thisattr];
 					}
 					
 					if (sizeof($audio)>1) {
+						/* that's great: length of file is given */
+						
 						$item[$thisattr] = array ( 'link' => $audio[0] , 'length' => $audio[1] , 'type' => $mimetype);
 					} else {
+						/* boooh! get your metadata right! */
+					
 						$item[$thisattr] = array ( 'link' => $audio[0] , 'length' => 0, 'type' => $mimetype );
 					}
+					
 					$item['audiofiles'][$thisattr]=$item[$thisattr];
 					
 				} else {
+					
+					/* this is an attribute which may have linebreaks. append line to current attribute */
 					if ($thisattr!="") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
 				}
 				
 			}
+			
 			fclose($fh);
 			return $item;
 		}
 	
-		public function __construct($main,$ITEMFILE,$feedattrs,$slug,$auphonic=false) {
-			
+		public function __construct($main,$ITEMFILE,$feedattrs,$slug,$auphonic=false,$item=array()) {
 			
 			if (!file_exists($ITEMFILE)) {
 				$this->item=array();
 				return;
 			}
 			
-			
 			$this->main = $main;
-			$item = array();
 			
+			$reparse = false;
 			
-			foreach ($feedattrs['audioformats'] as $format) {
-				$item[$format]="";
+			if (sizeof($item)==0) {
+				/* new item, set attributes */
+				foreach ($feedattrs['audioformats'] as $format) {
+					$item[$format]="";
+				}
+			} else {
+			
+				/* reparsing an old one to overwrite data */
+				$reparse = true;
 			}
 			
-			$thisattr="";
-			
 			if ($auphonic===false) {
-				$item = $this->parseConfig($main,$ITEMFILE,$feedattrs);
+				/* parse an .epi */
+				$item = $this->parseConfig($main,$ITEMFILE,$feedattrs,$item);
 			} else {
+				/* parse the auphonic json file */
 				$item = $this->parseAuphonic($main,$ITEMFILE,$feedattrs);
 				if ($item===false) {
 					$this->item=array();
 					return;
 				}
 			}
+			
+			if ($reparse === true) {	
+				/* just reparsing. skip the sanitation part */
+				$this->item = $item;
+				return;
+			}
+			
+			/* data sanitation */
 			
 			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
 			$item['slug'] = $slug;
@@ -156,14 +200,17 @@
 				$item['flattrlink'] = rawurlencode($item['pagelink']);
 				$item['flattrtitle'] = rawurlencode($item['title']);
 			}
-				
-			usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
+			
+			/* who says, chapters are in order? sort them! */
+			if ($item['chapters']) usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
 				
 			$this->item=$item;
 		}
 		
 		public function renderRSS2($audioformat) {
 		
+			/* this function is obsolete and kept for nostalgic reasons */
+			
 			$main = $this->main;
 			
 			$this->item['enclosure']=$this->item[$audioformat];
@@ -174,6 +221,8 @@
 		
 		public function renderHTML() {
 		
+			/* this function is obsolete and kept for nostalgic reasons */
+			
 			$main = $this->main;
 			
 			$main->set('item',$this->item);

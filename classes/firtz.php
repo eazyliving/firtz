@@ -26,8 +26,6 @@
 			
 		}
 	
-		
-
 		function loadAllTheExtensions() {
 		
 			$main = $this->main;
