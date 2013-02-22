@@ -43,7 +43,8 @@
 		<id>{{@item.pagelink}}</id>
 		<updated>{{ date('c', strtotime(@item.pubDate)) }}</updated>
 		<published>{{ date('c', strtotime(@item.pubDate)) }}</published>
-		<summary type="html"><![CDATA[{{@item.article | raw}}]]></summary>
+		<summary type="html"><![CDATA[{{@item.description | raw}}]]></summary>
+		<content type="html"><![CDATA[{{@item.article | raw}}]]></content>
 		<check if="{{@feedattr.flattrid}}">
 				<link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}" type="text/html" />
 		</check>
