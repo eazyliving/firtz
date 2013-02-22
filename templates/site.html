@@ -14,7 +14,16 @@
         padding-top: 20px;
         padding-bottom: 40px;
       }
-
+	 
+		a>h3,.homebut {
+			text-decoration:none;
+			color:black;
+		}
+		a>h3:hover,a:hover,.homebut:hover {
+			color:#666;
+			text-decoration:none !important;
+		}
+		
       /* Custom container */
       .container-narrow {
         margin: 0 auto;
@@ -77,7 +86,7 @@
 					
 			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
         </ul>
-        <h3 class="muted">{{@feedattr.title}}</h3>
+        <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
 
 	  
@@ -85,7 +94,7 @@
       <hr>
 
       <div class="jumbotron">
-		<h1><img src="{{@feedattr.image}}" width=100 style="margin-right:20px;"> {{@feedattr.title}}</h1>
+		<h1><img src="{{@feedattr.image}}" width=100 style="margin-right:20px;">{{@feedattr.title}}</h1>
         <p class="lead">{{@feedattr.description}}</p>
       </div>
 
@@ -96,11 +105,12 @@
 			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
 			<include href="podlove-player.html"/>
 			<p>
-				Download:
-			
+				
+				<ul class="nav nav-pills pull-right">
 				<repeat group="@item.audiofiles" value="@audiofile" key="@audiotype">
-					<a href="{{@audiofile.link}}">{{@audiotype}}</a>
+					<li><a href="{{@audiofile.link}}">{{@audiotype}}</a></li>
 				</repeat>
+				</ul>
 			</p>
 			<check if="{{@feedattr.flattrid}}">
 				<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}};popout=0&amp;button=compact"
