@@ -10,50 +10,7 @@
     <link href="{{@feedattr.sitecss}}" rel="stylesheet">
 	
     <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-	 
-		a>h3,.homebut {
-			text-decoration:none;
-			color:black;
-		}
-		a>h3:hover,a:hover,.homebut:hover {
-			color:#666;
-			text-decoration:none !important;
-		}
-		
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      } 
+     body{padding-top:20px;padding-bottom:40px} a>h3,.homebut,a>h3:hover,a:hover,.homebut:hover{text-decoration:none !important}  .container-narrow{ margin:0 auto; max-width:700px} .container-narrow >hr{ margin:30px 0}  .jumbotron{ margin:30px 0; text-align:center} .jumbotron h1{ font-size:72px; line-height:1} .jumbotron .btn{ font-size:21px; padding:14px 24px}  .marketing{ margin:60px 0} .marketing p+h4{ margin-top:28px}
     </style>
     <link href="{{@BASEURL}}css/bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -94,7 +51,7 @@
       <hr>
 
       <div class="jumbotron">
-		<h1><img src="{{@feedattr.image}}" width=100 style="margin-right:20px;">{{@feedattr.title}}</h1>
+		<h1><img src="{{@feedattr.image}}" width=100  style="margin-right:20px;">{{@feedattr.title}}</h1>
         <p class="lead">{{@feedattr.description}}</p>
       </div>
 
@@ -103,6 +60,7 @@
 	
 		<repeat group="@items" value="@item">
 			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
+			<p>{{@item.article | raw}}</p>
 			<include href="podlove-player.html"/>
 			<p>
 				
@@ -131,7 +89,14 @@
    
 
       <div class="footer">
-        <p>&copy; {{@feedattr.author}}</p>
+        <p>&copy; {{@feedattr.author}}
+		<check if="{{@feedattr.twitter}}">
+			<span>| twitter: <a href="https://twitter.com/{{@feedattr.twitter}}">@{{@feedattr.twitter}}</a></span>
+		</check>
+		<check if="{{@feedattr.email}}">
+			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
+		</check>
+		</p>
 		<check if="{{@feedattr.flattrid}}">
 			<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}};popout=0&amp;button=compact"
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">

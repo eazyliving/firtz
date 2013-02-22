@@ -33,7 +33,10 @@ version="2.0">
 			<width>144</width>
 			<height>144</height>
 		</image>
-		
+	
+		<check if="{{@feedattr.itunesblock=='yes'}}">
+			<itunes:block>{{@feedattr.itunesblock}}</itunes:block>
+		</check>	
 		<itunes:author>{{@feedattr.author | raw}}</itunes:author>
 		<itunes:summary>{{@feedattr.summary | raw}}</itunes:summary>
 		<itunes:image href="{{@feedattr.image}}" />
@@ -65,7 +68,8 @@ version="2.0">
 			<link>{{@item.pagelink}}</link>
 			<pubDate>{{@item.pubDate}}</pubDate>
 			<guid isPermaLink="false">{{@item.guid}}</guid>
-			<description>{{@item.description | raw}}</description>
+			<description><![CDATA[{{@item.description | raw}}<br><br>		
+			{{@item.article | raw}}]]></description>
 			<content:encoded><![CDATA[{{@item.article | raw}}]]></content:encoded>
 			<check if="{{@feedattr.flattrid}}">
 				<atom:link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}" type="text/html" />
