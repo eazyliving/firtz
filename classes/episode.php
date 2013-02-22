@@ -47,10 +47,12 @@
 			
 			/* parse an .epi file */
 			/* if item is given, it's a reparsing for overwriting data from an auphonic-episode */
-			
+		
 			$mime = $main->get('mimetypes');
-			if (sizeof($item)==0) foreach ($main->get('itemattr') as $var) $item[$var]="";
-			
+			if (sizeof($item)==0) 
+			{ 
+				foreach ($main->get('itemattr') as $var) $item[$var]="";
+			} 
 			$thisattr = "";
 			$fh = fopen($filename,'r');
 			
@@ -146,9 +148,7 @@
 			
 			if (sizeof($item)==0) {
 				/* new item, set attributes */
-				foreach ($feedattrs['audioformats'] as $format) {
-					$item[$format]="";
-				}
+				
 			} else {
 			
 				/* reparsing an old one to overwrite data */

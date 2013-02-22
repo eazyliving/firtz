@@ -124,7 +124,6 @@
 			
 			$main = $this->main;
 			$maxPubDate = "";
-		
 			if ($slug!='') {
 				
 				/*	reduce slugs array to this one episode
@@ -254,26 +253,28 @@
 			}
 		
 			/* find local epi files if not in auphonic exclusive mode */
-			
 			if ($this->attr['auphonic-mode']!='exclusive') {
 				$itemfiles = glob($this->feedDir.'/*.epi');
 				$this->episode_slugs=array();
-
+				
 				foreach ( $itemfiles as $EPISODEFILE ) {
 					$slug = basename($EPISODEFILE,'.epi');
 					
-					if ($this->attr['auphonic-mode']!="episode") {
+					if ($this->attr['auphonic-mode']=="episode") {
+						
 						/* auphonic episode mode. if there's no identically names auphonic episode, keep hands off */
 						if (in_array($slug,$this->auphonic_slugs)) $this->episode_slugs[]=$slug;
 					} else {	
 						/* auphonic off, full */
 						$this->episode_slugs[]=$slug;
+					
 					}
 					
 					
 				}
 				
 			}
+		
 		}
 		
 		public function runExt($main,$extension) {
