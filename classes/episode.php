@@ -203,7 +203,9 @@
 			
 			/* who says, chapters are in order? sort them! */
 			if ($item['chapters']) usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
-				
+
+			if (strpos($item['duration'],'.')!==FALSE) $item['duration'] = substr($item['duration'],0,strpos($item['duration'],'.'));
+			
 			$this->item=$item;
 		}
 		
