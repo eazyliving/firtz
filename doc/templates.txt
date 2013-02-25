@@ -1,0 +1,22 @@
+Dokumentation Templates und Pages
+
+Templates sind die zentrale Instanz, um aus den Daten der Feeds irgendeine Ausgabe zu generieren. Ohne Templates geht gar nichts.
+
+Da das fatfree framework eine solche Templateengine mitbringt, habe ich natürlich diese genutzt. Weshalb das Rad neu erfinden?
+Eine Doku zu f3/templates findet Ihr hier: https://github.com/bcosca/fatfree#views-and-templates
+
+Wie immer gilt: orientier Dich an den bereits vorhandenen Templates, die allesamt in /templates/ liegen.
+Eine ausführliche Dokumentation über alle in den Templates verfügbaren Variablen und Konstanten werde ich noch aufsetzen müssen, das ist ziemlich viel und wird eine Weile dauern.
+
+Zusätzlich zu den wesentlichen Templates (site.html, rss2.xml) können zusätzliche Seiten eingebunden werden.
+Diese müssen aktuell im Ordner /templates/pages/ liegen und <titel>.html heißen.
+Findet firtz dort z.B. eine Datei "Impressum.html", wird ein zusätzlicher Menüeintrag im Kopf angelegt und auf die Inhalte dieser Seite verlinkt.
+Achtung: Die Seite wird nicht solo gerendert, sondern im Kontext der site.html, d.h., die Seite ist über http://tollerpodcast.test/$feed/page/Impressum erreichbar.
+Alle für den angegebenen Feed wesentlichen Daten (Kopf, Fuß) werden eingeblendet, der Inhalt der HTML-Seite wird in der Mitte dazu gerendert.
+
+Weiterhin können in die Seite an entsprechender Stelle Dateien eingebunden werden.
+Dateien im Ordner /templates/head werden vor </head> hinzugefügt.
+Dateien im Ordner /templates/header werden vor das Logo des Podcasts hinzugefügt.
+Dateien im Ordner /templates/episode werden nach dem Rendern jeder Episode hinzugefügt.
+Dateien im Ordner /templates/footer werden nach dem Rendern des Fußes hinzugefügt.
+
