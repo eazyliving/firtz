@@ -149,6 +149,9 @@ Das heißt, dass die Description-Datei auf dem Filesystem des Webservers liegen 
 Die anderen Dateien hingegen können problemlos auf einem anderen Server liegen.
 Bei der Gelegenheit aktiviert gleich die Ausgabe des Cover-Images, das wird von firtz nämlich auch unterstützt.
 
+Weiterhin ist es wichtig, dass im "outgoing service" des Podcasts die "HTTP base URL on your web server" angegeben ist.
+Wenn Eure Dateien also per http://dein.toller.podcast.test/<dateiname>.m4a erreichbar sind, muss dort http://dein.toller.podcast.test/ stehen.
+
 aktuell sind folgende Attribute im Zusammenhang mit Auphonic vorhanden:
 ------------------------------------------------------------------------------------------
 auphonic-mode: full, exclusive, episode oder off
