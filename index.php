@@ -5,7 +5,8 @@ ini_set('auto_detect_line_endings',true);
 $main=require('lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
-$main->set('UI','templates/;templates/head/;templates/header/;templates/footer/;templates;/episode/');
+
+$main->set('UI','templates/;templates/head/;templates/header/;templates/footer/;templates/episode/;templates/pages/');
 $main->set('version',0);
 $main->set('revision',4);
 $main->set('generator','firtz feed generator v'.$main->get('version').".".$main->get('revision'));
@@ -13,7 +14,7 @@ $main->set('pager','');
 $main->set('BASEURL',"http://".$main->get('HOST').dirname($_SERVER['SCRIPT_NAME']));
 $main->set('BASEPATH',$_SERVER['DOCUMENT_ROOT']);
 $main->set('singlepage',false);
-
+$main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 
 $firtz = new firtz();
@@ -220,6 +221,29 @@ $main->route('GET /',
 		echo Template::instance()->render('front.html');
 	}
 );
+
+/*
+	single page mode with custom content page
+	put them im templates/pages/
+	
+*/
+
+$main->route('GET /@feed/page/@page',
+	function($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		$main->set('singlepage',true);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+		$feed->loadEpisodes();
+		$feed->renderHTML(false,$params['page']);
+		
+	}
+);
+
 
 
 $main->run();

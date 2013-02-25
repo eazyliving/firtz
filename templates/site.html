@@ -23,6 +23,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
     <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
     <link rel="shortcut icon" href="./favicon.png">
+
+
+    <repeat group="{{glob('templates/head/*.html')}}" value="@headtemplate">
+		<include href="{{basename(@headtemplate)}}"/>
+    </repeat>
   </head>
 
   <script src="{{@BASEURL}}js/jquery.js"></script>
@@ -42,22 +47,28 @@
 			</check>
 					
 			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
+			<repeat group="{{glob('templates/pages/*.html')}}" value="@template">
+				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
+			</repeat>
         </ul>
         <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
-
-	  
-	  
+	
       <hr>
-
+	<repeat group="{{glob('templates/header/*.html')}}" value="@template">
+		<include href="{{basename(@template)}}"/>
+	</repeat>
       <div class="jumbotron">
 		<h1><img src="{{@feedattr.image}}" width=100  style="margin-right:20px;">{{@feedattr.title}}</h1>
         <p class="lead">{{@feedattr.description}}</p>
       </div>
-
-      <hr>
-      <div class="row-fluid marketing">
 	
+    
+	<hr>
+   
+		<div class="row-fluid marketing">
+		<check if="{{!@showpage}}">
+		<true>
 		<repeat group="@items" value="@item">
 			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
 			<p>{{@item.article | raw}}</p>
@@ -82,10 +93,18 @@
 			</check>
 			
 			<hr>
+			<repeat group="{{glob('templates/episode/*.html')}}" value="@template">
+				<include href="{{basename(@template)}}"/>
+			</repeat>
+			
 		</repeat>
-        
-      </div>
-
+        </true>
+		<false>
+			<include href="{{@showpage}}"/>
+		</false>
+		</check>
+		</div>
+		
    
 
       <div class="footer">
@@ -102,6 +121,9 @@
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
 			</iframe>
 		</check>
+		<repeat group="{{glob('templates/footer/*.html')}}" value="@template">
+				<include href="{{basename(@template)}}"/>
+		</repeat>
       </div>
 
     </div>
@@ -110,7 +132,7 @@
     <script src="{{@BASEURL}}pwp/podlove-web-player.js"></script>
     
 	<check if="{{@feedattr.disqus}}">
-		<include href="disqus_multiple.js"></include>
+		<include href="disqus_multiple.js"/>
 	</check>
 	
 	

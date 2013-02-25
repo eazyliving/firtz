@@ -43,7 +43,7 @@
 				}
 				
 				/* a new attribute */
-				
+				 
 				if (substr($line,-1)==":" && in_array(substr($line,0,-1),$main->get('feedattr_default'))) {
 					$thisattr = substr($line,0,-1);
 					$attr[$thisattr]="";
@@ -211,6 +211,7 @@
 							
 						}
 					}
+					
 					break;
 			}
 			
@@ -336,12 +337,14 @@
 			}
 		}
 		
-		public function renderHTML($ret=false) {
+		public function renderHTML($ret=false,$pagename="") {
 			
 			/* render standard html template */
 			
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
+			
+			if ($pagename!="") $main->set('showpage',$pagename.'.html');
 			
 			/* collect episodes */
 			$items = array();
