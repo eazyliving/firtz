@@ -9,9 +9,9 @@ Hier stehen die für alle Episoden gültigen Daten, die die Publikation als Ganz
 
 Diese Datei muss sich zwingend an folgender Stelle befinden:
 	
-	/								Installationsordner
-	/feeds							Ordner für die Feedordner
-	/feeds/NameDesFeeds				Ordner für einen einzelnen Feed
+	/				Installationsordner
+	/feeds				Ordner für die Feedordner
+	/feeds/NameDesFeeds		Ordner für einen einzelnen Feed
 	/feeds/NameDesFeeds/feed.cfg	Feedkonfiguration
 	
 Die Datei muss zwingend feed.cfg heißen. Der Aufbau der Datei ist einfach.
