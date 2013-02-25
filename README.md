@@ -3,7 +3,7 @@ firtz
 
 firtz podcast publisher
 
-firtz 0.2
+firtz 0.4
 
 Podcastpublishing mit EDLIN
 
@@ -50,6 +50,8 @@ An's Ende der Konfiguration kannst Du in einer neuen Zeile ein "---end---" setze
 WICHTIG IST, DASS ALLE KONFIGURATIONSDATEIEN UTF8 SIND!
 
 Wenn Du nicht aufpasst, gibt's Müsli im Feed!
+
+Solltest Du Auphonic (http://auphonic.com/) nutzen, bist Du vermutlich ganz fein raus. Aktiviere in den Ausgangsdateien die Production-Description, sorge dafür, dass firtz sie im Dateisystem findet und schon erstellen sich die Folgen fast von selbst anhand der von Auphonic weitergereichten Metadaten. Weitere Informationen dazu finden sich in der Dokumentation.
 
 Nehmen wir an, Du hast das soweit fertig. Wie erreichst du den Feed? Angenommen der URL zu Deinem Webserver würde http://tollerneuerpodcast.de/ lauten. Der Feed heißt ja noch demo, also wäre der URL zum RSS2-Feed:
 
