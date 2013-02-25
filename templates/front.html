@@ -63,11 +63,11 @@
 		<repeat group="@frontfeeds" value="@feed">
 
 			<div class="media">
-				<a class="pull-left" href="show/{{@feed.slug}}">
+				<a class="pull-left" href="{{@feed.slug}}/show/">
 					<img class="media-object" src="{{@feed.image}}" width=100>
 				</a>
 				<div class="media-body">
-					<h4><a  href="show/{{@feed.slug}}">{{@feed.description}}</a></h4>
+					<h4><a  href="{{@feed.slug}}/show/">{{@feed.description}}</a></h4>
 				</div>
 			</div>
 			<hr>
