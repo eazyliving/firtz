@@ -9,9 +9,9 @@ Hier stehen die für alle Episoden gültigen Daten, die die Publikation als Ganz
 
 Diese Datei muss sich zwingend an folgender Stelle befinden:
 	
-	/								Installationsordner
-	/feeds							Ordner für die Feedordner
-	/feeds/NameDesFeeds				Ordner für einen einzelnen Feed
+	/				Installationsordner
+	/feeds				Ordner für die Feedordner
+	/feeds/NameDesFeeds		Ordner für einen einzelnen Feed
 	/feeds/NameDesFeeds/feed.cfg	Feedkonfiguration
 	
 Die Datei muss zwingend feed.cfg heißen. Der Aufbau der Datei ist einfach.
@@ -45,11 +45,14 @@ description: Eine kurze und aussagekräftige Zusammenfassung, Subheadline.
 
 ------------------------------------------------------------------------------------------
 formats: die im Feed zu veröffentlichenden Formate.
-Das erste Format der durch Leerzeichen getrennten Liste ist das Hauptformat des Feeds, alle anderen werden als alternate Feeds angeboten und sind nur durch explizite Angabe des Formates in der Feed-URL erreichbar. Beispiel:
+Das erste Format der durch Leerzeichen getrennten Liste ist das Hauptformat des Feeds,
+alle anderen werden als alternate Feeds angeboten und sind nur durch explizite Angabe des Formates in der Feed-URL
+erreichbar. Beispiel:
 
 m4a mp3 ogg opus
 
-Folgende Formate werden aktuell komplett unterstützt, also im Feed ein korrekter mime-type angegeben, sonst application/octet:
+Folgende Formate werden aktuell komplett unterstützt, also im Feed ein korrekter mime-type angegeben,
+sonst application/octet:
 
 mp3: audio/mpeg
 torrent: application/x-bittorrent
@@ -72,7 +75,9 @@ jpg: image/jpeg
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-flattrid: Wenn flattr genutzt wird/werden soll, hier die user-id angeben. Es werden Payment-Links im Feed und Buttons auf der Webseite für den gesamten Feed und für einzelne Episoden erzeugt. Es ist nicht möglich, mehrere IDs anzugeben.
+flattrid: Wenn flattr genutzt wird/werden soll, hier die user-id angeben. Es werden Payment-Links
+im Feed und Buttons auf der Webseite für den gesamten Feed und für einzelne Episoden erzeugt.
+Es ist nicht möglich, mehrere IDs anzugeben.
 ------------------------------------------------------------------------------------------
 
 
@@ -81,11 +86,13 @@ author: Der Name des Autors dieses Podcasts
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-summary: Eine ausführlichere Zusammenfassung der Inhalte des Podcasts. Dieser kann sich über mehrere Zeilen erstrecken und Zeilenumbrüche beinhalten.
+summary: Eine ausführlichere Zusammenfassung der Inhalte des Podcasts. Dieser kann sich über
+mehrere Zeilen erstrecken und Zeilenumbrüche beinhalten.
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-image: URL zu einem Bild, das im optimalen Fall 1400x1400 Pixel groß ist und sowohl im Feed als auch auf der Webseite genutzt wird.
+image: URL zu einem Bild, das im optimalen Fall 1400x1400 Pixel groß ist und sowohl im Feed als 
+auch auf der Webseite genutzt wird.
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
@@ -93,12 +100,17 @@ keywords: Kommagetrennte Stichwörter, die den Podcast beschreiben
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-category: Die Kategorien orientieren sich an den Vorgaben Apples für iTunes. Es gibt Hauptkategorien und jeweils mehrere Unterkategorien, die aber keine weiteren Kategorien unter sich haben. Um dies an dieser Stelle einigermaßen einfach konfigurieren zu können, wird entweder eine Hauptkategorie einzeln angegeben oder eine solche mit Unterkategorie durch -> verbunden:
+category: Die Kategorien orientieren sich an den Vorgaben Apples für iTunes. Es gibt Hauptkategorien
+und jeweils mehrere Unterkategorien, die aber keine weiteren Kategorien unter sich haben.
+Um dies an dieser Stelle einigermaßen einfach konfigurieren zu können, wird entweder eine
+Hauptkategorie einzeln angegeben oder eine solche mit Unterkategorie durch -> verbunden:
 
 Society & Culture
 Technology -> Podcasting
 
-Diese Konfiguration würde den Podcast sowohl in die Hauptkategorie "Society & Culture" ohne weitere Unterkategorie setzen und in die Unterkategorie "Podcasting" in der Kategorie "Technology". Die einzelne Angabe der Hauptkategorie "Technology" ohne "Podcasting" ist in diesem Falle nicht nötig.
+Diese Konfiguration würde den Podcast sowohl in die Hauptkategorie "Society & Culture" ohne 
+weitere Unterkategorie setzen und in die Unterkategorie "Podcasting" in der Kategorie "Technology".
+Die einzelne Angabe der Hauptkategorie "Technology" ohne "Podcasting" ist in diesem Falle nicht nötig.
 
 Details zu den Kategorien finden sich unter http://www.apple.com/itunes/podcasts/specs.html#categories
 Es ist nicht nötig das "&" als "&amp;" zu konfigurieren.
@@ -109,7 +121,8 @@ email: Emailadresse, unter der der Autor des Podcasts erreichbar ist.
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-language: Sprache, in der der Podcast veröffentlicht, Deutsch z.B. wäre "de-DE". Info zu den Sprachcodes finden sich hier: http://www.rssboard.org/rss-language-codes
+language: Sprache, in der der Podcast veröffentlicht, Deutsch z.B. wäre "de-DE". Info zu den
+Sprachcodes finden sich hier: http://www.rssboard.org/rss-language-codes
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
@@ -117,25 +130,33 @@ explicit: entweder yes oder no, wirkt sich vor allem auf iTunes aus.
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-itunes: Ist der Podcast bereits bei iTunes erreichbar, hier der Link zur iTunes-Seite. (firtz: https://itunes.apple.com/de/podcast/firtz/id604449399)
+itunes: Ist der Podcast bereits bei iTunes erreichbar, hier der Link zur iTunes-Seite.
+(firtz: https://itunes.apple.com/de/podcast/firtz/id604449399)
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
-disqus: Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter http://disqus.com/for-websites/ und https://disqus.com/admin/signup/
+disqus: Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken
+und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds
+Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter
+http://disqus.com/for-websites/ und https://disqus.com/admin/signup/
 ------------------------------------------------------------------------------------------
 
-Seit 0.4 gibt es Auphonic Support. Dazu muss bei den outgoing services im Preset einer Produktion lediglich die Ausgabedatei "Production Description" hinzugefügt werden. Bitte das Format "json" einstellen.
-In dieser Datei stehen alle nötigen Metadaten einer Folge, die dazu genutzt werden können, eine Episode aufzubauen. Aktuell ist nur die lokale Auphonic-Unterstützung implementiert.
-Das heißt, dass die Description-Datei auf dem Filesystem des Webservers liegen muss, auf dem firtz läuft. Die anderen Dateien hingegen können problemlos auf einem anderen Server liegen.
+Seit 0.4 gibt es Auphonic Support. Dazu muss bei den outgoing services im Preset einer Produktion
+lediglich die Ausgabedatei "Production Description" hinzugefügt werden. Bitte das Format "json" einstellen.
+In dieser Datei stehen alle nötigen Metadaten einer Folge, die dazu genutzt werden können,
+eine Episode aufzubauen. Aktuell ist nur die lokale Auphonic-Unterstützung implementiert.
+Das heißt, dass die Description-Datei auf dem Filesystem des Webservers liegen muss, auf dem firtz läuft.
+Die anderen Dateien hingegen können problemlos auf einem anderen Server liegen.
 Bei der Gelegenheit aktiviert gleich die Ausgabe des Cover-Images, das wird von firtz nämlich auch unterstützt.
 
 aktuell sind folgende Attribute im Zusammenhang mit Auphonic vorhanden:
 ------------------------------------------------------------------------------------------
 auphonic-mode: full, exclusive, episode oder off
 
-full: alle Episoden, die mittels Auphonic gefunden werden UND die, die mittels .epi-Datei konfiguriert wurden werden angezeigt.
-Dateinamensgleichheit führt dazu, dass die Daten der .epi-Datei die Auphonic-Produktion überschreiben, soweit vorhanden.
-Es ist damit möglich, eine Auphonic-Produktion einzubinden und Daten per .epi hinzuzufügen, bzw. zu modifizieren.
+full: alle Episoden, die mittels Auphonic gefunden werden UND die, die mittels .epi-Datei
+konfiguriert wurden werden angezeigt.Dateinamensgleichheit führt dazu, dass die Daten der
+.epi-Datei die Auphonic-Produktion überschreiben, soweit vorhanden. Es ist damit möglich,
+eine Auphonic-Produktion einzubinden und Daten per .epi hinzuzufügen, bzw. zu modifizieren.
 
 exclusive: Nur Auphonic-Produktionen werden angezeigt.
 
@@ -153,13 +174,15 @@ Der Pfad zu den lokal vorhandenen Auphonic-Produktionsdateien.
 ------------------------------------------------------------------------------------------
 auphonic-glob:
 Ein Matchpattern, mit denen die .json Produktionsdateien gefunden werden. *.json z.B. für alle.
-Sind im Pfad Dateien unterschiedlicher Feeds vorhanden, sollte das Pattern (und natürlich die Dateinamen!) entsprechend gewählt werden.
+Sind im Pfad Dateien unterschiedlicher Feeds vorhanden, sollte das Pattern (und natürlich die Dateinamen!)
+entsprechend gewählt werden.
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
 auphonic-url:
-Im Remote-Modus, in dem die Produktionsdateien nicht per Filesystem zu finden sind, muss der URL zu diesen Daten angegeben werden.
-Die Dateien werden dann ausschließlich über konfigurierte namensgleiche .epi-Dateien zu finden sein, die dann auch leer sein können.
+Im Remote-Modus, in dem die Produktionsdateien nicht per Filesystem zu finden sind, muss der URL
+zu diesen Daten angegeben werden. Die Dateien werden dann ausschließlich über konfigurierte
+namensgleiche .epi-Dateien zu finden sein, die dann auch leer sein können.
 Eine andere Idee, diese Dateien zu identifizieren hatte ich bisher nicht.
 ------------------------------------------------------------------------------------------
 
