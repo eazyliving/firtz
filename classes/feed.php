@@ -346,7 +346,8 @@
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
 			
-			if ($pagename!="") $main->set('showpage',$pagename.'.html');
+			/* single page from pages template? */
+			if ($pagename!="") $main->set('showpage','pages/'.$pagename.'.html');
 			
 			/* collect episodes */
 			$items = array();
