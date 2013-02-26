@@ -16,6 +16,7 @@ $main->set('BASEPATH',$_SERVER['DOCUMENT_ROOT']);
 $main->set('singlepage',false);
 $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
+$main->set('CDURATION',300);
 
 $firtz = new firtz();
 
@@ -68,7 +69,7 @@ foreach ($firtz->extensions as $slug => $extension) {
 			$feed->findEpisodes();
 			$feed->loadEpisodes();
 			$feed->runExt($main,$extension);
-		}
+		}, $main->get('CDURATION')
 	);
 
 }
@@ -102,7 +103,7 @@ foreach ($firtz->extensions as $slug => $extension) {
 			$feed->findEpisodes();
 			$feed->loadEpisodes();
 			$feed->runExt($main,$extension);
-		}
+		}, $main->get('CDURATION')
 	);
 
 }
@@ -128,7 +129,7 @@ $main->route('GET|HEAD /@feed/@audio',
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$feed->renderRSS2($params['audio']);
-	}
+	}, $main->get('CDURATION')
 );
 
 /*
@@ -148,7 +149,7 @@ $main->route('GET|HEAD /@feed',
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$feed->renderRSS2();
-	}
+	}, $main->get('CDURATION')
 );
 
 /*
@@ -169,7 +170,7 @@ $main->route('GET /@feed/show',
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$feed->renderHTML();
-	}
+	}, $main->get('CDURATION')
 );
 
 /*
@@ -190,7 +191,7 @@ $main->route('GET /@feed/show/@epi',
 		$feed->findEpisodes();
 		$feed->loadEpisodes($params['epi']);
 		$feed->renderHTML();
-	}
+	}, $main->get('CDURATION')
 );
 
 /*
@@ -219,7 +220,7 @@ $main->route('GET /',
 
 		$main->set('frontfeeds',$feeds);
 		echo Template::instance()->render('front.html');
-	}
+	}, $main->get('CDURATION')
 );
 
 /*
@@ -240,7 +241,7 @@ $main->route('GET /@feed/page/@page',
 		$feed->loadEpisodes();
 		$feed->renderHTML(false,$params['page']);
 		
-	}
+	}, $main->get('CDURATION')
 );
 
 
