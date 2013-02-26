@@ -6,7 +6,7 @@ $main=require('lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
 
-$main->set('UI','templates/;templates/head/;templates/header/;templates/footer/;templates/episode/;templates/pages/');
+$main->set('UI','templates/');
 $main->set('version',0);
 $main->set('revision',4);
 $main->set('generator','firtz feed generator v'.$main->get('version').".".$main->get('revision'));
@@ -225,7 +225,6 @@ $main->route('GET /',
 /*
 	single page mode with custom content page
 	put them im templates/pages/
-	
 */
 
 $main->route('GET /@feed/page/@page',

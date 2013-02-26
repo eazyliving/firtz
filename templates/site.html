@@ -25,8 +25,8 @@
     <link rel="shortcut icon" href="./favicon.png">
 
 
-    <repeat group="{{glob('templates/head/*.html')}}" value="@headtemplate">
-		<include href="{{basename(@headtemplate)}}"/>
+    <repeat group="{{glob('templates/head/*.html')}}" value="{{@template}}">
+		<include href="{{'head/'.basename(@template)}}"/>
     </repeat>
   </head>
 
@@ -39,7 +39,7 @@
       <div class="masthead">
 		
         <ul class="nav nav-pills pull-right">
-			<repeat group="@feedattr.audioformats" value="@format">
+			<repeat group="@feedattr.audioformats" value="{{@format}}">
 				<li><a href="{{@feedattr.baserel}}{{@format}}/">{{@format}}</a></li>
 			</repeat>
 			<check if="{{@feedattr.itunes}}">
@@ -47,17 +47,17 @@
 			</check>
 					
 			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
-			<repeat group="{{glob('templates/pages/*.html')}}" value="@template">
+			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
 				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
 			</repeat>
         </ul>
         <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
+    <repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
+		<include href="{{'header/'.basename(@template)}}"/>
+    </repeat>
 	
       <hr>
-	<repeat group="{{glob('templates/header/*.html')}}" value="@template">
-		<include href="{{basename(@template)}}"/>
-	</repeat>
       <div class="jumbotron">
 		<h1><img src="{{@feedattr.image}}" width=100  style="margin-right:20px;">{{@feedattr.title}}</h1>
         <p class="lead">{{@feedattr.description}}</p>
@@ -69,14 +69,14 @@
 		<div class="row-fluid marketing">
 		<check if="{{!@showpage}}">
 		<true>
-		<repeat group="@items" value="@item">
+		<repeat group="@items" value="{{@item}}">
 			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3>{{@item.title}}</h3></a>
 			<p>{{@item.article | raw}}</p>
 			<include href="podlove-player.html"/>
 			<p>
 				
 				<ul class="nav nav-pills pull-right">
-				<repeat group="@item.audiofiles" value="@audiofile" key="@audiotype">
+				<repeat group="{{@item.audiofiles}}" value="{{@audiofile}}" key="{{@audiotype}}">
 					<li><a href="{{@audiofile.link}}">{{@audiotype}}</a></li>
 				</repeat>
 				</ul>
@@ -84,7 +84,6 @@
 			<check if="{{@feedattr.flattrid}}">
 				<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}};popout=0&amp;button=compact"
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
-				
 				</iframe>
 			</check>
 			
@@ -93,8 +92,8 @@
 			</check>
 			
 			<hr>
-			<repeat group="{{glob('templates/episode/*.html')}}" value="@template">
-				<include href="{{basename(@template)}}"/>
+			<repeat group="{{glob('templates/episode/*.html')}}" value="{{@template}}">
+				<include href="{{'episode/'.basename(@template)}}"/>
 			</repeat>
 			
 		</repeat>
@@ -121,8 +120,8 @@
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
 			</iframe>
 		</check>
-		<repeat group="{{glob('templates/footer/*.html')}}" value="@template">
-				<include href="{{basename(@template)}}"/>
+		<repeat group="{{glob('templates/footer/*.html')}}" value="{{@template}}">
+				<include href="{{'footer/'.basename(@template)}}"/>
 		</repeat>
       </div>
 
