@@ -22,6 +22,19 @@ Firtz ist für Podcaster gedacht, die alle paar Wochen etwas veröffentlichen un
 
 Darüber hinaus ist es sehr hilfreich, wenn nicht sogar der einfachste Weg, mit [Auphonic](http://auphonic.com) zu arbeiten. Wenn der Workflow mit Auphonic einmal aufgestellt ist und funktioniert, muss die Webseite/der Feed nie wieder angefasst werden und erstellt sich praktisch von selbst.
 
+**Was - grob überschlagen - bekommst Du mit Firtz?**
+
+* Feeds für alle gängigen Audioformate, generiert aus einer einzigen Konfigurationszeile
+* komplette flattr-Integration
+* nahezu komplette Integration aller Podlove Standards und Features
+ * Alternate Feeds
+ * Simple Chapters
+ * Podlove Webplayer
+ * Deep Linking
+* Integration Auphonic
+* eine automagisch generierte Webseite
+* einiges mehr, das mir aktuell nicht einfällt...
+
 ## Was braucht es?
 
 Wie alle Software, die im Open-Source-Dampfgarer produziert wird, benötigt firtz einige Dinge, in die andere Menschen viel Arbeit und Zeit gesteckt haben. Firtz bringt die meisten dieser Pakete bereits mit. Dazu zählen:
@@ -296,6 +309,80 @@ Die numerische Angabe hinter der URL ist die Dateigröße in Bytes. Dies ist opt
 
 Und nun? Eigentlich bist Du jetzt fertig. Wenn alle Daten stimmen, dann hast Du jetzt eine funktionierende Podcastpublishingseite zusammengebaut, die Dir Feeds ausspuckt und eine Webseite.
 
-Eine Webseite? Ach, da war ja noch etwas!
+Alles beisammen? Dann schau Dir doch mal Deinen RSS-Feed an! Der Feed dieses Beispieles würde unter
+
+http://supicast.de/supicast/
+
+zu finden sein. Wenn Du weitere Formate anbietest (z.B. mp3, ogg oder opus - bitte keine Diskussion, dass ogg nur ein Container ist, hier ist mit ogg ogg-vorbis gemeint), wären die Feeds dieser Formate unter z.B.
+
+http://supicast.de/supicast/mp3 oder  
+http://supicast.de/supicast/opus 
+
+zu finden. Das Schema lautet http://domain/feedname/format
+
+Wird das Format weggelassen, wird der Feed für das erste unter **formats:** konfigurierte Audioformat ausgegeben.
+
+Moment... Webseite? Ach, da war ja noch etwas!
 
 ## Die Webseite
+
+Wenn Dich das Thema Webseite nur am Rande interessiert, überfliege diesen Abschnitt, nehme freudig zur Kenntnis, dass diese automatisch aus den Daten des Feeds und der Episoden erzeugt wird und lass es damit gut sein ;-)
+
+Erstmal aber schau Dir doch die Seite an: http://supicast.de/supicast/show
+
+**show** ist hier das Schlüsselwort, der Befehl, nicht den Feed auszugeben, sondern die Webseite anzuzeigen. Die Seite besteht aus Kopf, allen Episoden und einem Seitenfuß. Da aber oft eine Episode einzeln adressierbar sein muss oder sollte (z.B. flattr!) gibt es auch eine Möglichkeit, eine einzelne Episodenseite aufzurufen:
+
+http://supicast.de/supicast/show/001
+
+wenn die Episode den Slug 001 (Dateiname: *001.epi*) trägt. So kannst Du auch an beliebigen Stellen im Netz auf diese Folge verweisen.
+
+Seitenpaginierung mit einer bestimmten Menge an Episoden existiert noch nicht, wird aber bis Version 1.0 implementiert.
+
+Wesentlichen Beitrag zum Aufbau und Aussehen der Seite leisten [bootstrap](http://twitter.github.com/bootstrap/) für die Gestaltung der [podlove webplayer](https://github.com/gerritvanaaken/podlove-web-player) für den Audioplayer und die Template-Engine des [fatfree frameworks](https://github.com/bcosca/fatfree).
+
+Wenn Du also am Aussehen der Seite schrauben willst, wirst Du eine oder mehrere dieser Komponenten zumindest in Ansätzen kennen und verstehen müssen. Schaue Dir das Seitentemplate an, ich glaube, der Aufbau erschließt sich dem halbwegs ambitionierten Amateur von selbst.
+
+Was aber kannst Du tun, ohne gleich am Template drehen zu müssen? Es gibt ein paar Stellen, in die Du eigene Seiten und Informationen hineinwerfen kannst, nennen wir sie Hooks.
+
+Da wären zum einen die Template-Hooks. Das sind kleine HTML-Schnippsel, die in einem bestimmten Unterverzeichnis des Templates liegen und anhand dieses Verzeichnisses dem Haupt-Template hinzugefügt werden.
+
+Diese Verzeichnisse sind folgende:
+
+*head/*   
+Hier bringt Ihr Teile unter, die in der Webseite vor dem schließenden `</head>` hinzugefügt werden. Das kann Javascript sein oder auch zusätzliche Stylesheets.
+
+*header/*  
+Nicht zu verwechseln mit *head/*! Hier werden dem Kopf der Seite Informationen hinzugefügt. Beispielhaft zu nennen wären hier... äh... öhm.. Euch fällt bestimmt was ein, mir im Moment nicht.
+
+*episode/*  
+Die Schnippsel in diesem Verzeichnis werden hinter jede Episode integriert. Mit Hilfe der Episoden- oder Feedattribute lassen sich hier zusätzliche Informationen unterbringen.  
+Stell Dir vor, Du machst einen Podcast zusammen mit einem Freund. Dessen Flattr-Konto möchtest Du auch bedenken und deshalb hinter jede Episode einen kurzen Text wie "ohne Karl-Heinz geht es nicht, hier findet Ihr seinen [link] Klingebeutel" stellen. Ein besseres Beispiel fällt mir aktuell nicht ein ;)
+
+**Bedenke, dass diese Schnippsel für alle Folgen gelten. Mit hilfe der Attribute lässt sich das zwar etwas zuschneiden, aber individuellen Text für einzelne Episoden bringe bitte im Artikel der jeweiligen unter.**
+
+*footer/*  
+Alles was in den Fuß der Seite gelangen soll, muss hier hineingeworfen werden. 
+
+Das wären die Erweiterungsmöglichkeiten, die Unter-Templates ins Haupt-Template integrieren.
+
+Etwas einfacher geht es mit den  
+
+*pages/*  
+Diese finden sich im Unterordner *templates/pages* und heißen z.B.: *Impressum.html*.
+
+Findet firtz hier eine Datei geschehen zwei Dinge. Erstens wird der Webseite im Menübalken ein Menüpunkt hinzugefügt, der den Teil des Dateinamens vor .html als Titel trägt. In diesem Falle als *Impressum*.
+
+Klickt der Besucher Deiner Seite auf diesen Menüpunkt, gelangt er zur URL `http://supicast.de/supicast/page/Impressum`. Auf dieser wird der komplette Inhalt des Templates angezeigt, umrahmt von Kopf und Fuß der Webseite, allerdings **ohne Episoden**. Auf diese Art und Weise kannst Du also z.B. ein Impressum integrieren oder andere Infoseiten.
+
+Gestaltungsänderungen sind auch möglich, ohne gleich wahnsinnig zu werden. Für den ganzen CSS-Kram wird bootstrap genutzt. Für bootstrap gibt es ein paar freie Themes, die Du auf zwei Arten in das System hineinbringen kannst:
+
+Austausch der Standard CSS-Datei: Die findet sich im Ordner css. Eigentlich sind es zwei Dateien, einmal für den Desktop, einmal als responsive Version für mobile Geräte. Auf z.B. [Bootswatch](http://bootswatch.com/) oder auch bei [bootstrap selbst](http://twitter.github.com/bootstrap/getting-started.html#examples) gibt es freie Themes, die genutzt werden können.
+
+Lade die entsprechenden CSS-Dateien herunter und ersetze die Standard-Dateien. Diese Dateien gelten für alle angelegten Podcasts! Wenn Du nur einem Podcast eine bestimmte Gestaltung zukommen lassen möchtest, dann lege die CSS-Datei in den Ordner mit der Feedkonfiguration des Podcasts und nenne sie <feed-slug>.css. In unserem SupiCast-Beispiel hieße die Datei also supicast.css.
+
+Findet firtz eine solche Datei, wird diese anstelle der Standard-Datei genutzt. Zusätzlich kannst (und solltest) Du eine responsive-Datei nutzen, die dann supicast-responsive.css heißen muss.
+
+So viel (oder wenig) zur Webseite. Naturgemäß liegt hier das größte Potential für die Individualisierung Deines Podcasts, Feeds sehen schließlich immer gleich aus. Wenn Du weißt, was zu tun ist und Spaß an solchen Sachen hast, wird Dir die Standard-Template-Datei sicher hilfreich sein, das System zu verstehen.
+
+Und wenn Du mal ein tolles Template gebaut hast, dann lass uns bitte daran teilhaben. Firtz ist auch für Podcaster gedacht, die von solchen Systemen keine Ahnung haben. Gerade die freuen sich über solche Themes. Wende Dich einfach an [mich](mailto:info@hoersuppe.de), wenn Du Dein Theme veröffentlichen möchtest. Ich würde das einfach dem Archiv hinzufügen und in der Dokumentation behandeln.
+
