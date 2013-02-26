@@ -2,7 +2,6 @@
 
 * [Einleitung](#Einleitung)
 * [Was braucht es?](#was-braucht-es)
-* [Schnellstart](#schnellstart)
 * [der Feed](#der-feed)
 * [die Episode](#die-episode)
 * [Webseite](#webseite)
@@ -70,4 +69,49 @@ Das ist wiederum ein Kapitel, bei dem ich Dir nur schlecht helfen kann. Ich will
 Es gibt aber jemanden, der dabei sehr behilflich ist: [Auphonic](http://auphonic.com). Dort gibt es nicht nur Hilfe beim Verarbeiten der Audiodatei. Auphonic übernimmt auch das Übertragen der Audiodateien an den Ort, von dem sie das Publikum später herunterladen wird und zu allem Überfluss gibt es auch eine Möglichkeit, mit Auphonic den firtz zu füttern, der dann den Rest der Arbeit übernimmt, ohne dass irgendeine Episode angelegt werden muss.
 
 **Ich empfehle Anfängern, die sich noch im Unklaren sind, wie das die nötigen Arbeitsschritte vor der Veröffentlichung aussehen, dringend den Artikel [How to Podcast for Free](https://auphonic.com/blog/2013/02/07/how-to-podcast-for-free/) durchzulesen. Wem der erste grobe Durchblick fehlt, diesen Artikel aber nicht gelesen hat, der braucht auch hier erstmal nicht weiter zu lesen.**
+  
+## Der Feed
 
+Das Herzstück eines jeden Podcasts ist der Feed. Webseite: schön zu haben. iTunes: wichtig für die PR. Aber ohne Feed ist alles nichts. Ohne validen Feed ist alles blöd und da 99,9% aller Podcasthörer ihre Sendungen mit Hilfe eines Podcatchers konsumieren, ist hier für größte Sorgfalt und Stabilität zu sorgen. Also fangen wir auch genau hier an.
+
+Wieder ein paar beispielhafte Grundannahmen. Deine Domain lautet also **supicast.de**, der Podcast heißt also folgerichtig: **supicast**.
+
+Im Ordner *feeds* findest Du einen Ordner *demo*. Benenne den - wenn Du das schon tun möchtest - nach *supicast* um. Der Name sollte weise gewählt werden, denn er stellt ein immer wieder genutztes und in vielen URLs vorkommendes Schlüsselwort (slug) dar. Es sollte nach Veröffentlichen des Podcasts nur geändert werden, wenn es gar nicht anders mehr geht. Zum Testen kannst Du das natürlich nennen wie Du möchtest, achte aber darauf, Umlaute, Leer- und Sonderzeichen zu vermeiden. Wie gesagt: Der Name kommt immer wieder in URLs vor!
+
+In diesem Feed-Ordner *supicast* befindet sich eine vorgefertigte Datei namens *feed.cfg*. Dies ist die einzige und zentrale Konfigurationsdatei deines Podcasts. Hier finden sich alle allgemeingültigen Informationen, die für den gesamten Podcast oder aber für jede Episode gilt.
+
+Die Datei muss zwingend *feed.cfg* heißen, andere Dateien werden nicht erkannt. Jede Zeile enthält entweder einen Kommentar, eine Attributanweisung oder Attributinhalt.
+
+Kommentarzeilen fangen mit #: an. Diese Zeilen werden ignoriert.
+Attributzeilen fangen mit einem Attributnamen an und enden mit einem ':' ohne Leerzeichen zwischen Attribut und Doppelpunkt.
+Attributinhalte folgen einer Attributanweisung und werden immer der letzten Anweisung zugeordnet.
+
+Klingt schlimm? Ist es nicht. Hier ein Beispiel:
+
+> \#: Dies ist eine Feedkonfiguration
+
+>title:  
+SupiCast
+
+>description:  
+Hier ein kurze Zusammenfassung dessen, was der Hörer auf die Ohren bekommen wird.
+
+>summary:  
+Es war einmal, vor langer langer Zeit, da begab es sich, dass jemand der Meinung war eine längere Beschreibung eines Podcasts zusammenzuschreiben.  
+  
+>Das ging schief  
+
+>\#: das erste angegebene Audioformat ist der ausgelieferte Standard
+
+>formats:  
+m4a mp3
+
+>author:  
+Jon Doe
+
+>email:  
+jondoe@supicast.de
+
+
+
+So könnte eine minimale Feedkonfiguration aussehen. Viele weitere Optionen sind möglich und auch empfehlenswert.
