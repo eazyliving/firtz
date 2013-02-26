@@ -8,7 +8,7 @@ $main->set('FEEDDIR','./feeds');
 
 $main->set('UI','templates/');
 $main->set('version',0);
-$main->set('revision',4);
+$main->set('revision',5);
 $main->set('generator','firtz feed generator v'.$main->get('version').".".$main->get('revision'));
 $main->set('pager','');
 $main->set('BASEURL',"http://".$main->get('HOST').dirname($_SERVER['SCRIPT_NAME']));
