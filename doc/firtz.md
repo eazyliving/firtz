@@ -34,6 +34,8 @@ Diese Projekte integrieren wiederum zahlreiche Module aus anderen Projekten, die
 
 Was aber musst Du mitbringen, damit das alles klappt?
 
+**Ich empfehle Anfängern, die sich noch im Unklaren sind, wie die nötigen Arbeitsschritte vor der Veröffentlichung aussehen, dringend den Artikel [How to Podcast for Free](https://auphonic.com/blog/2013/02/07/how-to-podcast-for-free/) durchzulesen. Wem der erste grobe Durchblick fehlt, diesen Artikel aber nicht gelesen hat, der braucht auch hier erstmal nicht weiter zu lesen.**
+
 **Platz in diesem Internet**
 
 Das dürfte für die meisten noch die größte Hürde darstellen. Es ist inzwischen zwar möglich, für sehr wenig Geld geeigneten "Webspace" zu bekommen, dennoch ist es natürlich viel bequemer, seine Daten in einen vorhandenen Dienst zu schieben, der dann den Rest übernimmt. Für solche Fälle gibt es z.B. die [Soundcloud](http://soundcloud.com), aus der auch ein korrekter Feed herausfällt. Viel mehr dann aber auch nicht.  
@@ -68,7 +70,7 @@ Das ist wiederum ein Kapitel, bei dem ich Dir nur schlecht helfen kann. Ich will
 
 Es gibt aber jemanden, der dabei sehr behilflich ist: [Auphonic](http://auphonic.com). Dort gibt es nicht nur Hilfe beim Verarbeiten der Audiodatei. Auphonic übernimmt auch das Übertragen der Audiodateien an den Ort, von dem sie das Publikum später herunterladen wird und zu allem Überfluss gibt es auch eine Möglichkeit, mit Auphonic den firtz zu füttern, der dann den Rest der Arbeit übernimmt, ohne dass irgendeine Episode angelegt werden muss.
 
-**Ich empfehle Anfängern, die sich noch im Unklaren sind, wie die nötigen Arbeitsschritte vor der Veröffentlichung aussehen, dringend den Artikel [How to Podcast for Free](https://auphonic.com/blog/2013/02/07/how-to-podcast-for-free/) durchzulesen. Wem der erste grobe Durchblick fehlt, diesen Artikel aber nicht gelesen hat, der braucht auch hier erstmal nicht weiter zu lesen.**
+**Noch einmal: Ich empfehle Anfängern, die sich noch im Unklaren sind, wie die nötigen Arbeitsschritte vor der Veröffentlichung aussehen, dringend den Artikel [How to Podcast for Free](https://auphonic.com/blog/2013/02/07/how-to-podcast-for-free/) durchzulesen. Wem der erste grobe Durchblick fehlt, diesen Artikel aber nicht gelesen hat, der braucht auch hier erstmal nicht weiter zu lesen.**
   
 ## Der Feed
 
@@ -172,7 +174,7 @@ Technology -> Podcasting`
 Diese Konfiguration würde den Podcast sowohl in die Hauptkategorie *Society & Culture* ohne weitere Unterkategorie setzen und in die Unterkategorie *Podcasting* in der Kategorie *Technology*. Die einzelne Angabe der Hauptkategorie *Technology* ohne *Podcasting* ist in diesem Falle nicht nötig. 
 Details zu den Kategorien finden sich unter http://www.apple.com/itunes/podcasts/specs.html#categories
 
-Es ist nicht nötig (und erlaubt!) das "&" als "&amp;" zu kodieren.
+Es ist nicht nötig (und erlaubt!) das "&" als `&amp;` zu kodieren.
   
 **email:**  
 Emailadresse, unter der der Autor des Podcasts erreichbar ist.
@@ -295,3 +297,5 @@ Die numerische Angabe hinter der URL ist die Dateigröße in Bytes. Dies ist opt
 Und nun? Eigentlich bist Du jetzt fertig. Wenn alle Daten stimmen, dann hast Du jetzt eine funktionierende Podcastpublishingseite zusammengebaut, die Dir Feeds ausspuckt und eine Webseite.
 
 Eine Webseite? Ach, da war ja noch etwas!
+
+## Die Webseite
