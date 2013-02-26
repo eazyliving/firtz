@@ -1,5 +1,7 @@
 changelog:
 
+0.5 added subtemplate support for head/header/episode/footer
+    fixed a bug, in case episodes didn't provide all configured media
 0.4 added local auphonic support, yet work in progress
 	singlefeed pages redirect to web page on / instead if listing one feed on frontpage
 0.3 added first draft of extension class. atm only extends output templates (example: atom-extension. look into ext/atom/)
