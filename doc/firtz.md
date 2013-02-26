@@ -338,7 +338,7 @@ wenn die Episode den Slug 001 (Dateiname: *001.epi*) trägt. So kannst Du auch a
 
 Seitenpaginierung mit einer bestimmten Menge an Episoden existiert noch nicht, wird aber bis Version 1.0 implementiert.
 
-Wesentlichen Beitrag zum Aufbau und Aussehen der Seite leisten [bootstrap](http://twitter.github.com/bootstrap/) für die Gestaltung der [podlove webplayer](https://github.com/gerritvanaaken/podlove-web-player) für den Audioplayer und die Template-Engine des [fatfree frameworks](https://github.com/bcosca/fatfree).
+Wesentlichen Beitrag zum Aufbau und Aussehen der Seite leisten [bootstrap](http://twitter.github.com/bootstrap/) für die Gestaltung, der [podlove webplayer](https://github.com/gerritvanaaken/podlove-web-player) für den Audioplayer und die Template-Engine des [fatfree frameworks](https://github.com/bcosca/fatfree).
 
 Wenn Du also am Aussehen der Seite schrauben willst, wirst Du eine oder mehrere dieser Komponenten zumindest in Ansätzen kennen und verstehen müssen. Schaue Dir das Seitentemplate an, ich glaube, der Aufbau erschließt sich dem halbwegs ambitionierten Amateur von selbst.
 
@@ -376,9 +376,13 @@ Klickt der Besucher Deiner Seite auf diesen Menüpunkt, gelangt er zur URL `http
 
 Gestaltungsänderungen sind auch möglich, ohne gleich wahnsinnig zu werden. Für den ganzen CSS-Kram wird bootstrap genutzt. Für bootstrap gibt es ein paar freie Themes, die Du auf zwei Arten in das System hineinbringen kannst:
 
-Austausch der Standard CSS-Datei: Die findet sich im Ordner css. Eigentlich sind es zwei Dateien, einmal für den Desktop, einmal als responsive Version für mobile Geräte. Auf z.B. [Bootswatch](http://bootswatch.com/) oder auch bei [bootstrap selbst](http://twitter.github.com/bootstrap/getting-started.html#examples) gibt es freie Themes, die genutzt werden können.
+**Austausch der Standard CSS-Datei:**  
+Die findet sich im Ordner css. Eigentlich sind es zwei Dateien, einmal für den Desktop, einmal als responsive Version für mobile Geräte. Auf z.B. [Bootswatch](http://bootswatch.com/) oder auch bei [bootstrap selbst](http://twitter.github.com/bootstrap/getting-started.html#examples) gibt es freie Themes, die genutzt werden können.
 
-Lade die entsprechenden CSS-Dateien herunter und ersetze die Standard-Dateien. Diese Dateien gelten für alle angelegten Podcasts! Wenn Du nur einem Podcast eine bestimmte Gestaltung zukommen lassen möchtest, dann lege die CSS-Datei in den Ordner mit der Feedkonfiguration des Podcasts und nenne sie <feed-slug>.css. In unserem SupiCast-Beispiel hieße die Datei also supicast.css.
+Lade die entsprechenden CSS-Dateien herunter und ersetze die Standard-Dateien. Diese Dateien gelten für alle angelegten Podcasts!
+
+**Individuelle Styles für einen Podcast:**  
+Wenn Du nur einem Podcast eine bestimmte Gestaltung zukommen lassen möchtest, dann lege die CSS-Datei in den Ordner mit der Feedkonfiguration des Podcasts und nenne sie <feed-slug>.css. In unserem SupiCast-Beispiel hieße die Datei also supicast.css.
 
 Findet firtz eine solche Datei, wird diese anstelle der Standard-Datei genutzt. Zusätzlich kannst (und solltest) Du eine responsive-Datei nutzen, die dann supicast-responsive.css heißen muss.
 
@@ -386,3 +390,63 @@ So viel (oder wenig) zur Webseite. Naturgemäß liegt hier das größte Potentia
 
 Und wenn Du mal ein tolles Template gebaut hast, dann lass uns bitte daran teilhaben. Firtz ist auch für Podcaster gedacht, die von solchen Systemen keine Ahnung haben. Gerade die freuen sich über solche Themes. Wende Dich einfach an [mich](mailto:info@hoersuppe.de), wenn Du Dein Theme veröffentlichen möchtest. Ich würde das einfach dem Archiv hinzufügen und in der Dokumentation behandeln.
 
+## Auphonic
+
+Kommen wir zu dem Teil, der anfangs vielleicht etwas gewöhnungsbedürftig und lernintensiv ist, jedoch zu guter Letzt den größten Komfort bietet und ein maximal gutes Ergebnis in Deine Feeds kippt: [Auphonic](http://auphonic.com).
+
+Früher[tm]hat man seine Audiodateien am Rechner erstellt, dann geschnitten, mehr oder minder notdürftig in der Qualität verbessert, in die gewünschten Audioformate konvertiert und dann irgendwo in dieses Netz geworfen.
+
+Weil schon das Encoding in unterschiedliche Formate nicht von jeder Software erledigt werden kann und weitere Arbeit nach sich zieht (inklusive Feederstellung und -pflege), haben viele Podcaster darauf verzichtet, mehr als einen Feed mit mp3 anzubieten. Ein altes Format, bei dem heute das Verhältnis aus Qualität und Dateigröße nicht mehr zeitgemäß ist. Bessere Ergebnisse werden mit AAC erzielt und wo Bandbreite ein Thema ist, ist opus in den Startlöchern.
+
+Ich habe für die [Hörsuppe](http://hoersuppe.de) genau so angefangen. Erst gab's nur mp3, dann erstellte ich per Hand ein m4a (aac) und nachdem ich endlich Auphonic genutzt hatte, kam dann auch irgendwann opus hinzu.
+
+Aber Auphonic bietet nicht nur das Encoding in viele unterschiedliche Formate. Das ist nur ein kleiner Teil. Ich werde das hier nicht lang und breit erklären, dafür gibt es eine Menge Quellen, die das deutlich besser machen können als ich. Da wären zu nennen:
+
+* [Das Auphonic Blog](https://auphonic.com/blog/)
+* [Die Folge 7 "Auphonic"](http://der-lautsprecher.de/ls007/) in Tim Pritloves Podcast "der Lautsprecher" (etwas überholt, aber ein guter Anfang)
+* [Folge 240 der FLOSS Weekly](http://twit.tv/show/floss-weekly/240) für diejenigen, die des Englisch mächtig sind
+
+Kurz und gut: Auphonic bietet einen kompletten Audioworkflow von der ursprünglichen Audiodatei ausgehend bis hin zum Upload der verschiedenen Audiodateien auf den Server, von dem die Episoden heruntergeladen werden.
+
+Zugang und Nutzung von Auphonic ist bisher kostenlos, was hoffentlich noch lange so bleibt. Dennoch ist es anständig, wenigstens ein flattr-Abo draufzuwerfen!
+
+Nehmen wir mal an, Du hast alle für Auphonic nötigen Grundvoraussetzungen erfüllt: Eine fertige Ursprungsdatei (am besten .flac, mindestens jedoch ein 192kbit mp3), einen Server, auf dem die Dateien abgelegt werden sollen (hier am besten per sftp) und alle Metadaten in einem Preset für diesen Podcast.
+
+### Komm zur Sache!
+Nun muss firtz eigentlich nichts von Auphonic wissen. Wenn in einer episoden-Datei die URL zu den Audiodateien stecken, reicht das im Grunde.
+
+Wenn Du aber, wie ich, zu den extrem Faulen Zeitgenossen gehörst oder einfach einen automatischen Workflow bevorzugst, dann ist das Deine Chance!
+
+Ich sag's direkt: Wenn Du nicht ein wenig Erfahrung im Umgang mit Servern und *nix hast, wird das hier nicht so ganz einfach. Vielleicht kann Dir jemand dabei helfen? Fragen kostet nichts!
+
+####Was bei Auphonic getan werden muss
+
+Zusätzlich zu den üblicherweise benötigten Daten in einer Auphonicproduktion, muss eine Production-Description weggeschrieben werden, die vom firtz erreicht werden kann. Aktiviere diese Ausgabedatei dort, wo Du auch die Audioformate des Presets/der Produktion angibst. Achte darauf, dass das Format .json ist.
+
+Wo Du schon dabei bist, aktiviere hier auch die Ausgabe des Cover-Images, wenn Du für jede Episode unterschiedliche Cover nutzt.
+
+In der Konfiguration des "external service" (sftp...) gebe unbedingt die in Auphonic nur optional nötige BASEURL an. Diese Option lautet aktuell **HTTP base URL on your web server**.
+
+Wenn Deine Podcasts also unter z.B. der URL http://media.supicast.de/001.m4a zu finden sind, lautet die BASEURL http://media.supicast.de/ Lässt Du diese Angabe weg, wird der automatische Auphonic-Modus nicht funktionieren (oder nur zufällig ;)).
+
+Bis hierhin warst Du auf auphonic.com unterwegs. Wenden wir uns dem Kapitel zu, in dem es heißt:
+
+####Dem firtz erklären, wo auphonic den Most holt
+
+Die im Abschnitt [Feed](#der-feed) erklärten Auphonic-Attribute sind von zentraler Bedeutung. Ich erwähne hier nur noch ein paar zusätzliche Kniffe und Bedingungen, die an erster Stelle etwas kurz gekommen sind.
+
+Bisher (v0.5) sind nur lokal zugängliche Auphonic-Daten für firtz interessant. Liegen die Dateien, die die Produktionen beschreiben auf einem anderen Server, der nicht über ein lokales Filesystem erreichbar ist, ist an dieser Stelle für Dich Schluss. Ich hoffe bis zur 1.0 den remote mode für Auphonic fertig zu haben.
+
+Nehmen wir also an, die Dateien lägen auf dem gleichen Server wie der SupiCast und dort im Verzeichnis */home/supicast/audio/*. Nehmen wir weiterhin an, eine Episode mit dem slug 001 wäre über auphonic gelaufen und alle Dateien, die dazu gehören wären in diesem Ordner angekommen.
+
+Wie klappt das mit den Namen? Es handelt sich natürlich nicht um den Titel (Metadaten) der Folge. Der slug ist in diesem Falle der Teil des Dateinamens vor der Dateiextension (.mp3 .m4a .json...). Ihr könnt ihn in Auphonic als **Output Filename** angeben. Wird dies nicht getan, übernimmt Auphonic den Ursprungsdateinamen. Heißt die zu Auphonic hochgeladene Datei also bereits 001.flac, ist alles gut und Du musst nichts weiter tun.
+
+Im Ordner liegen also nun alle Dateien. Ist der Feed mit einem Attribut **auphonic-path** versehen, sucht firzt in genau diesem Ordner nach den json-Dateien. Gesucht wird nach dem **auphonic-glob**. Steht hier *.json, werden alle Dateien gefunden. Steht hier z.B. sc*.json, können sich im gleichen Ordner Dateien eines zweiten Podcasts befinden, ohne dass diese hinzugezählt werden.
+
+Gewöhne Dir übrigens an, die Dateinamen vorhersagbar zu halten und nicht zu überladen. Darüberhinaus bleibe dem Dateinamen von Anfang bis Ende treu und wechsle nicht zwischendrin die Benamung, sonst gibt's Tränen. Wähle am besten die Form INITIALE+NUMMER als Slug. Solltest Du mal einen zweiten Podcast beginnen, wirst Du Dich freuen, die Episoden auseinander halten zu können.
+
+Zu guter Letzt ist der **auphonic-mode** korrekt zu wählen. Je nachdem, wie Du das alles machst, sind vor allem full oder exclusive interessant. Wenn Du mit firtz zusammen einen Podcast beginnst, ist vermutlich exclusive die beste Wahl.
+
+Wählst Du einen Modus, in dem sowohl epi-Dateien als auch json-Dateien ausgewertet werden, bedenke, dass die epi-Dateien die höhere Priorität haben. Damit ist es Dir möglich, in Auphonic fehlende Daten nachträglich einzupflegen oder zu korrigieren, ohne gleich eine neue Produktion anstoßen zu müssen.
+
+[...]
