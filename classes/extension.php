@@ -15,11 +15,13 @@
 		public $templates = array();
 		public $route = "";
 		public $dir = "";
+		public $script = "";
+		public $type="";
+		public $prio=99;
 		
 		function __construct($main,$EXTDIR) {
 		
 			if (!file_exists($EXTDIR."/ext.cfg")) return false;
-			
 			$this->dir = $EXTDIR;
 			
 			$route = "";
@@ -44,13 +46,15 @@
 					}
 					
 					if ($thisattr == "template") {
-						
 						list($this->template['file'],$this->template['type']) = explode(" ",$line);
-						
+					}
+					
+					if ($thisattr == "script") {
+						if (file_exists($EXTDIR.'/'.$line)) include_once($EXTDIR.'/'.$line);
 					}
 					
 					if ($thisattr == "slug" ) $this->slug = $line;
-			
+					
 				}
 			
 			}

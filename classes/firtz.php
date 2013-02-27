@@ -29,11 +29,10 @@
 		function loadAllTheExtensions() {
 		
 			$main = $this->main;
-
-			if (!file_exists($main->get('BASEPATH').'ext/')) return;
+			if (!file_exists($main->get('BASEPATH').'/ext/')) return;
 			
-			foreach (glob($main->get('BASEPATH').'ext/*',GLOB_ONLYDIR) as $dir) {
-				if (substr(basename($dir),0,1)=="_") return;
+			foreach (glob($main->get('BASEPATH').'/ext/*',GLOB_ONLYDIR) as $dir) {
+				if (substr(basename($dir),0,1)=="_") continue;
 				$extension = new extension ($main,$dir);
 				
 				if ($extension===false) {
@@ -48,12 +47,9 @@
 						
 				}
 			}
-		
+			
 		}
 		
-		
-	
-	
 	}
 
 ?>

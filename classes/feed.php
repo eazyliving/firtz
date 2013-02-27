@@ -1,5 +1,9 @@
 <?php
 
+	/* feed class */
+	/* in fact it's more of a podcast class... */
+	/* it does not represent a single feed to output but all data needed to create a podcast with multiple feeds */
+	
 	class feed {
 	
 		public $attr = array();
@@ -174,7 +178,6 @@
 							/* auphonic with same slug exists. take values from epi to overwrite args in auphonic episode */
 						
 							$old_episode = $this->episodes[$slug];
-							#echo "<pre>".print_r($old_episode->item,1);exit;
 							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$old_episode->item);
 							if ($episode->item) $old_episode->item = $episode->item;
 							
@@ -226,9 +229,27 @@
 			/* find the latest episode to fill in data in rss and atom feeds (<updated>) */
 			
 			$lastupdate = 0;
+			$firtz = $main->get('firtz');
 			foreach ($this->episodes as $episode) {
+				
+				# find last update time. cache stuff and feed info
 				$update = strtotime($episode->item['pubDate']);
 				if ($update>$lastupdate) $lastupdate = $update;
+				
+				# no feed image? take the first found episode image...
+				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
+				
+				foreach ($firtz->extensions as $extslug => $ext) {
+					#if ($ext->type!="content") continue;
+					$efunc = $extslug."_episode";
+				
+					if (function_exists($efunc)) {
+						$item = $efunc($episode->item);
+						if ($item!==false) $episode->item = $item;
+						
+					} 
+				
+				}
 			}
 			$this->attr['lastupdate'] = date('c', $lastupdate);
 		}
