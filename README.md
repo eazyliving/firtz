@@ -31,7 +31,7 @@ Aber fangen wir vorne an. Was brauchst Du? Du brauchst irgendwo Platz im Web. Da
 Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: php muss ausgeführt werden können.
 Datenbanken und anderen Kram braucht nicht, allerdings muss der ausführende Nutzer des Webservers in der Lage, Verzeichnisse zu erzeugen und Dateien in diese hineinzuschreiben.
 
-Du besorgst Dir das firtz-Archiv (http://hoersuppe.de/firtz-latest.zip), entpackst es in den Ordner, in dem Du das auf dem Webserver haben willst und bewegst Dich darauf hin in den Unterordner feeds/.
+Du besorgst Dir das firtz-Archiv (https://github.com/eazyliving/firtz/archive/master.zip), entpackst es in den Ordner, in dem Du das auf dem Webserver haben willst und bewegst Dich darauf hin in den Unterordner feeds/.
 In diesem findest Du ein Demo-Verzeichnis. Der Name dieses Ordners, ist der zukünftige Name Deines Feeds.
 
 Im Demo-Ordner sind zwei Dateien: feed.cfg und 001.epi. Das nicht syntaktisch zu nennende Prinzip dieser Dateien ist identisch:
