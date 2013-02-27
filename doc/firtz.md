@@ -7,8 +7,6 @@
 * [die Webseite](#die-webseite)
 * [Auphonic](#auphonic)
 * [firtz erweitern](#firtz-erweitern)
- * [Templates](#templates)
- * [Extensions](#extensions)
 
 ## Einleitung
 
@@ -338,6 +336,8 @@ wenn die Episode den Slug 001 (Dateiname: *001.epi*) trägt. So kannst Du auch a
 
 Seitenpaginierung mit einer bestimmten Menge an Episoden existiert noch nicht, wird aber bis Version 1.0 implementiert.
 
+#### Die Seite modifizieren
+
 Wesentlichen Beitrag zum Aufbau und Aussehen der Seite leisten [bootstrap](http://twitter.github.com/bootstrap/) für die Gestaltung, der [podlove webplayer](https://github.com/gerritvanaaken/podlove-web-player) für den Audioplayer und die Template-Engine des [fatfree frameworks](https://github.com/bcosca/fatfree).
 
 Wenn Du also am Aussehen der Seite schrauben willst, wirst Du eine oder mehrere dieser Komponenten zumindest in Ansätzen kennen und verstehen müssen. Schaue Dir das Seitentemplate an, ich glaube, der Aufbau erschließt sich dem halbwegs ambitionierten Amateur von selbst.
@@ -445,8 +445,42 @@ Im Ordner liegen also nun alle Dateien. Ist der Feed mit einem Attribut **auphon
 
 Gewöhne Dir übrigens an, die Dateinamen vorhersagbar zu halten und nicht zu überladen. Darüberhinaus bleibe dem Dateinamen von Anfang bis Ende treu und wechsle nicht zwischendrin die Benamung, sonst gibt's Tränen. Wähle am besten die Form INITIALE+NUMMER als Slug. Solltest Du mal einen zweiten Podcast beginnen, wirst Du Dich freuen, die Episoden auseinander halten zu können.
 
-Zu guter Letzt ist der **auphonic-mode** korrekt zu wählen. Je nachdem, wie Du das alles machst, sind vor allem full oder exclusive interessant. Wenn Du mit firtz zusammen einen Podcast beginnst, ist vermutlich exclusive die beste Wahl.
+Zu guter Letzt ist der **auphonic-mode** korrekt zu wählen. Je nachdem, wie Du das machst, sind vor allem full oder exclusive interessant. Wenn Du mit firtz zusammen einen Podcast beginnst, ist vermutlich exclusive die beste Wahl.
 
 Wählst Du einen Modus, in dem sowohl epi-Dateien als auch json-Dateien ausgewertet werden, bedenke, dass die epi-Dateien die höhere Priorität haben. Damit ist es Dir möglich, in Auphonic fehlende Daten nachträglich einzupflegen oder zu korrigieren, ohne gleich eine neue Produktion anstoßen zu müssen.
 
-[...]
+Wenn nun alles beisammen ist, geschieht der Rest - je nach Konfiguration - voll- oder halbautomatisch.
+
+Dieser Teil der Dokumentation ist vermutlich noch zu ergänzen. Meine Erfahrung mit Auphonic verstellt mir eventuell den Blick auf den einen oder anderen Haken, der hier noch erwähnt werden will. Aber kommt Zeit, kommt Doku.
+
+## Firtz erweitern
+
+Während der Auslieferungszustand dieses Paketes bereits sehr brauchbar ist, gibt es dennoch viele Stellen, an denen man Gestaltung und Ausgabe modifizieren möchte.
+
+Für diese Zwecke kann man an die [Templates herangehen](#die-seite-modifizieren), indem dort zusätzliche HTML-Schnippsel eingefügt werden.
+
+Was aber, wenn nicht nur am Aussehen, sondern an der kompletten Ausgabe geschraubt werden soll? Wie zum Beispiel wäre ein ATOM-Feed anstelle des RSS2-Feeds einzubinden?
+
+Dafür gibt es im firtz die Ausgabe-Extensions, die zusätzliche Ausgabekanäle zur Verfügung stellen. Alle dafür benötigten Ordner müssen sich im Ordner *ext/* befinden.
+
+Nehmen wir mal an, wir möchten einen ATOM-Feed haben. Im Ordner *ext/atom/* befinden sich folgende Dateien:
+
+* ext.cfg: die Konfigurationsdatei der Erweiterung
+* atom.xml: Das Template, mit dessen Hilfe die Ausgabe erzeugt wird
+
+Im Grunde kopieren die Erweiterungen nur das Verhalten der Standardausgabe: Feedinformationen sammeln, Episoden sammeln und dann über das Template iterieren.
+
+Aber fangen wir vorne an. In der Datei *ext.cfg* befinden sich folgende Attribute:
+
+**slug:** Dies ist die Anweisung, die in der URL transportiert wird, um die Erweiterung aufzurufen. In diesem Falle hieße sie *atom* und würde dazu führen, dass der aufzurufende URL *http://supicast.de/supicast/atom/* lautet.
+
+**arguments:** die nach dem slug zu übergebenden Parameter. Wird die Erweiterung per z.B.: *http://supicast.de/supicast/atom/mp3* aufgerufen, wird dem Template (und im Falle der Variable audio auch firtz selbst!) mitgeteilt, dass der Parameter "mp3" das Audioformat der Ausgabe darstellt.
+
+Die Parameter können im Template mit @PARAMETERNAME referenziert werden. **Ich werde an dieser Stelle noch etwas ändern, allerdings muss ich noch einen vernünftigen Weg dafür finden**. Aktuell können Parameter aus Erweiterungen globale Adressen im firtz überschreiben. Das wird mit ausgewählten Parametern (z.B. @audio) weiterhin möglich sein, allerdings sollten private Parameter, die nur die Extension betreffen in einem eigenen Namensraum stecken, damit sich Erweiterungen nicht gegenseitig zerschießen.
+
+**template:** Zu guter Letzt muss die Erweiterung auch mitteilen, mit welchem Template firtz rendern soll. An erster Stelle steht der Dateiname des Templates, dass sich im selben Ordner wie die .cfg befinden muss, an zweiter Stelle ein optionaler Mimetype. Wird der weggelassen, geht firtz von "text/html" aus.
+
+
+## Ende gut alles gut?
+
+Ich bin an dieser Stelle mit der ersten, sehr groben Version der Dokumentation fertig. Es werden Lücken und Fehler enthalten sein, die über die Zeit ausgemerzt werden. Für Hilfe und Hinweise bin ich immer dankbar!
