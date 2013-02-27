@@ -18,7 +18,6 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 
-$main->set('CACHE',false);
 
 $firtz = new firtz();
 
