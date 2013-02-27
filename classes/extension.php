@@ -54,7 +54,7 @@
 					}
 					
 					if ($thisattr == "slug" ) $this->slug = $line;
-					
+					if ($thisattr == "type" ) $this->type = $line;
 				}
 			
 			}
