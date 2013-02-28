@@ -50,12 +50,12 @@
 			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
 				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
 			</repeat>
-        </ul>
-        <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
-      </div>
     <repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
 		<include href="{{'header/'.basename(@template)}}"/>
     </repeat>
+        </ul>
+        <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
+      </div>
 	
       <hr>
       <div class="jumbotron">
