@@ -50,7 +50,9 @@
 					}
 					
 					if ($thisattr == "script") {
-						if (file_exists($EXTDIR.'/'.$line)) include_once($EXTDIR.'/'.$line);
+						foreach (explode(" ",$line) as $script) {
+							if (file_exists($EXTDIR.'/'.$script)) include_once($EXTDIR.'/'.$script);
+						}
 					}
 					
 					if ($thisattr == "slug" ) $this->slug = $line;

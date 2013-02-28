@@ -47,13 +47,17 @@
 			
 			/* parse an .epi file */
 			/* if item is given, it's a reparsing for overwriting data from an auphonic-episode */
-		
+			
 			$mime = $main->get('mimetypes');
 			if (sizeof($item)==0) 
 			{ 
 				foreach ($main->get('itemattr') as $var) $item[$var]="";
 			} 
 			$thisattr = "";
+			
+			$item['audiofiles']=array();
+			$slug = basename($filename,".epi");
+			
 			$fh = fopen($filename,'r');
 			
 			while (!feof($fh)) {
@@ -129,6 +133,30 @@
 					if ($thisattr!="") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
 				}
 				
+			}
+			
+			if ($feedattrs['mediabaseurl']!="" && $feedattrs['mediabasepath']!="") {
+				
+				foreach ($feedattrs['audioformats'] as $format) 
+				{
+			
+					$localfile = $feedattrs['mediabasepath']."/".$slug.".".$format;
+					
+					if (!file_exists($localfile)) continue;
+					
+					if (array_key_exists($format,$mime)) {
+						$mimetype = $mime[$format];
+					} else {
+						$mimetype = "audio/mpeg";
+					}
+					
+					$item[$format] = array ('link' => $feedattrs['mediabaseurl']."/".$slug.".".$format , 'length' => filesize($localfile) , 'type' => $mimetype);
+					
+					$item['audiofiles'][$format]  = $item[$format];
+				
+				}
+			
+			
 			}
 			
 			fclose($fh);

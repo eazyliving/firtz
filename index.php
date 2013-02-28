@@ -29,7 +29,7 @@ foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
 
 $main->set('feeds',$feeds);
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath'));
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
 
