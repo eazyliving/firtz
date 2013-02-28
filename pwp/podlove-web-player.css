@@ -22,6 +22,12 @@
 	padding-bottom: 1.5em;
 }
 
+.podlovewebplayer_wrapper a, .podlovewebplayer_wrapper a:active, .podlovewebplayer_wrapper a:focus {
+	border: 0px none !important;
+	text-decoration: none !important;
+	outline: none !important;
+}
+
 .podlovewebplayer_wrapper:after {
 	content: ".";
 	color: #fff;
@@ -102,7 +108,7 @@
 
 .podlovewebplayer_wrapper .podlovewebplayer_chapters tr td.timecode {
 	white-space: nowrap;
-	padding-right: 10px!important;
+	padding-right: 10px !important;
 	text-align: right;
 }
 
@@ -131,7 +137,8 @@
 .podlovewebplayer_top {
 	position: relative;
 	background: #000;
-	height: 100px;
+	min-height: 100px;
+	height: auto;
 	margin-bottom: 1px;
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-top-right-radius: 10px;
@@ -151,23 +158,8 @@
 
 .podlovewebplayer_top {
 	height: 11px;
+	margin-bottom: 0px !important;
 }
-
-/*
-.podlovewebplayer_meta + .summary + .mejs-container .mejs-playpause-button,
-.podlovewebplayer_meta + .mejs-container .mejs-playpause-button {
-	width: 10px;
-}
-
-.podlovewebplayer_meta + .summary + .mejs-container .mejs-playpause-button *,
-.podlovewebplayer_meta + .mejs-container .mejs-playpause-button * {
-	display: none;
-}
-
-.mejs-duration-container {
-	margin-right: 20px;
-}
-*/
 
 .mejs-container {
 	margin-top: -1px;
@@ -208,11 +200,19 @@
 }
 
 .podlovewebplayer_meta .coverart img {
-	position: relative;
-	float: left;
-	margin-right: 10px;
+	position: relative !important;
+	float: left !important;
+	margin-top: 0px !important;
+	margin-right: 10px !important;
+	margin-left: 0px !important;
+	margin-bottom: 10px !important;
 	height: 75px !important;
-	top: 12px;
+	width: auto !important;
+	max-width: 275px !important;
+	top: 12px !important;
+	left: 0px !important;
+	right: auto !important;
+	bottom: auto !important;
 	box-shadow: none!important;
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
@@ -237,7 +237,7 @@
 }
 
 .podlovewebplayer_meta h3 a {
-	line-height: 20px;
+	line-height: 20px !important;
 }
 
 .podlovewebplayer_meta h3 a {
@@ -247,18 +247,18 @@
 .podlovewebplayer_meta h3 a:focus,
 .podlovewebplayer_meta h3 a:hover,
 .podlovewebplayer_meta h3 a:active {
-	color: #bbb!important;
+	color: #bbb !important;
 }
 
 .podlovewebplayer_meta .subtitle {
 	margin-right: 75px;
 	font-size: 12px;
-	color: #eee!important;
+	color: #eee !important;
 }
 
 .podlovewebplayer_meta .subtitle strong{
 	color: #ccc;
-	font-size: 13px!important;
+	font-size: 13px !important;
 }
 
 .podlovewebplayer_video .podlovewebplayer_meta .episodetitle {
@@ -279,17 +279,13 @@
 	min-height: 40px;
 	height: auto;
 	padding-top: 30px;
+	margin-bottom: 0px !important;
 	-webkit-border-top-left-radius: 0px;
 	-webkit-border-top-right-radius: 0px;
 	-moz-border-radius-topleft: 0px;
 	-moz-border-radius-topright: 0px;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
-}
-
-.podlovewebplayer_video .podlovewebplayer_meta .togglers {
-	top: 40px;
-	bottom: auto;
 }
 
 .podlovewebplayer_video .mejs-container .mejs-inner .mejs-controls {
@@ -324,7 +320,7 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 }
 
 .podlovewebplayer_meta + .summary,
-.podlovewebplayer_wrapper .controlbox {
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox {
 	overflow: hidden;
 	padding: 0px 10px;
 	margin-top: -1px;
@@ -338,6 +334,11 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 	-o-transition: all 0.5s;
 	transition: all 0.5s;
 	background: rgb(36,36,36);
+}
+
+.podlovewebplayer_video .podlovewebplayer_meta + .summary,
+.podlovewebplayer_video.podlovewebplayer_wrapper .podlovewebplayer_controlbox {
+	margin-top: 0px;
 }
 
 .podlovewebplayer_meta + .summary.active {
@@ -364,14 +365,14 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 	bottom: 10px;
 }
 
-.podlovewebplayer_wrapper .controlbox {
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox {
 	height: 0px;
 	font-size: 4px;
 	text-align: center;
 	background: #000;
 }
 
-.podlovewebplayer_wrapper .controlbox.active {
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox.active {
 	height: 25px;
 	padding: 3px 10px 4px 10px;
 	font-size: 8px;
@@ -379,8 +380,8 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 
 .podlovewebplayer_meta .togglers .infobuttons,
 .podlovewebplayer_meta .togglers .infobuttons a,
-.podlovewebplayer_wrapper .controlbox .infobuttons,
-.podlovewebplayer_wrapper .controlbox .infobuttons a {
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons a {
 	font-family: FontAwesome;
 	font-weight: normal;
 	font-style: normal;
@@ -391,23 +392,39 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 	text-decoration: none;
 }
 
-.podlovewebplayer_wrapper .controlbox .infobuttons,
-.podlovewebplayer_wrapper .controlbox .infobuttons a {
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons a {
 	position: relative;
-	margin: 15px;
-	padding: 10px;
+	margin: 5%;
+	padding: 0px;
 	z-index: 78;
 	font-size: 2.4em;
+	font-weight: bold;
 }
 
 .podlovewebplayer_meta .togglers .infobuttons:hover,
 .podlovewebplayer_meta .togglers .infobuttons a:hover,
-.podlovewebplayer_wrapper .controlbox .infobuttons:hover,
-.podlovewebplayer_wrapper .controlbox .infobuttons a:hover  {
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons:hover,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons a:hover  {
 	text-shadow: 0px 0px 4px #FFFFFF;
 	text-decoration: none;
 	filter: dropshadow(color=#FFFFFF, offx=0, offy=0);
 	cursor: pointer;
+}
+
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .icon-appdotnet {
+	font-family: "webdings", "Lucida Grande", "Lucida Sans Unicode", Geneva, sans-serif !important;
+	font-size: 2.6em;
+}
+
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .icon-twitter {
+	font-size: 2.1em;
+}
+
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .icon-link,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .icon-twitter,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .icon-facebook {
+	font-weight: normal;
 }
 
 .podlovewebplayer_chapters * {
@@ -478,7 +495,7 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 }
 
 .podlovewebplayer_chapters .chapterplay a[rel=player] span {
-	display: block;
+	display: block !important;
 	width: 14px;
 	height: 16px;
 	overflow: hidden;
@@ -496,7 +513,7 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 }
 
 .podlovewebplayer_chapters .paused .chapterplay a[rel=player] span {
-	background-position: 0 0;
+	background-position: 0 0 !important;
 }
 
 .podlovewebplayer_chapters tr.chaptertr:active {
@@ -573,7 +590,7 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 }*/
 
 .podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_tableend,
-.podlovewebplayer_wrapper.podlovewebplayer_video .controlbox,
+.podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_controlbox,
 .podlovewebplayer_wrapper.podlovewebplayer_video .summary {
 	background: #252525; 
 }
@@ -581,11 +598,11 @@ filter: dropshadow(color=#000000, offx=0, offy=0);
 .podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_chapterbox,
 .podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_chapters,
 .podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_meta + .summary,
-.podlovewebplayer_wrapper.podlovewebplayer_video .controlbox {
+.podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_controlbox {
 	border-color: #252525;
 }
 
-.podlovewebplayer_wrapper.podlovewebplayer_video .controlbox {
+.podlovewebplayer_wrapper.podlovewebplayer_video .podlovewebplayer_controlbox {
 	margin-top: 0px;
 }
 
@@ -608,20 +625,20 @@ and (max-width : 500px) {
 		height: auto;
 	}
 	.podlovewebplayer_meta h3 a, .podlovewebplayer_meta h3 {
-		position: initial;
-		top: 5px;
-		left: 10px;
-		right: 10px;
-		text-align: center;
+		position: initial !important;
+		top: 5px !important;
+		left: 10px !important;
+		right: 10px !important;
+		text-align: center !important;
 	}
 	.podlovewebplayer_meta .coverart {
 		position: absolute;
-		bottom: 30px;
+		bottom: 20px;
 		left: 120px;
 	}
 	.podlovewebplayer_meta .coverart img {
-		height: 75px;
-		width: 75px;
+		height: 75px !important;
+		width: 75px !important;
 	}
 	.podlovewebplayer_meta .bigplay {
 		position: absolute;
@@ -635,8 +652,14 @@ and (max-width : 500px) {
 		margin: auto;
 		text-align: center;
 	}
-	.podlovewebplayer_wrapper .controlbox a.infobuttons {
-		margin: 15px;
+	.podlovewebplayer_wrapper.podlovewebplayer_audio .podlovewebplayer_meta .togglers {
+		width: 20px;
+		right: 20px;
+		bottom: 15px;
+	}
+	
+	.podlovewebplayer_wrapper .podlovewebplayer_controlbox a.infobuttons {
+		margin: 4%;
 	}
 	.podlovewebplayer_wrapper .podlovewebplayer_tableend,
 	.podlovewebplayer_wrapper .podlovewebplayer_top {
