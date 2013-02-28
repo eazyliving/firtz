@@ -10,7 +10,7 @@
 		
 		public $episode_slugs = array();
 		public $auphonic_slugs = array();
-		
+		public $real_slugs = array();
 		public $episodes = array();
 		
 		public $feedDir = "";
@@ -124,6 +124,66 @@
 			
 		}
 		
+		public function preloadEpisodes() {
+			
+			$main = $this->main;
+			$maxPubDate = "";
+			$realSlugs = array();
+			
+			/* Just a simple PreLoad to determine, which slugs are real
+				needed for pageing mode to reduce load */
+			
+			
+			switch ($this->attr['auphonic-mode']) {
+				
+				/* standard mode. just load all .epi files */
+				
+				case "off":
+				case "":
+					foreach ($this->episode_slugs as $slug)	$realSlugs[]=$slug;
+					break;
+				
+				/* full mode: load auphonic and epi files.
+					if there's an epi file whith the same name as an auphonic file,
+					the data in epi file overwrites attributes from auphonic.
+				*/
+				
+				case "full":
+					
+					foreach ($this->auphonic_slugs as $slug) $realSlugs[]=$slug;
+					
+					foreach ($this->episode_slugs as $slug) {
+						
+						if (!in_array($slug,$this->auphonic_slugs)) $realSlugs[]=$slug;
+						
+					}
+					
+					break;
+				
+				/* exclusive mode: only auphonic files are read, epi ignored */
+				
+				case "exclusive": 
+					foreach ($this->auphonic_slugs as $slug) $realSlugs[]=$slug;
+					
+					break;
+				
+				/*	episode mode: like full, but only auphonic episodes are loaded,
+					that also exist as episode files. epi data overwrites auphonic attributes
+					this is the standard mode, if auphonic is in remote mode
+				*/
+				
+				case "episodes": 
+				
+					foreach ($this->episode_slugs as $slug) {
+						if (in_array($slug,$this->auphonic_slugs)) $realSlugs[]=$slug;
+					}
+					break;
+			}
+			
+			$this->real_slugs = $realSlugs;
+		
+		}
+		
 		public function loadEpisodes($slug = '') {
 			
 			$main = $this->main;
@@ -134,11 +194,15 @@
 					atm the only case this happens is calling /$feed/show/$episodeslug/
 					also to be used, when paging is implemented
 				*/
+				if (!is_array($slug)) {
+					$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
+					$this->auphonic_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
+				} else {
+					$this->episode_slugs = array_intersect_key($slug,$this->episode_slugs);
+					$this->auphonic_slugs= array_intersect_key($slug,$this->auphonic_slugs);
+				}
 				
-				$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
-				$this->auphonic_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
 			}
-			
 			/* handle loading of episodes depending on auphonic mode */
 			
 			switch ($this->attr['auphonic-mode']) {
@@ -252,6 +316,11 @@
 				}
 			}
 			$this->attr['lastupdate'] = date('c', $lastupdate);
+			
+			foreach ($this->episodes as $slug => $episode) {
+				$realSlugs[]=$slug;
+			}
+			$this->real_slugs = $realSlugs;
 		}
 		
 		
@@ -263,8 +332,10 @@
 			*/
 			
 			if ($this->attr['auphonic-path']!="" && file_exists($this->attr['auphonic-path']) && $this->attr['auphonic-mode']!="" && $this->attr['auphonic-mode']!="off") {
+				
 				/* get local auphonic files */
 				$auphonic_episodes = glob ($this->attr['auphonic-path']."/".$this->attr['auphonic-glob']);
+				
 				foreach ($auphonic_episodes as $json) {
 				
 					$slug = basename ($json,'.json');
@@ -291,7 +362,6 @@
 						$this->episode_slugs[]=$slug;
 					
 					}
-					
 					
 				}
 				

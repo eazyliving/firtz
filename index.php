@@ -17,7 +17,7 @@ $main->set('singlepage',false);
 $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
-
+$main->set('page',0);
 
 $firtz = new firtz();
 
@@ -174,14 +174,16 @@ $main->route('GET /@feed/show',
 		$feed = new feed($main,$slug,$FEEDCONFIG);
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
+		$main->set('page',1);
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / 3) );
+		$feed->episodes = array_slice($feed->episodes,0,3);
+		
 		$feed->renderHTML();
 	}, $main->get('CDURATION')
 );
 
 /*
-	
 	web page mode, single page for episode
-	
 */
 
 $main->route('GET /@feed/show/@epi',
@@ -198,6 +200,34 @@ $main->route('GET /@feed/show/@epi',
 		$feed->renderHTML();
 	}, $main->get('CDURATION')
 );
+
+/*
+	web page mode, single page for episode
+*/
+
+$main->route('GET /@feed/show/page/@pagenum',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		$pagenum = ltrim($params['pagenum'],'0');
+		if (!is_numeric($pagenum)) $pagenum=1;
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+
+		$feed->loadEpisodes();
+		$main->set('page',$pagenum);
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / 3) );
+		
+		$feed->episodes = array_slice($feed->episodes, ($pagenum-1) *3,3);
+		$feed->renderHTML();
+	}, $main->get('CDURATION')
+);
+
+
 
 /*
 	main page without any parameters
