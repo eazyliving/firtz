@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="{{ substr(@feedattr.language,0,2) }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{@feedattr.title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{@feedattr.description}}">
+    <meta name="author" content="{{@feedattr.author}}">
+
+    <link href="{{@feedattr.sitecss}}" rel="stylesheet">
+	
+    <style type="text/css">
+     body{padding-top:20px;padding-bottom:40px} a>h3,.homebut,a>h3:hover,a:hover,.homebut:hover{text-decoration:none !important}  .container-narrow{ margin:0 auto; max-width:700px} .container-narrow >hr{ margin:30px 0}  .jumbotron{ margin:30px 0; text-align:center} .jumbotron h1{ font-size:72px; line-height:1} .jumbotron .btn{ font-size:21px; padding:14px 24px}  .marketing{ margin:20px 0} .marketing p+h4{ margin-top:28px} 
+    </style>
+    <link href="{{@BASEURL}}css/bootstrap-responsive.min.css" rel="stylesheet">
+
+	<link href="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelementplayer.min.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="{{@BASEURL}}pwp/libs/fontawesome/css/font-awesome.min.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="{{@BASEURL}}pwp/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+	
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
+    <link rel="shortcut icon" href="./favicon.ico">
+
+
+    <repeat group="{{glob('templates/head/*.html')}}" value="{{@template}}">
+		<include href="{{'head/'.basename(@template)}}"/>
+    </repeat>
+  </head>
+
+  <script src="{{@BASEURL}}js/jquery.js"></script>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+		
+        <ul class="nav nav-pills pull-right">
+			<repeat group="@feedattr.audioformats" value="{{@format}}">
+				<li><a href="{{@feedattr.baserel}}{{@format}}/">{{@format}}</a></li>
+			</repeat>
+			<check if="{{@feedattr.itunes}}">
+				<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
+			</check>
+					
+			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
+			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
+				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
+			</repeat>
+			<repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
+		<include href="{{'header/'.basename(@template)}}"/>
+    </repeat>
+	
+        </ul>
+        <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
+      </div>
+    
+      <hr>
+      <div class="jumbotron">
+		<h1><img src="{{@feedattr.image}}" width=100  style="margin-right:20px;">{{@feedattr.title}}</h1>
+        <p class="lead">{{@feedattr.description}}</p>
+      </div>
+	
+    
+	<hr>
+		<check if="{{@page!=0}}">
+			<div>
+			<ul class="pager">
+				<check if="{{@page>1}}">
+					<li class="previous">
+						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
+					</li>
+				</check>
+				<check if="{{@page<@maxpage}}">
+					<li class="next">
+						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
+					</li>
+				</check>
+			</ul>
+			</div>
+		</check>
+		
+		<div class="row-fluid marketing">
+		
+		<repeat group="@items" value="{{@item}}">
+			
+			
+			<div class="media well-large">
+				<img class="media-object pull-left" src="{{@item.image}}" width=64 height=64>
+				
+				<div class="media-body">
+					<h4 class="media-heading"> <a href="/{{@feedattr.slug}}/show/{{@item.slug}}" name="{{@item.slug}}"><span class="text-center">{{@item.title}}</span></a> / {{strftime('%Y-%m-%d %H:%M',strtotime(@item.pubDate))}}</h4>
+					<div class="">
+						{{@item.description}}
+					</div>
+				</div>
+			</div>
+			
+		</repeat>
+		</div>
+		
+      <div class="footer">
+        <p>&copy; {{@feedattr.author}}
+		<check if="{{@feedattr.twitter}}">
+			<span>| twitter: <a href="https://twitter.com/{{@feedattr.twitter}}">@{{@feedattr.twitter}}</a></span>
+		</check>
+		<check if="{{@feedattr.email}}">
+			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
+		</check>
+		</p>
+		<check if="{{@feedattr.flattrid}}">
+			<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}};popout=0&amp;button=compact"
+				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
+			</iframe>
+		</check>
+		<repeat group="{{glob('templates/footer/*.html')}}" value="{{@template}}">
+				<include href="{{'footer/'.basename(@template)}}"/>
+		</repeat>
+      </div>
+
+    </div>
+	<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>
+    <script src="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelement-and-player.min.js"></script>
+    <script src="{{@BASEURL}}pwp/podlove-web-player.js"></script>
+    
+	<check if="{{@feedattr.disqus}}">
+		<include href="disqus_multiple.js"/>
+	</check>
+	
+	
+  </body>
+</html>
