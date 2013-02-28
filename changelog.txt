@@ -1,5 +1,6 @@
 changelog:
 
+0.7 autodetect mediafiles with mediabaseurl/path and formats:attribute
 0.6 finished first draft of documentation. see doc/firtz.md
 0.5 added subtemplate support for head/header/episode/footer
     fixed a bug, in case episodes didn't provide all configured media
