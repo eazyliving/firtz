@@ -57,7 +57,7 @@
 			</psc:chapters>
 		</check>
 		
-		<link rel="enclosure" type="{{ @item.enclosure.type }}" href="{{ @item.enclosure.link }}" length="{{ @item.enclosure.length }}" />
+		<check if="{{@item.enclosure}}"><link rel="enclosure" type="{{ @item.enclosure.type }}" href="{{ @item.enclosure.link }}" length="{{ @item.enclosure.length }}" /></check>
 		
 	</entry>
 	
