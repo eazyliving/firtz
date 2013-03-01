@@ -3,7 +3,7 @@ firtz
 
 firtz podcast publisher
 
-firtz 0.8
+firtz 0.9
 
 Podcastpublishing mit EDLIN
 
