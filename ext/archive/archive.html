@@ -66,23 +66,7 @@
 	
     
 	<hr>
-		<check if="{{@page!=0}}">
-			<div>
-			<ul class="pager">
-				<check if="{{@page>1}}">
-					<li class="previous">
-						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
-					</li>
-				</check>
-				<check if="{{@page<@maxpage}}">
-					<li class="next">
-						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
-					</li>
-				</check>
-			</ul>
-			</div>
-		</check>
-		
+	
 		<div class="row-fluid marketing">
 		
 		<repeat group="@items" value="{{@item}}">
