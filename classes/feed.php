@@ -86,7 +86,7 @@
 				$attr['flattrlanguage'] = ($attr['language']!="") ? str_replace("-","_",$attr['language']) : "";
 				$attr['flattrdescription'] = rawurlencode($attr['description']);
 				$attr['flattrkeywords'] = rawurlencode($attr['keywords']);
-				$attr['flattrlink'] = rawurlencode($main->get('BASEURL').'/show/'.$attr['slug']);
+				$attr['flattrlink'] = rawurlencode($main->get('BASEURL')"/".$attr['slug'].'/show'.);
 				$attr['flattrtitle'] = rawurlencode($attr['title']);
 			}
 			
