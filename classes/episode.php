@@ -4,7 +4,8 @@
 	
 		public $item=array();
 		public $main = "";
-	
+		public $markdown = "";
+		
 		public function parseAuphonic($main,$filename,$feedattrs) {
 			
 			/* parse a json production description file */
@@ -19,7 +20,7 @@
 			
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = $prod->metadata->subtitle;
-			$item['article'] = $prod->metadata->summary;
+			$item['article'] = $this->markdown->renderString($prod->metadata->summary);
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->creation_time));
 			$item['keywords'] = implode(",",$prod->metadata->tags);
@@ -62,7 +63,8 @@
 			
 			while (!feof($fh)) {
 				
-				$line = trim(fgets($fh));
+				$uline = fgets($fh);
+				$line = trim($uline);
 				
 				/* continue if comment or empty line. except for article attribute */
 				if ( ( $line=="" && $thisattr!="article") || substr($line,0,2)=="#:") continue;
@@ -130,7 +132,8 @@
 				} else {
 					
 					/* this is an attribute which may have linebreaks. append line to current attribute */
-					if ($thisattr!="") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
+					if ($thisattr!="" && $thisattr!="article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
+					if ($thisattr == "article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$uline : $uline;
 				}
 				
 			}
@@ -170,6 +173,8 @@
 				return;
 			}
 			
+			$this->markdown = new firtzMarkdown();
+			
 			$this->main = $main;
 			
 			$reparse = false;
@@ -207,9 +212,10 @@
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
-			$item['description']=($item['description']?:substr($item['article'],0,255));
+			$item['article'] =  $this->markdown->renderString($item['article']);
+			$item['description']=($item['description']?:substr(strip_tags($item['article'],0,255)));
 			$item['summary'] = strip_tags($item['article']);
-			$item['article'] = nl2br($item['article']);
+			
 
 			if ($item['image']=="") $item['image']=$feedattrs['image'];
 			
