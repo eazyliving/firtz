@@ -86,7 +86,7 @@
 				$attr['flattrlanguage'] = ($attr['language']!="") ? str_replace("-","_",$attr['language']) : "";
 				$attr['flattrdescription'] = rawurlencode($attr['description']);
 				$attr['flattrkeywords'] = rawurlencode($attr['keywords']);
-				$attr['flattrlink'] = rawurlencode($main->get('BASEURL')."/".$attr['slug'].'/show');
+				$attr['flattrlink'] = rawurlencode($main->get('BASEURL').$attr['slug'].'/show');
 				$attr['flattrtitle'] = rawurlencode($attr['title']);
 			}
 			
@@ -103,9 +103,9 @@
 					standard bootstrap.css
 				*/
 				
-				$attr['sitecss']=$main->get('BASEURL')."/feeds/".$slug."/".$slug.".css";
+				$attr['sitecss']=$main->get('BASEURL')."feeds/".$slug."/".$slug.".css";
 			} else {
-				$attr['sitecss']=$main->get('BASEURL').'/css/bootstrap.min.css';
+				$attr['sitecss']=$main->get('BASEURL').'css/bootstrap.min.css';
 			}
 			
 			if (file_exists(dirname($configfile)."/".$slug.".html")) {

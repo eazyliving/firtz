@@ -1,5 +1,6 @@
 changelog:
 
+0.8 tons of fixes, typos and stuff. content-extensions.
 0.7 autodetect mediafiles with mediabaseurl/path and formats:attribute
 0.6 finished first draft of documentation. see doc/firtz.md
 0.5 added subtemplate support for head/header/episode/footer
