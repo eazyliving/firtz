@@ -159,7 +159,14 @@ Folgende Formate werden aktuell komplett unterstützt, also im Feed ein korrekte
 * epub: application/epub+zip
 * png: image/png
 * jpg: image/jpeg
- 
+
+**mediabaseurl:**  
+**mediabasepath:**
+
+Mit diesen beiden Attributen ist firtz in der Lage, Audiodateien ohne Konfiguration in den Episoden zu finden. Nehmen wir an, die .epi-Datei einer Episode heißt *sc001.epi*. Alle Audiodateien dieses Podcasts finden sich im Netz unter *http://media.supicast.de/* (**mediabaseurl**) und lokal sind die Dateien unter */home/supicast/media/* (**mediabasepath**) zu finden.
+
+Du wirst einwenden, dass der lokale Pfad unnötig ist. Ist er auch, aber nur wenn man in Kauf nimmt, dass im Feed die Angabe der Dateigröße fehlt bzw. auf 0 Bytes steht. Außerdem wäre ein sinnvoller Check auf die Existenz der Datei nur mit permanenter Netzlast durchführbar. Und das will vermutlich niemand. Schluckt die Kröte oder tippt die URLs per Hand ;-)
+
 **flattrid:**  
 Wenn flattr genutzt wird/werden soll, hier die user-id angeben. Es werden Payment-Links im Feed und Buttons auf der Webseite für den gesamten Feed und für einzelne Episoden erzeugt. Es ist nicht möglich, mehrere IDs anzugeben.
  
@@ -246,6 +253,10 @@ Im Remote-Modus, in dem die Produktionsdateien nicht per Filesystem zu finden si
 zu diesen Daten angegeben werden. Die Dateien werden dann ausschließlich über konfigurierte namensgleiche .epi-Dateien zu finden sein, die dann auch leer sein können. Eine andere Idee, diese Dateien zu identifizieren hatte ich bisher nicht. **Implementiert ist diese Funktion mit Version 0.5 noch nicht.**
 
 Das war's wohl für's erste. Versuche alle nötigen Informationen zu liefern und so viele Attribute wie nur möglich zu füllen, die den Feed mit Metadaten versehen.
+
+**redirect**:
+
+Zu guter Letzt kann es natürlich vorkommen, dass Du den Feed umziehen musst. Anderes System, andere Domain, was auch immer. Um Deine Abonnenten nicht mit einem toten (alten) Feed alleine zu lassen, erzählst Du dem firtz, wo denn der neue Feed zu finden ist. Der führt dann ein redirect (301) aus, was im Allgemeinen auch diverse Dienste wie z.B. iTunes auf den neuen Feed führen sollte.
 
 
 ## Die Episode
@@ -461,7 +472,7 @@ Für diese Zwecke kann man an die [Templates herangehen](#die-seite-modifizieren
 
 Was aber, wenn nicht nur am Aussehen, sondern an der kompletten Ausgabe geschraubt werden soll? Wie zum Beispiel wäre ein ATOM-Feed anstelle des RSS2-Feeds einzubinden?
 
-Dafür gibt es im firtz die Ausgabe-Extensions, die zusätzliche Ausgabekanäle zur Verfügung stellen. Alle dafür benötigten Ordner müssen sich im Ordner *ext/* befinden.
+Dafür gibt es im firtz die Ausgabe- und Inhalts-Extensions, die zusätzliche Ausgabekanäle zur Verfügung stellen oder Inhalte modifizieren. Alle dafür benötigten Ordner müssen sich im Ordner *ext/* befinden.
 
 Nehmen wir mal an, wir möchten einen ATOM-Feed haben. Im Ordner *ext/atom/* befinden sich folgende Dateien:
 
@@ -478,8 +489,28 @@ Aber fangen wir vorne an. In der Datei *ext.cfg* befinden sich folgende Attribut
 
 Die Parameter können im Template mit @PARAMETERNAME referenziert werden. **Ich werde an dieser Stelle noch etwas ändern, allerdings muss ich noch einen vernünftigen Weg dafür finden**. Aktuell können Parameter aus Erweiterungen globale Adressen im firtz überschreiben. Das wird mit ausgewählten Parametern (z.B. @audio) weiterhin möglich sein, allerdings sollten private Parameter, die nur die Extension betreffen in einem eigenen Namensraum stecken, damit sich Erweiterungen nicht gegenseitig zerschießen.
 
-**template:** Zu guter Letzt muss die Erweiterung auch mitteilen, mit welchem Template firtz rendern soll. An erster Stelle steht der Dateiname des Templates, dass sich im selben Ordner wie die .cfg befinden muss, an zweiter Stelle ein optionaler Mimetype. Wird der weggelassen, geht firtz von "text/html" aus.
+**type:**  
+Der Typ der Extension, output oder content.
 
+**template:** Zu guter Letzt muss die Erweiterung auch mitteilen, mit welchem Template firtz rendern soll. An erster Stelle steht der Dateiname des Templates, dass sich im selben Ordner wie die .cfg befinden muss, an zweiter Stelle ein optionaler Mimetype. Wird der weggelassen, geht firtz von "text/html" aus. Templates sind nur bei Output-Extensions nötig.
+
+**script:** Bei Content-Extensions wird kein Template benötigt, sondern ein waschechtes php-Script. Hier wird nur der blanke Dateiname angegeben, das Script muss sich im Extension-Ordner befinden.
+
+Im Script befindet sich üblicherweise eine Funktion. Deren Dateiname baut sich wie folgt auf: 
+
+**$slug_$hook($item)**
+
+$slug ist der Name der Erweiterung. $hook gibt an, an welcher Stelle der Feed/Episodenverarbeitung die Funktion ausgeführt werden soll (aktuell nur: "episode"). Dieser Funktion wird ein Array übergeben, in dem entsprechend des Hooks eine Episode (oder später ein Feed) steckt.
+
+Angenommen, die Erweiterung heißt markdown und soll in jeder Episode den Artikel von .md nach .html konvertieren.
+
+`function markdown_episode($item)   
+{  
+	$item['article'] = my_md2html($item['article']);  
+	return $item;  
+}`
+
+kapiert? Nicht? Dann ist das hier sowieso nichts für Dich ;-P
 
 ## Ende gut alles gut?
 

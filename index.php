@@ -29,7 +29,8 @@ foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
 
 $main->set('feeds',$feeds);
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect'));
+
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
 
@@ -131,6 +132,13 @@ $main->route('GET|HEAD /@feed/@audio',
 		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
 		
 		$feed = new feed($main,$slug,$FEEDCONFIG);
+		
+		if ($feed->attr['redirect']!="") {
+			header ('HTTP/1.1 301 Moved Permanently');
+			header ('Location: '.$feed->attr['redirect']);
+			die();
+		}
+		
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$feed->renderRSS2($params['audio']);
@@ -151,6 +159,13 @@ $main->route('GET|HEAD /@feed',
 		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
 		
 		$feed = new feed($main,$slug,$FEEDCONFIG);
+		
+		if ($feed->attr['redirect']!="") {
+			header ('HTTP/1.1 301 Moved Permanently');
+			header ('Location: '.$feed->attr['redirect']);
+			die();
+		}
+		
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$feed->renderRSS2();
