@@ -178,7 +178,7 @@ $main->route('GET|HEAD /@feed',
 
 */
 
-$main->route('GET /@feed/show',
+$main->route('GET|HEAD /@feed/show',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -201,7 +201,7 @@ $main->route('GET /@feed/show',
 	web page mode, single page for episode
 */
 
-$main->route('GET /@feed/show/@epi',
+$main->route('GET|HEAD /@feed/show/@epi',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -220,7 +220,7 @@ $main->route('GET /@feed/show/@epi',
 	web page mode, single page for episode
 */
 
-$main->route('GET /@feed/show/page/@pagenum',
+$main->route('GET|HEAD /@feed/show/page/@pagenum',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -278,7 +278,7 @@ $main->route('GET /',
 	put them im templates/pages/
 */
 
-$main->route('GET /@feed/page/@page',
+$main->route('GET|HEAD /@feed/page/@page',
 	function($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
