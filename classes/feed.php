@@ -62,7 +62,14 @@
 					} else {
 						$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
 					}
-					
+				} elseif ($thisattr == "bitlove") {
+				
+					/* bitlove information */
+
+					$bitlove = explode(" ",$line);
+
+					if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
+
 				} else {
 					/* concat a new line to existing attribute */
 					
@@ -70,7 +77,7 @@
 				}
 				
 			}
-			
+			#echo "<pre>".print_r($attr,1);exit;
 			fclose($fh);
 		
 			/* sanitize data */

@@ -37,15 +37,22 @@
     <div class="container-narrow">
 
       <div class="masthead">
-		
-        <ul class="nav nav-pills pull-right">
-			<repeat group="@feedattr.audioformats" value="{{@format}}">
-				<li><a href="{{@feedattr.baserel}}{{@format}}/">{{@format}}</a></li>
-			</repeat>
-			<check if="{{@feedattr.itunes}}">
-				<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
-			</check>
-					
+		<ul class="nav nav-pills pull-right">
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				subscribe
+			<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu">
+				<repeat group="@feedattr.audioformats" value="{{@format}}">
+					<li><a href="{{@feedattr.baserel}}{{@format}}/">{{@format}}</a></li>
+				</repeat>
+				<check if="{{@feedattr.itunes}}">
+					<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
+				</check>
+			</ul>
+			
+		</li>
 			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
 			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
 				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
@@ -94,11 +101,34 @@
 			<check if="{{@item.noaudio==''}}">
 			<div><include href="podlove-player.html"/></div>
 			<div>
-			<ul class="nav nav-pills pull-right">
-			<repeat group="{{@item.audiofiles}}" value="{{@audiofile}}" key="{{@audiotype}}">
-				<li><a title="download {{@audiotype}} - size: {{ceil(@audiofile.length / 1048576)}} MByte" href="{{@audiofile.link}}">{{@audiotype}}</a></li>
-			</repeat>
-			</ul>
+				<ul class="nav nav-pills pull-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							download
+						<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+						<repeat group="{{@item.audiofiles}}" value="{{@audiofile}}" key="{{@audiotype}}">
+							<li><a title="download {{@audiotype}} - size: {{ceil(@audiofile.length / 1048576)}} MByte" href="{{@audiofile.link}}">{{@audiotype}}</a></li>
+						</repeat>
+						</ul>
+					</li>
+				<check if="{{@feedattr.bitlove}}">
+				
+				
+					<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						bitlove
+					<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+					<repeat group="{{@feedattr.bitlove}}" value="{{@bitlove}}" key="{{@audiotype}}">
+					<li><a title="bitlove torrent {{@audiotype}}" href="http://bitlove.org/{{@bitlove.user}}/{{@bitlove.feed}}/{{@item.slug}}.{{@audiotype}}.torrent">{{@audiotype}}</a></li>
+					</repeat>
+					
+					</li>
+				</check>
+				</ul>
 			</div>
 			</check>
 			<check if="{{@feedattr.flattrid}}">
@@ -144,6 +174,7 @@
       </div>
 
     </div>
+	<script src="{{@BASEURL}}js/bootstrap.min.js"></script>
 	<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>
     <script src="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelement-and-player.min.js"></script>
     <script src="{{@BASEURL}}pwp/podlove-web-player.js"></script>

@@ -73,6 +73,8 @@ Im Ordner *feeds* befinden sich die Ordner, die dem System sagen, welche Feeds a
 
 In den Feed-Ordnern wiederum werden sich die Konfigurationsdatei und die Episoden-Dateien finden, aus denen der Feed generiert wird.
 
+Feeds lassen sich übrigens deaktivieren, indem Du dem Ordnernamen ein "_" voranstellst. Alle Ordner, die mit "_" beginnen werden ignoriert.
+
 Im Ordner *templates* wiederum finden sich alle Dateien, die dazu beitragen, die generierten Feeds in irgendeiner Weise darzustellen. Ob nun RSS oder Webseite, die Ausgabe wird - größtenteils - hier festgelegt. Hier **muss** nichts getan werden, wer mag, kann die Grundeinstellungen übernehmen. Mit der Zeit wirst Du aber vermutlich an der einen oder anderen Stelle, vermutlich an der Webseite, drehen wollen.
 
 **Die Audiodateien**
@@ -205,11 +207,28 @@ Sprache, in der der Podcast veröffentlicht, Deutsch z.B. wäre "de-DE". Info zu
 **explicit:**  
 entweder yes oder no, wirkt sich vor allem auf iTunes aus.
  
-**itunes:** Ist der Podcast bereits bei iTunes erreichbar, steht hier der komplette Link zur iTunes-Seite. (firtz: [https://itunes.apple.com/de/podcast/firtz/id604449399](https://itunes.apple.com/de/podcast/firtz/id604449399))
+**itunes:**  
+Ist der Podcast bereits bei iTunes erreichbar, steht hier der komplette Link zur iTunes-Seite. (firtz: [https://itunes.apple.com/de/podcast/firtz/id604449399](https://itunes.apple.com/de/podcast/firtz/id604449399))
   
 **disqus:**  
 Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter [http://disqus.com/for-websites/](http://disqus.com/for-websites/) und [https://disqus.com/admin/signup/](https://disqus.com/admin/signup/)
  
+**bitlove:**  
+Wenn Du bei [bitlove](http://bitlove.org) Deine Feeds torrentifizierst, kannst Du hier - allerdings ausschließlich für das Webseitentemplate - Downloadlinks dafür konfigurieren. Das Format sieht wie folgt aus:
+
+*format* *user* *feedname*
+
+Wenn Deine Torrents also ungefähr so heißen:  
+*http://bitlove.org/supicast/supicast-m4a/sc001.m4a.torrent*  
+dann sieht die Konfigurationszeile so aus:
+
+bitlove:  
+m4a supicast supicast-m4a
+
+Es können beliebig viele Formate konfiguriert werden.
+
+Verwechselt das bitte nicht mit einem torrent-Feed. Das geht auch, funktioniert allerdings genau  so wie die normalen Formate. Du müsstest dafür in die **format:** Konfiguration "torrent" hinzufügen und in jeder Episode den vollständigen Link zu einem Torrentfile angeben. So wäre auch ein Feed ausschließlich mit Torrentlinks denkbar.
+
 
 **Details zu Auphonic und firtz**  
 
@@ -511,6 +530,8 @@ Angenommen, die Erweiterung heißt markdown und soll in jeder Episode den Artike
 }`
 
 kapiert? Nicht? Dann ist das hier sowieso nichts für Dich ;-P
+
+Extensions lassen sich übrigens deaktivieren, indem Du dem Ordnernamen ein "_" voranstellst. Alle Ordner, die mit "_" beginnen werden ignoriert.
 
 ## Ende gut alles gut?
 
