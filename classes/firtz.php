@@ -20,13 +20,16 @@
 			$main->set('firtz',$this);
 			$this->BASEURL ="http://".$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
-			
+			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=dirname($_SERVER['SCRIPT_NAME']);
+			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
+              
 			$this->BASEPATH = $_SERVER['DOCUMENT_ROOT'];
+			if (substr($this->BASEPATH,-1) != "/") $this->BASEPATH.='/';
 			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEPATH.=dirname($_SERVER['SCRIPT_NAME']);
 			if (substr($this->BASEPATH,-1) != "/") $this->BASEPATH.='/';
-			
-			$main->set('BASEPATH',$this->BASEPATH);
-			$main->set('BASEURL',$this->BASEURL);
+
+			$main->set('BASEPATH',$main->fixslashes($this->BASEPATH));
+			$main->set('BASEURL',$main->fixslashes($this->BASEURL));
 		}
 	
 		function loadAllTheExtensions() {

@@ -55,13 +55,13 @@
 		</li>
 			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
 			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
-				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
+				<li><a href="{{@BASEURL}}{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
 			</repeat>
 			<repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
 				<include href="{{'header/'.basename(@template)}}"/>
 			</repeat>
         </ul>
-        <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
+        <h3><a class="homebut" href="{{@BASEURL}}{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
 	
       <hr>
@@ -77,12 +77,12 @@
 			<ul class="pager">
 				<check if="{{@page>1}}">
 					<li class="previous">
-						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
 					</li>
 				</check>
 				<check if="{{@page<@maxpage}}">
 					<li class="next">
-						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
 					</li>
 				</check>
 			</ul>
@@ -94,7 +94,7 @@
 		<true>
 		<repeat group="@items" value="{{@item}}">
 			
-			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
+			<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
 			<h5 class="text-center">{{strftime('%Y-%m-%d %H:%M',strtotime(@item.pubDate))}}</h5>
 			<check if="{{(trim(@item.article)!='')}}"><div class="well well-large">{{@item.article | raw}}</div></check>
 
