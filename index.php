@@ -18,14 +18,7 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 $main->set('page',0);
-
-$firtz = new firtz();
-$feeds = array();
-foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
-	if (substr(basename($dir),0,1)!="_") $feeds[]=basename($dir);
-}
-
-$main->set('feeds',$feeds);
+$main->set('DEBUG',0);
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove'));
 
@@ -35,13 +28,24 @@ $main->set('extattr',array('slug','template','arguments','prio','script','type')
 $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webm'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg'));
 
 
+$firtz = new firtz();
+$firtz->loadAllTheExtensions();
+
+$feeds = array();
+
+foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
+	if (substr(basename($dir),0,1)!="_") $feeds[]=basename($dir);
+}
+
+$main->set('feeds',$feeds);
+
 
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
 	$slug = $extension->slug;
 	$main->route("GET|HEAD /@feed/$slug/*",
 		function($main,$params) use ($slug) {
-			
+				
 			$firtz = $main->get('firtz');
 			$extension = $firtz->extensions[$slug];
 			
@@ -59,7 +63,7 @@ foreach ($firtz->extensions as $slug => $extension) {
 			}
 			
 			$extension->arguments=$arguments;
-			
+		
 			$feedslug = $params['feed'];
 			if (!in_array($params['feed'],$main->get('feeds'))) $main->error(404);
 			
@@ -82,7 +86,6 @@ foreach ($firtz->extensions as $slug => $extension) {
 	$slug = $extension->slug;
 	$main->route("GET|HEAD /@feed/$slug",
 		function($main,$params) use ($slug) {
-			
 			$firtz = $main->get('firtz');
 			
 			$extension = $firtz->extensions[$slug];
@@ -179,6 +182,7 @@ $main->route('GET|HEAD /@feed',
 $main->route('GET|HEAD /@feed/show',
 	function ($main,$params) {
 		$slug = $params['feed'];
+		
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
 		
 		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
