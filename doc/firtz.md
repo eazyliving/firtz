@@ -73,6 +73,8 @@ Du besorgst Dir nun das [Zip-Archiv vom firtz](https://github.com/eazyliving/fir
 Für Profis:
 > git clone https://github.com/eazyliving/firtz.git .
 
+Sollte der firtz in einem Unterordner laufen, musst Du ggf. in die .htaccess eingreifen und die RewriteBase von / auf /UNTERORDNER ändern.
+
 Da liegen nun ein Haufen Dateien und Verzeichnisse herum. Wirklich von Interesse aber sind folgende Verzeichnisse und die Dateien und Unterverzeichnisse, die sich darin befinden:
 
 feeds/  
