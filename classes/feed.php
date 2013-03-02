@@ -188,11 +188,10 @@
 			}
 			
 			$this->real_slugs = $realSlugs;
-		
 		}
 		
 		public function loadEpisodes($slug = '') {
-			
+
 			$main = $this->main;
 			$maxPubDate = "";
 			if ($slug!='') {
@@ -202,11 +201,11 @@
 					also to be used, when paging is implemented
 				*/
 				if (!is_array($slug)) {
-					$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
-					$this->auphonic_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
+					$this->episode_slugs = array_intersect(array(0=>$slug),$this->episode_slugs);
+					$this->auphonic_slugs= array_intersect(array(0=>$slug),$this->auphonic_slugs);
 				} else {
-					$this->episode_slugs = array_intersect_key($slug,$this->episode_slugs);
-					$this->auphonic_slugs= array_intersect_key($slug,$this->auphonic_slugs);
+					$this->episode_slugs = array_intersect($slug,$this->episode_slugs);
+					$this->auphonic_slugs= array_intersect($slug,$this->auphonic_slugs);
 				}
 				
 			}
@@ -237,7 +236,7 @@
 					}
 					
 					foreach ($this->episode_slugs as $slug) {
-						
+
 						if (!in_array($slug,$this->auphonic_slugs)) {
 							
 							/* exclusive .epi */	
@@ -289,7 +288,6 @@
 					break;
 			}
 			
-		
 			# Sort episodes by pubDate
 			
 			function sortByPubDate($a,$b) {
@@ -337,7 +335,7 @@
 				collect slugs and save them.
 				no loading, just finding to reduce load in case, not all episodes have to be displayed (web page single mode/pageing mode)
 			*/
-			
+				
 			if ($this->attr['auphonic-path']!="" && file_exists($this->attr['auphonic-path']) && $this->attr['auphonic-mode']!="" && $this->attr['auphonic-mode']!="off") {
 				
 				/* get local auphonic files */
@@ -351,7 +349,6 @@
 				}
 				
 			}
-		
 			/* find local epi files if not in auphonic exclusive mode */
 			if ($this->attr['auphonic-mode']!='exclusive') {
 				$itemfiles = glob($this->feedDir.'/*.epi');
@@ -373,7 +370,7 @@
 				}
 				
 			}
-		
+
 		}
 		
 		public function runExt($main,$extension) {
