@@ -43,6 +43,15 @@ Wie alle Software, die im Open-Source-Dampfgarer produziert wird, benötigt firt
 
 Diese Projekte integrieren wiederum zahlreiche Module aus anderen Projekten, die ich aber nicht weiter aufzählen möchte.
 
+**PHP**  
+Das fatfree framework ist ein PHP-Framework. Deshalb ist php ab Version 5.3 nötig, damit der firtz funktioniert. Außerdem muss ggf. die Nutzung von .htaccess-Dateien erlaubt sein, wenn der Server nicht in Deiner Hand ist. Wenn die Kiste Dir gehört, rate ich die Einstellungen der .htaccess in die Konfiguration des Webservers zu bringen, das macht alles etwas schneller.
+
+Ob nun Apache, nginx oder lighthttpd ist nicht entscheidend. Im Zweifel sind jedoch die Konfigurationen der Server etwas unerschiedlich, um die rewrite-Rules umzusetzen. Schau mal beim [fatfree framework](https://github.com/bcosca/fatfree#getting-started) vorbei, dort steht nähers.
+
+Außerdem ist es für das Caching nötig, dass der firtz schreibend auf das Verzeichnis zugreifen kann, in dem er installiert ist. Das sollte in den meisten Fällen gegeben sein.
+
+*Kurz und gut: php 5.3 oder höher ist nötig, damit das alles klappt und der firtz muss auf sein Verzeichnis schreiben können.*
+
 Was aber musst Du mitbringen, damit das alles klappt?
 
 **Ich empfehle Anfängern, die sich noch im Unklaren sind, wie die nötigen Arbeitsschritte vor der Veröffentlichung aussehen, dringend den Artikel [How to Podcast for Free](https://auphonic.com/blog/2013/02/07/how-to-podcast-for-free/) durchzulesen. Wem der erste grobe Durchblick fehlt, diesen Artikel aber nicht gelesen hat, der braucht auch hier erstmal nicht weiter zu lesen.**
