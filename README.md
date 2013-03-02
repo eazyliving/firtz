@@ -70,3 +70,73 @@ Melde Dich. Entweder unter info@hoersuppe.de oder auf Twitter an @the_firtz!
 
 Weil's wichtig ist: Ich habe dieses Zeug mit fatfree framework (https://github.com/bcosca/fatfree) und bootstrap (http://twitter.github.com/bootstrap/) zusammengeschraubt.
 Weiterhin hilft der Podlove Webplayer (https://github.com/gerritvanaaken/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
+
+English Version
+---------------
+
+firtz Podcast publisher
+
+firtz 0.9
+
+Podcast publishing with EDLIN
+
++++ ATTENTION +++ 
+
+The project is below the 1.0. You could call it beta but that sounds weird today. 
+If you want to publish a Podcast with firtz be aware. It's going to be painful because I don't guarantee that the handling will remain the same.
+Directory names, locations, file names, formats could be changed. When you're not want to try new things just wait for one or two weeks or ask me. 
+
++++ ATTENTION +++
+You obviously have the urge to test this stuff here or to create a new Podcast. Whatever your intention is to use firtz: It's a good idea.
+
+What is it about? 
+For publishing a Podcast actually two things are necessary: audio files on the web and somewhere a XML file which describes the feed. Everything else is more or less a nice to have which requires additional work. 
+
+But why investing so much work and dragging a lot of ballast? Why using Wordpress when you publish every two months. Why a SQL Database for 5 Articles a year? Why worrying about the installation of plugins when a couple KBytes of XML are enough? 
+
+That's why firtz. firtz is the result of 1.5 days of "work" which I dedicated for producing something which works more or less. 
+
+So how is it working? With configuration files. One for the feed with general data and one file for each episode with its details. 
+
+But let's get started from Scratch. What do you need? You need space somewhere on the web. This space requires php. Databases and stuff like that are not required. However the user of the server needs permissions to create and write directories. 
+
+You're downloading the firtz archive (https://github.com/eazyliving/firtz/archive/master.zip) extract it in your destination directory on the web server and change to the feeds directory. In this location is a demo directory listed. The name of this directory is the future name of your feed. 
+
+The demo directory contains two files: feed.cfg and 001.epi. The   configuration syntax of those files is the same. 
+
+\#: is a comment don't forget the ":"
+
+Attributes are noted like the following: 
+
+attribute: 
+value
+
+Please keep attention that the attribute lines are always stand alone. Blank lines are ignored unless it is a textfield like the summary. 
+
+At the end of the configuration file you can insert a new line with "---end---". Everything below is ignored you can write down notes or trash. Just take a look into the files and play a little bit around. 
+
+IT IS IMPORTANT THAT ALL CONFIGURATION FILES ARE UTF-8!
+
+When you don't pay attention to it you create crazy and weird feeds. 
+
+When you're using Auphonic (http://auphonic.com/) you probably have a much easier life. Activate the Production-Description in your outgoing files make sure that firtz finds them and the episodes are created almost automatically thanks to the metadata passed by Auphonic. Additional information can be found in the documentation.
+
+Lets assume you're ready. How do you access the feed? We suppose that the URL of your web server is http://mynewsuperawesomepodcast.de/ . The feed is still called demo so the RSS2 URL would be: 
+
+http://mynewsuperawesomepodcast.de/feed
+
+When you're using several audio formats you also can use:
+
+http://mynewsuperawesomepodcast.de/feed/mp3
+
+As a bonus a website will be generated. For this feed you can access it via: mynewsuperawesomepodcast.de/feed/show . Each episode has its own player (podlove web player, awesome stuff!), flattr button and a disqus thread as long as it is specified in the configuration of the feed. 
+Single episodes are also linkable just by adding the slug of the episode (the file name without the suffix): 
+mynewsuperawesomepodcast.de/demo/show/001
+
+So that's it. Keep in mind you're a beta tester. The 1.0 will be released when I'm glad with it. Around 2015.
+I already added features which I didn't mention. New ones are in my mind but not implemented yet. You probably also got some!
+
+Contact me. Either via info@hoersuppe.de or Twitter under @the_firtz
+
+Because it is important. I created firtz with the fatfree framework (https://github.com/bcosca/fatfree) and bootstrap (http://twitter.github.com/bootstrap/)
+Furthermore the Podlove Webplayer (https://github.com/gerritvanaaken/podlove-web-player) helps massively that everything looks charming. 
