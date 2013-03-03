@@ -50,6 +50,9 @@
 				<check if="{{@feedattr.itunes}}">
 					<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
 				</check>
+				<script type="text/javascript">
+				if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) document.write('<li><a href="{{str_replace('http://','podcast://',@feedattr.baserel)}}">Instacast</a></li>');
+				</script>
 			</ul>
 			
 		</li>
@@ -114,8 +117,6 @@
 						</ul>
 					</li>
 				<check if="{{@feedattr.bitlove}}">
-				
-				
 					<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						bitlove
@@ -182,7 +183,5 @@
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"/>
 	</check>
-	
-	
-  </body>
+	</body>
 </html>
