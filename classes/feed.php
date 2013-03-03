@@ -62,14 +62,7 @@
 					} else {
 						$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
 					}
-				} elseif ($thisattr == "bitlove") {
-				
-					/* bitlove information */
-
-					$bitlove = explode(" ",$line);
-
-					if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
-
+					
 				} else {
 					/* concat a new line to existing attribute */
 					
@@ -77,7 +70,7 @@
 				}
 				
 			}
-			#echo "<pre>".print_r($attr,1);exit;
+			
 			fclose($fh);
 		
 			/* sanitize data */
@@ -188,10 +181,11 @@
 			}
 			
 			$this->real_slugs = $realSlugs;
+		
 		}
 		
 		public function loadEpisodes($slug = '') {
-
+			
 			$main = $this->main;
 			$maxPubDate = "";
 			if ($slug!='') {
@@ -201,11 +195,11 @@
 					also to be used, when paging is implemented
 				*/
 				if (!is_array($slug)) {
-					$this->episode_slugs = array_intersect(array(0=>$slug),$this->episode_slugs);
-					$this->auphonic_slugs= array_intersect(array(0=>$slug),$this->auphonic_slugs);
+					$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
+					$this->auphonice_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
 				} else {
-					$this->episode_slugs = array_intersect($slug,$this->episode_slugs);
-					$this->auphonic_slugs= array_intersect($slug,$this->auphonic_slugs);
+					$this->episode_slugs = array_intersect_key($slug,$this->episode_slugs);
+					$this->auphonic_slugs= array_intersect_key($slug,$this->auphonic_slugs);
 				}
 				
 			}
@@ -236,7 +230,7 @@
 					}
 					
 					foreach ($this->episode_slugs as $slug) {
-
+						
 						if (!in_array($slug,$this->auphonic_slugs)) {
 							
 							/* exclusive .epi */	
@@ -246,10 +240,15 @@
 						} else {
 						
 							/* auphonic with same slug exists. take values from epi to overwrite args in auphonic episode */
-						
+					
 							$old_episode = $this->episodes[$slug];
+						
 							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$old_episode->item);
-							if ($episode->item) $old_episode->item = $episode->item;
+							if ($episode->item) {
+								foreach ($episode->item as $key => $val) {
+									if ($val!="" && sizeof($val)!=0) $old_episode->item[$key]=$val;
+								}
+							}
 							
 						}
 					}
@@ -279,7 +278,11 @@
 							
 							/* take values from epi to overwrite args in auphonic episode */
 							$epi_episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$episode->item);
-							if ($epi_episode->item) $episode->item = $epi_episode->item;;
+							if ($epi_episode->item) {
+								foreach ($epi_episode->item as $key => $val) {
+									if ($val!="" && sizeof($val)!=0) $episode->item[$key]=$val;
+								}
+							}
 							
 							
 						}
@@ -288,6 +291,7 @@
 					break;
 			}
 			
+		
 			# Sort episodes by pubDate
 			
 			function sortByPubDate($a,$b) {
@@ -321,7 +325,7 @@
 				}
 			}
 			$this->attr['lastupdate'] = date('c', $lastupdate);
-			
+			$realSlugs = array();
 			foreach ($this->episodes as $slug => $episode) {
 				$realSlugs[]=$slug;
 			}
@@ -335,7 +339,7 @@
 				collect slugs and save them.
 				no loading, just finding to reduce load in case, not all episodes have to be displayed (web page single mode/pageing mode)
 			*/
-				
+			
 			if ($this->attr['auphonic-path']!="" && file_exists($this->attr['auphonic-path']) && $this->attr['auphonic-mode']!="" && $this->attr['auphonic-mode']!="off") {
 				
 				/* get local auphonic files */
@@ -349,6 +353,7 @@
 				}
 				
 			}
+		
 			/* find local epi files if not in auphonic exclusive mode */
 			if ($this->attr['auphonic-mode']!='exclusive') {
 				$itemfiles = glob($this->feedDir.'/*.epi');
@@ -358,19 +363,17 @@
 					$slug = basename($EPISODEFILE,'.epi');
 					
 					if ($this->attr['auphonic-mode']=="episode") {
-						
 						/* auphonic episode mode. if there's no identically names auphonic episode, keep hands off */
 						if (in_array($slug,$this->auphonic_slugs)) $this->episode_slugs[]=$slug;
 					} else {	
 						/* auphonic off, full */
 						$this->episode_slugs[]=$slug;
-					
 					}
 					
 				}
 				
 			}
-
+		
 		}
 		
 		public function runExt($main,$extension) {
@@ -389,9 +392,7 @@
 			$items=array();
 			foreach ($this->episodes as $episode) {
 				$item = $episode->item;
-				if (isset($item[$audioformat])) {
-					$item['enclosure'] = $item[$audioformat];
-				}
+				$item['enclosure'] = $item[$audioformat];
 				$items[]=$item;
 			}
 			$main->set('items',$items);
@@ -421,8 +422,8 @@
 				$item = $episode->item;
 				if (isset($item[$audioformat])) {
 					$item['enclosure'] = $item[$audioformat];
+					$items[]=$item;
 				}
-				$items[]=$item;
 			}
 			$main->set('items',$items);
 			
