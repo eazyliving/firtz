@@ -1,17 +1,15 @@
 #firtz
 
 
-firtz podcast publisher
+*firtz podcast publisher*  
+*Version 0.9*
 
-Version 0.9
-
-+++ ACHTUNG +++ 
+**ACHTUNG!**
 
 Das hier ist unterhalb 1.0. Könnte man beta nennen, klingt nur doof heutzutage.
-Solltest Du damit einen Podcast veröffentlichen wollen: Sei gewarnt, es wird schmerzhaft, denn ich garantiere Dir nicht, dass die Handhabung bleibt wie sie ist.
-Ordnernamen, Ordnerorte, Dateinamen, Formate können und werden sich ändern. Solltest Du nicht experiementierfreudig sein, warte lieber noch ein oder zwei Wochen oder frag mich ruhig persönlich.
 
-+++ ACHTUNG +++
+Solltest Du damit einen Podcast veröffentlichen wollen: Sei gewarnt, es könnte noch mehr Arbeit als nötig sein, denn ich garantiere Dir nicht, dass die Handhabung bleibt wie sie ist.  
+Ordnernamen, Ordnerorte, Dateinamen, Formate können und werden sich ändern. Solltest Du nicht experiementierfreudig sein, warte lieber noch ein oder zwei Wochen oder frag mich persönlich.
 
 ## Über
 
@@ -45,26 +43,39 @@ Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig. Dieser Platz i
 
 Datenbanken und anderen Kram braucht es nicht, allerdings muss der ausführende Nutzer des Webservers in der Lage, Verzeichnisse zu erzeugen und Dateien in diese hineinzuschreiben.
 
-Sollte der firtz in einem Unterverzeichnis der genutzten Domain betrieben werden, musst Du noch die .htaccess korrigieren und die RewriteBase von / auf /UNTERORDNER ändern.
+Sollte der firtz in einem Unterverzeichnis der genutzten Domain betrieben werden, musst Du noch die .htaccess korrigieren und die
+RewriteBase von 
+
+`RewriteBase /`
+
+auf 
+
+`RewriteBase /UNTERORDNER`
+
+ändern.
 
 ## Los geht's
 
-Du besorgst Dir das firtz-Archiv (https://github.com/eazyliving/firtz/), entpackst es in den Ordner, in dem Du das auf dem Webserver haben willst und bewegst Dich darauf hin in den Unterordner feeds/.
+Du besorgst Dir das [firtz-Archiv](https://github.com/eazyliving/firtz/), entpackst es in den Ordner, in dem Du das auf dem Webserver haben willst und bewegst Dich darauf hin in den Unterordner `feeds/`.
 
 In diesem findest Du ein Demo-Verzeichnis. Der Name dieses Ordners, ist der zukünftige Name Deines Feeds.
 
-Im Demo-Ordner sind zwei Dateien: feed.cfg und 001.epi. Das nicht syntaktisch zu nennende Prinzip dieser Dateien ist identisch:
+Im Demo-Ordner sind zwei Dateien: `feed.cfg` und `001.epi`. Das nicht syntaktisch zu nennende Prinzip dieser Dateien ist identisch:
 
-\#: ist ein Kommentar nicht den ":" vergessen!
+`#: ist ein Kommentar nicht den ":" vergessen!`
 
 Attribute werden wie folgt notiert:
 
-attribute:  
-value
+`attribute:  
+value`
 
 Achtet bitte darauf, dass die Attribut-Zeile alleine steht. Leerzeilen werden ignoriert, es sei denn, es geht um eine Textfeld wie summary.
 
-An's Ende der Konfiguration kannst Du in einer neuen Zeile ein "---end---" setzen, alles dahinter wird ignoriert. Du kannst da Notizen oder Müll unterbringen ;) Ich werde das hier im Moment noch nicht weiter ausbreiten. Schau in die Dateien und spiel damit rum.
+An's Ende der Konfiguration kannst Du in einer neuen Zeile ein 
+
+`---end---`
+
+setzen, alles dahinter wird ignoriert. Du kannst da Notizen oder Müll unterbringen ;) Ich werde das hier im Moment noch nicht weiter ausbreiten. Schau in die Dateien und spiel damit rum.
 
 **Wichtig ist, dass alle Konfigurationsdateien UTF8 sind, denn sonst gibt's Müsli im Feed!**
 
