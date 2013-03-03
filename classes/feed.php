@@ -63,6 +63,14 @@
 						$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
 					}
 					
+				} elseif ($thisattr == "bitlove") {
+				
+					/* bitlove information */
+
+					$bitlove = explode(" ",$line);
+
+					if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
+
 				} else {
 					/* concat a new line to existing attribute */
 					
@@ -195,11 +203,11 @@
 					also to be used, when paging is implemented
 				*/
 				if (!is_array($slug)) {
-					$this->episode_slugs = array_intersect_key(array(0=>$slug),$this->episode_slugs);
-					$this->auphonice_slugs= array_intersect_key(array(0=>$slug),$this->auphonic_slugs);
+					$this->episode_slugs = array_intersect(array(0=>$slug),$this->episode_slugs);
+					$this->auphonice_slugs= array_intersect(array(0=>$slug),$this->auphonic_slugs);
 				} else {
-					$this->episode_slugs = array_intersect_key($slug,$this->episode_slugs);
-					$this->auphonic_slugs= array_intersect_key($slug,$this->auphonic_slugs);
+					$this->episode_slugs = array_intersect($slug,$this->episode_slugs);
+					$this->auphonic_slugs= array_intersect($slug,$this->auphonic_slugs);
 				}
 				
 			}
@@ -422,8 +430,8 @@
 				$item = $episode->item;
 				if (isset($item[$audioformat])) {
 					$item['enclosure'] = $item[$audioformat];
-					$items[]=$item;
 				}
+				$items[]=$item;
 			}
 			$main->set('items',$items);
 			
