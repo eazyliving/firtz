@@ -98,7 +98,10 @@ Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (
 
 Das war's für's erste. Denke dran: Du bist im Grunde Betatester, so lange die 1.0 nicht erreicht ist.
 
-Noch vor der 1.0 möchte ich 
+Noch vor der 1.0 möchte ich fertig werden mit:
+
+* Cloning: Feeds und Seiten werden einmal statisch gerendert, die Seiten benötigen dann kein PHP mehr.
+* Ein paar schönen Templates zum Rumspielen
 
 ## Kontakt
 
