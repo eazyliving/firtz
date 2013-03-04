@@ -204,12 +204,12 @@
 				*/
 				if (!is_array($slug)) {
 					$this->episode_slugs = array_intersect(array(0=>$slug),$this->episode_slugs);
-					$this->auphonice_slugs= array_intersect(array(0=>$slug),$this->auphonic_slugs);
+					$this->auphonic_slugs = array_intersect(array(0=>$slug),$this->auphonic_slugs);
 				} else {
 					$this->episode_slugs = array_intersect($slug,$this->episode_slugs);
 					$this->auphonic_slugs= array_intersect($slug,$this->auphonic_slugs);
 				}
-				
+			
 			}
 			/* handle loading of episodes depending on auphonic mode */
 			
