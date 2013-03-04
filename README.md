@@ -111,6 +111,7 @@ Melde Dich. Entweder per [Mail](mailto:info@hoersuppe.de), auf [Twitter](https:/
 
 Ich habe firtz mit [fatfree framework](https://github.com/bcosca/fatfree) und [bootstrap](http://twitter.github.com/bootstrap/) zusammengeschraubt.
 
+Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
 
 # English Version
 
@@ -217,3 +218,5 @@ Contact me. Either via [Mail](mailto:info@hoersuppe.de), at [Twitter](https://tw
 ## Links 
 
 I build firtz with [fatfree framework](https://github.com/bcosca/fatfree) and [bootstrap](http://twitter.github.com/bootstrap/).
+
+Additionaly the [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) helps that everything looks nicely more or less :)
