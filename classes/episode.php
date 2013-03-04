@@ -15,12 +15,15 @@
 			
 			$thisattr = "";
 			
-			$prod = json_decode(file_get_contents($filename,true));
+			$prod = json_decode(str_replace("\\r", "\\n",  file_get_contents($filename)));
 			if ($prod===false) return false;
+			
+		
 			
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = $prod->metadata->subtitle;
 			$item['article'] = $this->markdown->renderString($prod->metadata->summary);
+
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->creation_time));
 			$item['keywords'] = implode(",",$prod->metadata->tags);
