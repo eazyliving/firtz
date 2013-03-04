@@ -1,0 +1,18 @@
+		<div class="row-fluid marketing">
+		
+		<repeat group="@items" value="{{@item}}">
+			
+			
+			<div class="media well-large">
+				<img class="media-object pull-left" src="{{@item.image}}" width=64 height=64>
+				
+				<div class="media-body">
+					<h4 class="media-heading"> <a href="/{{@feedattr.slug}}/show/{{@item.slug}}" name="{{@item.slug}}"><span class="text-center">{{@item.title}}</span></a> / {{strftime('%Y-%m-%d %H:%M',strtotime(@item.pubDate))}}</h4>
+					<div class="">
+						{{@item.description}}
+					</div>
+				</div>
+			</div>
+			
+		</repeat>
+		</div>

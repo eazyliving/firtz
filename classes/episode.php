@@ -15,12 +15,15 @@
 			
 			$thisattr = "";
 			
-			$prod = json_decode(file_get_contents($filename,true));
+			$prod = json_decode(str_replace("\\r", "\\n",  file_get_contents($filename)));
 			if ($prod===false) return false;
+			
+		
 			
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = $prod->metadata->subtitle;
 			$item['article'] = $this->markdown->renderString($prod->metadata->summary);
+
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->creation_time));
 			$item['keywords'] = implode(",",$prod->metadata->tags);
@@ -213,7 +216,7 @@
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
 			$item['article'] =  $this->markdown->renderString($item['article']);
-			$item['description']=($item['description']?:substr(strip_tags($item['article'],0,255)));
+			$item['description']=($item['description']?:substr(strip_tags($item['article']),0,255));
 			$item['summary'] = strip_tags($item['article']);
 			
 

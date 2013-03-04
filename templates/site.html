@@ -50,18 +50,21 @@
 				<check if="{{@feedattr.itunes}}">
 					<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
 				</check>
+				<script type="text/javascript">
+				if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) document.write('<li><a href="{{str_replace('http://','podcast://',@feedattr.baserel)}}">Instacast</a></li>');
+				</script>
 			</ul>
 			
 		</li>
-			<li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li>
+			<check if="{{@feedattr.email}}"><li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li></check>
 			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
-				<li><a href="/{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
+				<li><a href="{{@BASEURL}}{{@feedattr.slug}}/page/{{basename(@template,'.html')}}">{{basename(@template,'.html')}}</a></li>
 			</repeat>
 			<repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
 				<include href="{{'header/'.basename(@template)}}"/>
 			</repeat>
         </ul>
-        <h3><a class="homebut" href="/{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
+        <h3><a class="homebut" href="{{@BASEURL}}{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
 	
       <hr>
@@ -77,12 +80,12 @@
 			<ul class="pager">
 				<check if="{{@page>1}}">
 					<li class="previous">
-						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
 					</li>
 				</check>
 				<check if="{{@page<@maxpage}}">
 					<li class="next">
-						<a href="/{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
 					</li>
 				</check>
 			</ul>
@@ -94,7 +97,7 @@
 		<true>
 		<repeat group="@items" value="{{@item}}">
 			
-			<a href="<check if="{{@singlepage==false}}">/{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
+			<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
 			<h5 class="text-center">{{strftime('%Y-%m-%d %H:%M',strtotime(@item.pubDate))}}</h5>
 			<check if="{{(trim(@item.article)!='')}}"><div class="well well-large">{{@item.article | raw}}</div></check>
 
@@ -114,8 +117,6 @@
 						</ul>
 					</li>
 				<check if="{{@feedattr.bitlove}}">
-				
-				
 					<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						bitlove
@@ -136,15 +137,17 @@
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
 				</iframe>
 			</check>
-			
+			<div>
+			<repeat group="{{glob('templates/episode/*.html')}}" value="{{@template}}">
+				<include href="{{'episode/'.basename(@template)}}"/>
+			</repeat>
+			</div>
 			<check if="{{@feedattr.disqus}}">
 				<include href="disqus.html"/>
 			</check>
 			
 			<hr>
-			<repeat group="{{glob('templates/episode/*.html')}}" value="{{@template}}">
-				<include href="{{'episode/'.basename(@template)}}"/>
-			</repeat>
+			
 			
 		</repeat>
         </true>
@@ -172,8 +175,7 @@
 				<include href="{{'footer/'.basename(@template)}}"/>
 		</repeat>
       </div>
-
-    </div>
+	</div>
 	<script src="{{@BASEURL}}js/bootstrap.min.js"></script>
 	<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>
     <script src="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelement-and-player.min.js"></script>
@@ -182,7 +184,5 @@
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"/>
 	</check>
-	
-	
-  </body>
+	</body>
 </html>

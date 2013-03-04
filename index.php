@@ -18,9 +18,9 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 $main->set('page',0);
-$main->set('DEBUG',0);
+$main->set('DEBUG',1);
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','clone'));
 
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
@@ -39,6 +39,9 @@ foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
 
 $main->set('feeds',$feeds);
 
+function sortByPubDate($a,$b) {
+	return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
+}
 
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
@@ -296,6 +299,89 @@ $main->route('GET|HEAD /@feed/page/@page',
 	}, $main->get('CDURATION')
 );
 
+
+
+
+$main->route('GET /clone',
+	function($main,$params) {
+		
+		function addDirectoryToZip($zip, $dir, $base)
+		{
+			$newFolder = str_replace($base, '', $dir);
+			$zip->addEmptyDir($newFolder);
+			foreach(glob($dir . '/*') as $file)
+			{
+				if(is_dir($file))
+				{
+					$zip = addDirectoryToZip($zip, $file, $base);
+				}
+				else
+				{
+					$newFile = str_replace($base, '', $file);
+					$zip->addFile($file, $newFile);
+				}
+			}
+			return $zip;
+		}
+		
+		$z = new ZipArchive();
+		
+		try {
+			$filename = tempnam(sys_get_temp_dir(),'firtz');
+		} catch (Exception $e) {
+			echo $e;
+			exit;
+		}
+
+		$z->open($filename, ZIPARCHIVE::CM_PKWARE_IMPLODE);
+		
+		foreach ($main->get('feeds') as $slug) {
+			
+			$z=addDirectoryToZip($z,'js','');
+			$z=addDirectoryToZip($z,'css','');
+			$z=addDirectoryToZip($z,'pwp','');
+			
+			$z->addEmptyDir($slug);
+			$z->addEmptyDir($slug.'/show');
+			
+			$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
+			$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
+			$feed = new feed($main,$slug,$FEEDCONFIG);
+		
+			if ($feed->attr['clone']=='') continue;
+		
+			$main->set('BASEURL',$feed->attr['clone']);
+			
+			$feed->findEpisodes();
+			$feed->loadEpisodes();
+			
+			foreach ($feed->attr['audioformats'] as $audio) {
+				$xml = $feed->renderRSS2($audio,true);
+				$z->addFromString($slug."/".$audio.".xml",$xml);
+			}
+			
+			$main->set('epi','');
+			$html = $feed->renderHTML(true);
+			
+			$z->addFromString($slug.'/show/index.html',$html);
+			foreach ($feed->real_slugs as $episode_slug) {
+				$main->set('epi',$episode_slug);
+				$html = $feed->renderHTML(true);
+				$z->addEmptyDir($slug.'/show/'.$episode_slug);
+				$z->addFromString($slug.'/show/'.$episode_slug.'/index.html',$html);
+			}
+			
+		}
+		
+		$z->close();
+		
+		header('Content-Type: application/zip');
+		header('Content-Disposition: attachment; filename="'.basename($filename).'.zip"');
+		readfile($filename);
+		
+		exit;
+	}
+);
 
 
 $main->run();

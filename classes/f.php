@@ -62,7 +62,6 @@
 					} else {
 						$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
 					}
-					
 				} elseif ($thisattr == "bitlove") {
 				
 					/* bitlove information */
@@ -78,7 +77,7 @@
 				}
 				
 			}
-			
+			#echo "<pre>".print_r($attr,1);exit;
 			fclose($fh);
 		
 			/* sanitize data */
@@ -126,8 +125,8 @@
 				$main->set('sitetemplate','site.html');
 			}
 			
-			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
-			if ($attr['clone']!='' && substr($attr['clone'],-1)!='/') $attr['clone'].='/';
+			if ($attr['auphonic-mode']=="") $attr['auphonic-mode']='off';
+			
 			$this->attr = $attr;
 			
 		}
@@ -189,11 +188,10 @@
 			}
 			
 			$this->real_slugs = $realSlugs;
-		
 		}
 		
 		public function loadEpisodes($slug = '') {
-			
+
 			$main = $this->main;
 			$maxPubDate = "";
 			if ($slug!='') {
@@ -204,12 +202,12 @@
 				*/
 				if (!is_array($slug)) {
 					$this->episode_slugs = array_intersect(array(0=>$slug),$this->episode_slugs);
-					$this->auphonic_slugs = array_intersect(array(0=>$slug),$this->auphonic_slugs);
+					$this->auphonic_slugs= array_intersect(array(0=>$slug),$this->auphonic_slugs);
 				} else {
 					$this->episode_slugs = array_intersect($slug,$this->episode_slugs);
 					$this->auphonic_slugs= array_intersect($slug,$this->auphonic_slugs);
 				}
-			
+				
 			}
 			/* handle loading of episodes depending on auphonic mode */
 			
@@ -238,7 +236,7 @@
 					}
 					
 					foreach ($this->episode_slugs as $slug) {
-						
+
 						if (!in_array($slug,$this->auphonic_slugs)) {
 							
 							/* exclusive .epi */	
@@ -248,9 +246,8 @@
 						} else {
 						
 							/* auphonic with same slug exists. take values from epi to overwrite args in auphonic episode */
-					
-							$old_episode = $this->episodes[$slug];
 						
+							$old_episode = $this->episodes[$slug];
 							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$old_episode->item);
 							if ($episode->item) {
 								foreach ($episode->item as $key => $val) {
@@ -292,17 +289,17 @@
 								}
 							}
 							
-							
 						}
 					}
 					
 					break;
 			}
 			
-		
 			# Sort episodes by pubDate
 			
-			
+			function sortByPubDate($a,$b) {
+				return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
+			}
 			uasort($this->episodes,'sortByPubDate');
 			
 			/* find the latest episode to fill in data in rss and atom feeds (<updated>) */
@@ -331,7 +328,7 @@
 				}
 			}
 			$this->attr['lastupdate'] = date('c', $lastupdate);
-			$realSlugs = array();
+			
 			foreach ($this->episodes as $slug => $episode) {
 				$realSlugs[]=$slug;
 			}
@@ -345,7 +342,7 @@
 				collect slugs and save them.
 				no loading, just finding to reduce load in case, not all episodes have to be displayed (web page single mode/pageing mode)
 			*/
-			
+				
 			if ($this->attr['auphonic-path']!="" && file_exists($this->attr['auphonic-path']) && $this->attr['auphonic-mode']!="" && $this->attr['auphonic-mode']!="off") {
 				
 				/* get local auphonic files */
@@ -359,7 +356,6 @@
 				}
 				
 			}
-		
 			/* find local epi files if not in auphonic exclusive mode */
 			if ($this->attr['auphonic-mode']!='exclusive') {
 				$itemfiles = glob($this->feedDir.'/*.epi');
@@ -369,17 +365,19 @@
 					$slug = basename($EPISODEFILE,'.epi');
 					
 					if ($this->attr['auphonic-mode']=="episode") {
+						
 						/* auphonic episode mode. if there's no identically names auphonic episode, keep hands off */
 						if (in_array($slug,$this->auphonic_slugs)) $this->episode_slugs[]=$slug;
 					} else {	
 						/* auphonic off, full */
 						$this->episode_slugs[]=$slug;
+					
 					}
 					
 				}
 				
 			}
-		
+
 		}
 		
 		public function runExt($main,$extension) {
@@ -398,7 +396,9 @@
 			$items=array();
 			foreach ($this->episodes as $episode) {
 				$item = $episode->item;
-				$item['enclosure'] = $item[$audioformat];
+				if (isset($item[$audioformat])) {
+					$item['enclosure'] = $item[$audioformat];
+				}
 				$items[]=$item;
 			}
 			$main->set('items',$items);
