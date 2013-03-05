@@ -18,7 +18,7 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 $main->set('page',0);
-$main->set('DEBUG',1);
+$main->set('DEBUG',0);
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','clone'));
 

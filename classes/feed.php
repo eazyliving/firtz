@@ -397,9 +397,11 @@
 			/* collect episodes */
 			$items=array();
 			foreach ($this->episodes as $episode) {
+				
 				$item = $episode->item;
-				$item['enclosure'] = $item[$audioformat];
+				if (isset($item[$audioformat]))	$item['enclosure'] = $item[$audioformat];
 				$items[]=$item;
+				
 			}
 			$main->set('items',$items);
 			
@@ -426,9 +428,7 @@
 			foreach ($this->episodes as $episode) {
 			
 				$item = $episode->item;
-				if (isset($item[$audioformat])) {
-					$item['enclosure'] = $item[$audioformat];
-				}
+				if (isset($item[$audioformat])) $item['enclosure'] = $item[$audioformat];
 				$items[]=$item;
 			}
 			$main->set('items',$items);
