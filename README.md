@@ -112,3 +112,111 @@ Melde Dich. Entweder per [Mail](mailto:info@hoersuppe.de), auf [Twitter](https:/
 Ich habe firtz mit [fatfree framework](https://github.com/bcosca/fatfree) und [bootstrap](http://twitter.github.com/bootstrap/) zusammengeschraubt.
 
 Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
+
+# English Version
+
+
+*firtz podcast publisher*  
+*Version 0.9*
+
+**ATTENTION!**
+
+The project is below the 1.0. You could call it beta but that sounds weird today. 
+If you want to publish a Podcast with firtz be aware. It's going to be painful because I don't guarantee that the handling will remain the same.
+Directory names, locations, file names, formats could be changed. If you're not want to try new things just wait for one or two weeks or ask me.
+
+## About
+
+You obviously have the urge to test this stuff or to create a new Podcast. Whatever your intention is to use firtz: It's a good one.
+
+For publishing a Podcast actually two things are necessary: audio files on the web and somewhere a XML file which describes the feed. Everything else is more or less a nice to have which requires additional work. 
+
+But why investing so much work and dragging a lot of ballast? Why using Wordpress when you publish every two months. Why a SQL Database for five Articles a year? Why worrying about the installation of plugins when a couple KBytes of XML are enough? 
+
+There is a second aspect. During my daily work with the [Hörsuppe](http://hoersuppe.de) where I blog and podcast about german Podcasts, I'm more or less confronted with Podcasts which put a lot of effort into the spoken word but fail with problems during the publishing process.
+
+This ends up with broken feeds. Feeds where important metadata about the audio files is missing and it is not impossible but hard to subscribe the feed.
+
+Beyond that it is a relieve for the Hörsuppe when all metadata is correct.
+
+firtz should help to decrease the pressure about technical issues. 
+
+That's why firtz. firtz is the result of 1.5 days of "work" which I dedicated for producing something which works more or less. 
+
+So how is it working? With configuration files. One for the feed with general data and one file for each episode with its details. 
+
+If you want to have an easier life you should use auphonic and let process firtz all files which generates one or more feeds. It just could be easier if auphonic would provide it on its own. 
+
+
+## Requirements 
+
+But let's get started by the beginning. What do you need? 
+
+You need space somewhere on the net. This space just has to fulfil one requirement to execute **php greater than 5.3**
+
+You don't need databases or stuff like that however the user of the web server needs permissions to create directories and write files. 
+
+If you want to use firtz in subdirectories of your domain you need to adjust the RewriteBase of the .htaccess file from: 
+
+`RewriteBase /`
+
+to
+
+`RewriteBase /UNTERORDNER`
+
+## Let's go
+
+You're downloading the [firtz archive](https://github.com/eazyliving/firtz/) extract it in your destination directory on the web server and change to the `feeds` directory. 
+
+In this location is a demo directory listed. The name of this directory is the future name of your feed. 
+
+The demo directory contains two files: `feed.cfg` and `001.epi`. The configuration syntax of those files is the same. 
+
+`\#: is a comment don't forget the ":"`
+
+Attributes are noted like the following: 
+
+`attribute: 
+value`
+
+Please keep attention that the attribute lines are always stand alone. Blank lines are ignored unless it is a textfield like the summary. 
+
+At the end of the configuration file you can insert a new line with 
+
+`---end---`
+
+Everything below is ignored you can write down notes or trash. Just take a look into the files and play a little bit around. 
+
+**It It important that all files are UTF-8 encoded otherwise you create weird and crazy feeds!** 
+
+When you're using auphonic (http://auphonic.com/) you probably have a much easier life. Activate the Production-Description in your outgoing files make sure that firtz finds them and the episodes are created almost automatically thanks to the metadata passed by auphonic. Additional information can be found in the documentation.
+
+Lets assume you're ready. How do you access the feed? We suppose that the URL of your web server is `http://mynewsuperawesomepodcast.de/` . The feed is still called demo so the RSS2 URL would be: 
+
+`http://mynewsuperawesomepodcast.de/feed`
+
+When you're using several audio formats you also can use:
+
+`http://mynewsuperawesomepodcast.de/feed/mp3`
+
+As a bonus a website will be generated. For this feed you can access it via: `mynewsuperawesomepodcast.de/feed/show`. Each episode has its own [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player), [flattr](http://flattr.com) buttons and a [disqus](http://disqus.com) thread as long as it is specified in the configuration of the feed. 
+Single episodes are also linkable just by adding the slug of the episode (the file name without the suffix): 
+`mynewsuperawesomepodcast.de/demo/show/001`
+
+## Was wird alles noch passieren?
+
+So that's it. Keep in mind you're a beta tester as long as the 1.0 isn't reached. 
+
+Before the 1.0 I'd like to finish: 
+* Cloning: Feeds and pages will be rendered statically one time after the publishing the pages don't need php anymore.
+* Some nice templates for playing around
+
+## Contact
+
+Contact me. Either via [Mail](mailto:info@hoersuppe.de), at [Twitter](https://twitter.com/the_firtz) or [app.net](https://alpha.app.net/firtz) and of course here at github at the issues section. 
+
+## Links 
+
+I build firtz with [fatfree framework](https://github.com/bcosca/fatfree) and [bootstrap](http://twitter.github.com/bootstrap/).
+
+Additionaly the [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) helps that everything looks nicely more or less :)
