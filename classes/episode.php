@@ -22,7 +22,7 @@
 			
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = $prod->metadata->subtitle;
-			$item['article'] = $this->markdown->renderString($prod->metadata->summary);
+			$item['article'] = $prod->metadata->summary;
 
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->creation_time));
@@ -215,7 +215,7 @@
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
-			$item['article'] =  $this->markdown->renderString($item['article']);
+			$item['article'] =  $this->markdown->renderString(strip_tags($item['article']));
 			$item['description']=($item['description']?:substr(strip_tags($item['article']),0,255));
 			$item['summary'] = strip_tags($item['article']);
 			
