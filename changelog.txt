@@ -1,5 +1,6 @@
 changelog:
 
+0.10 changed to podlove webplayer v2.0.4
 0.9 added bitlove support; reintroduced dropdown menus; articles now marked up by markdown 
 0.8 tons of fixes, typos and stuff. content-extensions.
 0.7 autodetect mediafiles with mediabaseurl/path and formats:attribute

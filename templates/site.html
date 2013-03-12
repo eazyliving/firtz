@@ -15,22 +15,22 @@
     <link href="{{@BASEURL}}css/bootstrap-responsive.min.css" rel="stylesheet">
 
 	<link href="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelementplayer.min.css" rel="stylesheet" media="screen" type="text/css" />
-    <link href="{{@BASEURL}}pwp/libs/fontawesome/css/font-awesome.min.css" rel="stylesheet" media="screen" type="text/css" />
-    <link href="{{@BASEURL}}pwp/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="{{@BASEURL}}pwp/libs/pwpfont/css/fontello.css" rel="stylesheet" />
+ 
+	<link href="{{@BASEURL}}pwp/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+
 	
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{@feedattr.image}}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
     <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
     <link rel="shortcut icon" href="./favicon.png">
-
+	<script src="{{@BASEURL}}js/jquery.js"></script>
 
     <repeat group="{{glob('templates/head/*.html')}}" value="{{@template}}">
 		<include href="{{'head/'.basename(@template)}}"/>
     </repeat>
   </head>
-
-  <script src="{{@BASEURL}}js/jquery.js"></script>
 
   <body>
 
@@ -176,6 +176,7 @@
 		</repeat>
       </div>
 	</div>
+
 	<script src="{{@BASEURL}}js/bootstrap.min.js"></script>
 	<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>
     <script src="{{@BASEURL}}pwp/libs/mediaelement/build/mediaelement-and-player.min.js"></script>

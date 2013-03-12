@@ -27,6 +27,7 @@ $main->set('extattr',array('slug','template','arguments','prio','script','type')
 
 $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webm'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg'));
 
+#echo "<pre>".print_r($main,1);exit;
 
 $firtz = new firtz();
 $firtz->loadAllTheExtensions();
@@ -42,6 +43,7 @@ $main->set('feeds',$feeds);
 function sortByPubDate($a,$b) {
 	return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
 }
+
 
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
@@ -128,7 +130,7 @@ foreach ($firtz->extensions as $slug => $extension) {
 
 $main->route('GET|HEAD /@feed/@audio',
 	function ($main,$params) {
-		
+	
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
 		
@@ -146,6 +148,7 @@ $main->route('GET|HEAD /@feed/@audio',
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$feed->renderRSS2($params['audio']);
+		
 	}, $main->get('CDURATION')
 );
 
@@ -184,6 +187,7 @@ $main->route('GET|HEAD /@feed',
 
 $main->route('GET|HEAD /@feed/show',
 	function ($main,$params) {
+		
 		$slug = $params['feed'];
 		
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -199,6 +203,7 @@ $main->route('GET|HEAD /@feed/show',
 		$feed->episodes = array_slice($feed->episodes,0,3);
 		
 		$feed->renderHTML();
+		
 	}, $main->get('CDURATION')
 );
 
@@ -382,7 +387,6 @@ $main->route('GET /clone',
 		exit;
 	}
 );
-
 
 $main->run();
 
