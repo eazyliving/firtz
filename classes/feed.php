@@ -26,6 +26,15 @@
 			$this->main = $main;
 			$this->feedDir=dirname($configfile);
 			
+			if (file_exists($this->feedDir.'/'.$slug.'.html')) {
+				$this->htmltemplate = $slug.'.html';
+				$ui = $main->get('UI').';'.$this->feedDir.'/';
+				$main->set('UI',$ui);
+				
+			} else {
+				$this->htmltemplate = 'site.html';
+			}
+			
 			$attr=array();
 		
 			/* populate attributes */
@@ -411,6 +420,35 @@
 			
 		}
 		
+		public function setOpenGraph() {
+		
+			$main = $this->main;
+		
+			$og = array();
+			$og['url'] = $main->get('BASEURL').$this->attr['slug'].'/show';
+			if (sizeof($this->episodes)==1) {
+				
+				$episode = reset($this->episodes);
+			
+				$og['title'] = $episode->item['title'];
+				$og['url'].='/'.$episode->item['slug'];
+			} else {
+				$og['title']=$this->attr['title'];
+			}
+			$og['audio']=array();
+			foreach ($this->episodes as $episode) {
+				if (sizeof($episode->item['audiofiles'])==0) continue;
+				$format = $this->attr['audioformats'][0];
+				
+				$og['audio']['typename'] = substr($episode->item['audiofiles'][$format]['type'],0,5);
+				$og['audio']['type'] = $episode->item['audiofiles'][$format]['type'];
+				$og['audio']['url'] = $episode->item['audiofiles'][$format]['link'];
+			}
+			$main->set('og',$og);
+			
+		
+		}
+		
 		
 		public function renderRSS2($audioformat = '',$ret=false) {
 		
@@ -426,7 +464,6 @@
 			/* collect episodes */
 			$items=array();
 			foreach ($this->episodes as $episode) {
-			
 				$item = $episode->item;
 				if (isset($item[$audioformat])) $item['enclosure'] = $item[$audioformat];
 				$items[]=$item;
@@ -444,7 +481,7 @@
 		}
 		
 		public function renderHTML($ret=false,$pagename="") {
-			
+		
 			/* render standard html template */
 			
 			$main = $this->main;
@@ -462,14 +499,14 @@
 			}
 			
 			$main->set('items',$items);
-			
+			$this->setOpenGraph();
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
 			if ($ret===false) {
-				echo Template::instance()->render('site.html');
+				echo Template::instance()->render($this->htmltemplate);
 			} else {
-				return Template::instance()->render('site.html');
+				return Template::instance()->render($this->htmltemplate);
 			}
 		}
 	}

@@ -3,10 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>{{@feedattr.title}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{@feedattr.description}}">
-    <meta name="author" content="{{@feedattr.author}}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="{{@feedattr.description}}"/>
+    <meta name="author" content="{{@feedattr.author}}"/>
+	<check if="{{@feedattr.image}}"><meta property="og:image" content="{{@feedattr.image}}"/></check>
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="<check if="{{!@showpage}}"><true>{{@og.title}}</true><false>{{basename(@showpage,'.html')}}</false></check>"/>
+	<meta property="og:url" content="<check if="{{!@showpage}}"><true>{{@og.url}}</true><false>{{@BASEURL}}{{@feedattr.slug}}/page/{{basename(@showpage)}}</false></check>"/>
+	<meta property="og:site_name" content="{{@feedattr.title}}"/>
+	<check if="{{@og.audio}}"><meta property="og:{{@og.audio.typename}}" content="{{@og.audio.url}}"/>
+	<meta propertyp="og:{{@og.audio.typename}}:type" content="{{@og.audio.type}}"/>
+	</check>
+	
     <link href="{{@feedattr.sitecss}}" rel="stylesheet">
 	
     <style type="text/css">
@@ -33,7 +41,7 @@
   </head>
 
   <body>
-
+	
     <div class="container-narrow">
 
       <div class="masthead">

@@ -18,7 +18,9 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 $main->set('page',0);
-$main->set('DEBUG',0);
+$main->set('DEBUG',1);
+$main->set('epi','');
+$main->set('og',array());
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','clone'));
 
@@ -219,6 +221,7 @@ $main->route('GET|HEAD /@feed/show/@epi',
 		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
 		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
 		$main->set('singlepage',true);
+		$main->set('epi',$params['epi']);
 		$feed = new feed($main,$slug,$FEEDCONFIG);
 		$feed->findEpisodes();
 		$feed->loadEpisodes($params['epi']);
