@@ -216,7 +216,7 @@
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
 			$item['article'] =  $this->markdown->renderString(strip_tags($item['article']));
-			$item['description']=strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255)));
+			$item['description']=chop(strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255))));
 			$item['summary'] = strip_tags($item['article']);
 			
 
