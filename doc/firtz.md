@@ -274,7 +274,7 @@ Der Pfad zu den lokal vorhandenen Auphonic-Produktionsdateien.
  
 
 **auphonic-glob**:  
-Ein Matchpattern, mit denen die .json Produktionsdateien gefunden werden. *.json z.B. für alle.
+Ein Matchpattern, mit denen die `*.json` Produktionsdateien gefunden werden. `*.json` z.B. für alle.
 Sind im Pfad Dateien unterschiedlicher Feeds vorhanden, sollte das Pattern (und natürlich die Dateinamen!) entsprechend gewählt werden. 
 
  
@@ -482,7 +482,7 @@ Nehmen wir also an, die Dateien lägen auf dem gleichen Server wie der SupiCast 
 
 Wie klappt das mit den Namen? Es handelt sich natürlich nicht um den Titel (Metadaten) der Folge. Der slug ist in diesem Falle der Teil des Dateinamens vor der Dateiextension (.mp3 .m4a .json...). Ihr könnt ihn in Auphonic als **Output Filename** angeben. Wird dies nicht getan, übernimmt Auphonic den Ursprungsdateinamen. Heißt die zu Auphonic hochgeladene Datei also bereits 001.flac, ist alles gut und Du musst nichts weiter tun.
 
-Im Ordner liegen also nun alle Dateien. Ist der Feed mit einem Attribut **auphonic-path** versehen, sucht firzt in genau diesem Ordner nach den json-Dateien. Gesucht wird nach dem **auphonic-glob**. Steht hier *.json, werden alle Dateien gefunden. Steht hier z.B. sc*.json, können sich im gleichen Ordner Dateien eines zweiten Podcasts befinden, ohne dass diese hinzugezählt werden.
+Im Ordner liegen also nun alle Dateien. Ist der Feed mit einem Attribut **auphonic-path** versehen, sucht firzt in genau diesem Ordner nach den json-Dateien. Gesucht wird nach dem **auphonic-glob**. Steht hier `*.json`, werden alle Dateien gefunden. Steht hier z.B. `sc*.json`, können sich im gleichen Ordner Dateien eines zweiten Podcasts befinden, ohne dass diese hinzugezählt werden.
 
 Gewöhne Dir übrigens an, die Dateinamen vorhersagbar zu halten und nicht zu überladen. Darüberhinaus bleibe dem Dateinamen von Anfang bis Ende treu und wechsle nicht zwischendrin die Benamung, sonst gibt's Tränen. Wähle am besten die Form INITIALE+NUMMER als Slug. Solltest Du mal einen zweiten Podcast beginnen, wirst Du Dich freuen, die Episoden auseinander halten zu können.
 
