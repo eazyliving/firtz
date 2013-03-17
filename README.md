@@ -2,7 +2,7 @@
 
 
 *firtz podcast publisher*  
-*Version 0.9*
+*Version 0.10*
 
 **ACHTUNG!**
 
