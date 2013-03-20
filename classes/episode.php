@@ -176,7 +176,7 @@
 				return;
 			}
 			
-			$this->markdown = new firtzMarkdown();
+			$this->markdown = new Markdown();
 			
 			$this->main = $main;
 			
@@ -215,7 +215,7 @@
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
-			$item['article'] =  $this->markdown->renderString(strip_tags($item['article']));
+			$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
 			$item['description']=chop(strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255))));
 			$item['summary'] = strip_tags($item['article']);
 			

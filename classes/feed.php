@@ -136,7 +136,7 @@
 			}
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
-			if ($attr['clone']!='' && substr($attr['clone'],-1)!='/') $attr['clone'].='/';
+			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
 			$this->attr = $attr;
 			
 		}
