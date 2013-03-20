@@ -18,7 +18,7 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 $main->set('page',0);
-$main->set('DEBUG',1);
+$main->set('DEBUG',0);
 $main->set('epi','');
 $main->set('og',array());
 
