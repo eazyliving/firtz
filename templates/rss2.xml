@@ -10,12 +10,12 @@ version="2.0">
 		<title>{{@feedattr.title | raw}}</title>
 		<link>{{@feedattr.link | raw}}</link>
 		<description>{{@feedattr.description | raw}}</description>
-		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}" />
+		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}{{@extxml}}" />
 		
 		<check if="{{@feedattr.alternate}}">
 			<repeat group="@feedattr.alternate" value="@alttype">
 				<check if="{{@feedattr.audioformat != @alttype}}">
-				<atom:link rel="alternate" type="application/rss+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}/" />
+				<atom:link rel="alternate" type="application/rss+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}{{@extxml}}" />
 				</check>
 			</repeat>
 		</check>

@@ -21,6 +21,9 @@ $main->set('page',0);
 $main->set('DEBUG',0);
 $main->set('epi','');
 $main->set('og',array());
+$main->set('clonemode',false);
+$main->set('extxml','');
+$main->set('exthtml','');
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath'));
 
@@ -46,82 +49,6 @@ function sortByPubDate($a,$b) {
 	return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
 }
 
-function dir_recurse_copy($src,$dst) { 
-    $dir = opendir($src); 
-    @mkdir($dst); 
-    while(false !== ( $file = readdir($dir)) ) { 
-        if (( $file != '.' ) && ( $file != '..' )) { 
-            if ( is_dir($src . '/' . $file) ) { 
-                dir_recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-            else { 
-                copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-        } 
-    } 
-    closedir($dir); 
-} 
-
-if(php_sapi_name() == "cli") {
-    
-	# CLI mode... create static pages
-	foreach ($main->get('feeds') as $slug) {
-		
-		$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
-		$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
-		$feed = new feed($main,$slug,$FEEDCONFIG);
-	
-		if ($feed->attr['cloneurl']=='' || $feed->attr['clonepath']=='') continue;
-		$DEST = $feed->attr['clonepath'];
-		
-		if (!file_exists($DEST)) {
-			@mkdir($DEST);
-			if (!file_exists($DEST)) {
-				echo "could not create destination path $DEST";
-				exit;
-			}
-		}
-		
-		
-		if (!is_writable($DEST)) {
-			echo "no permissions to write to $DEST!";
-			exit;
-		}
-		
-	
-		dir_recurse_copy('js',$DEST.'/js');
-		dir_recurse_copy('css',$DEST.'/css');
-		dir_recurse_copy('pwp',$DEST.'/pwp');
-		
-		$DEST = $main->fixslashes($DEST.'/'.$slug);
-		@mkdir($DEST);
-		@mkdir($main->fixslashes($DEST.'/show/'));
-		
-		$main->set('BASEURL',$feed->attr['cloneurl']);
-		
-		$feed->findEpisodes();
-		$feed->loadEpisodes();
-		
-		foreach ($feed->attr['audioformats'] as $audio) {
-			$xml = $feed->renderRSS2($audio,true);
-			file_put_contents($DEST.'/'.$audio.'.xml',$xml);
-		}
-		
-		$main->set('epi','');
-		$html = $feed->renderHTML(true);
-		
-		file_put_contents($DEST.'/show/index.html',$html);
-		foreach ($feed->real_slugs as $episode_slug) {
-			$main->set('epi',$episode_slug);
-			$html = $feed->renderHTML(true);
-			@mkdir($DEST.'/show/'.$episode_slug);
-			file_put_contents($DEST.'/show/'.$episode_slug.'/index.html',$html);
-		}
-		
-	}
-	
-	exit;
-}
 
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
@@ -404,6 +331,9 @@ $main->route('GET /clone',
 			}
 			return $zip;
 		}
+		$main->set('clonemode',true);
+		$main->set('extxml','.xml');
+		$main->set('exthtml','.html');
 		
 		$z = new ZipArchive();
 		
@@ -463,6 +393,112 @@ $main->route('GET /clone',
 		exit;
 	}
 );
+
+if(php_sapi_name() == "cli") {
+    
+	function dir_recurse_copy($src,$dst) { 
+		$dir = opendir($src); 
+		@mkdir($dst); 
+		while(false !== ( $file = readdir($dir)) ) { 
+			if (( $file != '.' ) && ( $file != '..' )) { 
+				if ( is_dir($src . '/' . $file) ) { 
+					dir_recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+				} 
+				else { 
+					copy($src . '/' . $file,$dst . '/' . $file); 
+				} 
+			} 
+		} 
+		closedir($dir); 
+	} 
+
+
+	$main->set('clonemode',true);
+	$main->set('extxml','.xml');
+	$main->set('exthtml','.html');
+	
+	# CLI mode... create static pages
+	foreach ($main->get('feeds') as $slug) {
+		
+		$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
+		
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+	
+		if ($feed->attr['cloneurl']=='' || $feed->attr['clonepath']=='') continue;
+		$DEST = $feed->attr['clonepath'];
+		
+		if (!file_exists($DEST)) {
+			@mkdir($DEST);
+			if (!file_exists($DEST)) {
+				echo "could not create destination path $DEST";
+				exit;
+			}
+		}
+		
+		
+		if (!is_writable($DEST)) {
+			echo "no permissions to write to $DEST!";
+			exit;
+		}
+		
+		if (strpos($feed->attr['sitecss'],'/feeds/')!==false) {
+			$origcss = $FEEDPATH.'/'.basename($feed->attr['sitecss']);
+			$clonecss = $main->fixslashes($DEST.'/css/'.basename($feed->attr['sitecss']));
+			copy($origcss,$clonecss);
+			$feed->attr['sitecss']=$feed->attr['cloneurl'].'/css/'.basename($feed->attr['sitecss']);
+		}
+		
+		dir_recurse_copy('js',$DEST.'/js');
+		dir_recurse_copy('css',$DEST.'/css');
+		dir_recurse_copy('pwp',$DEST.'/pwp');
+		
+		$DEST = $main->fixslashes($DEST.'/'.$slug);
+		@mkdir($DEST);
+		@mkdir($main->fixslashes($DEST.'/show/'));
+		
+		$main->set('BASEURL',$feed->attr['cloneurl']);
+		
+		$feed->findEpisodes();
+		$feed->loadEpisodes();
+		
+		foreach ($feed->attr['audioformats'] as $audio) {
+			$xml = $feed->renderRSS2($audio,true);
+			file_put_contents($DEST.'/'.$audio.'.xml',$xml);
+		}
+		
+		$main->set('epi','');
+		$html = $feed->renderHTML(true);
+		
+		file_put_contents($DEST.'/show/index.html',$html);
+		foreach ($feed->real_slugs as $episode_slug) {
+			$main->set('epi',$episode_slug);
+			$html = $feed->renderHTML(true);
+			@mkdir($DEST.'/show/'.$episode_slug);
+			file_put_contents($DEST.'/show/'.$episode_slug.'/index.html',$html);
+		}
+		
+		foreach (glob('templates/pages/*.html') as $page) {
+			$html = $feed->renderHTML(true,basename($page,'.html'));
+			@mkdir($main->fixslashes($DEST.'/page'));
+			file_put_contents($DEST.'/page/'.basename($page),$html);
+		}
+		
+	
+	
+		$frontfeeds[]=$feed->attr;
+		$main->set('frontlanguage',substr($feed->attr['language'],0,2));
+		$main->set('fronttitle',$feed->attr['title']);
+		$main->set('frontauthor',$feed->attr['author']);
+	
+	}
+	$main->set('frontfeeds',$frontfeeds);
+	$front=Template::instance()->render('front.html');
+	file_put_contents($feed->attr['clonepath'].'index.html',$front);
+	exit;
+}
+
+
 
 $main->run();
 

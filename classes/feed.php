@@ -92,12 +92,19 @@
 		
 			/* sanitize data */
 			
+			/* cloning? */
+			if ($main->get('clonemode')===true) {
+				$main->set('BASEURL',$attr['cloneurl']);
+			}
+			
 			$attr['categories']=$categories;
 			
 			$attr['slug']=$slug;
 			$attr['link'] = $main->get('REALM');
 			$attr['self'] = $main->get('REALM');
 			
+			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
+
 			if ($attr['flattrid']!="") {
 			
 				$attr['flattrlanguage'] = ($attr['language']!="") ? str_replace("-","_",$attr['language']) : "";
@@ -106,13 +113,17 @@
 				$attr['flattrlink'] = rawurlencode($main->get('BASEURL').$attr['slug'].'/show');
 				$attr['flattrtitle'] = rawurlencode($attr['title']);
 			}
-			
+
 			$attr['audioformats']=explode(" ",$attr['formats']);
 			$attr['maintype']=$attr['audioformats'][0];
 			$attr['alternate']= $attr['audioformats'];
 			
 			/* fishy - might take a look into that */
-			$attr['baserel']="http://".$main->get('HOST')."/".$slug."/";
+			if ($main->get('clonemode')===false) {
+				$attr['baserel']=$main->fixslashes('http://'.$main->get('HOST').'/'.$slug.'/');
+			} else {
+				$attr['baserel']=$main->fixslashes($attr['cloneurl'].$slug.'/');
+			}
 			
 			if (file_exists(dirname($configfile)."/".$slug.".css")) {
 				/*	yet undocumented ;) 
@@ -136,7 +147,6 @@
 			}
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
-			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
 			$this->attr = $attr;
 			
 		}
@@ -397,7 +407,7 @@
 			
 			$main = $this->main;
 			$this->attr['self']=$main->get('BASEURL').$this->attr['slug']."/".$extension->slug."/".$main->get('audio');
-
+			
 			$audioformat = ($main->get('audio')?:$this->attr['audioformats'][0]);
 			
 			$this->attr['audioformat']=$audioformat;

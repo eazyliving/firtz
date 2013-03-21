@@ -1,6 +1,7 @@
 changelog:
 
 0.12 fixed bug in markdown parsing (thanks bcosca)
+     first (stable? haha) cloning support. call index.php from commandline
 0.11 fixed pwp integration bug
 0.10 changed to podlove webplayer v2.0.4
 0.9 added bitlove support; reintroduced dropdown menus; articles now marked up by markdown 
