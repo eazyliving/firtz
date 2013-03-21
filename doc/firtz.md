@@ -7,6 +7,7 @@
 * [die Webseite](#die-webseite)
 * [Auphonic](#auphonic)
 * [firtz erweitern](#firtz-erweitern)
+* [Cloning](#cloning)
 
 ## Einleitung
 
@@ -543,6 +544,32 @@ Angenommen, die Erweiterung heißt markdown und soll in jeder Episode den Artike
 kapiert? Nicht? Dann ist das hier sowieso nichts für Dich ;-P
 
 Extensions lassen sich übrigens deaktivieren, indem Du dem Ordnernamen ein "_" voranstellst. Alle Ordner, die mit "_" beginnen werden ignoriert.
+
+##Cloning
+
+Im Grunde ist es ja etwas schizzophren. Nichts ändert sich seltener, als ein Podcastfeed. Immer, wenn eine neue Episode erzeugt wird, ändert sich die Ausgabe der Seite und des Feeds, um dann bis zur nächsten Episode konstant den selben Kram auszugeben.
+
+Wieso also eine dynamische Seite, wo der Inhalt alles, aber nicht wirklich dynamisch ist?
+
+Vielleicht kannst Du php nicht leiden und willst Deinen Webserver nicht damit belästigen?
+
+Für Dich gibt es das Cloning. Das heißt nicht mehr und nicht weniger, als dass die Feeds und Seiten Deines Podcasts einmal erstellt und ab dann statisch genutzt werden können.
+
+Um die statischen Seiten zu generieren, rufst Du die *index.php* des firtz auf der Konsole mit dem CLI-php auf:
+
+`php index.php`
+
+Die Seiten werden daraufhin an einen vorkonfigurierten Ort im Filesystem geschrieben.
+
+Die Konfiguration dazu findet sich in der jeweiligen *feed.cfg*:
+
+**cloneurl:**  
+Da zum Zeitpunkt der Generierung natürlich kein Webserver im Spiel ist, muss dem firtz mitgeteilt werden, wie der URL der Seite später lauten wird. Für den supicast wäre das dann **http://supicast.de/**
+
+**clonepath:**  
+Da wir uns im Filesystem bewegen, muss der firtz auch wissen, wohin die Daten im lokalen Filesystem geschrieben werden sollen. **/home/supicast/html** wäre ein Beispiel. Du wirst hoffentlich wissen, was Du tust. Im Grunde kannst Du die Dateien überall erzeugen lassen, wenn Du sie dann später an den Bestimmungsort kopierst, z.B. per FTP auf den Webserver.
+ 
+Cloning ist im Moment das jüngste Feature und weitgehend ungetestet. Ich habe das entlang meines Hauptfeeds geschrieben und gestestet, wo alles soweit gut läuft. Ob das auch auf Dich zutrifft, steht auf einem anderen Blatt Papier...
 
 ## Ende gut alles gut?
 
