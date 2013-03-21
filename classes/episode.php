@@ -229,7 +229,7 @@
 				$pubDate = filectime($ITEMFILE);
 			}
 			
-			$item['pubDate'] = strftime ("%a, %d %b %Y %H:%M:%S %z" , $pubDate);
+			$item['pubDate'] = date ('D, d M y H:i:s O' , $pubDate);
 			
 			if ($feedattrs['flattrid']!="") {
 				$item['flattrdescription'] = rawurlencode($item['description']);
