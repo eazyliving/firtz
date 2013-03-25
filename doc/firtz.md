@@ -186,6 +186,12 @@ Wenn flattr genutzt wird/werden soll, hier die user-id angeben. Es werden Paymen
  
 **author:**  
 Der Name des Autors dieses Podcasts
+
+**licensename:**  
+Name der Lizenz, unter deren Bedingungen die Weitergabe des Podcasts, deren Metadaten und Dateien gestattet ist. 
+
+**licenseurl:**  
+URL einer Seite, auf der diese Weitergabebedingungen im Detail erklärt sind.
   
 **summary:**  
 Eine ausführlichere Zusammenfassung der Inhalte des Podcasts. Dieser kann sich über mehrere Zeilen erstrecken und Zeilenumbrüche beinhalten.
