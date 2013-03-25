@@ -19,7 +19,9 @@ version="2.0">
 				</check>
 			</repeat>
 		</check>
-		
+		<check if="{{@feedattr.licensename}}">
+			<copyright>{{@feedattr.licensename}} {{@feedattr.licenseurl}}</copyright>
+		</check>
 		<check if="{{@feedattr.flattrid}}">
 				<atom:link rel="payment" title="Flattr this!"
 					href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}" type="text/html" />

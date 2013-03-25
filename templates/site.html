@@ -173,12 +173,16 @@
 		<check if="{{@feedattr.email}}">
 			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
 		</check>
+		<check if="{{@feedattr.licensename}}">
+			<span>| license: <a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></span>
+		</check>
 		</p>
 		<check if="{{@feedattr.flattrid}}">
 			<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}&amp;popout=0&amp;button=compact"
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
 			</iframe>
 		</check>
+		
 		<repeat group="{{glob('templates/footer/*.html')}}" value="{{@template}}">
 				<include href="{{'footer/'.basename(@template)}}"/>
 		</repeat>
