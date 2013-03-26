@@ -274,7 +274,7 @@ $main->route('GET /',
 
 		$feeds = array();
 		$allfeeds = $main->get('feeds');
-		if (sizeof($allfeeds)==1) $main->reroute('/'.$allfeeds[0].'/show/');
+		if (sizeof($allfeeds)==1) $main->reroute('/'.$allfeeds[0].'/show');
 		
 		foreach ($allfeeds as $slug) {
 			$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
