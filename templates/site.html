@@ -9,7 +9,7 @@
 	<check if="{{@feedattr.image}}"><meta property="og:image" content="{{@feedattr.image}}"/></check>
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="<check if="{{!@showpage}}"><true>{{@og.title}}</true><false>{{basename(@showpage,'.html')}}</false></check>"/>
-	<meta property="og:url" content="<check if="{{!@showpage}}"><true>{{@og.url}}</true><false>{{@BASEURL}}{{@feedattr.slug}}/page/{{basename(@showpage)}}</false></check>"/>
+	<meta property="og:url" content="<check if="{{!@showpage}}"><true>{{@og.url}}</true><false>{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@showpage)}}</false></check>"/>
 	<meta property="og:site_name" content="{{@feedattr.title}}"/>
 	<check if="{{@og.audio}}"><meta property="og:{{@og.audio.typename}}" content="{{@og.audio.url}}"/>
 	<meta propertyp="og:{{@og.audio.typename}}:type" content="{{@og.audio.type}}"/>
@@ -64,13 +64,28 @@
 			</ul>
 			
 		</li>
-			<check if="{{@feedattr.email}}"><li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li></check>
+			
+			<repeat group="{{glob('templates/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+				<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				{{basename(@dir)}}
+				<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+				<repeat group="{{glob('templates/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+					<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+				</repeat>
+				</ul>
+				</li>
+			</repeat>
 			<repeat group="{{glob('templates/pages/*.html')}}" value="{{@template}}">
-				<li><a href="{{@BASEURL}}{{@feedattr.slug}}/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+				<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
 			</repeat>
 			<repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
 				<include href="{{'header/'.basename(@template)}}"/>
 			</repeat>
+			<check if="{{@feedattr.email}}"><li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li></check>
+			
         </ul>
         <h3><a class="homebut" href="{{@BASEURL}}{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
@@ -88,12 +103,12 @@
 			<ul class="pager">
 				<check if="{{@page>1}}">
 					<li class="previous">
-						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{sprintf('%03d',@page-1)}}">&larr; newer</a>
 					</li>
 				</check>
 				<check if="{{@page<@maxpage}}">
 					<li class="next">
-						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{sprintf('%03d',@page+1)}}">&rarr; older</a>
 					</li>
 				</check>
 			</ul>

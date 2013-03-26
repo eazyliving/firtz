@@ -236,7 +236,7 @@ $main->route('GET|HEAD /@feed/show/@epi',
 	web page mode, single page for episode
 */
 
-$main->route('GET|HEAD /@feed/show/page/@pagenum',
+$main->route('GET|HEAD /@feed/show/pager/@pagenum',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -294,7 +294,7 @@ $main->route('GET /',
 	put them im templates/pages/
 */
 
-$main->route('GET|HEAD /@feed/page/@page',
+$main->route('GET|HEAD /@feed/show/page/@page',
 	function($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -309,6 +309,23 @@ $main->route('GET|HEAD /@feed/page/@page',
 		
 	}, $main->get('CDURATION')
 );
+
+$main->route('GET|HEAD /@feed/show/page/@dir/@page',
+	function($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		$main->set('singlepage',true);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+		$feed->loadEpisodes();
+		$feed->renderHTML(false,$params['dir'].'/'.$params['page']);
+		
+	}, $main->get('CDURATION')
+);
+
 
 $main->route('GET /clone',
 	function($main,$params) {
