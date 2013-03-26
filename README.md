@@ -54,6 +54,12 @@ auf
 
 ändern.
 
+Es gibt übrigens hier und dort Probleme mit dem Schreiben in das temporäre Verzeichnis. Je nach Webhoster kann es nötig und hilfreich sein, den Handler für php auf (fast-)cgi zu stellen. In der .htaccess geht das z.B. mit dieser Zeile:  
+
+`AddHandler php5-cgi .php`
+
+Das sollte allerdings wirklich nur passieren, wenn der firtz diesbezüglich Fehlermeldungen auswirft.
+
 ## Los geht's
 
 Du besorgst Dir das [firtz-Archiv](https://github.com/eazyliving/firtz/), entpackst es in den Ordner, in dem Du das auf dem Webserver haben willst und bewegst Dich darauf hin in den Unterordner `feeds/`.
@@ -163,6 +169,12 @@ If you want to use firtz in subdirectories of your domain you need to adjust the
 to
 
 `RewriteBase /UNTERORDNER`
+
+To address problems with write-access to the temporary folder, you might want to add this line to .htaccess:
+
+`AddHandler php5-cgi .php`
+
+Don't do that unless you have error messages stating any problems with writing to **tmp/**.
 
 ## Let's go
 
