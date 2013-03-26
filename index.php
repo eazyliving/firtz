@@ -24,6 +24,8 @@ $main->set('og',array());
 $main->set('clonemode',false);
 $main->set('extxml','');
 $main->set('exthtml','');
+$main->set('LOCALES','dict/');
+
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename'));
 
