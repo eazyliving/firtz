@@ -422,6 +422,8 @@ Findet firtz hier eine Datei geschehen zwei Dinge. Erstens wird der Webseite im 
 
 Klickt der Besucher Deiner Seite auf diesen Menüpunkt, gelangt er zur URL `http://supicast.de/supicast/page/Impressum`. Auf dieser wird der komplette Inhalt des Templates angezeigt, umrahmt von Kopf und Fuß der Webseite, allerdings **ohne Episoden**. Auf diese Art und Weise kannst Du also z.B. ein Impressum integrieren oder andere Infoseiten.
 
+Um dem ganzen etwas Struktur zu geben, ist es möglich, Unterordner in pages/ anzulegen. Diese ergeben dann im Kopf der Seite ein Dropdown-Menu. Verschachtelte Ordnerstrukturen sind nicht möglich. Der Name des Ordners wird als Titel des Dropdownmenus gesetzt.
+
 Gestaltungsänderungen sind auch möglich, ohne gleich wahnsinnig zu werden. Für den ganzen CSS-Kram wird bootstrap genutzt. Für bootstrap gibt es ein paar freie Themes, die Du auf zwei Arten in das System hineinbringen kannst:
 
 **Austausch der Standard CSS-Datei:**  
