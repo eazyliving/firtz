@@ -10,7 +10,7 @@
 					<h4 class="media-heading">{{@dict_pubdate,strtotime(@item.pubDate) | format}}: <a href="/{{@feedattr.slug}}/show/{{@item.slug}}" name="{{@item.slug}}"><span class="text-center">{{@item.title}}</span></a> </h4>
 					<div class="">
 						{{@item.description}}<br>
-						<check if="{{@item.duration}}">Dauer: {{@item.duration}}</check>
+						<check if="{{@item.duration}}">{{@dict_duration}}: {{@item.duration}}</check>
 					</div>
 				</div>
 			</div>
