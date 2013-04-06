@@ -34,6 +34,7 @@
 			foreach ($prod->outgoing_services as $service) $services[$service->uuid]=$service->base_url;
 			
 			foreach ($prod->output_files as $output) {
+				if (sizeof($output->outgoing_services)==0) continue;
 				$service = $output->outgoing_services[0];
 				if ($output->format=="image") $item['image']=$services[$service].$output->filename;
 				if (in_array($output->ending,$feedattrs['audioformats'])) {
