@@ -230,7 +230,7 @@
 				$pubDate = filectime($ITEMFILE);
 			}
 			
-			$item['pubDate'] = date ('D, d M y H:i:s O' , $pubDate);
+			$item['pubDate'] = date ('D, d M Y H:i:s O' , $pubDate);
 			
 			if ($feedattrs['flattrid']!="") {
 				$item['flattrdescription'] = rawurlencode($item['description']);
