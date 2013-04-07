@@ -146,6 +146,8 @@
 				$main->set('sitetemplate','site.html');
 			}
 			
+			if ($attr['rfc5005']=="") $attr['rfc5005'] = 'off';
+			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
 			$this->attr = $attr;
 			
@@ -157,7 +159,7 @@
 			$maxPubDate = "";
 			$realSlugs = array();
 			
-			/* Just a simple PreLoad to determine, which slugs are real
+			/* Just a simple PreLoad to determine, which slugs are really
 				needed for pageing mode to reduce load */
 			
 			
@@ -211,15 +213,15 @@
 		
 		}
 		
-		public function loadEpisodes($slug = '') {
+		public function loadEpisodes($slug = array()) {
 			
 			$main = $this->main;
 			$maxPubDate = "";
-			if ($slug!='') {
+			if (sizeof($slug)!=0) {
 				
 				/*	reduce slugs array to this one episode
-					atm the only case this happens is calling /$feed/show/$episodeslug/
-					also to be used, when paging is implemented
+					happens for /$feed/show/$episodeslug/
+					and /$feed/show/pager/$page
 				*/
 				if (!is_array($slug)) {
 					$this->episode_slugs = array_intersect(array(0=>$slug),$this->episode_slugs);
@@ -296,10 +298,11 @@
 					this is the standard mode, if auphonic is in remote mode
 				*/
 				
-				case "episodes": 
+				case "episode": 
 				
 					foreach ($this->episode_slugs as $slug) {
 						if (in_array($slug,$this->auphonic_slugs)) {
+							
 							$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
 							if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
 							
@@ -374,9 +377,7 @@
 				
 					$slug = basename ($json,'.json');
 					$this->auphonic_slugs[]=$slug;
-					
 				}
-				
 			}
 		
 			/* find local epi files if not in auphonic exclusive mode */
@@ -386,7 +387,6 @@
 				
 				foreach ( $itemfiles as $EPISODEFILE ) {
 					$slug = basename($EPISODEFILE,'.epi');
-					
 					if ($this->attr['auphonic-mode']=="episode") {
 						/* auphonic episode mode. if there's no identically names auphonic episode, keep hands off */
 						if (in_array($slug,$this->auphonic_slugs)) $this->episode_slugs[]=$slug;
