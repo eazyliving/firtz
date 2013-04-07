@@ -184,7 +184,7 @@ In this location is a demo directory listed. The name of this directory is the f
 
 The demo directory contains two files: `feed.cfg` and `001.epi`. The configuration syntax of those files is the same. 
 
-`\#: is a comment don't forget the ":"`
+`#: is a comment don't forget the ":"`
 
 Attributes are noted like the following: 
 
