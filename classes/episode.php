@@ -43,7 +43,7 @@
 					$item['audiofiles'][$output->ending]=$item[$output->ending];
 				}
 			}	
-			
+			$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
 			return $item;
 		}
 	
@@ -165,7 +165,7 @@
 			
 			
 			}
-			
+			$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
 			fclose($fh);
 			return $item;
 		}
@@ -216,7 +216,7 @@
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
-			$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
+			#$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
 			$item['description']=chop(strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255))));
 			$item['summary'] = strip_tags($item['article']);
 			

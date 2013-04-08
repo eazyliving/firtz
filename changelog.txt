@@ -2,6 +2,7 @@ changelog:
 
 0.13 changed path to pages (now /show/page/@page from /page/@page) and pagers (now /show/pager/@pagenum from /show/page/@pagenum)
      added subdirs for /templates/pages: create dropdowns. only one level
+     changed to podlove web player 2.0.5
 0.12 fixed bug in markdown parsing (thanks bcosca)
      first (stable? haha) cloning support. call index.php from commandline
 0.11 fixed pwp integration bug
