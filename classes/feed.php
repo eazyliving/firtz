@@ -15,8 +15,11 @@
 		
 		public $feedDir = "";
 		public $main = "";
+		public $markdown = "";
 		
 		public function __construct($main,$slug,$configfile) {
+		
+			$this->markdown = new Markdown();
 		
 			if (!file_exists($configfile)) {
 				echo "Config for $slug not found (missing $configfile)";
@@ -339,7 +342,7 @@
 				
 				# no feed image? take the first found episode image...
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
-				
+				$episode->item['article'] =  $this->markdown->convert(strip_tags($episode->item['article']));
 				foreach ($firtz->extensions as $extslug => $ext) {
 					#if ($ext->type!="content") continue;
 					$efunc = $extslug."_episode";

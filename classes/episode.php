@@ -4,8 +4,7 @@
 	
 		public $item=array();
 		public $main = "";
-		public $markdown = "";
-		
+				
 		public function parseAuphonic($main,$filename,$feedattrs) {
 			
 			/* parse a json production description file */
@@ -43,7 +42,7 @@
 					$item['audiofiles'][$output->ending]=$item[$output->ending];
 				}
 			}	
-			$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
+			
 			return $item;
 		}
 	
@@ -165,7 +164,7 @@
 			
 			
 			}
-			$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
+			
 			fclose($fh);
 			return $item;
 		}
@@ -177,7 +176,7 @@
 				return;
 			}
 			
-			$this->markdown = new Markdown();
+			
 			
 			$this->main = $main;
 			
@@ -204,6 +203,8 @@
 				}
 			}
 			
+			
+			
 			if ($reparse === true) {	
 				/* just reparsing. skip the sanitation part */
 				$this->item = $item;
@@ -216,7 +217,7 @@
 			$item['slug'] = $slug;
 			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
-			#$item['article'] =  $this->markdown->convert(strip_tags($item['article']));
+			
 			$item['description']=chop(strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255))));
 			$item['summary'] = strip_tags($item['article']);
 			
