@@ -37,7 +37,7 @@
 				$service = $output->outgoing_services[0];
 				if ($output->format=="image") $item['image']=$services[$service].$output->filename;
 				if (in_array($output->ending,$feedattrs['audioformats'])) {
-					$mimetype = (array_key_exists($output->ending,$mime) ?  $mime[$output->ending] : "audio/mpeg");
+					$mimetype = (array_key_exists($output->ending,$mime) ?  $mime[$output->ending] : "application/octet");
 					$item[$output->ending] = array ( 'link' => $services[$service].$output->filename, 'length' => $output->size , 'type'=> $mimetype );
 					$item['audiofiles'][$output->ending]=$item[$output->ending];
 				}
