@@ -27,11 +27,11 @@
 			$item['date']= date('r',strtotime($prod->creation_time));
 			$item['keywords'] = implode(",",$prod->metadata->tags);
 			foreach ($prod->chapters as $chapter) $item['chapters'][]=array('start'=>$chapter->start,'title'=>$chapter->title);
-			
-			
+
 			$services = array();
-			foreach ($prod->outgoing_services as $service) $services[$service->uuid]=$service->base_url;
-			
+			foreach ($prod->outgoing_services as $service) {
+				if (isset($service->base_url)) $services[$service->uuid]=$service->base_url;
+			}
 			foreach ($prod->output_files as $output) {
 				if (sizeof($output->outgoing_services)==0) continue;
 				$service = $output->outgoing_services[0];
