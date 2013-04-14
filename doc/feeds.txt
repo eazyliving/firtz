@@ -72,6 +72,7 @@ pdf: application/pdf
 epub: application/epub+zip
 png: image/png
 jpg: image/jpeg
+mobi: application/x-mobipocket-ebook
 ------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------

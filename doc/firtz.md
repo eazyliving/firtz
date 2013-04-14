@@ -173,6 +173,7 @@ Folgende Formate werden aktuell komplett unterstützt, also im Feed ein korrekte
 * epub: application/epub+zip
 * png: image/png
 * jpg: image/jpeg
+* mobi: application/x-mobipocket-ebook
 
 **mediabaseurl:**  
 **mediabasepath:**
