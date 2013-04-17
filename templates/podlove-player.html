@@ -12,14 +12,12 @@
 		$(document).ready( function() {
 			$('#player-{{@item.slug}}').podlovewebplayer({
 				title: '{{@item.title}}',
-				subtitle: '{{@item.description}}',
+				subtitle: {{json_encode(nl2br(@item.description))}},
 				permalink: '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}',
 				duration: '{{@item.duration}}',
 				poster: '{{@item.image}}',
 				<check if="{{@item.chapters}}">
-				chapters: <repeat group="@item.chapters" value="@chapter">
-				"{{@chapter.start}} {{@chapter.title}}"+"\n"+
-				</repeat>'',
+chapters: {{json_encode(@item.chapters)}},
 				</check>
 				alwaysShowHours: true,
 				startVolume: 0.8,
