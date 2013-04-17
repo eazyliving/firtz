@@ -1,5 +1,6 @@
 changelog:
 
+1.0 tons of bugs fixed. podlove webplayer version 2.0.7 integrated
 0.13 changed path to pages (now /show/page/@page from /page/@page) and pagers (now /show/pager/@pagenum from /show/page/@pagenum)
      added subdirs for /templates/pages: create dropdowns. only one level
      changed to podlove web player 2.0.5
