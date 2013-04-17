@@ -26,14 +26,18 @@
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->creation_time));
 			$item['keywords'] = implode(",",$prod->metadata->tags);
-			foreach ($prod->chapters as $chapter) $item['chapters'][]=array('start'=>$chapter->start,'title'=>$chapter->title);
-			if (isset($prod->multi_input_files)) {
-				foreach ($prod->multi_input_files as $mif) {
-					if ($mif->type=='intro') 
-						foreach ($item['chapters'] as $key=>$chap) $item['chapters'][$key]['start'] = strftime("%H:%M:%S",strtotime($chap['start']) + $mif->input_length);
-				}
-			}
 			
+			foreach ($prod->chapters as $chapter) $item['chapters'][]=array('start'=>$chapter->start,'title'=>$chapter->title);
+			
+			if (isset($prod->multi_input_files) && $item['chapters']!="") {
+				foreach ($prod->multi_input_files as $mif) {
+					if ($mif->type=='intro') {
+						
+						foreach ($item['chapters'] as $key=>$chap) $item['chapters'][$key]['start'] = strftime("%H:%M:%S",strtotime($chap['start']) + $mif->input_length);
+					}
+				}
+			
+			}
 			
 			$services = array();
 			foreach ($prod->outgoing_services as $service) {
