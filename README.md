@@ -2,11 +2,9 @@
 
 
 *firtz podcast publisher*  
-*Version 0.13*
+*Version 1.0*
 
 **ACHTUNG!**
-
-Das hier ist unterhalb 1.0. Könnte man beta nennen, klingt nur doof heutzutage.
 
 Solltest Du damit einen Podcast veröffentlichen wollen: Sei gewarnt, es könnte noch mehr Arbeit als nötig sein, denn ich garantiere Dir nicht, dass die Handhabung bleibt wie sie ist.  
 Ordnernamen, Ordnerorte, Dateinamen, Formate können und werden sich ändern. Solltest Du nicht experiementierfreudig sein, warte lieber noch ein oder zwei Wochen oder frag mich persönlich.
@@ -100,15 +98,6 @@ Für jede Episode gibt's dann einen eigenen [Podlove Webplayer](https://github.c
 
 Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (praktisch der Dateiname ohne Endung) angehangen wird: `http://tollerneuerpodcst.de/demo/show/001`.
 
-## Was wird alles noch passieren?
-
-Das war's für's erste. Denke dran: Du bist im Grunde Betatester, so lange die 1.0 nicht erreicht ist.
-
-Noch vor der 1.0 möchte ich fertig werden mit:
-
-* Cloning: Feeds und Seiten werden einmal statisch gerendert, die Seiten benötigen dann kein PHP mehr.
-* Ein paar schönen Templates zum Rumspielen
-
 ## Kontakt
 
 Melde Dich. Entweder per [Mail](mailto:info@hoersuppe.de), auf [Twitter](https://twitter.com/the_firtz) oder [app.net](https://alpha.app.net/firtz) oder natürlich hier auf github in den issues.
@@ -127,7 +116,6 @@ Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlov
 
 **ATTENTION!**
 
-The project is below the 1.0. You could call it beta but that sounds weird today. 
 If you want to publish a Podcast with firtz be aware. It's going to be painful because I don't guarantee that the handling will remain the same.
 Directory names, locations, file names, formats could be changed. If you're not want to try new things just wait for one or two weeks or ask me.
 
@@ -214,14 +202,6 @@ When you're using several audio formats you also can use:
 As a bonus a website will be generated. For this feed you can access it via: `mynewsuperawesomepodcast.de/feed/show`. Each episode has its own [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player), [flattr](http://flattr.com) buttons and a [disqus](http://disqus.com) thread as long as it is specified in the configuration of the feed. 
 Single episodes are also linkable just by adding the slug of the episode (the file name without the suffix): 
 `mynewsuperawesomepodcast.de/demo/show/001`
-
-## Was wird alles noch passieren?
-
-So that's it. Keep in mind you're a beta tester as long as the 1.0 isn't reached. 
-
-Before the 1.0 I'd like to finish: 
-* Cloning: Feeds and pages will be rendered statically one time after the publishing the pages don't need php anymore.
-* Some nice templates for playing around
 
 ## Contact
 
