@@ -167,7 +167,7 @@
 						$mimetype = "audio/mpeg";
 					}
 					
-					$item[$format] = array ('link' => $feedattrs['mediabaseurl']."/".$slug.".".$format , 'length' => filesize($localfile) , 'type' => $mimetype);
+					$item[$format] = array ('link' => $feedattrs['mediabaseurl'].$slug.".".$format , 'length' => filesize($localfile) , 'type' => $mimetype);
 					
 					$item['audiofiles'][$format]  = $item[$format];
 				

@@ -150,6 +150,7 @@
 			}
 			
 			if ($attr['rfc5005']=="") $attr['rfc5005'] = 'off';
+			if ($attr['mediabaseurl']!='' && substr($attr['mediabaseurl'],-1)!='/') $attr['mediabaseurl'].='/';
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
 			$this->attr = $attr;
