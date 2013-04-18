@@ -107,7 +107,7 @@ Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlov
 
 
 *firtz podcast publisher*  
-*Version 1.9*
+*Version 1.0*
 
 ## About
 
