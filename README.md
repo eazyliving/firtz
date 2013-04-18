@@ -4,11 +4,6 @@
 *firtz podcast publisher*  
 *Version 1.0*
 
-**ACHTUNG!**
-
-Solltest Du damit einen Podcast veröffentlichen wollen: Sei gewarnt, es könnte noch mehr Arbeit als nötig sein, denn ich garantiere Dir nicht, dass die Handhabung bleibt wie sie ist.  
-Ordnernamen, Ordnerorte, Dateinamen, Formate können und werden sich ändern. Solltest Du nicht experiementierfreudig sein, warte lieber noch ein oder zwei Wochen oder frag mich persönlich.
-
 ## Über
 
 Du hast offensichtlich den Drang, entweder diesen Kram hier auszuprobieren, oder einen Podcast aus der Taufe zu heben.
@@ -112,12 +107,7 @@ Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlov
 
 
 *firtz podcast publisher*  
-*Version 0.9*
-
-**ATTENTION!**
-
-If you want to publish a Podcast with firtz be aware. It's going to be painful because I don't guarantee that the handling will remain the same.
-Directory names, locations, file names, formats could be changed. If you're not want to try new things just wait for one or two weeks or ask me.
+*Version 1.9*
 
 ## About
 
