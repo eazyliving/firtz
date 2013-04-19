@@ -103,7 +103,7 @@
 			$attr['categories']=$categories;
 			
 			$attr['slug']=$slug;
-			$attr['link'] = $main->get('REALM');
+			$attr['link'] = $main->get('REALM')."/show";
 			$attr['self'] = $main->get('REALM');
 			
 			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
