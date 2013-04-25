@@ -180,6 +180,23 @@
 		</false>
 		</check>
 		</div>
+
+		<check if="{{@page!=0}}">
+			<div>
+			<ul class="pager">
+				<check if="{{@page>1}}">
+					<li class="previous">
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{@page-1}}">&larr; {{@dict_newer}}</a>
+					</li>
+				</check>
+				<check if="{{@page<@maxpage}}">
+					<li class="next">
+						<a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{@page+1}}">&rarr; {{@dict_older}}</a>
+					</li>
+				</check>
+			</ul>
+			</div>
+		</check>
 		
       <div class="footer">
         <p>{{@feedattr.author}}
