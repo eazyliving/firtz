@@ -203,6 +203,10 @@
 		<check if="{{@feedattr.twitter}}">
 			<span>| twitter: <a href="https://twitter.com/{{@feedattr.twitter}}">@{{@feedattr.twitter}}</a></span>
 		</check>
+		<check if="{{@feedattr.adn}}">
+			<span>| adn: <a rel="me" href="https://alpha.app.net/{{@feedattr.adn}}">@{{@feedattr.adn}}</a></span>
+		</check>
+		
 		<check if="{{@feedattr.email}}">
 			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
 		</check>
@@ -229,5 +233,5 @@
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"/>
 	</check>
-	</body>
+</body>
 </html>
