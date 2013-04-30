@@ -84,7 +84,7 @@
 			<repeat group="{{glob('templates/header/*.html')}}" value="{{@template}}">
 				<include href="{{'header/'.basename(@template)}}"/>
 			</repeat>
-			<check if="{{@feedattr.email}}"><li><a href="mailto:{{@feedattr.email}}">E-Mail</a></li></check>
+			
 			
         </ul>
         <h3><a class="homebut" href="{{@BASEURL}}{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
@@ -207,6 +207,9 @@
 			<span>| adn: <a rel="me" href="https://alpha.app.net/{{@feedattr.adn}}">@{{@feedattr.adn}}</a></span>
 		</check>
 		
+		<check if="{{@feedattr.email}}">
+			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
+		</check>
 		<check if="{{@feedattr.licensename}}">
 			<span>| {{@dict_license}}: <a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></span>
 		</check>
