@@ -85,7 +85,7 @@ Im Ordner *feeds* befinden sich die Ordner, die dem System sagen, welche Feeds a
 
 In den Feed-Ordnern wiederum werden sich die Konfigurationsdatei und die Episoden-Dateien finden, aus denen der Feed generiert wird.
 
-Feeds lassen sich übrigens deaktivieren, indem Du dem Ordnernamen ein "_" voranstellst. Alle Ordner, die mit "_" beginnen werden ignoriert.
+Feeds lassen sich übrigens deaktivieren, indem Du dem Ordnernamen ein *_* voranstellst. Alle Ordner, die mit *_* beginnen werden ignoriert.
 
 Im Ordner *templates* wiederum finden sich alle Dateien, die dazu beitragen, die generierten Feeds in irgendeiner Weise darzustellen. Ob nun RSS oder Webseite, die Ausgabe wird - größtenteils - hier festgelegt. Hier **muss** nichts getan werden, wer mag, kann die Grundeinstellungen übernehmen. Mit der Zeit wirst Du aber vermutlich an der einen oder anderen Stelle, vermutlich an der Webseite, drehen wollen.
 
