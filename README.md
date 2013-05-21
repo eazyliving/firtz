@@ -205,4 +205,4 @@ I build firtz with [fatfree framework](https://github.com/bcosca/fatfree) and [b
 
 Additionaly the [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) helps that everything looks nicely more or less :)
 
-[Stefan Thesing](https://alpha.app.net/hirnbloggade) wrote an [articel](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/), describing his procedure of installing firtz. Maybe you can find some helpful hints there. Sorry, german only :-)
+[Stefan Thesing](https://alpha.app.net/hirnbloggade) wrote an [article](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/), describing his procedure of installing firtz. Maybe you can find some helpful hints there. Sorry, german only :-)
