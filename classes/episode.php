@@ -41,11 +41,24 @@
 			
 			$services = array();
 			foreach ($prod->outgoing_services as $service) {
-				if (isset($service->base_url)) $services[$service->uuid]=$service->base_url;
+				if (isset($service->base_url) && $service->base_url!="") $services[$service->uuid]=$service->base_url;
 			}
+			$item['audiofiles']=array();
+		
 			foreach ($prod->output_files as $output) {
 				if (sizeof($output->outgoing_services)==0) continue;
-				$service = $output->outgoing_services[0];
+				
+				
+				$service = "";
+				foreach ($output->outgoing_services as $oservice) {
+					if (array_key_exists($oservice,$services)) {
+						$service = $oservice;
+						break;
+					}
+				}
+
+				if ($service=="") continue;
+				
 				if ($output->format=="image") $item['image']=$services[$service].$output->filename;
 				if (in_array($output->ending,$feedattrs['audioformats'])) {
 					$mimetype = (array_key_exists($output->ending,$mime) ?  $mime[$output->ending] : "application/octet");
