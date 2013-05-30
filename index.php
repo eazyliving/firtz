@@ -25,7 +25,7 @@ $main->set('clonemode',false);
 $main->set('extxml','');
 $main->set('exthtml','');
 $main->set('LOCALES','dict/');
-
+$main->set('rfc5005','');
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','baseurl'));
 
@@ -200,7 +200,7 @@ $main->route('GET|HEAD /@feed/page/@page',
 			die();
 		}
 		
-		$feed->attr['rfc5005']='on';
+		$main->set('rfc5005','on');
 		
 		$feed->findEpisodes();
 		$feed->loadEpisodes();

@@ -20,7 +20,7 @@ version="2.0">
 			</repeat>
 		</check>
 		
-		<check if="{{@feedattr.rfc5005}}">
+		<check if="{{@rfc5005}}">
 		<atom:link rel="first" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}page/first" />
 		<atom:link rel="last" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}page/last" />
 		<check if="{{@page < @maxpage}}">
