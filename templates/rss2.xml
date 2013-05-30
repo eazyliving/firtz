@@ -19,6 +19,18 @@ version="2.0">
 				</check>
 			</repeat>
 		</check>
+		
+		<check if="{{@feedattr.rfc5005}}">
+		<atom:link rel="first" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}page/first" />
+		<atom:link rel="last" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}page/last" />
+		<check if="{{@page < @maxpage}}">
+			<atom:link rel="next" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}page/{{@page + 1}}" />
+		</check>
+		<check if="{{@page > 1}}">
+			<atom:link rel="prev" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}page/{{@page - 1}}" />
+		</check>
+		</check>
+		
 		<check if="{{@feedattr.licensename}}">
 			<copyright>{{@feedattr.licensename}} {{@feedattr.licenseurl}}</copyright>
 		</check>

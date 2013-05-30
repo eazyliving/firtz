@@ -184,6 +184,42 @@ $main->route('GET|HEAD /@feed',
 	}, $main->get('CDURATION')
 );
 
+$main->route('GET|HEAD /@feed/page/@page',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		
+		if ($feed->attr['redirect']!="") {
+			header ('HTTP/1.1 301 Moved Permanently');
+			header ('Location: '.$feed->attr['redirect']);
+			die();
+		}
+		
+		$feed->attr['rfc5005']='on';
+		
+		$feed->findEpisodes();
+		$feed->loadEpisodes();
+		
+		$main->set('page',ltrim($params['page'],'0'));
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / 5) );
+		
+		if ($main->get('page')=='first' || $main->get('page')=='current')  $main->set('page',1);
+		if ($main->get('page')=='last') $main->set('page',$main->get('maxpage'));
+		
+		$feed->episodes = array_slice($feed->episodes,($main->get('page')-1)*5,5);
+		
+		$feed->renderRSS2();
+		
+	}, $main->get('CDURATION')
+);
+
+
+
 /*
 	web page mode, complete page
 	paging mode comes next
@@ -233,7 +269,7 @@ $main->route('GET|HEAD /@feed/show/@epi',
 );
 
 /*
-	web page mode, single page for episode
+	web page mode, pageing 3 shows
 */
 
 $main->route('GET|HEAD /@feed/show/pager/@pagenum',
