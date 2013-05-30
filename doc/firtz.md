@@ -30,6 +30,7 @@ Darüber hinaus ist es sehr hilfreich, wenn nicht sogar der einfachste Weg, mit 
  * Simple Chapters
  * Podlove Webplayer
  * Deep Linking
+ * paged Feeds (rfc5005)
 * Integration Auphonic
 * eine automagisch generierte Webseite
 * einiges mehr, das mir aktuell nicht einfällt...
