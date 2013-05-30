@@ -175,6 +175,16 @@ Folgende Formate werden aktuell komplett unterstützt, also im Feed ein korrekte
 * jpg: image/jpeg
 * mobi: application/x-mobipocket-ebook
 
+**baseurl:**
+
+Wenn im firtz mehr als nur ein Podcast gehostet wird, wird auf der Frontseite (URL ohne weiteren Pfad) eine Liste mit Links dieser Podcasts aufgeführt.
+
+Da es denkbar ist, dass eine Installation des firtz unter mehreren Domains läuft, kann mit Hilfe dieser URL die Domain je Podcast/Feed angegeben werden.
+
+Dieser Parameter betrifft aktuell auch nur genau diese Frontseite. Wird der Feed/die Seite dennoch über die andere Domain angesprochen, wird kein URL-Rewriting oder Weiterleitung ausgeführt!
+
+Siehe dazu auch [hier](https://github.com/eazyliving/firtz/issues/45).
+
 **mediabaseurl:**  
 **mediabasepath:**
 

@@ -101,7 +101,7 @@
 			}
 			
 			$attr['categories']=$categories;
-			
+			if ($attr['baseurl']!="" && substr($attr['baseurl'],-1)== "/") $attr['baseurl'] = substr($attr['baseurl'],0,-1);
 			$attr['slug']=$slug;
 			$attr['link'] = $main->get('BASEURL').$attr['slug'].'/show';
 			$attr['self'] = $main->get('REALM');
