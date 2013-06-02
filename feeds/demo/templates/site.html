@@ -35,7 +35,7 @@
     <link rel="shortcut icon" href="./favicon.png">
 	<script src="{{@BASEURL}}js/jquery.js"></script>
 
-    <repeat group="{{glob(@UI.'/head/*.html')}}" value="{{@template}}">
+    <repeat group="{{glob(@templatepath.'/head/*.html')}}" value="{{@template}}">
 		<include href="{{'head/'.basename(@template)}}"/>
     </repeat>
   </head>
@@ -65,7 +65,7 @@
 			
 		</li>
 			
-			<repeat group="{{glob(@UI.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+			<repeat group="{{glob(@templatepath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
 			
 				<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -73,16 +73,16 @@
 				<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-				<repeat group="{{glob(@UI.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+				<repeat group="{{glob(@templatepath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
 					<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
 				</repeat>
 				</ul>
 				</li>
 			</repeat>
-			<repeat group="{{glob(@UI.'/pages/*.html')}}" value="{{@template}}">
+			<repeat group="{{glob(@templatepath.'/pages/*.html')}}" value="{{@template}}">
 				<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
 			</repeat>
-			<repeat group="{{glob(@UI.'/header/*.html')}}" value="{{@template}}">
+			<repeat group="{{glob(@templatepath.'/header/*.html')}}" value="{{@template}}">
 				<include href="{{'header/'.basename(@template)}}"/>
 			</repeat>
 			
@@ -166,7 +166,7 @@
 				</iframe>
 			</check>
 			<div>
-			<repeat group="{{glob(@UI.'/episode/*.html')}}" value="{{@template}}">
+			<repeat group="{{glob(@templatepath.'/episode/*.html')}}" value="{{@template}}">
 				<include href="{{'episode/'.basename(@template)}}"/>
 			</repeat>
 			</div>
@@ -217,7 +217,7 @@
 		<check if="{{@feedattr.licensename}}">
 			<span>| {{@dict_license}}: <a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></span>
 		</check>
-        <repeat group="{{glob(@UI.'/footer/*.html')}}" value="{{@template}}">
+        <repeat group="{{glob(@templatepath.'/footer/*.html')}}" value="{{@template}}">
 				<include href="{{'footer/'.basename(@template)}}"/>
 		</repeat>
 		</p>
