@@ -29,6 +29,7 @@
 			$this->main = $main;
 			$this->feedDir=dirname($configfile);
 			
+			
 			if (file_exists($this->feedDir.'/'.$slug.'.html')) {
 				$this->htmltemplate = $slug.'.html';
 				$ui = $main->get('UI').';'.$this->feedDir.'/';
@@ -489,6 +490,9 @@
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
+			if (file_exists($this->feedDir."/templates"))
+				$main->set('UI',$this->feedDir."/templates/");
+			
 			if ($ret===false) {
 				echo Template::instance()->render('rss2.xml','application/xml');
 			} else {
@@ -519,6 +523,11 @@
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
+			
+			if (file_exists($this->feedDir."/templates"))
+				$main->set('UI',$this->feedDir."/templates/");
+			
+			
 			if ($ret===false) {
 				echo Template::instance()->render($this->htmltemplate);
 			} else {
