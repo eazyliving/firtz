@@ -88,12 +88,15 @@
 			
 			
         </ul>
-        <h3><a class="homebut" href="{{@BASEURL}}{{@feedattr.slug}}/show/"><img src="{{@feedattr.image}}" width=100 /></a></h3>
+		
+        <h3><a class="homebut" href="{{@BASEURL}}{{@feedattr.slug}}/show/">{{@feedattr.title}}</a></h3>
       </div>
 	
       <hr>
-      <div class="jumbotron">
-		<h1>{{@feedattr.title}}</h1>
+      
+	  <div class="jumbotron">
+		
+		<h1><img src="{{@feedattr.image}}" width=100  style="margin-right:20px;">{{@feedattr.title}}</h1>
         <p class="lead">{{@feedattr.description}}</p>
       </div>
 	
