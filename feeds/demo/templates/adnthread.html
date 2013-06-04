@@ -10,7 +10,6 @@
 	 .adnhead a {font-weight:bold;}
 </style>
 
-<check if="{{@feedattr.adntoken}}">
 <repeat group="{{@adnposts}}" value="{{@post}}" key="{{@key}}">
 	
 	<div class="well well-small adnpost<check if="{{@key}}"><false> adnfirst</false></check>">
@@ -33,4 +32,3 @@
 		</div>
 	</div>
 </repeat>
-</check>
