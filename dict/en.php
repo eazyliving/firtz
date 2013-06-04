@@ -7,6 +7,8 @@ return array(
 	'dict_showcomments'=>'show comments',
 	'dict_license'=>'Lizenz',
 	'dict_older'=>'older',
-	'dict_newer'=>'newer'
+	'dict_newer'=>'newer',
+	'dict_reply'=>'reply',
+	
 );
 ?>

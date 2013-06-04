@@ -6,6 +6,7 @@ return array(
 	'dict_showcomments'=>'Kommentare zeigen',
 	'dict_license'=>'Lizenz',
 	'dict_older'=>'&auml;lter',
-	'dict_newer'=>'neuer'
+	'dict_newer'=>'neuer',
+	'dict_reply'=>'antworten',
 );
 ?>
