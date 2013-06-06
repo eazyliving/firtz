@@ -440,7 +440,7 @@
 		public function setOpenGraph() {
 		
 			$main = $this->main;
-		
+			
 			$og = array();
 			$og['url'] = $main->get('BASEURL').$this->attr['slug'].'/show';
 			if (sizeof($this->episodes)==1) {
@@ -456,7 +456,7 @@
 			foreach ($this->episodes as $episode) {
 				if (sizeof($episode->item['audiofiles'])==0) continue;
 				$format = $this->attr['audioformats'][0];
-				
+				if (!isset($episode->item['audiofiles'][$format]['type'])) continue;
 				$og['audio']['typename'] = substr($episode->item['audiofiles'][$format]['type'],0,5);
 				$og['audio']['type'] = $episode->item['audiofiles'][$format]['type'];
 				$og['audio']['url'] = $episode->item['audiofiles'][$format]['link'];
