@@ -50,6 +50,11 @@ function sortByPubDate($a,$b) {
 	return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
 }
 
+function markdown($text) {
+	global $main;
+	$f = $main->get('firtz');
+	return $f->markdown->convert($text);
+}
 
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;

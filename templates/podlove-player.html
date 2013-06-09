@@ -12,7 +12,8 @@
 		$(document).ready( function() {
 			$('#player-{{@item.slug}}').podlovewebplayer({
 				title: '{{@item.title}}',
-				subtitle: {{json_encode(nl2br(@item.description))}},
+				subtitle:
+{{json_encode(nl2br(markdown(@item.description)))}},
 				permalink: '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}',
 				duration: '{{@item.duration}}',
 				poster: '{{@item.image}}',
@@ -30,3 +31,5 @@ chapters: {{json_encode(@item.chapters)}},
 		});
 	</script>
 	</p>
+	<!-- {{@item.description}} -->
+	<!-- {{@item.summary}} -->
