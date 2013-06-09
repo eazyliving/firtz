@@ -18,6 +18,9 @@
 			
 			$this->main = $main;
 			$main->set('firtz',$this);
+			
+			$this->markdown = new Markdown();
+			
 			$this->BASEURL ="http://".$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
 			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=dirname($_SERVER['SCRIPT_NAME']);
