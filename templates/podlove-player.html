@@ -13,7 +13,7 @@
 			$('#player-{{@item.slug}}').podlovewebplayer({
 				title: '{{@item.title}}',
 				subtitle:
-{{json_encode(nl2br(markdown(@item.description)))}},
+{{json_encode(nl2br(firtz_markdown(@item.description)))}},
 				permalink: '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}',
 				duration: '{{@item.duration}}',
 				poster: '{{@item.image}}',
