@@ -59,8 +59,14 @@ function podlovewebplayer_register_settings() {
 				'bottom'     => 'Put player to bottom of post:'
 			)
 		),
+		'chapter' => array(
+			'title' => 'Chapter',
+			'fields' => array(
+				'height' => 'Maximal Chapter height'
+			),
+		),
 		'buttons' => array(
-			'title'    => 'PWP buttons',
+			'title'    => 'Buttons',
 			'function' => true,
 			'fields'   => array(
 				'time'      => 'Hide time buttons:',
@@ -200,6 +206,14 @@ function podlovewebplayer_enclosure_bottom() {
 		(instead of the top)";
 }
 
+function podlovewebplayer_chapter_height() {
+	$options = get_option('podlovewebplayer_options');
+	if ( !isset( $options['chapter_height'] ) )
+		$options['chapter_height'] = "";
+	print "<input id='chapter_height' name='podlovewebplayer_options[chapter_height]' 
+		value='".$options['chapter_height']."' style='width:3em;' /> px&nbsp;&nbsp;(keep empty to show all)";
+}
+
 function podlovewebplayer_buttons() {
 	print "<p>Here you can select, which buttons will be displayd. The Chapter-Toggle- and Summary-Info-Button are not configurable here, because they automaticle hidden, when no chapters/summary are provided.</p>\n\n";
 }
@@ -225,7 +239,7 @@ function podlovewebplayer_buttons_share() {
 function podlovewebplayer_info() {
 	$scriptname = explode('/wp-admin', $_SERVER["SCRIPT_FILENAME"]);
 	$dirname    = explode('/wp-content', dirname(__FILE__));
-	print '<p>This is <strong>Version 2.0.7</strong> of the <strong>Podlove Web Player</strong>.<br>
+	print '<p>This is <strong>Version 2.0.9</strong> of the <strong>Podlove Web Player</strong>.<br>
 	The <strong>Including file</strong> is: <code>wp-admin'.$scriptname[1].'</code><br>
 	The <strong>PWP-directory</strong> is: <code>wp-content'.$dirname[1].'</code></p>
 	<p>Want to contribute? Found a bug? Need some help? <br/>you can found our github repo/page at

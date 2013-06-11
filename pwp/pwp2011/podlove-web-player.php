@@ -1,14 +1,14 @@
 <?php
 /**
  * @package PodloveWebPlayer
- * @version 2.0.7
+ * @version 2.0.9
  */
 
 /*
 Plugin Name: Podlove Web Player
 Plugin URI: http://podlove.org/podlove-web-player/
 Description: Video and audio plugin for WordPress built on the MediaElement.js HTML5 media player library.
-Version: 2.0.7
+Version: 2.0.9
 Author: Podlove Team
 Author URI: http://podlove.org/
 License: BSD 2-Clause License
@@ -56,19 +56,14 @@ include_once( PODLOVEWEBPLAYER_DIR . 'settings.php' );
 
 function podlovewebplayer_add_scripts() {
 	wp_enqueue_script( 
-		'mediaelementjs', 
-		plugins_url('libs/mediaelement/build/mediaelement-and-player.min.js', __FILE__), 
-		array('jquery'), '2.10.3', false 
-	);
-	wp_enqueue_script( 
 		'ba_hashchange', 
-		plugins_url('libs/jquery.ba-hashchange.min.js', __FILE__), 
-		array('jquery'), '1.3.0', false
+		plugins_url('static/hashchange.min.js', __FILE__), 
+		array(), '1.3.0', false
 	);
 	wp_enqueue_script( 
 		'podlovewebplayer', 
-		plugins_url('podlove-web-player.js', __FILE__), 
-		array('jquery', 'mediaelementjs'), '2.0.7', false
+		plugins_url('static/podlove-web-player.js', __FILE__), 
+		array(), '2.0.9', false
 	);
 }
 add_action('wp_print_scripts', 'podlovewebplayer_add_scripts');
@@ -80,9 +75,7 @@ add_action('wp_print_scripts', 'podlovewebplayer_add_scripts');
 function podlovewebplayer_add_styles() {
 	global $blog_id;
 	$wp_options = get_option('podlovewebplayer_options');
-	wp_enqueue_style( 'pwpfont', plugins_url('libs/pwpfont/css/fontello.css', __FILE__), array(), '2.0.7' );
-	wp_enqueue_style( 'mediaelementjs', plugins_url('libs/mediaelement/build/mediaelementplayer.css', __FILE__), array(), '2.0.7' );
-	wp_enqueue_style( 'podlovewebplayer', plugins_url('podlove-web-player.css', __FILE__), array(), '2.0.7' );
+	wp_enqueue_style( 'pwpfont', plugins_url('static/podlove-web-player.css', __FILE__), array(), '2.0.9' );
 }
 add_action( 'wp_print_styles', 'podlovewebplayer_add_styles' );
 
@@ -140,6 +133,7 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 		'chapters' => '',
 		'chapterlinks' => 'all', // could also be 'false' or 'buffered'
 		'duration' => 'false',
+		'chapterHeight' => 'false',
 		'chaptersvisible' => 'false',
 		'timecontrolsvisible' => 'false',
 		'summaryvisible' => 'false'
@@ -255,7 +249,7 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 	$truthy = array( true, 'true', 'on', 1, "1" );
 
 	$init_options = array(
-		'pluginPath'          => plugins_url( 'libs/mediaelement/build/', __FILE__),
+		'pluginPath'          => plugins_url( 'static/', __FILE__),
 		'alwaysShowHours'     => in_array( $alwaysshowhours, $truthy, true ),
 		'alwaysShowControls'  => in_array( $alwaysshowcontrols, $truthy, true ),
 		'chaptersVisible'     => in_array( $chaptersvisible, $truthy, true ),
@@ -266,6 +260,7 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 		'hidesharebutton'     => in_array( @$wp_options['buttons_share'], $truthy, true ),
 		'sharewholeepisode'   => in_array( @$wp_options['buttons_sharemode'], $truthy, true ),
 		'loop'                => in_array( $loop, $truthy, true ),
+		'chapterHeight'       => @$wp_options['chapter_height'],
 		'chapterlinks'        => $chapterlinks
 	);
 
@@ -285,6 +280,9 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 	}
 	if ( $chapters ) {
 		$init_options['chapters'] = podlovewebplayer_render_chapters( $chapters );
+		if (( $init_options['chapters'] == false )||( $init_options['chapters'] == '' )) {
+			unset($init_options['chapters']);
+		}
 	}
 	if ( $summary ) {
 		$init_options['summary'] = nl2br( $summary );
@@ -315,20 +313,39 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 
 function podlovewebplayer_render_chapters( $input ) {
 	global $post;
-	$input = trim( $input );
-	$chapters = false;
-	if ( $input != '' ) {
-		if ( 
-			substr( $input, 0, 7 ) == 'http://' || 
-			substr( $input, 0, 8 ) == 'https://'
-		) {
-			$chapters = trim( file_get_contents( $input ) );
-		} elseif ( $chapters = get_post_custom_values( $input, $post->ID ) ) {
-			$chapters = trim( $chapters[0] );
+	if ( json_decode($input) === null ) {
+		$input = trim( $input );
+		$chapters = false;
+		if ( $input != '' ) {
+			if ( substr( $input, 0, 7 ) == 'http://' || substr( $input, 0, 8 ) == 'https://') {
+				$http_context = stream_context_create();
+				stream_context_set_params($http_context, array('user_agent' => 'UserAgent/1.0'));
+				$chapters = trim( @file_get_contents( $input, 0, $http_context ) );
+				$json_chapters = json_decode($chapters);
+				if($json_chapters !== null) {
+					return $json_chapters;
+				}
+			} elseif ( $chapters = get_post_custom_values( $input, $post->ID ) ) {
+				$chapters = trim( $chapters[0] );
+				$json_chapters = json_decode($chapters);
+				if($json_chapters !== null) {
+					return $json_chapters;
+				}
+			}
 		}
+		if ( $chapters == '' ) {
+			return '';
+		}
+		preg_match_all('/((\d+:)?(\d\d?):(\d\d?)(?:\.(\d+))?) ([^<>\r\n]*) ?<?([^<>\r\n]*)>?\r?/', $chapters, $chapterArrayTemp, PREG_SET_ORDER);
+		$chaptercount = count($chapterArrayTemp);
+		for($i = 0; $i < $chaptercount; ++$i) {
+			$chapterArray[$i]['start'] = $chapterArrayTemp[$i][1];
+			$chapterArray[$i]['title'] = htmlspecialchars($chapterArrayTemp[$i][6], ENT_QUOTES);
+			$chapterArray[$i]['href'] = $chapterArrayTemp[$i][7];
+		}
+		return $chapterArray;
 	}
-	$chapters = preg_replace("(\r?\n)", "\n".'+"\n"', htmlspecialchars($chapters, ENT_QUOTES));
-	return $chapters;
+	return $input;
 }
 
 
@@ -352,7 +369,7 @@ add_shortcode( 'podlovevideo', 'podlovewebplayer_video_shortcode' );
 /* Announce deprecation of [audio] and [video] shortcode */
 
 function podlovewebplayer_deprecated_widget_function() {
-	echo '<p style="border-top:2px solid red;padding-top:6px;color:#c00">Using the shortcode <code>[audio]</code> and <code>[video]</code> for the Podlove Web Player is <strong>deprecated</strong> and will be dropped.<br /> Use <code>[podloveaudio]</code> and <code>[podlovevideo]</code> instead!</p>';
+	echo '<p style="border-top:2px solid red;padding-top:6px;color:#c00">Using the shortcode <code>[audio]</code> and <code>[video]</code> for the Podlove Web Player is <strong>deprecated</strong> and will be dropped.<br /> Use <code>[podloveaudio]</code> and <code>[podlovevideo]</code> instead!<br/>The Chapters has now to be handed over as JSON as described in the <a href="http://wordpress.org/plugins/podlove-web-player/faq/">FAQ</a></p>';
 }
 function podlovewebplayer_add_dashboard_widgets() {
 	wp_add_dashboard_widget('podlovewebplayer_deprecated_widget', 'Podlove Web Player', 'podlovewebplayer_deprecated_widget_function');

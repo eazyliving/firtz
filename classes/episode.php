@@ -17,8 +17,6 @@
 			$prod = json_decode(str_replace("\\r", "\\n",  file_get_contents($filename)));
 			if ($prod===false) return false;
 			
-		
-			
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = strip_tags($prod->metadata->subtitle);
 			$item['article'] = $prod->metadata->summary;
@@ -27,12 +25,16 @@
 			$item['date']= date('r',strtotime($prod->creation_time));
 			$item['keywords'] = implode(",",$prod->metadata->tags);
 			
-			foreach ($prod->chapters as $chapter) $item['chapters'][]=array('start'=>$chapter->start,'title'=>$chapter->title);
-			
+			foreach ($prod->chapters as $chapter) {
+				$chap = array('start'=>$chapter->start,'title'=>$chapter->title);
+				if (isset($chapter->url)) $chap['href'] = $chapter->url;
+				if (isset($chapter->image)) $chap['image'] = $chapter->image;
+				$item['chapters'][]=$chap;
+				
+			}
 			if (isset($prod->multi_input_files) && $item['chapters']!="") {
 				foreach ($prod->multi_input_files as $mif) {
 					if ($mif->type=='intro') {
-						
 						foreach ($item['chapters'] as $key=>$chap) $item['chapters'][$key]['start'] = strftime("%H:%M:%S",strtotime($chap['start']) + $mif->input_length);
 					}
 				}
@@ -41,15 +43,18 @@
 			
 			$services = array();
 			foreach ($prod->outgoing_services as $service) {
+				// only services with a base_url work...
 				if (isset($service->base_url) && $service->base_url!="") $services[$service->uuid]=$service->base_url;
 			}
 			$item['audiofiles']=array();
 		
 			foreach ($prod->output_files as $output) {
+				
 				if (sizeof($output->outgoing_services)==0) continue;
 				
 				
 				$service = "";
+				// Check if this services exists
 				foreach ($output->outgoing_services as $oservice) {
 					if (array_key_exists($oservice,$services)) {
 						$service = $oservice;
