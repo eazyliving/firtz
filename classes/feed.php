@@ -487,7 +487,7 @@
 			}
 			
 			if ($ret===false) {
-				echo Template::instance()->render('podlove.xml','application/xml');
+				echo Template::instance()->render('podlove_feed.xml','application/xml');
 			} else {
 				return Template::instance()->render('podlove.xml');
 			}
