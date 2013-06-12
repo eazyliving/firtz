@@ -435,6 +435,21 @@ $main->route('GET /@feed/xml',
 	}, $main->get('CDURATION')
 );
 
+$main->route('GET|HEAD /@feed/xml/@epi',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		$main->set('epi',$params['epi']);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+		$feed->loadEpisodes($params['epi']);
+		
+		$feed->renderPodlove($params['epi']);
+	}, $main->get('CDURATION')
+);
 
 if(php_sapi_name() == "cli") {
     

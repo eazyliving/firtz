@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<episode xmlns="http://podlove.org/dtd/episode-description">
+    <title>{{@item.title | raw}}</title>
+    <subtitle>{{ str_replace("&","&amp;",@item.description)}}</subtitle>
+    <summary>{{str_replace("&","&amp;",@item.summary)}}</summary>
+    <homepage>{{@item.pagelink}}</homepage>
+    <image>{{@item.image}}</image>
+	<media-files>
+	<repeat group="{{@item.audiofiles}}" value="{{@audio}}" key="{{@audiotype}}">
+		 <media-file>
+			<file-title>{{@audiotype}} Audio</file-title>
+			<file-url>{{@audio.link}}</file-url>
+			<file-mime-type>{{@audio.type}}</file-mime-type>
+			</media-file>
+	</repeat>   
+    </media-files>
+</episode>
