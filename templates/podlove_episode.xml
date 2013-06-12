@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <episode xmlns="http://podlove.org/dtd/episode-description">
     <title>{{@item.title | raw}}</title>
-    <subtitle>{{ str_replace("&","&amp;",@item.description)}}</subtitle>
-    <summary>{{str_replace("&","&amp;",@item.summary)}}</summary>
+    <subtitle>{{@item.description | raw}}</subtitle>
+    <summary>{{ @item.summary | raw}}</summary>
     <homepage>{{@item.pagelink}}</homepage>
     <image>{{@item.image}}</image>
 	<media-files>
