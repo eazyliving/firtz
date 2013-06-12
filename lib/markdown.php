@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+	Copyright (c) 2009-2013 F3::Factory/Bong Cosca, All rights reserved.
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -23,9 +23,9 @@ class Markdown extends Prefab {
 		$special;
 
 	/**
-		Process blockquote
-		@return string
-		@param $str string
+	*	Process blockquote
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _blockquote($str) {
 		$str=preg_replace('/(?<=^|\n)\h?>\h?(.*?(?:\n+|$))/','\1',$str);
@@ -34,9 +34,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process whitespace-prefixed code block
-		@return string
-		@param $str string
+	*	Process whitespace-prefixed code block
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _pre($str) {
 		$str=preg_replace('/(?<=^|\n)(?: {4}|\t)(.+?(?:\n+|$))/','\1',
@@ -49,10 +49,10 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process fenced code block
-		@return string
-		@param $hint string
-		@param $str string
+	*	Process fenced code block
+	*	@return string
+	*	@param $hint string
+	*	@param $str string
 	**/
 	protected function _fence($hint,$str) {
 		$str=$this->snip($str);
@@ -171,18 +171,18 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process horizontal rule
-		@return string
+	*	Process horizontal rule
+	*	@return string
 	**/
 	protected function _hr() {
 		return '<hr />'."\n\n";
 	}
 
 	/**
-		Process atx-style heading
-		@return string
-		@param $type string
-		@param $str string
+	*	Process atx-style heading
+	*	@return string
+	*	@param $type string
+	*	@param $str string
 	**/
 	protected function _atx($type,$str) {
 		$level=strlen($type);
@@ -191,10 +191,10 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process setext-style heading
-		@return string
-		@param $str string
-		@param $type string
+	*	Process setext-style heading
+	*	@return string
+	*	@param $str string
+	*	@param $type string
 	**/
 	protected function _setext($str,$type) {
 		$level=strpos('=-',$type)+1;
@@ -203,9 +203,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process ordered/unordered list
-		@return string
-		@param $str string
+	*	Process ordered/unordered list
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _li($str) {
 		// Initialize list parser
@@ -263,18 +263,18 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Ignore raw HTML
-		@return string
-		@param $str string
+	*	Ignore raw HTML
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _raw($str) {
 		return $str;
 	}
 
 	/**
-		Process paragraph
-		@return string
-		@param $str string
+	*	Process paragraph
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _p($str) {
 		$str=trim($str);
@@ -283,7 +283,7 @@ class Markdown extends Prefab {
 				return $this->_p($parts[1]).$this->build($parts[2]);
 			$self=$this;
 			$str=preg_replace_callback(
-				'/([^<\[]+)?(<.+?>|\[.+?\]\s*\(.+?\))([^>\]]+)?|(.+)/s',
+				'/([^<>\[]+)?(<.+?>|\[.+?\]\s*\(.+?\))([^<>\]]+)?|(.+)/s',
 				function($expr) use($self) {
 					$tmp='';
 					if (isset($expr[4]))
@@ -305,32 +305,38 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process strong/em spans
-		@return string
-		@param $str string
+	*	Process strong/em/strikethrough spans
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _text($str) {
 		$tmp='';
 		while ($str!=$tmp)
 			$str=preg_replace_callback(
-				'/(?<!\\\\)([*_]{1,2})(?=\S)(.*?\S[*_]*)(?!\\\\)\1/',
+				'/(?<!\\\\)([*_]{1,3})(.*?)(?!\\\\)\1(?=[\s[:punct:]]|$)/',
 				function($expr) {
 					switch (strlen($expr[1])) {
 						case 1:
 							return '<em>'.$expr[2].'</em>';
 						case 2:
 							return '<strong>'.$expr[2].'</strong>';
+						case 3:
+							return '<strong><em>'.$expr[2].'</em></strong>';
 					}
 				},
-				$tmp=$str
+				preg_replace(
+					'/(?<!\\\\)~~(.*?)(?!\\\\)~~(?=[\s[:punct:]]|$)/',
+					'<del>\1</del>',
+					$tmp=$str
+				)
 			);
 		return $str;
 	}
 
 	/**
-		Process image span
-		@return string
-		@param $str string
+	*	Process image span
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _img($str) {
 		$self=$this;
@@ -350,9 +356,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process anchor span
-		@return string
-		@param $str string
+	*	Process anchor span
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _a($str) {
 		$self=$this;
@@ -370,9 +376,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Auto-convert links
-		@return string
-		@param $str string
+	*	Auto-convert links
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _auto($str) {
 		$self=$this;
@@ -390,9 +396,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Process code span
-		@return string
-		@param $str string
+	*	Process code span
+	*	@return string
+	*	@param $str string
 	**/
 	protected function _code($str) {
 		$self=$this;
@@ -407,9 +413,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Convert characters to HTML entities
-		@return string
-		@param $str string
+	*	Convert characters to HTML entities
+	*	@return string
+	*	@param $str string
 	**/
 	function esc($str) {
 		if (!$this->special)
@@ -426,18 +432,18 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Reduce multiple line feeds
-		@return string
-		@param $str string
+	*	Reduce multiple line feeds
+	*	@return string
+	*	@param $str string
 	**/
 	protected function snip($str) {
 		return preg_replace('/(?:(?<=\n)\n+)|\n+$/',"\n",$str);
 	}
 
 	/**
-		Scan line for convertible spans
-		@return string
-		@param $str string
+	*	Scan line for convertible spans
+	*	@return string
+	*	@param $str string
 	**/
 	function scan($str) {
 		$inline=array('img','a','text','auto','code');
@@ -447,9 +453,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Assemble blocks
-		@return string
-		@param $str string
+	*	Assemble blocks
+	*	@return string
+	*	@param $str string
 	**/
 	protected function build($str) {
 		if (!$this->blocks) {
@@ -468,8 +474,8 @@ class Markdown extends Prefab {
 					'<(address|article|aside|audio|blockquote|canvas|dd|'.
 					'div|dl|fieldset|figcaption|figure|footer|form|h\d|'.
 					'header|hgroup|hr|noscript|object|ol|output|p|pre|'.
-					'section|table|tfoot|ul|video).'.
-					'*?(?:\/>|>(?:(?>[^><]+)|(?R))*<\/\2>))'.
+					'section|table|tfoot|ul|video).*?'.
+					'(?:\/>|>(?:(?>[^><]+)|(?R))*<\/\2>))'.
 					'\h*(?:\n{2,}|\n?$))/s',
 				'p'=>'/^(.+?(?:\n{2,}|\n?$))/s'
 			);
@@ -542,9 +548,9 @@ class Markdown extends Prefab {
 	}
 
 	/**
-		Render HTML equivalent of markdown
-		@return string
-		@param $txt string
+	*	Render HTML equivalent of markdown
+	*	@return string
+	*	@param $txt string
 	**/
 	function convert($txt) {
 		$txt=preg_replace_callback(
