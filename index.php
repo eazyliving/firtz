@@ -409,92 +409,32 @@ $main->route('GET /@feed/adnthread/@postid',
 		echo Template::instance()->render('adnthread.html');
 		
 	
-	}
+	}, $main->get('CDURATION')
 );
 
-$main->route('GET /clone',
+$main->route('GET /@feed/xml',
+
 	function($main,$params) {
 		
-		function addDirectoryToZip($zip, $dir, $base)
-		{
-			$newFolder = str_replace($base, '', $dir);
-			$zip->addEmptyDir($newFolder);
-			foreach(glob($dir . '/*') as $file)
-			{
-				if(is_dir($file))
-				{
-					$zip = addDirectoryToZip($zip, $file, $base);
-				}
-				else
-				{
-					$newFile = str_replace($base, '', $file);
-					$zip->addFile($file, $newFile);
-				}
-			}
-			return $zip;
-		}
-		$main->set('clonemode',true);
-		$main->set('extxml','.xml');
-		$main->set('exthtml','.html');
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
 		
-		$z = new ZipArchive();
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
 		
-		try {
-			$filename = tempnam(sys_get_temp_dir(),'firtz');
-		} catch (Exception $e) {
-			echo $e;
-			exit;
-		}
-
-		$z->open($filename, ZIPARCHIVE::CM_PKWARE_IMPLODE);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
 		
-		foreach ($main->get('feeds') as $slug) {
-			
-			$z=addDirectoryToZip($z,'js','');
-			$z=addDirectoryToZip($z,'css','');
-			$z=addDirectoryToZip($z,'pwp','');
-			
-			$z->addEmptyDir($slug);
-			$z->addEmptyDir($slug.'/show');
-			
-			$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
-			$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
-			$feed = new feed($main,$slug,$FEEDCONFIG);
-		
-			if ($feed->attr['cloneurl']=='') continue;
-		
-			$main->set('BASEURL',$feed->attr['cloneurl']);
-			
-			$feed->findEpisodes();
-			$feed->loadEpisodes();
-			
-			foreach ($feed->attr['audioformats'] as $audio) {
-				$xml = $feed->renderRSS2($audio,true);
-				$z->addFromString($slug."/".$audio.".xml",$xml);
-			}
-			
-			$main->set('epi','');
-			$html = $feed->renderHTML(true);
-			
-			$z->addFromString($slug.'/show/index.html',$html);
-			foreach ($feed->real_slugs as $episode_slug) {
-				$main->set('epi',$episode_slug);
-				$html = $feed->renderHTML(true);
-				$z->addEmptyDir($slug.'/show/'.$episode_slug);
-				$z->addFromString($slug.'/show/'.$episode_slug.'/index.html',$html);
-			}
-			
+		if ($feed->attr['redirect']!="") {
+			header ('HTTP/1.1 301 Moved Permanently');
+			header ('Location: '.$feed->attr['redirect']);
+			die();
 		}
 		
-		$z->close();
+		$feed->renderPodlove();
 		
-		header('Content-Type: application/zip');
-		header('Content-Disposition: attachment; filename="'.basename($filename).'.zip"');
-		readfile($filename);
-		
-		exit;
-	}
+	}, $main->get('CDURATION')
 );
+
 
 if(php_sapi_name() == "cli") {
     

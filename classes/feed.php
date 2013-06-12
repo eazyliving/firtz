@@ -466,6 +466,33 @@
 		
 		}
 		
+		public function renderPodlove($ret=false) {
+		
+			/* render podlove feed specification template */
+			/* https://github.com/podlove/podlove-specifications/blob/master/podlove-podcast-description.md */
+			
+			$main = $this->main;
+			$audioformat = $this->attr['audioformats'][0];
+			$this->attr['audioformat']=$audioformat;
+			$main->set('feedattr',$this->attr);
+
+			/*	render or return template 
+				return rendered data will be used in clone mode, which will be used for static site clones
+			*/
+			
+			if (file_exists($this->feedDir."/templates")) {
+				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
+				$main->set('UI',$ui);
+				$main->set('templatepath',$this->feedDir."/templates");
+			}
+			
+			if ($ret===false) {
+				echo Template::instance()->render('podlove.xml','application/xml');
+			} else {
+				return Template::instance()->render('podlove.xml');
+			}
+		}
+		
 		
 		public function renderRSS2($audioformat = '',$ret=false) {
 		
