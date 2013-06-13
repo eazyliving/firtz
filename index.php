@@ -9,7 +9,7 @@ $main->set('FEEDDIR','./feeds');
 $main->set('UI','templates/');
 $main->set('templatepath','templates/');
 $main->set('version',1);
-$main->set('revision',0);
+$main->set('revision',1);
 $main->set('generator','firtz podcast publisher v'.$main->get('version').".".$main->get('revision'));
 $main->set('pager','');
 $main->set('BASEURL',"http://".$main->get('HOST').dirname($_SERVER['SCRIPT_NAME']));
@@ -19,7 +19,7 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
 $main->set('CDURATION',300);
 $main->set('page',0);
-$main->set('DEBUG',1);
+$main->set('DEBUG',0);
 $main->set('epi','');
 $main->set('og',array());
 $main->set('clonemode',false);
@@ -449,16 +449,6 @@ $main->route('GET|HEAD /@feed/xml/@epi',
 		
 		$feed->renderPodlove($params['epi']);
 	}, $main->get('CDURATION')
-);
-
-$main->route('GET /test',
-	function($main,$params) {
-		
-		$view=new View;
-        echo $view->render('test.html');
-	
-	
-	}
 );
 
 if(php_sapi_name() == "cli") {
