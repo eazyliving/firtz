@@ -8,19 +8,13 @@
 	
 	class firtz {
 	
-	
 		public $data = array();
 		public $extensions = array();
-		
-		function __construct() {
-		
-			global $main;
-			
-			$this->main = $main;
-			$main->set('firtz',$this);
+	
+		function __construct($main) {
 			
 			$this->markdown = new Markdown();
-			
+
 			$this->BASEURL ="http://".$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
 			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=dirname($_SERVER['SCRIPT_NAME']);
@@ -33,6 +27,7 @@
 
 			$main->set('BASEPATH',$main->fixslashes($this->BASEPATH));
 			$main->set('BASEURL',$main->fixslashes($this->BASEURL));
+
 		}
 	
 		function time_difference($date) {
@@ -75,9 +70,8 @@
 			return "$difference$periods[$j] {$tense}";
 		}
 			
-		function loadAllTheExtensions() {
+		function loadAllTheExtensions($main) {
 		
-			$main = $this->main;
 			if (!file_exists($main->get('BASEPATH').'/ext/')) return;
 			
 			foreach (glob($main->get('BASEPATH').'/ext/*',GLOB_ONLYDIR) as $dir) {
