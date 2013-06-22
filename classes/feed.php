@@ -525,7 +525,10 @@
 			foreach ($this->episodes as $episode) {
 				$item = $episode->item;
 				if (isset($item[$audioformat])) $item['enclosure'] = $item[$audioformat];
+				foreach ($item['chapters'] as $key => $chapter) $item['chapters'][$key]['title']=$item['chapters'][$key]['title'] = str_replace("&","&amp;amp;",$chapter['title']);
+				
 				$items[]=$item;
+			
 			}
 			$main->set('items',$items);
 			
