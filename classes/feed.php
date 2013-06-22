@@ -106,7 +106,8 @@
 			$attr['slug']=$slug;
 			$attr['link'] = $main->get('BASEURL').$attr['slug'].'/show';
 			$attr['self'] = $main->get('REALM');
-			
+			$attr['selfrel'] = (substr($attr['self'],-1)== "/") ? substr($attr['self'],0,-1) : $attr['self'];
+
 			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
 
 			if ($attr['flattrid']!="") {
