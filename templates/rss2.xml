@@ -92,7 +92,7 @@ version="2.0">
 				<check if="{{@item.chapters}}">
 				<psc:chapters version="1.1">
 				<repeat group="@item.chapters" value="@chapter">
-					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title}}"/>
+					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"/>
 				</repeat>	
 				</psc:chapters>
 				</check>
