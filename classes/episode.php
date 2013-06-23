@@ -28,7 +28,8 @@
 			foreach ($prod->chapters as $chapter) {
 				$chap = array('start'=>$chapter->start,'title'=>$chapter->title);
 				if (isset($chapter->url)) $chap['href'] = $chapter->url;
-				if (isset($chapter->image)) $chap['image'] = $chapter->image;
+				// images in chapters are located on auphonics server. no chance to get them :(
+				// if (isset($chapter->image)) $chap['image'] = $chapter->image;
 				$item['chapters'][]=$chap;
 				
 			}
