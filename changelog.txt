@@ -1,5 +1,7 @@
 changelog:
 
+1.2 enabled rfc5005 inside standard feed (until now only by special urls...)
+	fixed onother pile of smelly bugs. Take some care though...
 1.1 another tons of bugfixes, templates per feed and podlove webplayer 2.0.11
     updated to fatfree 3.0.9, added adnthreads for episode comments
 1.0 tons of bugs fixed. podlove webplayer version 2.0.7 integrated
