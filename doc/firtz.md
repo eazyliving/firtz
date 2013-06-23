@@ -303,12 +303,18 @@ Sind im Pfad Dateien unterschiedlicher Feeds vorhanden, sollte das Pattern (und 
 Im Remote-Modus, in dem die Produktionsdateien nicht per Filesystem zu finden sind, muss der URL
 zu diesen Daten angegeben werden. Die Dateien werden dann ausschließlich über konfigurierte namensgleiche .epi-Dateien zu finden sein, die dann auch leer sein können. Eine andere Idee, diese Dateien zu identifizieren hatte ich bisher nicht. **Implementiert ist diese Funktion mit Version 0.5 noch nicht.**
 
-Das war's wohl für's erste. Versuche alle nötigen Informationen zu liefern und so viele Attribute wie nur möglich zu füllen, die den Feed mit Metadaten versehen.
+**rfc5005**:  
+**pagedcount**:  
+Wenn ein Feed sehr groß wird, weil viel Episoden mit ausladenden Kapitelmarken und Shownotes nunmal ihren Platz fordern, kann es zu langen Lade- und Checkzeiten kommen und so manche Software oder Dienst strecken schonmal die Segel. Feedburner z.B. mag es nicht, wenn ein Feed größer als ein halbes MByte ist.  
+Für solche Fälle gibt es "paged feeds", die im [RFC5005](http://www.ietf.org/rfc/rfc5005.txt) definiert sind. Das Prinzip ist ganz einfach: Die eigentliche Hauptadresse des Feeds spuckt nur die ersten X Folgen aus und verlinkt wiederum auf die nächstälteren X Folgen. Ein geeineter Podcatcher/Feedreader kann aus diesen Verlinkungen den kompletten Feed zusammenbauen. Leider ist dieses Feature selten bis gar nicht umgesetzt. Bisher ist mir nur [instacast für den Mac](http://vemedio.com/products/instacast-mac) bekannt.
+
+Ist *rfc5005* auf "on" gesetzt, wird genau dieses Feature eingeschaltet. Der Feed hat dann erstmal nur so viele Episoden, wie in *pagedcount* angegeben wurden. Default ist für diese Anzahl 10. 
 
 **redirect**:
 
 Zu guter Letzt kann es natürlich vorkommen, dass Du den Feed umziehen musst. Anderes System, andere Domain, was auch immer. Um Deine Abonnenten nicht mit einem toten (alten) Feed alleine zu lassen, erzählst Du dem firtz, wo denn der neue Feed zu finden ist. Der führt dann ein redirect (301) aus, was im Allgemeinen auch diverse Dienste wie z.B. iTunes auf den neuen Feed führen sollte.
 
+Das war's wohl für's erste. Versuche alle nötigen Informationen zu liefern und so viele Attribute wie nur möglich zu füllen, die den Feed mit Metadaten versehen.
 
 ## Die Episode
 
