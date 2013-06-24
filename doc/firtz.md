@@ -90,7 +90,7 @@ Feeds lassen sich übrigens deaktivieren, indem Du dem Ordnernamen ein *_* voran
 
 Im Ordner *templates* wiederum finden sich alle Dateien, die dazu beitragen, die generierten Feeds in irgendeiner Weise darzustellen. Ob nun RSS oder Webseite, die Ausgabe wird - größtenteils - hier festgelegt. Hier **muss** nichts getan werden, wer mag, kann die Grundeinstellungen übernehmen. Mit der Zeit wirst Du aber vermutlich an der einen oder anderen Stelle, vermutlich an der Webseite, drehen wollen.
 
-Den Templatesordner gibt es in zwei Geschmacksrichtungen. Zum einen kann es einen geben, der im feeds-Ordner lebt. Der gilt dann für den jeweiligen Feed. Ist der nicht vorhanden, wird auf den Ordner *templates* im Installationsverzeichnis zurückgegriffen. Ist der Ordner im Feedsverzeichnis vorhanden, muss dieser vollständig sein. Die Demoinstallation beinhaltet einen vollständigen Ordner *templates* im Feedsverzeichnis. 
+Den Templatesordner gibt es in zwei Geschmacksrichtungen. Zum einen kann es einen geben, der im feeds-Ordner lebt. Der gilt dann für den jeweiligen Feed. Ist der nicht vorhanden, wird auf den Ordner *templates* im Installationsverzeichnis zurückgegriffen. Ist der Ordner im Feedsverzeichnis vorhanden, muss dieser vollständig sein.
 
 **Die Audiodateien**
 
