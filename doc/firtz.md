@@ -291,7 +291,7 @@ nur .epi-Dateien werden angezeigt.
 
  
 **auphonic-path:**
-Der Pfad zu den lokal vorhandenen Auphonic-Produktionsdateien. 
+Der _absolute_ Pfad auf dem lokalen Dateisystem des Webservers zu den vorhandenen Auphonic-Produktionsdateien. 
  
 
 **auphonic-glob**:  
