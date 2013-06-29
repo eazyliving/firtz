@@ -340,7 +340,7 @@ Optional das Veröffentlichungsdatum der Episode in der Notation "YYYY-MM-DD HH:
 Kurze Beschreibung der Episode, Subheadline
 
 **article:**  
-Ausführliche Beschreibung / Artikel zum Inhalt der Episode. Dieser Text wird auch im Player der Webseite angezeigt und darf HTML enthalten.
+Ausführliche Beschreibung / Artikel zum Inhalt der Episode. Dieser Text wird auch im Player der Webseite angezeigt und darf markdown, aber nicht HTML enthalten. Das wirkt sich vor allem auf die Webseite aus, im Feed kann es an einigen Stellen dazu kommen, dass diese Auszeichnung verloren geht, z.B. bei iTunes:summary.  
 
 **keywords:**  
 Kommagetrennte Stichwörter, die den Inhalt der Episode beschreiben
