@@ -33,6 +33,7 @@ Darüber hinaus ist es sehr hilfreich, wenn nicht sogar der einfachste Weg, mit 
  * paged Feeds (rfc5005)
 * Integration Auphonic
 * eine automagisch generierte Webseite
+* Auszeichnung per Markdown
 * einiges mehr, das mir aktuell nicht einfällt...
 
 ## Was braucht es?
