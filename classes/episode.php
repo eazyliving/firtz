@@ -46,6 +46,7 @@
 			foreach ($prod->outgoing_services as $service) {
 				// only services with a base_url work...
 				if (isset($service->base_url) && $service->base_url!="") $services[$service->uuid]=$service->base_url;
+				if ($service->type=="amazons3") $services[$service->uuid] = 'http://'.$service->bucket.'.s3.amazonaws.com/';
 			}
 			$item['audiofiles']=array();
 		
