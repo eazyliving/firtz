@@ -56,7 +56,8 @@
 					<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
 				</check>
 				<script type="text/javascript">
-				if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) document.write('<li><a href="{{str_replace('http://','podcast://',@feedattr.baserel)}}">Instacast</a></li>');
+//if (navigator.userAgent.match(/iPhone|iPad|iPod/i))				
+				document.write('<li><a href="{{str_replace('http://','podcast://',@feedattr.instacast)}}">Instacast</a></li>');
 				</script>
 			</ul>
 			
