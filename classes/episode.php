@@ -117,11 +117,30 @@
 					/* a chapter line */
 					/* no link or image atm */
 					/* will have to separate with | or because of title attribute, which might contain white space */
+					#((\d+:)?(\d\d?):(\d\d?)(?:\.(\d+))?) ([^<>\r\n]{3,}) ?(<([^<>\r\n]*)>\s*(<([^<>\r\n]*)>\s*)?)?\r?
+					# thanks, Simon Waldherr. You saved my brain here! :)
 					
-					$sep = strpos ( $line, " " );
-					$time = substr($line,0,$sep);
-					$name = substr($line,$sep+1);
-					$item['chapters'][]=array('start'=>$time,'title'=>$name,'link'=>'','image'=>'');
+					preg_match('#((\d+:)?(\d\d?):(\d\d?)(?:\.(\d+))?) ([^<>\r\n]{3,}) ?(<([^<>\r\n]*)>\s*(<([^<>\r\n]*)>\s*)?)?\r?#',$line,$chapreg );
+				
+					$chap = array();
+					if (isset($chapreg[1]) && isset($chapreg[6])) {
+						$chap['start'] = $chapreg[1];	
+						$chap['title'] = $chapreg[6];	
+						$chap['image']="";$chap['href']="";
+						if (isset($chapreg[8])) {
+							$chap['href']=$chapreg[8];
+							if (isset($chapreg[10])) {
+								$chap['image']=$chapreg[10];
+							}
+						}
+						$item['chapters'][]=$chap;
+
+					
+					}
+					
+					
+					
+					
 					
 				} elseif (in_array($thisattr,$feedattrs['audioformats'])) {
 				
