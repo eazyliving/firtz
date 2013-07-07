@@ -91,7 +91,14 @@ version="2.0">
 				<check if="{{@item.chapters}}">
 				<psc:chapters version="1.1">
 				<repeat group="@item.chapters" value="@chapter">
-					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"/>
+					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"
+					<check if="{{@chapter.href}}">
+						href="{{@chapter.href|raw}}"
+					</check>
+					<check if="{{@chapter.image}}">
+						image="{{@chapter.image|raw}}"
+					</check> 
+					/>
 				</repeat>	
 				</psc:chapters>
 				</check>

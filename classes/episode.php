@@ -26,7 +26,7 @@
 			$item['keywords'] = implode(",",$prod->metadata->tags);
 			
 			foreach ($prod->chapters as $chapter) {
-				$chap = array('start'=>$chapter->start,'title'=>$chapter->title);
+				$chap = array('start'=>$chapter->start,'title'=>$chapter->title,'image'=>'','href'=>'');
 				if (isset($chapter->url)) $chap['href'] = $chapter->url;
 				// images in chapters are located on auphonics server. no chance to get them :(
 				// if (isset($chapter->image)) $chap['image'] = $chapter->image;
@@ -122,11 +122,11 @@
 					
 					preg_match('#((\d+:)?(\d\d?):(\d\d?)(?:\.(\d+))?) ([^<>\r\n]{3,}) ?(<([^<>\r\n]*)>\s*(<([^<>\r\n]*)>\s*)?)?\r?#',$line,$chapreg );
 				
-					$chap = array();
+					$chap = array('start'=>'','title'=>'','image'=>'','href'=>'');
 					if (isset($chapreg[1]) && isset($chapreg[6])) {
 						$chap['start'] = $chapreg[1];	
 						$chap['title'] = $chapreg[6];	
-						$chap['image']="";$chap['href']="";
+					
 						if (isset($chapreg[8])) {
 							$chap['href']=$chapreg[8];
 							if (isset($chapreg[10])) {
