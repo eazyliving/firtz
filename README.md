@@ -2,7 +2,7 @@
 
 
 *firtz podcast publisher*  
-*Version 1.0*
+*Version 1.3*
 
 ## Über
 
@@ -109,7 +109,7 @@ Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlov
 
 
 *firtz podcast publisher*  
-*Version 1.0*
+*Version 1.3*
 
 ## About
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <podcast xmlns="http://podlove.org/dtd/podcast-description">
     <title>{{@feedattr.title | raw}}</title>
     <subtitle>{{@feedattr.description | raw}}</subtitle>
