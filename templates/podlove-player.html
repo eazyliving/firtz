@@ -1,5 +1,4 @@
 	<p>
-	
 	<{{substr(@item.audiofiles[@feedattr.audioformats[0]].type,0,5)}} id="player-{{@item.slug}}">
 		<repeat group="@item.audiofiles" value="@audio">
 			<check if="{{substr(@audio.type,0,5)}}=='audio' || {{substr(@audio.type,0,5)}}=='video'">
@@ -10,10 +9,9 @@
 
 	<script>
 		$(document).ready( function() {
-			$('#player-{{@item.slug}}').podlovewebplayer({
+			jQuery('#player-{{@item.slug}}').podlovewebplayer({
 				title: '{{@item.title}}',
-				subtitle:
-{{json_encode(nl2br(firtz_markdown(@item.description)))}},
+				subtitle: {{json_encode(nl2br(firtz_markdown(@item.description)))}},
 				permalink: '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}',
 				duration: '{{@item.duration}}',
 				poster: '{{@item.image}}',
