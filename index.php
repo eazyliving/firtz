@@ -9,7 +9,7 @@ $main->set('FEEDDIR','./feeds');
 $main->set('UI','templates/');
 $main->set('templatepath','templates/');
 $main->set('version',1);
-$main->set('revision',2);
+$main->set('revision',3);
 $main->set('generator','firtz podcast publisher v'.$main->get('version').".".$main->get('revision'));
 $main->set('pager','');
 $main->set('BASEURL',"http://".$main->get('HOST').dirname($_SERVER['SCRIPT_NAME']));
