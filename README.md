@@ -203,6 +203,6 @@ Contact me. Either via [Mail](mailto:info@hoersuppe.de), at [Twitter](https://tw
 
 I build firtz with [fatfree framework](https://github.com/bcosca/fatfree) and [bootstrap](http://twitter.github.com/bootstrap/).
 
-Additionaly the [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) helps that everything looks nicely more or less :)
+Additionaly the [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) helps that everything looks nicely :)
 
 [Stefan Thesing](https://alpha.app.net/hirnbloggade) wrote an [article](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/), describing his procedure of installing firtz. Maybe you can find some helpful hints there. Sorry, german only :-)
