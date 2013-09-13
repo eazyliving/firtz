@@ -28,7 +28,7 @@
 			$main->set('BASEPATH',$main->fixslashes($this->BASEPATH));
 			$main->set('BASEURL',$main->fixslashes($this->BASEURL));
 
-			foreach ($main->get('firtz') as $var) $attr[$var]="";
+			foreach ($main->get('firtzattr_default') as $var) $attr[$var]="";
 
 			if (file_exists('./firtz.cfg')) {
 				
