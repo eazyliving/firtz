@@ -29,7 +29,9 @@ $main->set('LOCALES','dict/');
 $main->set('rfc5005','');
 $main->set('audio','');
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken'));
+$main->set('firtzattr_default',array('feedalias'));
+
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias'));
 
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
@@ -55,6 +57,22 @@ function firtz_markdown($text) {
 	global $main;
 	$f = $main->get('firtz');
 	return $f->markdown->convert($text);
+}
+
+foreach ($firtz->attr['feedalias'] as $alias) {
+	
+	$main->route('GET|HEAD '.$alias['route'],
+	
+	function($main,$params) use ($alias) {
+		
+		header ('HTTP/1.1 301 Moved Permanently');
+		header ('Location: /'.$alias['feed'].'/'.$alias['format']);
+		die();
+	
+	}
+);
+
+
 }
 
 foreach ($firtz->extensions as $slug => $extension) {
@@ -131,7 +149,6 @@ foreach ($firtz->extensions as $slug => $extension) {
 	);
 
 }
-
 
 
 /*
@@ -326,7 +343,26 @@ $main->route('GET|HEAD /@feed/show/@epi',
 		$feed->loadEpisodes($params['epi']);
 		$feed->renderHTML();
 	}, $main->get('CDURATION')
+
 );
+
+$main->route('GET|HEAD /@feed/show/@epi/alex',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		$main->set('singlepage',true);
+		$main->set('epi',$params['epi']);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+		$feed->loadEpisodes($params['epi']);
+		$feed->renderHTML();
+	}, $main->get('CDURATION')
+);
+
+
 
 /*
 	web page mode, pageing 3 shows

@@ -10,7 +10,7 @@
 	
 		public $data = array();
 		public $extensions = array();
-	
+		public $attr = array();
 		function __construct($main) {
 			
 			$this->markdown = new Markdown();
@@ -28,6 +28,49 @@
 			$main->set('BASEPATH',$main->fixslashes($this->BASEPATH));
 			$main->set('BASEURL',$main->fixslashes($this->BASEURL));
 
+			if (file_exists('./firtz.cfg')) {
+				
+				# firtz global config file... at last :(
+				
+					foreach ($main->get('firtzattr_default') as $var) $attr[$var]="";
+			
+					$fh = fopen('./firtz.cfg','r');
+					
+					$thisattr="";
+					
+					while (!feof($fh)) {
+						
+						$line = trim(fgets($fh));
+						
+						if ($line=="" || substr($line,0,2)=="#:") continue;
+						
+						if ($line=="---end---") {
+							break;
+						}
+						
+						/* a new attribute */
+						 
+						if (substr($line,-1)==":" && in_array(substr($line,0,-1),$main->get('firtzattr_default'))) {
+							$thisattr = substr($line,0,-1);
+							$attr[$thisattr]="";
+						} elseif ($thisattr == "feedalias") {
+							$alias = explode(" ",$line);
+							if (sizeof($alias)==3) $attr['feedalias'][$alias[0]] = array('format'=>$alias[0],'feed'=>$alias[1],'route'=>$alias[2]);
+						} else {
+							/* concat a new line to existing attribute */
+							
+							if ($thisattr!="") $attr[$thisattr] .= ($attr[$thisattr]!="") ? "\n".$line : $line;
+						}
+						
+					}
+					
+					fclose($fh);
+		
+					/* sanitize data */
+					$this->attr=$attr;
+				
+			}
+			
 		}
 	
 		function time_difference($date) {
