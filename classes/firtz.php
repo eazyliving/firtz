@@ -11,6 +11,7 @@
 		public $data = array();
 		public $extensions = array();
 		public $attr = array();
+		
 		function __construct($main) {
 			
 			$this->markdown = new Markdown();
@@ -29,7 +30,7 @@
 			$main->set('BASEURL',$main->fixslashes($this->BASEURL));
 
 			foreach ($main->get('firtzattr_default') as $var) $attr[$var]="";
-
+			$attr['feedalias'] = array();
 			if (file_exists('./firtz.cfg')) {
 				
 				# firtz global config file... at last :(

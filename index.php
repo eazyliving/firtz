@@ -75,6 +75,7 @@ foreach ($firtz->attr['feedalias'] as $alias) {
 
 }
 
+
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
 	$slug = $extension->slug;
