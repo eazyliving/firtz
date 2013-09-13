@@ -188,6 +188,8 @@ Da es denkbar ist, dass eine Installation des firtz unter mehreren Domains läuf
 
 Dieser Parameter betrifft aktuell auch nur genau diese Frontseite. Wird der Feed/die Seite dennoch über die andere Domain angesprochen, wird kein URL-Rewriting oder Weiterleitung ausgeführt!
 
+Änderung am 13.9.2013: Wenn eine baseurl angegeben wurde, und genau diese aufgerufen wird, leitet auch die Frontseite direkt zur Webseite des Podcasts weiter. Voraussetzung dafür ist allerdings ein Eintrag in die firtz.cfg mit dem Attribut `baseurlredirect` mit dem Wert `yes`.
+
 Siehe dazu auch [hier](https://github.com/eazyliving/firtz/issues/45).
 
 **mediabaseurl:**  
@@ -320,11 +322,9 @@ Das war's wohl für's erste. Versuche alle nötigen Informationen zu liefern und
 
 ## Der firtz
 
-Auch der firtz als Gesamtkunstwerk verfügt über eine Konfigurationsdatei, allerdings ist die aktuell (v 1.3) noch sehr schmal und verfügt nur über ein Attribut.
+Auch der firtz als Gesamtkunstwerk verfügt über eine Konfigurationsdatei, allerdings ist die aktuell (v 1.3) noch sehr schmal und verfügt nur über zwei Attribute.
 
 Die Notation ist analog zum Feed, die Datei muss im Hauptverzeichnis liegen und *firtz.cfg* heißen.
-
-Dieses eine Attribut ist eines, das meinen Migrationsbemühungen geschuldet ist und heißt `feedalias`:
 
 **feedalias:**
 format feed route
@@ -335,6 +335,11 @@ Wenn man z.B. von Wordpress kommt und der alte MP3-Feed nach *http://supicast.de
 `mp3 sc /feed/mp3`
 
 ein. Es gibt dann einen 301er redirect und alles bleibt "beim alten". Entsprechend gut programmierte Podcatcher werden die neue Adresse dann übernehmen.
+
+**baseurlredirect:**
+yes
+Bei einer Installation mit mehreren Podcasts (Feeds), die auf unterschiedlichen Domains laufen sollen, wird auf der eigentlich eingeblendeten Homepage ein redirect zur Webseite des Podcasts durchgeführt und _nicht_ die Frontseite mit der Liste der Podcasts angezeigt.
+
 
 Nun bleibt die Frage offen, weshalb denn eine zentrale firtz-Konfiguration nötig its: Es gibt Dinge, die man nicht an den Feed binden kann. Ein solcher redirect zum Beispiel ist ein Problem, das _vor_ dem Laden der Konfiguration des feeds passiert sein muss. Es wird sicher in Zukunft noch andere Attribute geben, die hierher wandern werden. Es bleibt spannend ;)
 

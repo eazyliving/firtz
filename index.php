@@ -29,7 +29,7 @@ $main->set('LOCALES','dict/');
 $main->set('rfc5005','');
 $main->set('audio','');
 
-$main->set('firtzattr_default',array('feedalias'));
+$main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias'));
 
@@ -403,14 +403,21 @@ $main->route('GET /',
 	function($main,$params) {
 
 		$feeds = array();
+		$firtz = $main->get('firtz');
 		$allfeeds = $main->get('feeds');
 		if (sizeof($allfeeds)==1) $main->reroute('/'.$allfeeds[0].'/show');
 		
 		foreach ($allfeeds as $slug) {
+			
+			
+			
 			$FEEDPATH = $main->get('FEEDDIR').'/'.$slug;
 			$FEEDCONFIG = $FEEDPATH.'/feed.cfg';
 			$feed = new feed($main,$slug,$FEEDCONFIG);
 			$feeds[]=$feed->attr;
+			if ('http://'.$main->get('HOST') == $feed->attr['baseurl'] && $firtz->attr['baseurlredirect']=='yes') {
+				$main->reroute('/'.$slug.'/show');
+			}
 			$main->set('frontlanguage',substr($feed->attr['language'],0,2));
 			$main->set('fronttitle',$feed->attr['title']);
 			$main->set('frontauthor',$feed->attr['author']);
