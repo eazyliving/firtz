@@ -69,10 +69,10 @@
 					fclose($fh);
 		
 					/* sanitize data */
-					$this->attr=$attr;
+					
 				
 			}
-			
+			$this->attr=$attr;
 		}
 	
 		function time_difference($date) {
