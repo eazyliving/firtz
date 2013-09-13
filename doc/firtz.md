@@ -3,6 +3,7 @@
 * [Einleitung](#Einleitung)
 * [Was braucht es?](#was-braucht-es)
 * [der Feed](#der-feed)
+* [der firtz](#der-firtz)
 * [die Episode](#die-episode)
 * [die Webseite](#die-webseite)
 * [Auphonic](#auphonic)
@@ -316,6 +317,26 @@ Ist *rfc5005* auf "on" gesetzt, wird genau dieses Feature eingeschaltet. Der Fee
 Zu guter Letzt kann es natürlich vorkommen, dass Du den Feed umziehen musst. Anderes System, andere Domain, was auch immer. Um Deine Abonnenten nicht mit einem toten (alten) Feed alleine zu lassen, erzählst Du dem firtz, wo denn der neue Feed zu finden ist. Der führt dann ein redirect (301) aus, was im Allgemeinen auch diverse Dienste wie z.B. iTunes auf den neuen Feed führen sollte.
 
 Das war's wohl für's erste. Versuche alle nötigen Informationen zu liefern und so viele Attribute wie nur möglich zu füllen, die den Feed mit Metadaten versehen.
+
+## Der firtz
+
+Auch der firtz als Gesamtkunstwerk verfügt über eine Konfigurationsdatei, allerdings ist die aktuell (v 1.3) noch sehr schmal und verfügt nur über ein Attribut.
+
+Die Notation ist analog zum Feed, die Datei muss im Hauptverzeichnis liegen und *firtz.cfg* heißen.
+
+Dieses eine Attribut ist eines, das meinen Migrationsbemühungen geschuldet ist und heißt `feedalias`:
+
+**feedalias:**
+format feed route
+
+Das Problem war bei vielen Migrationen, dass frei benannte Feedadressen auf die neue Notation (/slug/format) umgestellt werden müssen.
+Wenn man z.B. von Wordpress kommt und der alte MP3-Feed nach *http://supicast.de/feed/mp3* ging, der neue aber *http://supicast.de/sc/mp3* lauten soll, trägt man in dieser Zeile
+
+`mp3 sc /feed/mp3`
+
+ein. Es gibt dann einen 301er redirect und alles bleibt "beim alten". Entsprechend gut programmierte Podcatcher werden die neue Adresse dann übernehmen.
+
+Nun bleibt die Frage offen, weshalb denn eine zentrale firtz-Konfiguration nötig its: Es gibt Dinge, die man nicht an den Feed binden kann. Ein solcher redirect zum Beispiel ist ein Problem, das _vor_ dem Laden der Konfiguration des feeds passiert sein muss. Es wird sicher in Zukunft noch andere Attribute geben, die hierher wandern werden. Es bleibt spannend ;)
 
 ## Die Episode
 
