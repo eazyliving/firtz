@@ -58,7 +58,7 @@
 							$attr[$thisattr]="";
 						} elseif ($thisattr == "feedalias") {
 							$alias = explode(" ",$line);
-							if (sizeof($alias)==3) $attr['feedalias'][$alias[0]] = array('format'=>$alias[0],'feed'=>$alias[1],'route'=>$alias[2]);
+							if (sizeof($alias)==3) $attr['feedalias'][] = array('format'=>$alias[0],'feed'=>$alias[1],'route'=>$alias[2]);
 						} else {
 							/* concat a new line to existing attribute */
 							
