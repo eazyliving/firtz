@@ -346,7 +346,7 @@ $main->route('GET|HEAD /@feed/show/@epi',
 
 );
 
-$main->route('GET|HEAD /@feed/show/@epi/alex',
+$main->route('GET|HEAD /@feed/show/@epi/@ignore',
 	function ($main,$params) {
 		$slug = $params['feed'];
 		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
@@ -360,9 +360,8 @@ $main->route('GET|HEAD /@feed/show/@epi/alex',
 		$feed->loadEpisodes($params['epi']);
 		$feed->renderHTML();
 	}, $main->get('CDURATION')
+
 );
-
-
 
 /*
 	web page mode, pageing 3 shows
