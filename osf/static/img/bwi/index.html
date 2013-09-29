@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BitmapWebIcons</title>
+<style>
+body,
+html {
+  padding: 0;
+  margin: auto 35px;
+  height: 100%;
+}
+body { background: #fff none repeat 0 0 }
+h1 {
+  text-align: center;
+  margin: auto;
+  margin: 25px auto;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+div#images div {
+  display: inline-block;
+  width: 260px;
+  padding: 6px;
+  margin: 2px;
+}
+img { height: 28px }
+div#images span {
+  font-family: "Lucida Grande","Lucida Sans Unicode",Geneva,sans-serif;
+  position: relative;
+  top: -8px;
+  left: 8px;
+}
+
+</style>
+</head>
+<body>
+
+<h1>BitmapWebIcons</h1>
+<div id="images">Downloading Images...</div>
+
+<script>
+var loadImages = function () {
+  var ajax, ajaxTimeout, requrl;
+  ajax = (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : (XMLHttpRequest && new XMLHttpRequest()) || null;
+
+  ajaxTimeout = window.setTimeout(function () {
+    ajax.abort();
+  }, 6000);
+
+  ajax.onreadystatechange = function () {
+    var selectEle, itemsArray, itemsString, i;
+    if (ajax.readyState === 4) {
+      if (ajax.status === 200) {
+        clearTimeout(ajaxTimeout);
+        if (ajax.status === 200) {
+          selectEle = document.getElementById('images');
+          itemsArray = JSON.parse(ajax.responseText);
+          itemsString = '';
+          for(i = 0; i < itemsArray.length; i++) {
+            if(itemsArray[i].name.indexOf('.png') !== -1) {
+              itemsString += '<div><img src="'+itemsArray[i].html_url.replace("blob", "raw")+'" alt="'+itemsArray[i].name+'" /><span>'+itemsArray[i].name+'</span></div>';
+            }
+          }
+          selectEle.innerHTML = itemsString;
+        }
+      }
+    }
+  };
+
+  requrl = 'https://api.github.com/repos/simonwaldherr/BitmapWebIcons/contents';
+  ajax.open("GET", requrl, true);
+  ajax.send();
+}
+
+window.onload = loadImages();
+</script>
+</body>
+</html>

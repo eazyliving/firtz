@@ -1,0 +1,161 @@
+.osf_chaptertime {
+  margin-left: 10px;
+  font-family: monospace;
+  font-weight: 300;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.osf_chapterbox {
+  margin-top: 7px;
+  margin-bottom: 23px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
+.osf_chaptertime,
+.osf_chapter {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.osf_chaptertime {
+  vertical-align: middle;
+}
+
+h2.osf_chapter {
+  font-size: 22.5px;
+}
+
+div a:hover { text-decoration: underline }
+
+.osf_amazon,
+.osf_applecom,
+.osf_appnet,
+.osf_facebookcom,
+.osf_flattr,
+.osf_flattrcom,
+.osf_twitter,
+.osf_wiki,
+.osf_wikipediaorg,
+.osf_youtube,
+.osf_youtubecom,
+.osf_youtu.be,
+.osf_glossary,
+.osf_googlede,
+.osf_googlecom,
+.osf_google,
+.osf_link,
+.osf_heisede,
+.osf_shopping,
+.osf_amazonde,
+.osf_amazoncom,
+.osf_paypalcom,
+.osf_video,
+.osf_esaint,
+.osf_dlrde,
+.osf_wiktionaryorg,
+.osf_deviantartcom,
+.osf_podloveorg,
+.osf_dropboxcom,
+.osf_nytimescom,
+.osf_shownotes,
+.osf_githubcom,
+.osf_imdbcom,
+.osf_flickrcom,
+.osf_tumblrcom,
+.osf_threemach,
+.osf_soundcloudcom,
+.osf_stackoverflow,
+.osf_yahoocom,
+.osf_xingcom,
+.osf_xenimde,
+.osf_quote,
+.osf_rss,
+.osf_feed,
+.osf_podcast {
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  padding-left: 18px;
+  margin-left: 4px;
+  background-size: 16px 16px;
+}
+
+.osf_threemach { background-image: url('./img/bwi/threema.png') }
+
+.osf_deviantartcom { background-image: url('./img/bwi/deviantart.png') }
+
+.osf_podloveorg { background-image: url('./img/bwi/podlove.png') }
+
+.osf_dropboxcom { background-image: url('./img/bwi/dropbox.png') }
+
+.osf_nytimescom { background-image: url('./img/bwi/nyt.png') }
+
+.osf_shownotes { background-image: url('./img/bwi/shownotes.png') }
+
+.osf_heisede { background-image: url('./img/bwi/heise.png') }
+
+.osf_link { background-image: url('./img/bwi/link.png') }
+
+.osf_shopping { background-image: url('./img/bwi/shopping.png') }
+
+.osf_amazon,
+.osf_amazonde,
+.osf_amazoncom { background-image: url('./img/bwi/amazon.png') }
+
+.osf_shopping { background-image: url('./img/bwi/shopping.png') }
+
+.osf_rss,
+.osf_feed { background-image: url('./img/bwi/rss.png') }
+
+.osf_googlede,
+.osf_googlecom,
+.osf_google { background-image: url('./img/bwi/google.png') }
+
+.osf_facebookcom { background-image: url('./img/bwi/facebook.png') }
+
+.osf_flattrcom,
+.osf_flattr { background-image: url('./img/bwi/flattr.png') }
+
+.osf_twitter { background-image: url('./img/bwi/twitter.png') }
+
+.osf_wiki,
+.osf_wikipediaorg,
+.osf_wiktionaryorg,
+.osf_glossary { background-image: url('./img/bwi/wikipedia2.png') }
+
+.osf_paypal.com { background-image: url('./img/bwi/paypal.png') }
+
+.osf_stackoverflow { background-image: url('./img/bwi/stackoverflow.png') }
+
+.osf_youtube,
+.osf_youtubecom,
+.osf_youtu.be,
+.osf_video { background-image: url('./img/bwi/youtube.png') }
+
+.osf_applecom { background-image: url('./img/bwi/apple.png') }
+
+.osf_appnet { background-image: url('./img/bwi/appdotnet.png') }
+
+.osf_esaint { background-image: url('./img/bwi/esa.png') }
+
+.osf_dlrde { background-image: url('./img/bwi/dlr.png') }
+
+.osf_githubcom { background-image: url('./img/bwi/github3.png') }
+
+.osf_imdbcom { background-image: url('./img/bwi/imdb.png') }
+
+.osf_quote { background-image: url('./img/bwi/quote.png') }
+
+.osf_podcast { background-image: url('./img/bwi/podcast.png') }
+
+.osf_flickrcom { background-image: url('./img/bwi/flickr.png') }
+
+.osf_tumblrcom { background-image: url('./img/bwi/tumblr.png') }
+
+.osf_soundcloudcom { background-image: url('./img/bwi/soundcloud.png') }
+
+.osf_yahoocom { background-image: url('./img/bwi/yahoo.png') }
+
+.osf_xingcom { background-image: url('./img/bwi/xing.png') }
+
+.osf_xenimde { background-image: url('./img/bwi/xenim.png') }

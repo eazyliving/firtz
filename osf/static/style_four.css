@@ -1,0 +1,186 @@
+
+.osf_chaptertime {
+    margin-left: 10px;
+    font-family: monospace;
+    font-weight: 300;
+    font-size: 11px;
+    margin-top: 2px;
+    cursor: default !important;
+}
+.osf_chapterbox {
+    margin-top: 7px;
+    margin-bottom: 23px;
+}
+.osf_chaptertime,
+.osf_chapter {
+    display: inline-block;
+    font-size: large;
+    vertical-align: text-top;
+}
+.osf_items a,
+.osf_items span {
+    height: 26px;
+    line-height: 23px;
+    padding: 0 2px 0 6px;
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+    text-shadow: 0 1px white;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #dadada #d2d2d2 #c5c5c5;
+    border-radius: 3px;
+}
+.osf_items a:hover,
+.osf_items span:hover {
+    border-color: #8d8d8d #858585 #797979;
+    color: #000;
+}
+.osf_items span,
+.osf_items a,
+.osf_items span div,
+.osf_items a div {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.osf_items a div span,
+.osf_items span div span {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    overflow: hidden;
+    max-width: 0;
+    height: 26px;
+    line-height: 24px;
+    padding: 0 0 0 3px;
+    color: #efefef;
+    text-shadow: 0 -1px rgba(0,0,0,0.3);
+    font-weight: 500;
+    border-color: #7d7e7d #0e0e0e;
+    border-radius: 0 4px 4px 0;
+    opacity: 0.2;
+    cursor: pointer;
+    background: #7d7e7d;
+    background: -moz-linear-gradient(top,#7d7e7d 0%,#0e0e0e 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#7d7e7d),color-stop(100%,#0e0e0e));
+    background: -webkit-linear-gradient(top,#7d7e7d 0%,#0e0e0e 100%);
+    background: -o-linear-gradient(top,#7d7e7d 0%,#0e0e0e 100%);
+    background: -ms-linear-gradient(top,#7d7e7d 0%,#0e0e0e 100%);
+    background: linear-gradient(to bottom,#7d7e7d 0%,#0e0e0e 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d',endColorstr='#0e0e0e',GradientType=0 );
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out;
+}
+.osf_items a:hover div span,
+.osf_items span:hover div span { opacity: 1 }
+.osf_items a:hover span,
+.osf_items span:hover span {
+    padding: 0 7px 0 6px;
+    max-width: 80px;
+    -webkit-box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15),1px 1px 2px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15),1px 1px 2px rgba(0,0,0,0.2);
+}
+.osf_items a div,
+.osf_items span div {
+    top: -1px;
+    max-width: 55px;
+    width: 4px;
+    right: -3px;
+    position: relative;
+    border-radius: 0 3px 3px 0;
+}
+.osf_items a:hover div,
+.osf_items span:hover div {
+    overflow: visible;
+    z-index: 100;
+}
+.osf_items a div span:hover,
+.osf_items span div span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #fff;
+}
+div a:hover { text-decoration: underline }
+.osf_items span {
+    cursor: default;
+    font-weight: 500;
+}
+.osf_items a,
+.osf_items .osf_amazon,
+.osf_items .osf_applecom,
+.osf_items .osf_appnet,
+.osf_items .osf_flattr,
+.osf_items .osf_flattrcom,
+.osf_items .osf_twitter,
+.osf_items .osf_wiki,
+.osf_items .osf_youtube,
+.osf_items .osf_youtubecom,
+.osf_items .osf_youtu.be,
+.osf_items .osf_glossary,
+.osf_items .osf_amazonde,
+.osf_items .osf_amazoncom,
+.osf_items .osf_video,
+.osf_items .osf_esaint,
+.osf_items .osf_dlrde,
+.osf_items .osf_githubcom,
+.osf_items .osf_imdbcom,
+.osf_items .osf_quote,
+.osf_items .osf_podcast {
+    background-repeat: no-repeat;
+    background-position: 3px center;
+    padding-left: 22px;
+    margin-left: 0px;
+}
+.osf_items a,
+.osf_amazon,
+.osf_applecom,
+.osf_appnet,
+.osf_flattr,
+.osf_flattrcom,
+.osf_twitter,
+.osf_wiki,
+.osf_youtube,
+.osf_youtubecom,
+.osf_glossary,
+.osf_amazonde,
+.osf_amazoncom,
+.osf_video,
+.osf_esaint,
+.osf_dlrde,
+.osf_githubcom,
+.osf_imdbcom,
+.osf_quote,
+.osf_podcast { background-size: 16px 16px }
+.osf_items a {
+    background-image: url('./img/orig/link.png');
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+a.osf_amazon,
+a.osf_amazonde,
+a.osf_amazoncom { background-image: url('./img/orig/amazon.png') !important }
+a.osf_flattrcom,
+a.osf_flattr { background-image: url('./img/orig/flattr.png') !important }
+a.osf_twitter { background-image: url('./img/orig/twitter.png') !important }
+a.osf_wiki,
+a.osf_glossary { background-image: url('./img/orig/wiki.png') !important }
+a.osf_youtube,
+a.osf_youtubecom,
+a.osf_youtu.be,
+a.osf_video { background-image: url('./img/orig/youtube.png') !important }
+a.osf_applecom { background-image: url('./img/orig/apple.png') !important }
+a.osf_appnet { background-image: url('./img/orig/appnet.png') !important }
+a.osf_esaint { background-image: url('./img/orig/esa.png') !important }
+a.osf_dlrde { background-image: url('./img/orig/dlr.png') !important }
+a.osf_githubcom { background-image: url('./img/orig/git.png') !important }
+a.osf_imdbcom { background-image: url('./img/orig/imdb.png') !important }
+span.osf_quote,
+a.osf_quote { background-image: url('./img/orig/quote.png') !important }
+a.osf_podcast { background-image: url('./img/orig/podcast.png') !important }
