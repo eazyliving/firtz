@@ -110,8 +110,8 @@ version="2.0">
 				<check if="{{@item.image}}">
 					<itunes:image href="{{@item.image}}" />
 				</check>
-				<itunes:subtitle>{{ @item.description | raw}}</itunes:subtitle>
-				<itunes:summary>{{ @item.summary | raw}}</itunes:summary>
+				<itunes:subtitle>{{ htmlspecialchars(@item.description)}}</itunes:subtitle>
+				<itunes:summary>{{ htmlspecialchars(@item.summary)}}</itunes:summary>
 				<itunes:keywords>{{@item.keywords | raw}}</itunes:keywords>
 				<itunes:author>{{@feedattr.author | raw}}</itunes:author>
 				<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
