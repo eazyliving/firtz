@@ -535,8 +535,8 @@
 						if ($chapter['title']!="") $item['chapters'][$key]['title']=$item['chapters'][$key]['title'] = str_replace("&","&amp;amp;",$chapter['title']);
 					}
 				}
-				$item['description'] = str_replace("&","&amp;amp;",$item['description']);
-				$item['summary'] = str_replace("&","&amp;",$item['summary']);
+				#$item['description'] = str_replace("&","&amp;amp;",$item['description']);
+				#$item['summary'] = str_replace("&","&amp;",$item['summary']);
 				$items[]=$item;
 			
 			}
