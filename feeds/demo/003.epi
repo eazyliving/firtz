@@ -2,7 +2,7 @@
 #: gewöhne Dir eine vernünftige Benennung der Dateien an. Vielleicht 001 bis 999, dann behälst Du Sortierung und Überblick.
 
 title:
-Demo - Episode II
+Demo - Episode III
 
 date:
 2013-09-30 13:37:00
@@ -30,7 +30,7 @@ opus:
 http://podcast.hoersuppe.de/fz001.opus
 
 pluginmode:
-osf
+md
 
 plugindata:
-./002.osf.txt
+./003.md

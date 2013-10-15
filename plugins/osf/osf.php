@@ -1006,7 +1006,7 @@ function osf_export_glossary($array, $showtags = array(0 => '')) {
   return $return;
 }
 
-function markdown($string) {
+function shownotes_markdown($string) {
   $rules['sm'] = array(
     '/\n(#+)(.*)/e' => 'md_header(\'\\1\', \'\\2\')',                        // headers
     '/\[([^\[]+)\]\(([^\)]+)\)/' => '<a target="_blank" href=\'\2\'>\1</a>', // links

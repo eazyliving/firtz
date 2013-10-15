@@ -349,7 +349,7 @@
 				
 				# no feed image? take the first found episode image...
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
-				if ($episode->item['osf']=="") {
+				if ($episode->item['pluginmode']=="") {
 					$episode->item['article'] =  $this->markdown->convert(strip_tags($episode->item['article']));
 				} else {
 					$episode->item['article'] =  $this->markdown->convert($episode->item['article']);
