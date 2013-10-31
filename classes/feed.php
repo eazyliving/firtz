@@ -532,7 +532,9 @@
 				if (isset($item[$audioformat])) $item['enclosure'] = $item[$audioformat];
 				if ($item['chapters']!="") {
 					foreach ($item['chapters'] as $key => $chapter) {
-						if ($chapter['title']!="") $item['chapters'][$key]['title']=$item['chapters'][$key]['title'] = str_replace("&","&amp;amp;",$chapter['title']);
+						if ($chapter['title']!="") {
+							$item['chapters'][$key]['title']=$item['chapters'][$key]['title'] = str_replace(array("&","\""),array("&amp;amp;","&amp;quot;"),$chapter['title']);
+						}
 					}
 				}
 				#$item['description'] = str_replace("&","&amp;amp;",$item['description']);
