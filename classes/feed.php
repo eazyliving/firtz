@@ -179,7 +179,9 @@
 				
 				case "off":
 				case "":
-					foreach ($this->episode_slugs as $slug)	$realSlugs[]=$slug;
+					foreach ($this->episode_slugs as $slug) {
+						$realSlugs[]=$slug;
+					}
 					break;
 				
 				/* full mode: load auphonic and epi files.
@@ -214,7 +216,9 @@
 				case "episodes": 
 				
 					foreach ($this->episode_slugs as $slug) {
-						if (in_array($slug,$this->auphonic_slugs)) $realSlugs[]=$slug;
+						if (in_array($slug,$this->auphonic_slugs)) {
+							$realSlugs[]=$slug;
+						}
 					}
 					break;
 			}
@@ -252,7 +256,9 @@
 				case "":
 					foreach ($this->episode_slugs as $slug) {
 						$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug);
-						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+						if ($episode->item) {
+							$this->episodes[$episode->item['slug']]= $episode;
+						}
 					}
 					break;
 				
@@ -265,7 +271,9 @@
 					
 					foreach ($this->auphonic_slugs as $slug) {
 						$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
-						if ($episode->item) $this->episodes[$episode->item['slug']] = $episode;
+						if ($episode->item) {
+							$this->episodes[$episode->item['slug']] = $episode;
+						}
 					}
 					
 					foreach ($this->episode_slugs as $slug) {
@@ -274,7 +282,9 @@
 							
 							/* exclusive .epi */	
 							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false);
-							if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+							if ($episode->item) {
+								$this->episodes[$episode->item['slug']]= $episode;
+							}
 							
 						} else {
 						
@@ -285,7 +295,9 @@
 							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$old_episode->item);
 							if ($episode->item) {
 								foreach ($episode->item as $key => $val) {
-									if ($val!="" && sizeof($val)!=0) $old_episode->item[$key]=$val;
+									if ($val!="" && sizeof($val)!=0) {
+										$old_episode->item[$key]=$val;
+									}
 								}
 							}
 							
@@ -299,7 +311,9 @@
 				case "exclusive": 
 					foreach ($this->auphonic_slugs as $slug) {
 						$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
-						if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+						if ($episode->item) {
+							$this->episodes[$episode->item['slug']]= $episode;
+						}
 					}
 					break;
 				
@@ -314,7 +328,9 @@
 						if (in_array($slug,$this->auphonic_slugs)) {
 							
 							$episode = new episode($main,$this->attr['auphonic-path']."/".$slug.".json",$this->attr,$slug,true);
-							if ($episode->item) $this->episodes[$episode->item['slug']]= $episode;
+							if ($episode->item) {
+								$this->episodes[$episode->item['slug']]= $episode;
+							}
 							
 							/* take values from epi to overwrite args in auphonic episode */
 							$epi_episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$episode->item);
@@ -348,7 +364,9 @@
 				if ($update>$lastupdate) $lastupdate = $update;
 				
 				# no feed image? take the first found episode image...
-				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
+				if ($this->attr['image']=="" && $episode->item['image']!="") {
+					$this->attr['image']=$episode->item['image'];
+				}
 				if ($episode->item['pluginmode']=="") {
 					$episode->item['article'] =  $this->markdown->convert(strip_tags($episode->item['article']));
 				} else {
