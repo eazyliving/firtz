@@ -9,7 +9,7 @@ $main->set('FEEDDIR','./feeds');
 $main->set('UI','templates/');
 $main->set('templatepath','templates/');
 $main->set('version',1);
-$main->set('revision',3);
+$main->set('revision',4);
 $main->set('generator','firtz podcast publisher v'.$main->get('version').".".$main->get('revision'));
 $main->set('pager','');
 $main->set('BASEURL',"http://".$main->get('HOST').dirname($_SERVER['SCRIPT_NAME']));
@@ -31,9 +31,9 @@ $main->set('audio','');
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken', 'pluginmode', 'plugindata', 'feedalias'));
 
-$main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread'));
+$main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread', 'pluginmode', 'plugindata'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
 
 $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webm'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg','mobi'=>'application/x-mobipocket-ebook'));
@@ -638,8 +638,6 @@ if(php_sapi_name() == "cli") {
 			file_put_contents($DEST.'/page/'.basename($page),$html);
 		}
 		
-	
-	
 		$frontfeeds[]=$feed->attr;
 		$main->set('frontlanguage',substr($feed->attr['language'],0,2));
 		$main->set('fronttitle',$feed->attr['title']);
@@ -651,8 +649,6 @@ if(php_sapi_name() == "cli") {
 	file_put_contents($feed->attr['clonepath'].'index.html',$front);
 	exit;
 }
-
-
 
 $main->run();
 

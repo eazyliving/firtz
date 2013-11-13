@@ -1,0 +1,36 @@
+#: Dies ist eine Episode
+#: gewöhne Dir eine vernünftige Benennung der Dateien an. Vielleicht 001 bis 999, dann behälst Du Sortierung und Überblick.
+
+title:
+Demo - Episode II
+
+date:
+2013-09-30 13:37:00
+
+description:
+Keep it simple, stupid
+
+article:
+Fallback für den Fall, dass es beim OSF-Parser Probleme gibt
+
+keywords:
+lorem, ipsum, dolor, sit, amet
+
+#: Die Dauer gibst Du bitte mit "HH:MM:SS" an. Danke!
+duration:
+01:35:00
+
+mp3:
+http://podcast.hoersuppe.de/fz001.mp3
+
+m4a:
+http://podcast.hoersuppe.de/fz001.m4a
+
+opus:
+http://podcast.hoersuppe.de/fz001.opus
+
+pluginmode:
+osf
+
+plugindata:
+./002.osf.txt

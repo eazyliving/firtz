@@ -1,0 +1,40 @@
+
+00:00:01 Am Anfang war das Wort #chapter
+00:00:30 Diese Show Notes sind in OSF geschrieben <http://shownotes.github.io/OSF-in-a-Nutshell/#deutsch>
+00:01:10 Die Notes können Links enthalten
+00:02:05 Tags in Notes führen neben Semantik auch zu schönen Icons #q
+00:03:15 So verlinkt man einen Podcast <http://schallrauch.hoersuppe.de/sur/show> #podcast
+
+00:10:00 Und der Content-Type des Wortes ist text/plain #c
+00:13:00 Die OSF-Notes werden nicht nur zu den HTML-Notes
+00:13:10 - sondern auch zu den Kapitelmarken gewandelt
+00:14:00 - und sogar Hierarchien sind in den Notes möglich
+
+00:21:37 Think Different #c
+00:23:37 Stay Hungry &#8722; Stay Foolish (Steve) #q
+00:30:33 Do or do not, there is no try (Joda) #q
+00:31:41 Btw: Bitte k. Abk. verw.! (Holgi) #q
+00:35:00 Ich weiß, dass ich nichts weiß (Sokrates) #q
+00:39:31 Wir stehen auf den Schultern von Riesen (Bernhard von Chartres) #q
+
+00:51:42 2b||!2b #c
+00:55:12 to be or not to be
+00:56:31 sein oder nicht sein
+00:57:44 ich würd so gern die Welt verändern
+00:58:00 - aber Gott gibt mir den Quellcode nicht
+00:58:30 Wenn Wörter ihre Bedeutung verlieren, verlieren Menschen ihre Freiheit (Konfuzius) #q
+
+01:00:30 Podcasts #c
+01:05:10 Robotiklabor <http://www.robotiklabor.de/> #podcast
+01:08:30 Wer redet ist nicht tot <http://www.wrint.de/> #podcast
+01:10:00 CRE &#8722; Technik, Kultur und Gesellschaft <http://cre.fm/> #podcast
+01:12:20 Binärgewitter <http://blog.binaergewitter.de/> #podcast
+01:20:00 Working Draft <http://workingdraft.de/> #podcast
+01:21:50 Radio OSM <http://blog.openstreetmap.de/> #podcast
+01:23:42 /dev/radio <http://www.ulm.ccc.de/dev/radio/index> #podcast
+
+01:30:00 letztes Kapitel #c
+01:31:00 OSF wurde vom Shownot.es Team entwickelt <http://shownot.es/>
+01:32:00 - die Geschichte des Projekts steht hier <http://shownotes.github.io/about-us/>
+01:33:00 - die Parser wurden von Simon Waldherr geschrieben <http://simon.waldherr.eu/>
+01:35:00 - Simon hilft auch beim Podlove Projekt <http://podlove.org/>

@@ -3,7 +3,6 @@
 	/* 
 		application class 
 		some globals and extensions
-
 	*/	
 	
 	class firtz {

@@ -1,8 +1,8 @@
 #firtz
 
 
-*firtz podcast publisher*  
-*Version 1.3*
+*firtz podcast publisher*
+*Version 1.4*
 
 ## Über
 
@@ -101,7 +101,7 @@ Melde Dich. Entweder per [Mail](mailto:info@hoersuppe.de), auf [Twitter](https:/
 
 Ich habe firtz mit [fatfree framework](https://github.com/bcosca/fatfree) und [bootstrap](http://twitter.github.com/bootstrap/) zusammengeschraubt.
 
-Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
+Weiterhin hilft der [Podlove Webplayer](https://github.com/podlove/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
 
 [Stefan Thesing](https://alpha.app.net/hirnbloggade) hat einen knackigen [Artikel](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/) verfasst, in dem er seine Installationserfahrungen niedergeschrieben hat. Vielleicht kann Euch das weiterhelfen.
 
@@ -109,7 +109,7 @@ Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlov
 
 
 *firtz podcast publisher*  
-*Version 1.3*
+*Version 1.4*
 
 ## About
 
@@ -203,6 +203,6 @@ Contact me. Either via [Mail](mailto:info@hoersuppe.de), at [Twitter](https://tw
 
 I build firtz with [fatfree framework](https://github.com/bcosca/fatfree) and [bootstrap](http://twitter.github.com/bootstrap/).
 
-Additionaly the [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) helps that everything looks nicely :)
+Additionaly the [Podlove Webplayer](https://github.com/podlove/podlove-web-player) helps that everything looks nicely :)
 
 [Stefan Thesing](https://alpha.app.net/hirnbloggade) wrote an [article](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/), describing his procedure of installing firtz. Maybe you can find some helpful hints there. Sorry, german only :-)

@@ -76,8 +76,7 @@
 			
 			return $item;
 		}
-	
-	
+
 		public function parseConfig($main,$filename,$feedattrs,$item=array()) {
 			
 			/* parse an .epi file */
@@ -134,14 +133,7 @@
 							}
 						}
 						$item['chapters'][]=$chap;
-
-					
 					}
-					
-					
-					
-					
-					
 				} elseif (in_array($thisattr,$feedattrs['audioformats'])) {
 				
 					/* configured audio formats */
@@ -188,11 +180,9 @@
 					if ($thisattr!="" && $thisattr!="article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
 					if ($thisattr == "article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$uline : $uline;
 				}
-				
 			}
 			
 			if ($feedattrs['mediabaseurl']!="" && $feedattrs['mediabasepath']!="") {
-				
 				foreach ($feedattrs['audioformats'] as $format) 
 				{
 			
@@ -211,8 +201,6 @@
 					$item['audiofiles'][$format]  = $item[$format];
 				
 				}
-			
-			
 			}
 			
 			fclose($fh);
@@ -225,8 +213,6 @@
 				$this->item=array();
 				return;
 			}
-			
-			
 			
 			$this->main = $main;
 			
@@ -252,8 +238,6 @@
 					return;
 				}
 			}
-			
-			
 			
 			if ($reparse === true) {	
 				/* just reparsing. skip the sanitation part */
@@ -281,7 +265,7 @@
 				$pubDate = filectime($ITEMFILE);
 			}
 			
-			$item['pubDate'] = date ('D, d M Y H:i:s O' , $pubDate);
+			$item['pubDate'] = date ('D, d M Y' , $pubDate);
 			
 			if ($feedattrs['flattrid']!="") {
 				$item['flattrdescription'] = rawurlencode($item['description']);
@@ -294,6 +278,11 @@
 			if ($item['chapters']) usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
 
 			if (strpos($item['duration'],'.')!==FALSE) $item['duration'] = substr($item['duration'],0,strpos($item['duration'],'.'));
+			
+			if ($item['pluginmode'] != "" && $item['plugindata'] != "") {
+				include_once './plugins/'.$item['pluginmode'].'.php';
+			}
+			
 			$this->item=$item;
 		}
 		
