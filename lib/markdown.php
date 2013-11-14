@@ -299,7 +299,8 @@ class Markdown extends Prefab {
 				},
 				$str
 			);
-			return '<p>'.$this->scan($str).'</p>'."\n\n";
+			//return '<p>'.$this->scan($str).'</p>'."\n\n"; 
+			return '<p>'.$this->scan($str).'</p>'."\n\n"; #bugfix 
 		}
 		return '';
 	}
