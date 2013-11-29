@@ -222,6 +222,12 @@
 	<script src="{{@BASEURL}}pwp/static/podlove-web-player.js"></script>
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"/>
+		<script type="text/javascript">
+			jQuery(function() {
+				loadDisqus(jQuery('#comment_{{@item.slug}}'), '{{@item.guid}}', '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}');				
+			});
+		</script>
+
 	</check>
 </body>
 </html>
