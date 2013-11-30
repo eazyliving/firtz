@@ -112,12 +112,11 @@
 		<check if="{{!@showpage}}">
 		<true>
 		<repeat group="@items" value="{{@item}}">
-			
 			<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
 			
 			<h5 class="text-center">{{@dict_pubdate,strtotime(@item.pubDate) | format}}</h5>
 			<check if="{{(trim(@item.article)!='')}}"><div class="well well-large">{{@item.article | raw}}</div></check>
-
+			
 			<check if="{{@item.noaudio==''}}">
 			<div><include href="podlove-player.html"/></div>
 			<div>
@@ -222,12 +221,13 @@
 	<script src="{{@BASEURL}}pwp/static/podlove-web-player.js"></script>
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"/>
-		<script type="text/javascript">
-			jQuery(function() {
-				loadDisqus(jQuery('#comment_{{@item.slug}}'), '{{@item.guid}}', '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}');				
-			});
-		</script>
-
+		<check if="{{@singlepage==true && isset(@item)}}">
+			<script type="text/javascript">
+				jQuery(function() {
+					loadDisqus(jQuery('#comment_{{@item.slug}}'), '{{@item.guid}}', '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}');				
+				});
+			</script>
+		</check>
 	</check>
 </body>
 </html>
