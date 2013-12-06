@@ -1,5 +1,5 @@
 	<p>
-	<{{substr(@item.audiofiles[@feedattr.audioformats[0]].type,0,5)}} id="player-{{@item.slug}}">
+	<{{substr(@item.audiofiles[@feedattr.audioformats[0]].type,0,5)}} id="player-{{@item.slug}}" preload="none">
 		<repeat group="@item.audiofiles" value="@audio">
 			<check if="{{substr(@audio.type,0,5)}}=='audio' || {{substr(@audio.type,0,5)}}=='video'">
 			<source src="{{@audio.link}}" type="{{@audio.type}}"></source>
