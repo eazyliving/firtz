@@ -283,6 +283,15 @@
 							$old_episode = $this->episodes[$slug];
 						
 							$episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$old_episode->item);
+							
+							/* parse additional .epi */
+							/* maybe the epi decided to invalidate the episode (future pubdate...)? then $episode->destroy is true */
+							
+							if ($episode->destroy === true) {
+								unset($this->episodes[$slug]);
+								continue;
+							}
+							
 							if ($episode->item) {
 								foreach ($episode->item as $key => $val) {
 									if ($val!="" && sizeof($val)!=0) $old_episode->item[$key]=$val;
@@ -318,6 +327,14 @@
 							
 							/* take values from epi to overwrite args in auphonic episode */
 							$epi_episode = new episode($main,$this->feedDir."/".$slug.".epi",$this->attr,$slug,false,$episode->item);
+						
+							/* parse additional .epi */
+							/* maybe the epi decided to invalidate the episode (future pubdate...)? then $episode->destroy is true */
+							
+							if ($epi_episode->destroy === true) {
+								unset($this->episodes[$slug]);
+								continue;
+							}
 							if ($epi_episode->item) {
 								foreach ($epi_episode->item as $key => $val) {
 									if ($val!="" && sizeof($val)!=0) $episode->item[$key]=$val;
@@ -565,7 +582,6 @@
 		public function renderHTML($ret=false,$pagename="") {
 		
 			/* render standard html template */
-			
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);
 			
@@ -579,7 +595,7 @@
 			} else {
 				foreach ($this->episodes as $episode) $items[]=$episode->item;
 			}
-			
+		
 			$main->set('items',$items);
 			$this->setOpenGraph();
 			/*	render or return template 

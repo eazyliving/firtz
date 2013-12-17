@@ -23,7 +23,6 @@
 
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->creation_time));
-			$item['keywords'] = implode(",",$prod->metadata->tags);
 			
 			foreach ($prod->chapters as $chapter) {
 				$chap = array('start'=>$chapter->start,'title'=>$chapter->title,'image'=>'','href'=>'');
@@ -74,6 +73,24 @@
 				}
 			}	
 			
+			# replace attributes by tags, starting with _
+			# eg: _date:2013-12-17 10:00:00
+			
+			foreach ($prod->metadata->tags as $key=>$tag) {
+				$tag = trim($tag);
+				if (substr($tag,0,1)=="_" && strpos($tag,':')!==false) {
+					$tagname = substr($tag,1,strpos($tag,':')-1);
+					$tagval = trim(substr($tag,strpos($tag,':')+1));
+									
+					if (in_array($tagname,$main->get('itemattr'))) {
+						$item[$tagname]=$tagval;
+						unset($prod->metadata->tags[$key]);
+					}
+				}
+			
+			}
+			
+			$item['keywords'] = implode(",",$prod->metadata->tags);
 			return $item;
 		}
 	
@@ -226,9 +243,8 @@
 				return;
 			}
 			
-			
-			
 			$this->main = $main;
+			$this->destroy = false;
 			
 			$reparse = false;
 			
@@ -253,15 +269,29 @@
 				}
 			}
 			
-			
-			
 			if ($reparse === true) {	
 				/* just reparsing. skip the sanitation part */
-				$this->item = $item;
-				return;
+				#$this->item = $item;
+				#return;
 			}
 			
 			/* data sanitation */
+			
+			if ($item['date']!="") {
+				$pubDate = strtotime($item['date']);
+				if ($pubDate===false) $pubDate = filectime($ITEMFILE);
+			} else {
+				$pubDate = filectime($ITEMFILE);
+			}
+			
+			if ($pubDate>time()) {
+				$this->item=array();
+				$this->destroy = true;
+				return;
+			}
+			
+			$item['pubDate'] = date ('D, d M Y H:i:s O' , $pubDate);
+			
 			
 			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
 			$item['slug'] = $slug;
@@ -273,15 +303,6 @@
 			
 
 			if ($item['image']=="") $item['image']=$feedattrs['image'];
-			
-			if ($item['date']!="") {
-				$pubDate = strtotime($item['date']);
-				if ($pubDate===false) $pubDate = filectime($ITEMFILE);
-			} else {
-				$pubDate = filectime($ITEMFILE);
-			}
-			
-			$item['pubDate'] = date ('D, d M Y H:i:s O' , $pubDate);
 			
 			if ($feedattrs['flattrid']!="") {
 				$item['flattrdescription'] = rawurlencode($item['description']);
