@@ -295,7 +295,7 @@
 			
 			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
 			$item['slug'] = $slug;
-			$item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
+			if ($item['guid']=="") $item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
 			
 			$item['description']=chop(strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255))));
