@@ -28,6 +28,7 @@
     <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
     <link rel="shortcut icon" href="/favicon.ico">
     <script src="{{@BASEURL}}js/jquery.js"></script>
+	<script src="{{@BASEURL}}pwp/static/podlove-web-player.js"></script>
     <repeat group="{{glob(@templatepath.'/head/*.html')}}" value="{{@template}}">
       <include href="{{'head/'.basename(@template)}}"/>
     </repeat>
@@ -218,7 +219,7 @@
 	</div>
 	<script src="{{@BASEURL}}js/bootstrap.min.js"></script>
 	<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>
-	<script src="{{@BASEURL}}pwp/static/podlove-web-player.js"></script>
+	
 	<check if="{{@feedattr.disqus}}">
 		<include href="disqus_multiple.js"/>
 		<check if="{{@singlepage==true && isset(@item)}}">
