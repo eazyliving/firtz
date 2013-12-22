@@ -362,6 +362,8 @@ Titel der Episode
 
 **date:**  
 Optional das Veröffentlichungsdatum der Episode in der Notation "YYYY-MM-DD HH:MM:SS". Wird das Datum weggelassen, erzeugt sich das Veröffentlichungsdatum aus dem Datum der letzten Änderung der Konfigurationsdatei.
+
+Wird ein Datum in der Zukunft (relativ zur Uhrzeit des Servers) gesetzt, wird die Episode ignoriert und erst nach Erreichen dieser Uhrzeit angezeigt.
  
 **description:**  
 Kurze Beschreibung der Episode, Subheadline
@@ -527,6 +529,18 @@ In der Konfiguration des "external service" (sftp...) gebe unbedingt die in Auph
 Wenn Deine Podcasts also unter z.B. der URL http://media.supicast.de/001.m4a zu finden sind, lautet die BASEURL http://media.supicast.de/ Lässt Du diese Angabe weg, wird der automatische Auphonic-Modus nicht funktionieren (oder nur zufällig ;)).
 
 Bis hierhin warst Du auf auphonic.com unterwegs. Wenden wir uns dem Kapitel zu, in dem es heißt:
+
+####Was bei Auphonic getan werden kann
+
+Es kann Fälle geben, in denen Du voll automatisch über z.B. die auphonic-app in den firtz publizieren möchtest. Nun gibt es wiederum Attribute, die so aus der auphonic-Produktion nicht anständig heraus geholt werden können oder übersteuert werden sollen. 
+
+Solche Attribute kannst Du in den Tags mitgeben. Das Format dafür sieht so aus: 
+
+_attribut:Inhalt
+
+Unterstricht, Name, Doppelpunkt, Inhalt. Das wäre es schon. So kannst Du z.B. ein zukünftiges Publikationsdatum angeben:
+
+_date:2014-12-12 20:15:00
 
 ####Dem firtz erklären, wo auphonic den Most holt
 
