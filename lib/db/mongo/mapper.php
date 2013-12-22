@@ -24,7 +24,9 @@ class Mapper extends \DB\Cursor {
 		//! Mongo collection
 		$collection,
 		//! Mongo document
-		$document=array();
+		$document=array(),
+	    //! Mongo cursor
+	    $cursor;
 
 	/**
 	*	Return TRUE if field is defined
@@ -110,27 +112,24 @@ class Mapper extends \DB\Cursor {
 		);
 		$fw=\Base::instance();
 		$cache=\Cache::instance();
-		if (!$fw->get('CACHE') || !$ttl || !($cached=$cache->exists(
-			$hash=$fw->hash($fw->stringify(array($fields,$filter,$options))).
-				'.mongo',$result)) || $cached[0]+$ttl<microtime(TRUE)) {
+		if (!($cached=$cache->exists($hash=$fw->hash($this->db->dsn().
+			$fw->stringify(array($fields,$filter,$options))).'.mongo',
+			$result)) || !$ttl || $cached[0]+$ttl<microtime(TRUE)) {
 			if ($options['group']) {
+				$grp=$this->collection->group(
+					$options['group']['keys'],
+					$options['group']['initial'],
+					$options['group']['reduce'],
+					array(
+						'condition'=>$filter,
+						'finalize'=>$options['group']['finalize']
+					)
+				);
 				$tmp=$this->db->selectcollection(
-					$fw->get('HOST').'.'.$fw->get('BASE').'.'.uniqid().'.tmp'
+					$fw->get('HOST').'.'.$fw->get('BASE').'.'.
+					uniqid(NULL,TRUE).'.tmp'
 				);
-				$tmp->batchinsert(
-					$this->collection->group(
-						$options['group']['keys'],
-						$options['group']['initial'],
-						$options['group']['reduce'],
-						array(
-							'condition'=>array(
-								$filter,
-								$options['group']['finalize']
-							)
-						)
-					),
-					array('safe'=>TRUE)
-				);
+				$tmp->batchinsert($grp['retval'],array('safe'=>TRUE));
 				$filter=array();
 				$collection=$tmp;
 			}
@@ -138,18 +137,18 @@ class Mapper extends \DB\Cursor {
 				$filter=$filter?:array();
 				$collection=$this->collection;
 			}
-			$cursor=$collection->find($filter,$fields?:array());
+			$this->cursor=$collection->find($filter,$fields?:array());
 			if ($options['order'])
-				$cursor=$cursor->sort($options['order']);
+				$this->cursor=$this->cursor->sort($options['order']);
 			if ($options['limit'])
-				$cursor=$cursor->limit($options['limit']);
+				$this->cursor=$this->cursor->limit($options['limit']);
 			if ($options['offset'])
-				$cursor=$cursor->skip($options['offset']);
+				$this->cursor=$this->cursor->skip($options['offset']);
+			$result=array();
+			while ($this->cursor->hasnext())
+				$result[]=$this->cursor->getnext();
 			if ($options['group'])
 				$tmp->drop();
-			$result=array();
-			while ($cursor->hasnext())
-				$result[]=$cursor->getnext();
 			if ($fw->get('CACHE') && $ttl)
 				// Save to cache backend
 				$cache->set($hash,$result,$ttl);
@@ -183,9 +182,20 @@ class Mapper extends \DB\Cursor {
 	*	Count records that match criteria
 	*	@return int
 	*	@param $filter array
+	*	@param $ttl int
 	**/
-	function count($filter=NULL) {
-		return $this->collection->count($filter);
+	function count($filter=NULL,$ttl=0) {
+		$fw=\Base::instance();
+		$cache=\Cache::instance();
+		if (!($cached=$cache->exists($hash=$fw->hash($fw->stringify(
+			array($filter))).'.mongo',$result)) || !$ttl ||
+			$cached[0]+$ttl<microtime(TRUE)) {
+			$result=$this->collection->count($filter);
+			if ($fw->get('CACHE') && $ttl)
+				// Save to cache backend
+				$cache->set($hash,$result,$ttl);
+		}
+		return $result;
 	}
 
 	/**
@@ -266,6 +276,14 @@ class Mapper extends \DB\Cursor {
 		$var=&\Base::instance()->ref($key);
 		foreach ($this->document as $key=>$field)
 			$var[$key]=$field;
+	}
+	
+	/**
+	 * Get the cursor from the last query
+	 * @return MongoCursor|NULL 
+	 */
+	function cursor() {
+        return $this->cursor;
 	}
 
 	/**
