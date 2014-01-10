@@ -50,6 +50,7 @@ foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
 $main->set('feeds',$feeds);
 
 function sortByPubDate($a,$b) {
+	if (strtotime($a->item['pubDate']) == strtotime($b->item['pubDate'])) return ($a->item['slug'] < $b->item['slug'] );
 	return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
 }
 
