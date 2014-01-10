@@ -208,14 +208,16 @@
 				
 			}
 			
-			if ($feedattrs['mediabaseurl']!="" && $feedattrs['mediabasepath']!="") {
+			if ($feedattrs['mediabaseurl']!="") {
 				
 				foreach ($feedattrs['audioformats'] as $format) 
 				{
-			
-					$localfile = $feedattrs['mediabasepath']."/".$slug.".".$format;
-					
-					if (!file_exists($localfile)) continue;
+					if ($feedattrs['mediabasepath']!="") {
+						$localfile = $feedattrs['mediabasepath']."/".$slug.".".$format;
+						if (!file_exists($localfile)) continue;
+					} else {
+						$localfile = "";
+					}
 					
 					if (array_key_exists($format,$mime)) {
 						$mimetype = $mime[$format];
@@ -223,7 +225,7 @@
 						$mimetype = "audio/mpeg";
 					}
 					
-					$item[$format] = array ('link' => $feedattrs['mediabaseurl'].$slug.".".$format , 'length' => filesize($localfile) , 'type' => $mimetype);
+					$item[$format] = array ('link' => $feedattrs['mediabaseurl'].$slug.".".$format , 'length' => $localfile!="" ? filesize($localfile) : 0, 'type' => $mimetype);
 					
 					$item['audiofiles'][$format]  = $item[$format];
 				
