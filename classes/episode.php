@@ -225,7 +225,13 @@
 						$mimetype = "audio/mpeg";
 					}
 					
-					$item[$format] = array ('link' => $feedattrs['mediabaseurl'].$slug.".".$format , 'length' => $localfile!="" ? filesize($localfile) : 0, 'type' => $mimetype);
+					if (isset($item['audiofiles'][$format])) {
+						$audiofilename = basename($item['audiofiles'][$format]['link'],".".$format);
+					} else {
+						$audiofilename = $slug;
+					}
+					
+					$item[$format] = array ('link' => $feedattrs['mediabaseurl'].$audiofilename.".".$format , 'length' => $localfile!="" ? filesize($localfile) : 0, 'type' => $mimetype);
 					
 					$item['audiofiles'][$format]  = $item[$format];
 				
