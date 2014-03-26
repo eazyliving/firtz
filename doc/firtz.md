@@ -188,7 +188,7 @@ Da es denkbar ist, dass eine Installation des firtz unter mehreren Domains läuf
 
 Dieser Parameter betrifft aktuell auch nur genau diese Frontseite. Wird der Feed/die Seite dennoch über die andere Domain angesprochen, wird kein URL-Rewriting oder Weiterleitung ausgeführt!
 
-Änderung am 13.9.2013: Wenn eine baseurl angegeben wurde, und genau diese aufgerufen wird, leitet auch die Frontseite direkt zur Webseite des Podcasts weiter. Voraussetzung dafür ist allerdings ein Eintrag in die firtz.cfg mit dem Attribut `baseurlredirect` mit dem Wert `yes`.
+Änderung am 13.9.2013: Wenn eine baseurl angegeben wurde, und genau diese aufgerufen wird, leitet auch die Frontseite direkt zur Webseite des Podcasts weiter.
 
 Siehe dazu auch [hier](https://github.com/eazyliving/firtz/issues/45).
 
