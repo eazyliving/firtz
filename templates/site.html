@@ -5,7 +5,12 @@
     <title>{{@feedattr.title}}<check if="{{@showpage}}"> - {{basename(@showpage,'.html')}}</check></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="{{@feedattr.description}}"/>
-    <meta name="author" content="{{@feedattr.author | raw}}"/>
+    <repeat group="@feedattr.audioformats" value="{{@format}}">
+	<atom:link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@format}} Audio)" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+	
+	
+	<meta name="author" content="{{@feedattr.author | raw}}"/>
     <check if="{{@feedattr.image}}">
       <meta property="og:image" content="{{@feedattr.image}}"/>
     </check>
