@@ -50,7 +50,7 @@
 			</a>
 			<ul class="dropdown-menu">
 				<repeat group="@feedattr.audioformats" value="{{@format}}">
-					<li><a href="{{@feedattr.baserel}}{{@format}}{{@extxml}}">{{@format}}</a></li>
+					<li><a href="{{@BASEURL}}{{@feedattr.slug}}/{{@format}}{{@extxml}}">{{@format}}</a></li>
 				</repeat>
 				<check if="{{@feedattr.itunes}}">
 					<li><a href="{{@feedattr.itunes}}">iTunes</a></li>
