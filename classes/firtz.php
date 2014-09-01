@@ -18,9 +18,11 @@
 
 			$this->BASEURL ="http://".$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
-			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=dirname($_SERVER['SCRIPT_NAME']);
+
+			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=trim(dirname($_SERVER['SCRIPT_NAME']),"/");
+
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
-              
+          	  
 			$this->BASEPATH = $_SERVER['DOCUMENT_ROOT'];
 			if (substr($this->BASEPATH,-1) != "/") $this->BASEPATH.='/';
 			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEPATH.=dirname($_SERVER['SCRIPT_NAME']);
@@ -28,7 +30,7 @@
 
 			$main->set('BASEPATH',$main->fixslashes($this->BASEPATH));
 			$main->set('BASEURL',$main->fixslashes($this->BASEURL));
-
+			
 			foreach ($main->get('firtzattr_default') as $var) $attr[$var]="";
 			$attr['feedalias'] = array();
 			if (file_exists('./firtz.cfg')) {
