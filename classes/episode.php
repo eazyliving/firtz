@@ -22,7 +22,7 @@
 			$item['article'] = $prod->metadata->summary;
 
 			$item['duration'] = $prod->length_timestring;
-			$item['date']= date('r',strtotime($prod->creation_time));
+			$item['date']= date('r',strtotime($prod->change_time));
 			
 			foreach ($prod->chapters as $chapter) {
 				$chap = array('start'=>$chapter->start,'title'=>$chapter->title,'image'=>'','href'=>'');
