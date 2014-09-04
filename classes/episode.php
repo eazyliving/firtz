@@ -20,7 +20,15 @@
 			$item['title'] = $prod->metadata->title;
 			$item['description'] = strip_tags($prod->metadata->subtitle);
 			$item['article'] = $prod->metadata->summary;
-
+			$item['location']['latitude'] = 0;                                         
+                        $item['location']['longitude'] = 0;
+			if (isset($prod->metadata->location)) {
+				if ($prod->metadata->location->latitude!='null' && $prod->metadata->location->longitude!='null') { 
+					$item['location']['latitude'] = $prod->metadata->location->latitude;
+					$item['location']['longitude'] = $prod->metadata->location->longitude;
+				}
+			}
+	
 			$item['duration'] = $prod->length_timestring;
 			$item['date']= date('r',strtotime($prod->change_time));
 			
@@ -299,8 +307,7 @@
 			}
 			
 			$item['pubDate'] = date ('D, d M Y H:i:s O' , $pubDate);
-			
-			
+
 			$item['pagelink'] = $main->get('BASEURL').$feedattrs['slug']."/show/".$slug;
 			$item['slug'] = $slug;
 			if ($item['guid']=="") $item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
