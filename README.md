@@ -32,7 +32,7 @@ Wer es ganz einfach haben möchte, verbündet sich mit auphonic und überlässt 
 
 Aber fangen wir vorne an. Was brauchst Du?
 
-Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig. Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: **php ab Version 5.3** muss ausgeführt werden können. 
+Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig. Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: **php ab Version 5.4.0** muss ausgeführt werden können. 
 
 Datenbanken und anderen Kram braucht es nicht, allerdings muss der ausführende Nutzer des Webservers in der Lage, Verzeichnisse zu erzeugen und Dateien in diese hineinzuschreiben.
 

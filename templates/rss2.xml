@@ -93,7 +93,7 @@ version="2.0">
 				<repeat group="@item.chapters" value="@chapter">
 					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"
 					<check if="{{@chapter.href}}">
-						href="{{@chapter.href}}"
+						href="{{htmlentities(@chapter.href,ENT_XML1)}}"
 					</check>
 					<check if="{{@chapter.image}}">
 						image="{{@chapter.image}}"
