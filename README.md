@@ -5,7 +5,7 @@ Mit der 1.4 vom 21.9.2014 benötigt firtz php 5.4.0 oder höher. Da diese Versio
 
 
 *firtz podcast publisher*  
-*Version 1.3*
+*Version 1.4*
 
 ## Über
 
