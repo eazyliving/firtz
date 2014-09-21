@@ -1,3 +1,6 @@
+Mit der 1.4 vom 21.9.2014 benötigt firtz php 5.4.0 oder höher. Da diese Version über zwei Jahre alt ist, sollte das eigentlich kein Problem darstellen. Wer drunter ist, der hat ganz andere Probleme. Also seht zu, dass Ihr das auf 5.5.x bekommt.
+
+
 #firtz
 
 
