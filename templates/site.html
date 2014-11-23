@@ -154,6 +154,14 @@
 				</ul>
 			</div>
 			</check>
+			<check if="{{@item.speakers}}">
+				<h5>{{@dict_speakers}}</h5>
+				<repeat group="@item.speakers" value="{{@speaker}}">
+					<include href="{{'speakers/' . @speaker . '.html'}}" />
+				</repeat>
+				<br>
+			</check>
+			
 			<check if="{{@feedattr.flattrid}}">
 				<iframe src="https://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}&amp;popout=0&amp;button=compact"
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
@@ -209,7 +217,14 @@
 			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
 		</check>
 		<check if="{{@feedattr.licensename}}">
-			<span>| {{@dict_license}}: <a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></span>
+			<check if="{{@feedattr.licenseimg}}">
+				<true>
+					<span>|&nbsp;{{@dict_license}}:&nbsp;<a href="{{@feedattr.licenseurl}}" title="{{@feedattr.licensename}}"><img src="{{@feedattr.licenseimg}}" alt="{{@feedattr.licensename}}" /></a></span>
+				</true>
+				<false>
+					<span>|&nbsp;{{@dict_license}}:&nbsp;<a href="{{@feedattr.licenseurl}}" title="{{@feedattr.licensename}}">{{@feedattr.licensename}}</a></span>
+				</false>
+			</check>
 		</check>
         <repeat group="{{glob(@templatepath.'/footer/*.html')}}" value="{{@template}}">
 				<include href="{{'footer/'.basename(@template)}}"/>

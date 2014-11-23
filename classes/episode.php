@@ -89,9 +89,14 @@
 				if (substr($tag,0,1)=="_" && strpos($tag,':')!==false) {
 					$tagname = substr($tag,1,strpos($tag,':')-1);
 					$tagval = trim(substr($tag,strpos($tag,':')+1));
-									
+
 					if (in_array($tagname,$main->get('itemattr'))) {
 						$item[$tagname]=$tagval;
+						unset($prod->metadata->tags[$key]);
+					}
+
+					if ($tagname == 'speakers' ) {
+						$item['speakers'] = explode(" ", $tagval);
 						unset($prod->metadata->tags[$key]);
 					}
 				}
@@ -99,6 +104,8 @@
 			}
 			
 			$item['keywords'] = implode(",",$prod->metadata->tags);
+
+			
 			return $item;
 		}
 	
