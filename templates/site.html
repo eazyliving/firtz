@@ -121,10 +121,7 @@
 			<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
 			
 			<h5 class="text-center">{{@dict_pubdate,strtotime(@item.pubDate) | format}}</h5>
-			<check if="{{(trim(@item.article)!='')}}">
-			<div class="well well-large">{{@item.article | raw}}</div>
-			<div class="well">Tags: {{@item.keywords}}</div>
-			</check>
+			<check if="{{(trim(@item.article)!='')}}"><div class="well well-large">{{@item.article | raw}}</div></check>
 			
 			<check if="{{@item.noaudio==''}}">
 			<div><include href="podlove-player.html"/></div>
