@@ -154,6 +154,13 @@
 				</ul>
 			</div>
 			</check>
+			<check if="{{@item.speakers}}">
+				<h5>{{@dict_speakers}}</h5>
+				<repeat group="@item.speakers" value="{{@speaker}}">
+					<include href="{{'speakers/' . @speaker . '.html'}}" />
+				</repeat>
+				<br>
+			</check>
 			<check if="{{@feedattr.flattrid}}">
 				<iframe src="https://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}&amp;popout=0&amp;button=compact"
 				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
