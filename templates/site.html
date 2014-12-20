@@ -209,7 +209,14 @@
 			<span>| email: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></span>
 		</check>
 		<check if="{{@feedattr.licensename}}">
-			<span>| {{@dict_license}}: <a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></span>
+			<check if="{{@feedattr.licenseimg}}">
+				<true>
+					<span>|&nbsp;{{@dict_license}}:&nbsp;<a href="{{@feedattr.licenseurl}}" title="{{@feedattr.licensename}}"><img src="{{@feedattr.licenseimg}}" alt="{{@feedattr.licensename}}" /></a></span>
+				</true>
+				<false>
+					<span>|&nbsp;{{@dict_license}}:&nbsp;<a href="{{@feedattr.licenseurl}}" title="{{@feedattr.licensename}}">{{@feedattr.licensename}}</a></span>
+				</false>
+			</check>
 		</check>
         <repeat group="{{glob(@templatepath.'/footer/*.html')}}" value="{{@template}}">
 				<include href="{{'footer/'.basename(@template)}}"/>
