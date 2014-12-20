@@ -89,9 +89,14 @@
 				if (substr($tag,0,1)=="_" && strpos($tag,':')!==false) {
 					$tagname = substr($tag,1,strpos($tag,':')-1);
 					$tagval = trim(substr($tag,strpos($tag,':')+1));
-									
+
 					if (in_array($tagname,$main->get('itemattr'))) {
 						$item[$tagname]=$tagval;
+						unset($prod->metadata->tags[$key]);
+					}
+
+					if ($tagname == 'speakers' ) {
+						$item['speakers'] = explode(" ", $tagval);
 						unset($prod->metadata->tags[$key]);
 					}
 				}
@@ -99,6 +104,8 @@
 			}
 			
 			$item['keywords'] = implode(",",$prod->metadata->tags);
+
+			
 			return $item;
 		}
 	
@@ -210,8 +217,9 @@
 				} else {
 					
 					/* this is an attribute which may have linebreaks. append line to current attribute */
-					if ($thisattr!="" && $thisattr!="article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
+					if ($thisattr!="" && $thisattr!="article" && $thisattr!="speakers") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
 					if ($thisattr == "article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$uline : $uline;
+					if ($thisattr == "speakers") $item[$thisattr] = explode (" ", $line);
 				}
 				
 			}

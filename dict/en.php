@@ -8,6 +8,7 @@ return array(
 	'dict_license'=>'license',
 	'dict_older'=>'older',
 	'dict_newer'=>'newer',
-	'dict_reply'=>'reply'
+	'dict_reply'=>'reply',
+	'dict_speakers'=>'Speakers'
 );
 ?>
