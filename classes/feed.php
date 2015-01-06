@@ -158,6 +158,8 @@
 			if ($attr['pagedcount']=="") $attr['pagedcount'] = 10;
 			if ($attr['mediabaseurl']!='' && substr($attr['mediabaseurl'],-1)!='/') $attr['mediabaseurl'].='/';
 			
+			if ($attr['articles-per-page']=="") $attr['articles-per-page']=3;
+			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
 			$this->attr = $attr;
 			
@@ -531,6 +533,49 @@
 			
 		}
 		
+		public function renderMap($ret=false,$kml=false) {
+		
+			/* render rss2 template */
+			
+			$main = $this->main;
+			
+			$main->set('feedattr',$this->attr);
+
+			/* collect episodes */
+			$items=array();
+			foreach ($this->episodes as $episode) {
+				$item = $episode->item;
+				
+				$items[]=$item;
+			
+			}
+			$main->set('items',$items);
+		
+			/*	render or return template 
+				return rendered data will be used in clone mode, which will be used for static site clones
+			*/
+			
+			if (file_exists($this->feedDir."/templates")) {
+				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
+				$main->set('UI',$ui);
+				$main->set('templatepath',$this->feedDir."/templates");
+			}
+			if ($kml==false) {
+				if ($ret===false) {
+					echo Template::instance()->render('map.html');
+				} else {
+					return Template::instance()->render('map.html');
+				}
+			} else {
+				if ($ret===false) {
+					echo Template::instance()->render('map.xml','application/xml');
+				} else {
+					return Template::instance()->render('map.xml');
+				}
+				
+				
+			}
+		}
 		
 		public function renderRSS2($audioformat = '',$ret=false) {
 		
@@ -613,6 +658,71 @@
 			} else {
 				return Template::instance()->render($this->htmltemplate);
 			}
+		}
+		
+		public function renderHTMLbare($ret=false,$pagename="") {
+		
+			/* render standard html template */
+			$main = $this->main;
+			$main->set('feedattr',$this->attr);
+			
+			/* collect episodes */
+			$items = array();
+			if ($main->exists('epi') && $main->get('epi')!="") {
+				$items = array ( $this->episodes[$main->get('epi')]->item );
+			} else {
+				foreach ($this->episodes as $episode) $items[]=$episode->item;
+			}
+		
+			$main->set('items',$items);
+			$this->setOpenGraph();
+			/*	render or return template 
+				return rendered data will be used in clone mode, which will be used for static site clones
+			*/
+			
+			if (file_exists($this->feedDir."/templates")) {
+				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
+				$main->set('UI',$ui);
+				$main->set('templatepath',$this->feedDir."/templates");
+			}
+			
+			if ($ret===false) {
+				echo Template::instance()->render("site_episode.html");
+			} else {
+				return Template::instance()->render("site_episode.html");
+			}
+		}
+		
+		public function renderRaw($ret=false,$pagename="") {
+		
+			/* render standard html template */
+			$main = $this->main;
+			$main->set('feedattr',$this->attr);
+			
+			/* single page from pages template? */
+			if ($pagename!="") $main->set('showpage','pages/'.$pagename.'.html');
+			
+			/* collect episodes */
+			$items = array();
+			if ($main->exists('epi') && $main->get('epi')!="") {
+				$items = array ( $this->episodes[$main->get('epi')]->item );
+			} else {
+				foreach ($this->episodes as $episode) $items[]=$episode->item;
+			}
+		
+			$main->set('items',$items);
+			$this->setOpenGraph();
+			/*	render or return template 
+				return rendered data will be used in clone mode, which will be used for static site clones
+			*/
+			
+			if (file_exists($this->feedDir."/templates")) {
+				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
+				$main->set('UI',$ui);
+				$main->set('templatepath',$this->feedDir."/templates");
+			}
+			
+			echo Template::instance()->render("raw.html");
 		}
 	}
 	
