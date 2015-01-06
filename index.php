@@ -9,7 +9,7 @@ $main->set('FEEDDIR','./feeds');
 $main->set('UI','templates/');
 $main->set('templatepath','templates/');
 $main->set('version',1);
-$main->set('revision',3);
+$main->set('revision',4);
 $main->set('generator','firtz podcast publisher v'.$main->get('version').".".$main->get('revision'));
 $main->set('pager','');
 $main->set('BASEURL',"http://".str_replace("/","",$main->get('HOST')).dirname($_SERVER['SCRIPT_NAME']));
@@ -17,7 +17,7 @@ $main->set('BASEPATH',$_SERVER['DOCUMENT_ROOT']);
 $main->set('singlepage',false);
 $main->set('showpage',false);
 $main->set('AUTOLOAD','classes/');
-$main->set('CDURATION',300);
+$main->set('CDURATION',3600);
 $main->set('page',0);
 $main->set('DEBUG',0);
 $main->set('epi','');
@@ -31,12 +31,12 @@ $main->set('audio','');
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias','articles-per-page'));
 
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread','location'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
 
-$main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webm'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg','mobi'=>'application/x-mobipocket-ebook'));
+$main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webma'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg','mobi'=>'application/x-mobipocket-ebook'));
 
 $firtz = new firtz($main);
 $firtz->loadAllTheExtensions($main);
@@ -339,8 +339,8 @@ $main->route('GET|HEAD /@feed/show',
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
 		$main->set('page',1);
-		$main->set('maxpage',ceil(sizeof($feed->episodes) / 3) );
-		$feed->episodes = array_slice($feed->episodes,0,3);
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / $feed->attr['articles-per-page']) );
+		$feed->episodes = array_slice($feed->episodes,0,$feed->attr['articles-per-page']);
 		
 		$feed->renderHTML();
 		
@@ -367,6 +367,24 @@ $main->route('GET|HEAD /@feed/show/@epi',
 	}, $main->get('CDURATION')
 
 );
+
+$main->route('GET|HEAD /@feed/showbare/@epi',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		$main->set('singlepage',true);
+		$main->set('epi',$params['epi']);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+		$feed->loadEpisodes($params['epi']);
+		$feed->renderHTMLbare();
+	}, $main->get('CDURATION')
+
+);
+
 
 $main->route('GET|HEAD /@feed/show/@epi/@ignore',
 	function ($main,$params) {
@@ -404,9 +422,9 @@ $main->route('GET|HEAD /@feed/show/pager/@pagenum',
 
 		$feed->loadEpisodes();
 		$main->set('page',$pagenum);
-		$main->set('maxpage',ceil(sizeof($feed->episodes) / 3) );
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / $feed->attr['articles-per-page']) );
 		
-		$feed->episodes = array_slice($feed->episodes, ($pagenum-1) *3,3);
+		$feed->episodes = array_slice($feed->episodes, ($pagenum-1) *$feed->attr['articles-per-page'],$feed->attr['articles-per-page']);
 		$feed->renderHTML();
 	}, $main->get('CDURATION')
 );
