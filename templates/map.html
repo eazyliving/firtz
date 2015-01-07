@@ -51,37 +51,36 @@ e;a=++f)if(g=b[a],g===c)return a;return-1};w.g=function(b){return this.setMap(b)
 	  var oms = new OverlappingMarkerSpiderfier(map);
 	  <check if="{{@items}}">
 	  <repeat group="@items" value="@item" key="@key">
-	 	 <check if="{{@item.location.latitude!=0}}">
-			var myLatlng = new google.maps.LatLng({{@item.location.latitude}},{{@item.location.longitude}});
-	  		bounds.extend(myLatlng);
-			var marker{{@key}} = new google.maps.Marker({
-	      	  icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld={{sizeof(@items)-@key}}|FE6256|000000',
-			  position: myLatlng,
-	       	  map: map,
-			  action:  "$('#episode').load('{{@BASEURL}}{{@feedattr.slug}}/raw/{{@item.slug}}')",
-	       	  title: '{{@item.title | raw}}'
-	  		 });
-			
-			  var contentString = '<div id="content">'+
-		       '<h2 class="firstHeading" class="firstHeading">{{@item.title | raw}}</h1>'+
-		       '<div class="bodyContent">'+
-		       '<p>'+
-			   '{{str_replace(array("\r", "\n"), "", htmlentities(@item.summary,ENT_QUOTES))}}</p>'+
-			  '<p><a href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">Episode</a></p>'+
-		       '</div>'+
-		       '</div>';
-			   // 
-		       
-		   var infowindow{{@key}} = new google.maps.InfoWindow({
-		       content: contentString,
-			    
-		   });
-		 
-		oms.addMarker(marker{{@key}});
-		</check>
-		 </repeat>
-		 
-		 </check>
+        	 <check if="{{isset(@item.location.latitude) && isset(@item.location.longitude)}}">
+           	 var myLatlng = new google.maps.LatLng({{@item.location.latitude}},{{@item.location.longitude}});
+            	 bounds.extend(myLatlng);
+           	 var marker{{@key}} = new google.maps.Marker({
+              	 icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld={{sizeof(@items)-@key}}|FE6256|000000',
+          	 position: myLatlng,
+              	 map: map,
+             	 action:  "$('#episode').load('{{@BASEURL}}{{@feedattr.slug}}/raw/{{@item.slug}}')",
+              	 title: '{{@item.title | raw}}'
+             });
+
+              var contentString = '<div id="content">'+
+               '<h2 class="firstHeading" class="firstHeading">{{@item.title | raw}}</h1>'+
+               '<div class="bodyContent">'+
+               '<p>'+
+               '{{str_replace(array("\r", "\n"), "", htmlentities(@item.summary,ENT_QUOTES))}}</p>'+
+              '<p><a href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">Episode</a></p>'+
+               '</div>'+
+               '</div>';
+               // 
+
+           var infowindow{{@key}} = new google.maps.InfoWindow({
+               content: contentString,
+
+           });
+
+       		 oms.addMarker(marker{{@key}});
+        	</check>
+	      </repeat>	 
+	  </check>
 		oms.addListener('click', function(marker, event) {
 			
 			$.globalEval(marker.action);
