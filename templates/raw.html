@@ -1,0 +1,58 @@
+<hr>
+		<div class="row-fluid marketing">
+		<repeat group="@items" value="{{@item}}">
+			<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" name="{{@item.slug}}"><h3 class="text-center">{{@item.title}}</h3></a>
+			
+			<h5 class="text-center">{{@dict_pubdate,strtotime(@item.pubDate) | format}}</h5>
+			<check if="{{(trim(@item.article)!='')}}"><div class="well well-large">{{@item.article | raw}}</div></check>
+			
+			<check if="{{@item.noaudio==''}}">
+			<div><include href="podlove-player.html"/></div>
+			<div>
+				<ul class="nav nav-pills pull-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							download
+						<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+						<repeat group="{{@item.audiofiles}}" value="{{@audiofile}}" key="{{@audiotype}}">
+							<li><a title="download {{@audiotype}} - size: {{ceil(@audiofile.length / 1048576)}} MByte" href="{{@audiofile.link}}">{{@audiotype}}</a></li>
+						</repeat>
+						</ul>
+					</li>
+				<check if="{{@feedattr.bitlove}}">
+					<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						bitlove
+					<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+					<repeat group="{{@feedattr.bitlove}}" value="{{@bitlove}}" key="{{@audiotype}}">
+					<li><a title="bitlove torrent {{@audiotype}}" href="http://bitlove.org/{{@bitlove.user}}/{{@bitlove.feed}}/{{@item.slug}}.{{@audiotype}}.torrent">{{@audiotype}}</a></li>
+					</repeat>
+					
+					</li>
+				</check>
+				</ul>
+			</div>
+			</check>
+			<check if="{{@feedattr.flattrid}}">
+				<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}&amp;popout=0&amp;button=compact"
+				class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
+				</iframe>
+			</check>
+			<div>
+			
+			<repeat group="{{glob(@templatepath.'/episode/*.html')}}" value="{{@template}}">
+				<include href="{{'episode/'.basename(@template)}}"/>
+			</repeat>
+			</div>
+			<check if="{{@feedattr.disqus}}">
+				<exclude><include href="disqus.html"/></exclude>
+			</check>
+			<check if="{{@singlepage==true && isset(@item)}}">
+				<include href="comet.html"/>
+			</check>
+			<hr>
+		</repeat>
