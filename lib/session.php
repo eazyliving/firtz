@@ -1,20 +1,25 @@
 <?php
 
 /*
-	Copyright (c) 2009-2013 F3::Factory/Bong Cosca, All rights reserved.
 
-	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
+	Copyright (c) 2009-2015 F3::Factory/Bong Cosca, All rights reserved.
 
-	THE SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF
-	ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-	IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-	PURPOSE.
+	This file is part of the Fat-Free Framework (http://fatfreeframework.com).
 
-	Please see the license.txt file for more information.
+	This is free software: you can redistribute it and/or modify it under the
+	terms of the GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or later.
+
+	Please see the LICENSE file for more information.
+
 */
 
 //! Cache-based session handler
 class Session {
+
+	protected
+		//! Session ID
+		$sid;
 
 	/**
 	*	Open session
@@ -40,6 +45,8 @@ class Session {
 	*	@param $id string
 	**/
 	function read($id) {
+		if ($id!=$this->sid)
+			$this->sid=$id;
 		return Cache::instance()->exists($id.'.@',$data)?$data['data']:FALSE;
 	}
 
@@ -51,17 +58,23 @@ class Session {
 	**/
 	function write($id,$data) {
 		$fw=Base::instance();
+		$sent=headers_sent();
 		$headers=$fw->get('HEADERS');
-		$jar=session_get_cookie_params();
+		$csrf=$fw->hash($fw->get('ROOT').$fw->get('BASE')).'.'.
+			$fw->hash(mt_rand());
+		$jar=$fw->get('JAR');
+		if ($id!=$this->sid)
+			$this->sid=$id;
 		Cache::instance()->set($id.'.@',
 			array(
 				'data'=>$data,
+				'csrf'=>$sent?$this->csrf():$csrf,
 				'ip'=>$fw->get('IP'),
 				'agent'=>isset($headers['User-Agent'])?
 					$headers['User-Agent']:'',
 				'stamp'=>time()
 			),
-			$jar['lifetime']
+			$jar['expire']?($jar['expire']-time()):0
 		);
 		return TRUE;
 	}
@@ -73,6 +86,9 @@ class Session {
 	**/
 	function destroy($id) {
 		Cache::instance()->clear($id.'.@');
+		setcookie(session_name(),'',strtotime('-1 year'));
+		unset($_COOKIE[session_name()]);
+		header_remove('Set-Cookie');
 		return TRUE;
 	}
 
@@ -87,33 +103,43 @@ class Session {
 	}
 
 	/**
-	*	Return IP address associated with specified session ID
+	*	Return anti-CSRF token
 	*	@return string|FALSE
-	*	@param $id string
 	**/
-	function ip($id=NULL) {
-		return Cache::instance()->exists(($id?:session_id()).'.@',$data)?
-			$data['ip']:FALSE;
+	function csrf() {
+		return Cache::instance()->
+			exists(($this->sid?:session_id()).'.@',$data)?
+				$data['csrf']:FALSE;
 	}
 
 	/**
-	*	Return Unix timestamp associated with specified session ID
+	*	Return IP address
 	*	@return string|FALSE
-	*	@param $id string
 	**/
-	function stamp($id=NULL) {
-		return Cache::instance()->exists(($id?:session_id()).'.@',$data)?
-			$data['stamp']:FALSE;
+	function ip() {
+		return Cache::instance()->
+			exists(($this->sid?:session_id()).'.@',$data)?
+				$data['ip']:FALSE;
 	}
 
 	/**
-	*	Return HTTP user agent associated with specified session ID
+	*	Return Unix timestamp
 	*	@return string|FALSE
-	*	@param $id string
 	**/
-	function agent($id=NULL) {
-		return Cache::instance()->exists(($id?:session_id()).'.@',$data)?
-			$data['agent']:FALSE;
+	function stamp() {
+		return Cache::instance()->
+			exists(($this->sid?:session_id()).'.@',$data)?
+				$data['stamp']:FALSE;
+	}
+
+	/**
+	*	Return HTTP user agent
+	*	@return string|FALSE
+	**/
+	function agent() {
+		return Cache::instance()->
+			exists(($this->sid?:session_id()).'.@',$data)?
+				$data['agent']:FALSE;
 	}
 
 	/**
@@ -130,6 +156,26 @@ class Session {
 			array($this,'cleanup')
 		);
 		register_shutdown_function('session_commit');
+		@session_start();
+		$fw=\Base::instance();
+		$headers=$fw->get('HEADERS');
+		if (($ip=$this->ip()) && $ip!=$fw->get('IP') ||
+			($agent=$this->agent()) &&
+			(!isset($headers['User-Agent']) ||
+				$agent!=$headers['User-Agent'])) {
+			session_destroy();
+			\Base::instance()->error(403);
+		}
+		$csrf=$fw->hash($fw->get('ROOT').$fw->get('BASE')).'.'.
+			$fw->hash(mt_rand());
+		$jar=$fw->get('JAR');
+		if (Cache::instance()->exists(($this->sid=session_id()).'.@',$data)) {
+			$data['csrf']=$csrf;
+			Cache::instance()->set($this->sid.'.@',
+				$data,
+				$jar['expire']?($jar['expire']-time()):0
+			);
+		}
 	}
 
 }
