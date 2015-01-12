@@ -6,6 +6,7 @@ return array(
 	'dict_showcomments'=>'show comments',
 	'dict_show_adn_thread'=>'Show thread on App.net',
 	'dict_license'=>'license',
+	'dict_speakers'=>'Speakers',
 	'dict_older'=>'older',
 	'dict_newer'=>'newer',
 	'dict_reply'=>'reply'

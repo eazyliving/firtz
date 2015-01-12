@@ -91,6 +91,10 @@
 						$item[$tagname]=$tagval;
 						unset($prod->metadata->tags[$key]);
 					}
+					if ($tagname == 'speakers' ) {
+						$item['speakers'] = explode(" ", $tagval);
+						unset($prod->metadata->tags[$key]);
+					}
 				}
 			
 			}
@@ -207,8 +211,9 @@
 				} else {
 					
 					/* this is an attribute which may have linebreaks. append line to current attribute */
-					if ($thisattr!="" && $thisattr!="article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
+					if ($thisattr!="" && $thisattr!="article" && $thisattr!="speakers") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$line : $line;
 					if ($thisattr == "article") $item[$thisattr] .= ($item[$thisattr]!="") ? "\n".$uline : $uline;
+					if ($thisattr == "speakers") $item[$thisattr] = explode (" ", $line);
 				}
 				
 			}
