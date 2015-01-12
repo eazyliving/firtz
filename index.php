@@ -31,7 +31,7 @@ $main->set('audio','');
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias','articles-per-page'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','licenseimg','rfc5005','pagedcount','baseurl','adntoken','feedalias','articles-per-page'));
 
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread','location'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
