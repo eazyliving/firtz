@@ -113,7 +113,7 @@
 			}
 			
 			if (isset($templatevars)) $main->set('templatevars',$templatevars);
-			
+			if (isset($attr['template'])) $main->set('templatepath','templates/'.$attr['template']);
 			$attr['categories']=$categories;
 			if ($attr['baseurl']!="" && substr($attr['baseurl'],-1)== "/") $attr['baseurl'] = substr($attr['baseurl'],0,-1);
 			$attr['slug']=$slug;

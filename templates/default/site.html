@@ -454,8 +454,11 @@ QuorX Version: 1.0.4a
 </div>
 <!---------//firtz Information --------->	
 <script src="{{@BASEURL}}src/pwp/libs/html5shiv.js"></script>	
-<script src="{{@BASEURL}}src/js/quorx.js"></script>	
 <script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
+<repeat group="{{glob(@templatepath.'/quorx/*.js')}}" value="{{@template}}">
+      <include href="{{'quorx/'.basename(@template)}}"/>
+    </repeat>
+    
 <script>
   window.podcastData = {
     "title": {{json_encode(@feedattr.title) | raw}},
