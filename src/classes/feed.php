@@ -77,6 +77,12 @@
 
 					if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
 
+				} elseif ($thisattr == 'template-vars') {
+					if (!isset($templatevars)) $templatevars = array();
+					$var = explode(' ',$line)[0];
+					$value = substr($line,strpos($line,' ')+1);
+					$templatevars[$var]=$value;
+				
 				} else {
 					/* concat a new line to existing attribute */
 					
@@ -93,6 +99,8 @@
 			if ($main->get('clonemode')===true) {
 				$main->set('BASEURL',$attr['cloneurl']);
 			}
+			
+			if (isset($templatevars)) $main->set('templatevars',$templatevars);
 			
 			$attr['categories']=$categories;
 			if ($attr['baseurl']!="" && substr($attr['baseurl'],-1)== "/") $attr['baseurl'] = substr($attr['baseurl'],0,-1);
