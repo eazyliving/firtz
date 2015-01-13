@@ -58,35 +58,47 @@
 					$thisattr = substr($line,0,-1);
 					$attr[$thisattr]="";
 					
-				} elseif ($thisattr=="category") {
+				} elseif ($thisattr!="") {
+				
+					switch ($thisattr) {
 					
-					/* append a category line */
+						case 'category': 
 					
-					$thiscat = explode("->",$line);
-					if (sizeof($thiscat)>1) {
-						$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => trim($thiscat[1])) ;
-					} else {
-						$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
+							/* append a category line */
+					
+							$thiscat = explode("->",$line);
+							if (sizeof($thiscat)>1) {
+								$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => trim($thiscat[1])) ;
+							} else {
+								$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
+							}
+						
+							break;
+		
+						case 'bitlove': 
+				
+							/* bitlove information */
+
+							$bitlove = explode(" ",$line);
+							if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
+						
+							break;
+						
+						case 'template-vars': 
+							
+							/* template variables go to @templatevars */
+							
+							if (!isset($templatevars)) $templatevars = array();
+							$var = explode(' ',$line)[0];
+							$value = substr($line,strpos($line,' ')+1);
+							$templatevars[$var]=$value;
+							
+							break;
+
+						default:
+							$attr[$thisattr] .= ($attr[$thisattr]!="") ? "\n".$line : $line;
+							break;
 					}
-					
-				} elseif ($thisattr == "bitlove") {
-				
-					/* bitlove information */
-
-					$bitlove = explode(" ",$line);
-
-					if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
-
-				} elseif ($thisattr == 'template-vars') {
-					if (!isset($templatevars)) $templatevars = array();
-					$var = explode(' ',$line)[0];
-					$value = substr($line,strpos($line,' ')+1);
-					$templatevars[$var]=$value;
-				
-				} else {
-					/* concat a new line to existing attribute */
-					
-					if ($thisattr!="") $attr[$thisattr] .= ($attr[$thisattr]!="") ? "\n".$line : $line;
 				}
 				
 			}
@@ -164,12 +176,38 @@
 			
 			if ($attr['template']!='') {
 				$main->set('UI','templates/'.$attr['template'].'/ | templates/default/');
+				$this->loadTemplateConfig($attr['template']);
+			
 			} else {
 				$main->set('UI','templates/default/');
+				$this->loadTemplateConfig('default');
 			}
 			
 			$this->attr = $attr;
 			
+		}
+		
+		public function loadTemplateConfig($template) {
+			
+			$main = $this->main;
+			if (!file_exists('./templates/'.$template.'/template.cfg')) return;
+		
+			$templatevars = $main->get('templatevars');
+		
+			$fh = fopen('./templates/'.$template.'/template.cfg','r');
+			while (!feof($fh)) {
+			
+				$line = trim(fgets($fh));
+				if ($line=="" || substr($line,0,2)=="#:") continue;
+				
+				$var = explode(' ',$line)[0];
+				$value = substr($line,strpos($line,' ')+1);
+				
+				if (!isset($templatevars[$var])) $templatevars[$var]=$value;
+			
+			}
+			$main->set('templatevars',$templatevars);
+		
 		}
 		
 		public function preloadEpisodes() {

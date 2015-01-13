@@ -1,5 +1,17 @@
 changelog:
 
+1.5 so far:
+	cleaned structure:
+		lib, pwp, js, dict and classes moved to src-folder
+		
+	changed way templating works: 
+		main template-folder contains default template (now quorx!)
+		additional folders inside template-folder can contain additional files, overriding files inside default folder
+		feed.cfg needs template: attribute
+		feed.cfg can contain template-vars (go to @templatevars)
+		template.cfg inside template-folder can contain default template-vars
+		
+	
 1.3 update to podlove webplayer v2.0.13 and support images in mp4chaps
 1.2 enabled rfc5005 inside standard feed (until now only by special urls...)
 	fixed onother pile of smelly bugs. Take some care though...
