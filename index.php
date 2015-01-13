@@ -6,7 +6,7 @@ $main=require('src/lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
 
-$main->set('UI','templates/default/');
+$main->set('UI','');
 $main->set('templatepath','templates/default/');
 $main->set('version',1);
 $main->set('revision',5);
@@ -31,7 +31,7 @@ $main->set('audio','');
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','pagedcount','baseurl','adntoken','feedalias','articles-per-page'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','rfc5005','baseurl','adntoken','feedalias','articles-per-page','template'));
 
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread','location'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type')); 
@@ -182,8 +182,8 @@ $main->route('GET|HEAD /@feed/@audio',
 		$feed->loadEpisodes();
 		if ($feed->attr['rfc5005']=="on") {
 			$main->set('rfc5005','on');
-			$main->set('maxpage',ceil(sizeof($feed->episodes) / $feed->attr['pagedcount']) );
-			$feed->episodes = array_slice($feed->episodes,0,$feed->attr['pagedcount']);
+			$main->set('maxpage',ceil(sizeof($feed->episodes) / 10) );
+			$feed->episodes = array_slice($feed->episodes,0,10);
 		}
 		
 		
@@ -238,8 +238,8 @@ $main->route('GET|HEAD /@feed',
 		
 		if ($feed->attr['rfc5005']=="on") {
 			$main->set('rfc5005','on');
-			$main->set('maxpage',ceil(sizeof($feed->episodes) / $feed->attr['pagedcount']) );
-			$feed->episodes = array_slice($feed->episodes,0,$feed->attr['pagedcount']);
+			$main->set('maxpage',ceil(sizeof($feed->episodes) / 10) );
+			$feed->episodes = array_slice($feed->episodes,0,10);
 		}
 		
 		
@@ -269,12 +269,12 @@ $main->route('GET|HEAD /@feed/page/@page',
 		$feed->loadEpisodes();
 		
 		$main->set('page',ltrim($params['page'],'0'));
-		$main->set('maxpage',ceil(sizeof($feed->episodes) / $feed->attr['pagedcount']) );
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / 10) );
 		
 		if ($main->get('page')=='first' || $main->get('page')=='current')  $main->set('page',1);
 		if ($main->get('page')=='last') $main->set('page',$main->get('maxpage'));
 		
-		$feed->episodes = array_slice($feed->episodes,($main->get('page')-1)*$feed->attr['pagedcount'],$feed->attr['pagedcount']);
+		$feed->episodes = array_slice($feed->episodes,($main->get('page')-1)*10,10);
 		
 		$feed->renderRSS2();
 		
@@ -303,12 +303,12 @@ $main->route('GET|HEAD /@feed/@audio/page/@page',
 		$feed->loadEpisodes();
 		
 		$main->set('page',ltrim($params['page'],'0'));
-		$main->set('maxpage',ceil(sizeof($feed->episodes) / $feed->attr['pagedcount']) );
+		$main->set('maxpage',ceil(sizeof($feed->episodes) / 10) );
 		
 		if ($main->get('page')=='first' || $main->get('page')=='current')  $main->set('page',1);
 		if ($main->get('page')=='last') $main->set('page',$main->get('maxpage'));
 		
-		$feed->episodes = array_slice($feed->episodes,($main->get('page')-1)*$feed->attr['pagedcount'],$feed->attr['pagedcount']);
+		$feed->episodes = array_slice($feed->episodes,($main->get('page')-1)*10,10);
 		$main->set('audio',$params['audio']);
 		
 		$feed->renderRSS2($params['audio']);

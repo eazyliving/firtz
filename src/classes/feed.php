@@ -30,14 +30,7 @@
 			$this->feedDir=dirname($configfile);
 			
 			
-			if (file_exists($this->feedDir.'/'.$slug.'.html')) {
-				$this->htmltemplate = $slug.'.html';
-				$ui = $main->get('UI').';'.$this->feedDir.'/';
-				$main->set('UI',$ui);
-				
-			} else {
-				$this->htmltemplate = 'site.html';
-			}
+			$this->htmltemplate = 'site.html';
 			
 			$attr=array();
 		
@@ -155,12 +148,18 @@
 			
 			if ($attr['rfc5005']=="") $attr['rfc5005'] = 'off';
 			
-			if ($attr['pagedcount']=="") $attr['pagedcount'] = 10;
 			if ($attr['mediabaseurl']!='' && substr($attr['mediabaseurl'],-1)!='/') $attr['mediabaseurl'].='/';
 			
 			if ($attr['articles-per-page']=="") $attr['articles-per-page']=3;
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
+			
+			if ($attr['template']!='') {
+				$main->set('UI','templates/'.$attr['template'].'/ | templates/default/');
+			} else {
+				$main->set('UI','templates/default/');
+			}
+			
 			$this->attr = $attr;
 			
 		}
@@ -514,11 +513,6 @@
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
 			
-			if (file_exists($this->feedDir."/templates")) {
-				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
-				$main->set('UI',$ui);
-				$main->set('templatepath',$this->feedDir."/templates");
-			}
 			if ($kml==false) {
 				if ($ret===false) {
 					echo Template::instance()->render('map.html');
@@ -570,12 +564,6 @@
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
 			
-			if (file_exists($this->feedDir."/templates")) {
-				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
-				$main->set('UI',$ui);
-				$main->set('templatepath',$this->feedDir."/templates");
-			}
-			
 			if ($ret===false) {
 				echo Template::instance()->render('rss2.xml','application/xml');
 			} else {
@@ -606,11 +594,6 @@
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
 			
-			if (file_exists($this->feedDir."/templates")) {
-				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
-				$main->set('UI',$ui);
-				$main->set('templatepath',$this->feedDir."/templates");
-			}
 			
 			if ($ret===false) {
 				echo Template::instance()->render($this->htmltemplate);
@@ -638,13 +621,7 @@
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
-			
-			if (file_exists($this->feedDir."/templates")) {
-				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
-				$main->set('UI',$ui);
-				$main->set('templatepath',$this->feedDir."/templates");
-			}
-			
+						
 			if ($ret===false) {
 				echo Template::instance()->render("site_episode.html");
 			} else {
@@ -674,13 +651,7 @@
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
-			
-			if (file_exists($this->feedDir."/templates")) {
-				$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
-				$main->set('UI',$ui);
-				$main->set('templatepath',$this->feedDir."/templates");
-			}
-			
+						
 			echo Template::instance()->render("raw.html");
 		}
 	}
