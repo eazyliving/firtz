@@ -2,7 +2,7 @@
 
 ini_set('auto_detect_line_endings',true);
 
-$main=require('lib/base.php');
+$main=require('src/lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
 
@@ -16,16 +16,16 @@ $main->set('BASEURL',"http://".str_replace("/","",$main->get('HOST')).dirname($_
 $main->set('BASEPATH',$_SERVER['DOCUMENT_ROOT']);
 $main->set('singlepage',false);
 $main->set('showpage',false);
-$main->set('AUTOLOAD','classes/');
+$main->set('AUTOLOAD','src/classes/');
 $main->set('CDURATION',3600);
 $main->set('page',0);
-$main->set('DEBUG',0);
+$main->set('DEBUG',3);
 $main->set('epi','');
 $main->set('og',array());
 $main->set('clonemode',false);
 $main->set('extxml','');
 $main->set('exthtml','');
-$main->set('LOCALES','dict/');
+$main->set('LOCALES','src/dict/');
 $main->set('rfc5005','');
 $main->set('audio','');
 
@@ -548,28 +548,6 @@ $main->route('GET /@feed/adnthread/@postid',
 	}, $main->get('CDURATION')
 );
 
-$main->route('GET /@feed/xml',
-
-	function($main,$params) {
-		
-		$slug = $params['feed'];
-		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
-		
-		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
-		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
-		
-		$feed = new feed($main,$slug,$FEEDCONFIG);
-		
-		if ($feed->attr['redirect']!="") {
-			header ('HTTP/1.1 301 Moved Permanently');
-			header ('Location: '.$feed->attr['redirect']);
-			die();
-		}
-		
-		$feed->renderPodlove();
-		
-	}, $main->get('CDURATION')
-);
 
 $main->route('GET|HEAD /@feed/raw/@epi',
 	function ($main,$params) {
@@ -587,22 +565,6 @@ $main->route('GET|HEAD /@feed/raw/@epi',
 	}, $main->get('CDURATION')
 );
 
-
-$main->route('GET|HEAD /@feed/xml/@epi',
-	function ($main,$params) {
-		$slug = $params['feed'];
-		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
-		
-		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
-		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
-		$main->set('epi',$params['epi']);
-		$feed = new feed($main,$slug,$FEEDCONFIG);
-		$feed->findEpisodes();
-		$feed->loadEpisodes($params['epi']);
-		
-		$feed->renderPodlove($params['epi']);
-	}, $main->get('CDURATION')
-);
 
 if(php_sapi_name() == "cli") {
     
@@ -707,8 +669,6 @@ if(php_sapi_name() == "cli") {
 	file_put_contents($feed->attr['clonepath'].'index.html',$front);
 	exit;
 }
-
-
 
 $main->run();
 

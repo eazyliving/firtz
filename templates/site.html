@@ -34,14 +34,14 @@
 		<link rel="alternate" type="application/rss+xml" title="Podcast Feed: {{@feedattr.title}} {{@format}}" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
 	</repeat>
 	
-    <!--quarx - css-->
+    <!--quorx - css-->
 	<repeat group="{{glob(@templatepath.'/quorx/*.html')}}" value="{{@template}}">
       <include href="{{'quorx/'.basename(@template)}}"/>
     </repeat>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="{{@BASEURL}}pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="{{@BASEURL}}src/pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
 	<!--quarx - js-->
-	<script src="{{@BASEURL}}js/jquery.js"></script>
+	<script src="{{@BASEURL}}/src/js/jquery.js"></script>
 	<!--[if lt IE 9]>
   		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->	
@@ -455,9 +455,9 @@ QuorX Version: 1.0.4a
     </div>
 </div>
 <!---------//firtz Information --------->	
-<script src="{{@BASEURL}}pwp/libs/html5shiv.js"></script>	
-<script src="{{@BASEURL}}js/quorx.js"></script>	
-<script src="{{@BASEURL}}pwp/static/podlove-web-player.js"></script>
+<script src="{{@BASEURL}}src/pwp/libs/html5shiv.js"></script>	
+<script src="{{@BASEURL}}src/js/quorx.js"></script>	
+<script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
 <script>
   window.podcastData = {
     "title": {{json_encode(@feedattr.title) | raw}},
