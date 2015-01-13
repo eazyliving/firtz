@@ -1,0 +1,4 @@
+<check if="{{@feedattr.adntoken && @item.adnthread}}">
+<div class="showcomments" onclick="$('#adnthread-{{@item.adnthread}}').load('/{{@feedattr.slug}}/adnthread/{{@item.adnthread}}');" id="adnthread-{{@item.adnthread}}" class="adnthread"><a href="#c-{{@item.adnthread}}"><i class="icon-comment"></i> {{@dict_show_adn_thread}}</a></div>
+&nbsp;<br>
+<a name="#c-{{@item.adnthread}}"></a></check>

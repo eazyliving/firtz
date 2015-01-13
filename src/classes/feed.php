@@ -490,48 +490,7 @@
 			
 		
 		}
-		
-		public function renderPodlove($epi="",$ret=false) {
-		
-			/* render podlove feed specification template */
-			/* https://github.com/podlove/podlove-specifications/blob/master/podlove-podcast-description.md */
-			
-			$main = $this->main;
-			$audioformat = $this->attr['audioformats'][0];
-			$this->attr['audioformat']=$audioformat;
-			$main->set('feedattr',$this->attr);
-
-			/*	render or return template 
-				return rendered data will be used in clone mode, which will be used for static site clones
-			*/
-			if ($epi=="") {
-				if (file_exists($this->feedDir."/templates")) {
-					$ui = $this->feedDir."/templates/ ; ".$main->get('UI');
-					$main->set('UI',$ui);
-					$main->set('templatepath',$this->feedDir."/templates");
-				}
-				
-				if ($ret===false) {
-					echo Template::instance()->render('podlove_feed.xml','application/xml');
-				} else {
-					return Template::instance()->render('podlove.xml');
-				}
-			} else {
-			
-				
-				foreach ($this->episodes as $episode) {
-					$item = $episode->item;
-				}
-				$main->set('item',$item);
-				if ($ret===false) {
-					echo Template::instance()->render('podlove_episode.xml','application/xml');
-				} else {
-					return Template::instance()->render('podlove_episode.xml');
-				}
-			}
-			
-			
-		}
+	
 		
 		public function renderMap($ret=false,$kml=false) {
 		

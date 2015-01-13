@@ -1,0 +1,492 @@
+<set quorx="{{ array ( 'color'=>'#666', 'light'=>'#999', 'dark'=>'#333' ) }}"/>
+
+<!DOCTYPE html>
+<html lang="{{ substr(@feedattr.language,0,2) }}" dir="ltr" class="uk-notouch">
+<head>
+	<!--page-metas-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--page title-->
+	<title>{{@feedattr.title}}<check if="{{@showpage}}"> - {{basename(@showpage,'.html')}}</check></title>
+    <meta name="description" content="{{@feedattr.description}}"/>
+    <meta name="author" content="{{@feedattr.author | raw}}"/>
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+	<link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@format}} Audio)" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+    <check if="{{@feedattr.image}}">
+      <meta property="og:image" content="{{@feedattr.image}}"/>
+    </check>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<check if="{{!@showpage}}"><true>{{@og.title}}</true><false>{{basename(@showpage,'.html')}}</false></check>"/>
+    <meta property="og:url" content="<check if="{{!@showpage}}"><true>{{@og.url}}</true><false>{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@showpage)}}</false></check>"/>
+    <meta property="og:site_name" content="{{@feedattr.title}}"/>
+    <check if="{{@og.audio}}">
+      <meta property="og:{{@og.audio.typename}}" content="{{@og.audio.url}}"/>
+      <meta propertyp="og:{{@og.audio.typename}}:type" content="{{@og.audio.type}}"/>
+    </check>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
+    <link rel="shortcut icon" href="{{@BASEURL}}hoersuppe.png">
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+		<link rel="alternate" type="application/rss+xml" title="Podcast Feed: {{@feedattr.title}} {{@format}}" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+	
+    <!--quorx - css-->
+	<repeat group="{{glob(@templatepath.'/quorx/*.html')}}" value="{{@template}}">
+      <include href="{{'quorx/'.basename(@template)}}"/>
+    </repeat>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="{{@BASEURL}}src/pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+	<!--quarx - js-->
+	<script src="{{@BASEURL}}/src/js/jquery.js"></script>
+	<!--[if lt IE 9]>
+  		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->	
+</head>
+<body class="tm-sidebar-a-right tm-sidebars-1 tm-isblog tm-article-panel tm-sticky-navbar">
+
+<!----------------------top-------------------------->
+<div class="tm-block-top">
+		<div class="uk-container uk-container-center">				
+				<!--logo-->
+				<a class="tm-logo uk-visible-large" href="{{@BASEURL}}">
+					<img height=50 width=50 src="{{@feedattr.image}}" alt="{{@feedattr.title}}">
+				</a>
+				<!--logo-->
+				
+				<!--navigation-->
+				<nav class="uk-navbar">
+                    <ul class="uk-navbar-nav uk-hidden-small">
+                        <!--pages-einzeln-->                       
+                        <repeat group="{{glob(@templatepath.'/pages/*.html')}}" value="{{@template}}">
+							<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+						</repeat>
+						<!--pages-einzeln--> 
+
+            	        <!--pages-automation-->
+                    	<repeat group="{{glob(@templatepath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+							<li class="uk-parent" data-uk-dropdown="">
+                            <a href="">{{basename(@dir)}}</a>
+                            <div class="uk-dropdown uk-dropdown-navbar">
+								<ul class="uk-nav uk-nav-navbar">
+									<repeat group="{{glob(@templatepath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+										<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+									</repeat>
+				 				</ul>
+                        	</div>
+                         	</li>
+						</repeat>
+						<!--//pages-automation-->
+
+						<!--abonnieren-->
+                        <li>
+							<a href="#" class="podlove-subscribe-button-{{@feedattr.slug}}">Abonnieren</a>
+                        </li>
+                         <!--//abonnieren-->
+						
+
+                    </ul>
+
+					<!--navigation-botton-->
+                    <a href="#offcanvas-1" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>
+
+                    <div class="uk-navbar-content uk-navbar-center uk-hidden-large">
+						<a class="tm-logo-small" href="{{@BASEURL}}">
+							<img src="{{@feedattr.image}}" width="40" alt="{{@feedattr.title}}">
+							<!--fixed: #102a-->
+						</a>
+					</div>
+                </nav>
+				<!--//navigation-->
+		
+				<!--handy-nav-->
+				<div id="offcanvas-1" class="uk-offcanvas">
+                	<div class="uk-offcanvas-bar">
+						<div class="uk-panel" align="center">
+        					<h4 style="margin-bottom: 7px;" class="uk-panel-title">{{@feedattr.title}}</h4>
+        					 <b>{{@feedattr.description}}</b>
+					  		 <br>
+					  		<img style="padding-top:10px; width: 80px;" alt="{{@feedattr.title}}" src="{{@BASEURL}}feedimages/schnirkel.png">
+        					<br>
+        				</div>				
+						<ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
+                            <!--pages-einzeln-->                       
+                        	<repeat group="{{glob(@templatepath.'/pages/*.html')}}" value="{{@template}}">
+								<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+							</repeat>
+							<!--//pages-einzeln--> 
+
+							<!--pages-automation-->
+                    		<repeat group="{{glob(@templatepath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+							<li class="uk-parent">
+                            	<a href="#">{{basename(@dir)}}</a>
+								<ul class="uk-nav-sub">
+									<repeat group="{{glob(@templatepath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+										<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+									</repeat>
+				 				</ul>
+                         	</li>
+							</repeat>
+							<!--//pages-automation-->
+
+							<!--feed abonnieren--> 
+                             <li>
+								<a href="#" class="podlove-subscribe-button-{{@feedattr.slug}}">Abonnieren</a>
+							</li>
+                            <!--//feed abonnieren-->
+                        </ul>
+                        <!--handy-infos-->
+        				<div class="uk-panel">
+        					<!--handy-unterstützen-->
+        					<h5 align="center" style="font-size: 17px; line-height: 10px;" 
+        						class="uk-panel-title"><b>Unterstützen</b></h5>
+					 				Dies ist ein kostenloser Podcast. Du kannst ihn über Flattr unterstützen. 
+					 				So bleibt das Angebot weiterhin am Leben.
+					 			 <br><br>
+        						<div align="center">
+        							<check if="{{@feedattr.flattrid}}">
+									<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+									</check>
+								</div>
+							<!--//handy-unterstützen-->
+        				</div>
+    					<!--//handy-infos-->
+                    </div>
+                </div>
+				<!--//handy-nav-->
+		</div>
+	</div>
+<!----------------------//top-------------------------->
+
+<!---------------------container--------------------->
+<div class="uk-container uk-container-center">
+	<!--content-->
+	<div class="uk-grid" data-uk-grid-match="" data-uk-grid-margin="">		
+		
+		<!---------article------------>
+		<div class="uk-width-medium-3-4" style="min-height: 2946px;">
+			<!--article-main-->
+			<main class="tm-content">
+
+			<!--breadcamp-->
+			<ul class="uk-breadcrumb">
+				<li><a href="{{@BASEURL}}">Home</a></li>
+				<check if="{{!@showpage}}">
+					<true>
+					<repeat group="@items" value="{{@item}}">
+						<check if="{{@singlepage==true}}">
+							<li>{{@item.title}}</li>
+						</check>
+						<check if="{{@showpage}}"><li> {{basename(@showpage,'.html')}} </li></check>
+					</repeat>
+					</true>
+					<false>
+						<check if="{{@showpage}}"><li> {{basename(@showpage,'.html')}} </li></check>
+					</false>
+				</check>
+			</ul>
+			<!--//breadcamp-->					
+	
+	<check if="{{!@showpage}}">
+		<true>
+			<repeat group="@items" value="{{@item}}">
+			
+			<!--article-->
+			<div class="uk-grid" data-uk-grid-match="" data-uk-grid-margin="">
+			<div class="uk-width-medium-1-1">
+			
+					<!--article-infos-->
+					<article class="uk-article" data-permalink="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
+
+        				<!--date-->
+    					<div id="date" class="tm-article-date">
+							<span class="tm-article-date-day">{{date ('d . m' , strtotime(@item.date))}}</span>
+							<span class="tm-article-date-year">{{date ('Y' , strtotime(@item.date))}}</span>
+    					</div>
+    					<!--//date-->
+    					
+    					<!--title-->
+    					<h1 id="title" class="uk-article-title" style="font-size:30px;">
+    						<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" title="{{@item.slug}}" name="{{@item.slug}}">{{@item.title}}</a>
+    					</h1>
+						<!--//title-->
+						
+						<!--handy-date-->
+						<div id="hdate">{{date ('d . m' , strtotime(@item.date))}} . {{date ('Y' , strtotime(@item.date))}}</div>
+						<!--//handy-date-->
+						
+    					
+        				<!--flattr-->
+						<check if="{{@feedattr.flattrid}}">
+							<div id="flattr">
+								<iframe id="flattr" src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}&amp;popout=0&amp;button=compact"
+									class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
+								</iframe>
+							</div>
+						</check>
+						<!--//flattr-->
+					<br>
+					<!--article-player--> 
+					<div class="uk-width-medium-1-1">
+						<check if="{{@item.noaudio==''}}">
+							<include href="podlove-player.html"/>
+						</check>
+					</div>
+					<!--//article-player-->
+					<br>
+						<div class="uk-width-medium-1-1">
+							
+							<!--shownotes-->
+							<h2>Shownotes</h2>
+							<check if="{{(trim(@item.article)!='')}}">
+								{{@item.article | raw}}
+							</check>
+							<!--//shownotes-->
+							
+							<!--episode template-->
+							<repeat group="{{glob(@templatepath.'/episode/*.html')}}" value="{{@template}}">
+								<include href="{{'episode/'.basename(@template)}}"/>
+							</repeat>
+							<!--//episode template-->
+			
+							<hr />
+							
+							<!--episode downloads-->
+							<check if="{{@item.noaudio==''}}">
+								<!--download-->
+								<div class="uk-button-dropdown" data-uk-dropdown>
+									<button class="uk-button uk-button-primary uk-button-large"><i class="uk-icon-download"></i> <span class="bico">Download</span></button>
+    								<div class="uk-dropdown uk-dropdown-small">
+        								<ul class="uk-nav uk-nav-dropdown">
+											<repeat group="{{@item.audiofiles}}" value="{{@audiofile}}" key="{{@audiotype}}">
+												<li><a title="download {{@audiotype}} - size: {{ceil(@audiofile.length / 1048576)}} MByte" href="{{@audiofile.link}}">{{@audiotype}}</a></li>
+											</repeat>
+										</ul>
+    								</div>
+								</div>
+								<!--download torrents-->		
+								<check if="{{@feedattr.bitlove}}">
+								<div class="uk-button-dropdown" data-uk-dropdown>
+									<button class="uk-button uk-button-danger uk-button-large"><i class="uk-icon-cloud-download"></i> <span class="bico">Torrents</span></button>
+    								<div class="uk-dropdown uk-dropdown-small">
+        								<ul class="uk-nav uk-nav-dropdown">
+											<repeat group="{{@feedattr.bitlove}}" value="{{@bitlove}}" key="{{@audiotype}}">
+												<li><a title="bitlove torrent {{@audiotype}}" href="http://bitlove.org/{{@bitlove.user}}/{{@bitlove.feed}}/{{@item.slug}}.{{@audiotype}}.torrent">{{@audiotype}}</a></li>
+											</repeat>
+										</ul>
+    								</div>
+								</div>
+								</check>
+							</check>
+							<!--//episode downloads-->
+							
+							<!--comments button-->	
+							<check if="{{@feedattr.disqus}}">
+								<include href="disqus.html"/>
+							</check>
+							<!--//comments button-->
+
+						</div>
+					</article>
+					<br>
+					<!--//article-content-->
+			</div>
+			</div>
+			<!--//article-->
+					
+			</repeat>
+    	</true>
+		<false>
+			<article class="uk-article"><include href="{{@showpage}}"/></article>
+		</false>
+	</check>
+
+			<!--pagination-->
+			<check if="{{@page!=0}}">
+    			<check if="{{@page>1}}">
+					<ul class="uk-breadcrumb" id="pagi_right">
+						<li> 
+						 <a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{@page-1}}">
+						  {{@dict_newer}}
+						 </a>
+						</li>
+					</ul>
+				</check>
+    			<check if="{{@page<@maxpage}}">
+					<ul class="uk-breadcrumb" id="pagi_left">
+						<li> 
+						 <a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{@page+1}}">
+						  {{@dict_older}}
+						 </a>
+						</li>
+					</ul>
+				</check>
+			</check>
+			<!--//pagination-->
+
+    		</main>
+			<!--//article-main-->
+		</div>
+		<!---------//article --------->
+		
+		<!---------sidebar------------>	
+		<aside class="tm-sidebar-a uk-width-medium-1-4" style="min-height: 2946px;">
+			
+			<div class="tm-sidebar-b uk-panel uk-hidden-medium uk-hidden-small widget_text">
+			<div class="sideline" align="center">				
+				<h3 style="color:#fff;">{{@feedattr.title}}</h3>
+			</div>
+				<div align="center" style="padding: 25px 30px;">
+					<p style="margin-top: -10px;">
+					  <b>{{@feedattr.description}}</b>
+					</p>
+					<hr />
+					<p>
+					 {{@feedattr.summary}}
+					</p>					
+					<img alt="{{@feedattr.title}}" src="{{@feedattr.image}}" width="200" height="200" border="0">        			
+				</div>
+			</div>
+			
+			<div class="tm-sidebar-b uk-panel uk-hidden-medium uk-hidden-small widget_text">
+				<div style="padding-top: 20px" align="center">
+					<h4>Unterstützen</h4>
+				</div>
+				<hr />
+				<div style="padding: 2px 30px;" align="center">
+					<p><!--//Dein Text hier...-->
+					 Dies ist ein kostenloser Podcast. Du kannst ihn über Flattr unterstützen. 
+					 So bleibt das Angebot weiterhin am Leben.
+					</p>
+					<p>
+					  <check if="{{@feedattr.flattrid}}">
+						<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+					  </check>
+					</p>
+				</div>
+			</div>
+		</aside>
+		<!---------//sidebar --------->	
+	</div>
+	<!--//content-->
+		
+	<!--end-footer-->
+	<section class="tm-bottom-b uk-grid" data-uk-grid-match="{target:&#39;&gt; div &gt; .uk-panel&#39;}" data-uk-grid-margin="">
+		<!-- Über diesen Podcast-->
+		<div class="uk-width-1-1 uk-width-medium-1-2">
+			<div class="uk-panel uk-panel-box widget_text" style="min-height: 142px;">
+					<span class="uk-button uk-button-large uk-button-link"><i class="uk-icon-user"></i></span> {{@feedattr.author | raw}}
+						<span style="padding-right: 110px;"></span>
+					<!--social-->
+					<div class="uk-button-group" data-uk-button-checkbox>
+						<check if="{{@feedattr.email}}">
+		 					<a class="uk-button uk-button-large uk-button-primary" href="mailto:{{@feedattr.email}}"><i class="uk-icon-envelope-o"></i></a>
+		 					<span style="padding-right: 12px;"></span>
+						</check>
+						<check if="{{@feedattr.twitter}}">
+		 					<a class="uk-button uk-button-large" href="https://twitter.com/{{@feedattr.twitter}}"><i class="uk-icon-twitter"></i></a>
+		 					<span style="padding-right: 12px;"></span>
+						</check>
+						<check if="{{@feedattr.adn}}">
+							<a class="uk-button uk-button-large" href="https://alpha.app.net/{{@feedattr.adn}}" rel="me"><i class="uk-icon-adn"></i></a>
+							<span style="padding-right: 12px;"></span>
+						</check> 
+					</div>
+					<!--//social-->
+			</div>
+		</div>
+		<!-- //Über diesen Podcast-->
+	</section>
+	<!--//end-footer-->
+
+	<!--page-footer-->
+	<footer class="tm-footer">
+		<a class="tm-totop-scroller" data-uk-smooth-scroll="" href="#"></a>
+		<div class="uk-panel widget_text">
+			<p>
+			  <small id="c-footer">
+				Powered by <a class="tm-secondary-color" href="#firtz-design" data-uk-modal>Firtz</a> | Design by <a href="http://podunion.com/podcaster/6214/michael-mccouman-jr" target="_blank">Michael McCouman Jr.</a>
+			  </small>
+			</p>
+			<p style="margin-top: -20px;"><small id="c-footer"><check if="{{@feedattr.licensename}}"><a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></check> - 2014 {{@feedattr.title}}. </small></p>
+		</div>
+	</footer>
+	<!--//page-footer-->
+</div>
+<!---------------------//container--------------------->
+						
+
+<!----------------
+/**
+*
+*	Firtz Information
+*	------------------
+*	Bleib anständig und ändere diese Informationen nicht! 
+*	Firtz ist für uns alle kostenlos, gebe auch anderen die Chance es kennen zu lernen ;)
+*
+**/
+
+QuorX Version: 1.0.4a
+------------------>						
+<div id="firtz-design" class="uk-modal">
+   <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <h3>Firtz - Ein Podcast Publisher</h3>
+        	<hr />
+        <div class="uk-grid">
+    		<div class="uk-width-7-10">
+    			<p><b>Einfach und schnell podcasten mit Firtz. Entwickelt von <a href="http://hoersuppe.de/">Christian Bednarek</a>
+    			um als Podcast Publisher die Welt zu erobern.</b></p>
+    									
+    			<p>Das QuorX-Design wurde von <a href="http://podunion.com/podcaster/6214/michael-mccouman-jr">Michael McCouman Jr.</a> entwickelt.</b></p>
+    		</div>
+    		<div class="uk-width-3-10">
+    			<img src="{{@BASEURL}}feedimages/firtz-design.png">
+    		</div>
+		</div>
+        	<br>
+        <a class="uk-button uk-button-primary uk-button" href="http://firtz.org">Mehr erfahren</a>
+        						 
+        <a target="_blank" href="https://github.com/McCouman/Firtz-QuorX-Design" class="uk-float-right uk-button"><i class="uk-icon-github"></i> Firtz + QuorX</a>
+        <a target="_blank" style="margin-right: 5px;" href="https://github.com/eazyliving/firtz/" class="uk-float-right uk-button uk-button-danger"><i class="uk-icon-github"></i> Firtz</a>  						
+    </div>
+</div>
+<!---------//firtz Information --------->	
+<script src="{{@BASEURL}}src/pwp/libs/html5shiv.js"></script>	
+<script src="{{@BASEURL}}src/js/quorx.js"></script>	
+<script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
+<script>
+  window.podcastData = {
+    "title": {{json_encode(@feedattr.title) | raw}},
+    "subtitle": {{json_encode(@feedattr.description) | raw}},
+	"description": {{json_encode(@feedattr.summary) | raw}},
+    "cover": "{{@feedattr.image}}",
+    "feeds": [
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+	  {
+		"type":"{{explode('/',@mimetypes[@format])[0]}}",
+        "format": "{{@format}}",
+        "url": "{{@feedattr.baserel}}{{@format}}{{@extxml}}",
+      },
+	  </repeat>
+    ]
+  }
+</script>
+<script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="" data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
+
+	<check if="{{@feedattr.disqus}}">
+	<include href="disqus_multiple.js"/>
+		<check if="{{@singlepage==true && isset(@item)}}">
+			<script type="text/javascript">
+				jQuery(function() { 
+					loadDisqus(jQuery('#comment_{{@item.slug}}'), '{{@item.guid}}', '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}');
+				});
+			</script>
+		</check>
+</check>
+</body>
+</html>
+
