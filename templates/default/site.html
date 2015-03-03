@@ -33,12 +33,14 @@
 	</repeat>
 	
     <!--quorx - css-->
-	<repeat group="{{glob(@templatepath.'/quorx/*.html')}}" value="{{@template}}">
-      <include href="{{'quorx/'.basename(@template)}}"/>
+    <repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<repeat group="{{glob(@tpath.'/quorx/*.html')}}" value="{{@template}}">
+   	   		<include href="{{'quorx/'.basename(@template)}}"/>
+   		 </repeat>
     </repeat>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="{{@BASEURL}}src/pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
-	<!--quarx - js-->
+	<!--quorx - js-->
 	<script src="{{@BASEURL}}/src/js/jquery.js"></script>
 	<!--[if lt IE 9]>
   		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -59,9 +61,11 @@
 				<nav class="uk-navbar">
                     <ul class="uk-navbar-nav uk-hidden-small">
                         <!--pages-einzeln-->                       
-                        <repeat group="{{glob(@templatepath.'/pages/*.html')}}" value="{{@template}}">
-							<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
-						</repeat>
+                       <repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+							<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
+    						 <li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+ 						</repeat>
+ 					   </repeat>
 						<!--pages-einzeln--> 
 
             	        <!--pages-automation-->
@@ -241,6 +245,7 @@
 							<h2>Shownotes</h2>
 							<check if="{{(trim(@item.article)!='')}}">
 								{{@item.article | raw}}
+								
 							</check>
 							<!--//shownotes-->
 							
@@ -455,10 +460,9 @@ QuorX Version: 1.0.4a
 <!---------//firtz Information --------->	
 <script src="{{@BASEURL}}src/pwp/libs/html5shiv.js"></script>	
 <script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
-<repeat group="{{glob(@templatepath.'/quorx/*.js')}}" value="{{@template}}">
-      <include href="{{'quorx/'.basename(@template)}}"/>
-    </repeat>
-    
+
+<include href="quorx/quorx.js"/>
+  
 <script>
   window.podcastData = {
     "title": {{json_encode(@feedattr.title) | raw}},
