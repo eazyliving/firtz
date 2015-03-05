@@ -31,13 +31,13 @@
 	<repeat group="@feedattr.audioformats" value="{{@format}}">
 		<link rel="alternate" type="application/rss+xml" title="Podcast Feed: {{@feedattr.title}} {{@format}}" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
 	</repeat>
-	
     <!--quorx - css-->
     <repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 		<repeat group="{{glob(@tpath.'/quorx/*.html')}}" value="{{@template}}">
    	   		<include href="{{'quorx/'.basename(@template)}}"/>
    		 </repeat>
     </repeat>
+    
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="{{@BASEURL}}src/pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
 	<!--quorx - js-->
@@ -45,6 +45,21 @@
 	<!--[if lt IE 9]>
   		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->	
+	
+	
+	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<repeat group="{{glob(@tpath.'/head/*.html')}}" value="{{@template}}">
+   	   		<include href="{{@tpath.'head/'.basename(@template)}}"/>
+   		 </repeat>
+    </repeat>
+	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<!-- tpath: {{@tpath.'head/*.js'}} -->
+		<repeat group="{{glob(@tpath.'head/*.js')}}" value="{{@template}}">
+			<!-- temp: {{@template}} -->
+			<script src="{{'/'.@tpath.'head/'.basename(@template)}}"></script>
+   		 </repeat>
+    </repeat>
+	
 </head>
 <body class="tm-sidebar-a-right tm-sidebars-1 tm-isblog tm-article-panel tm-sticky-navbar">
 
@@ -69,17 +84,19 @@
 						<!--pages-einzeln--> 
 
             	        <!--pages-automation-->
-                    	<repeat group="{{glob(@templatepath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
-							<li class="uk-parent" data-uk-dropdown="">
-                            <a href="">{{basename(@dir)}}</a>
-                            <div class="uk-dropdown uk-dropdown-navbar">
-								<ul class="uk-nav uk-nav-navbar">
-									<repeat group="{{glob(@templatepath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
-										<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
-									</repeat>
-				 				</ul>
-                        	</div>
-                         	</li>
+                    	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+							<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+								<li class="uk-parent" data-uk-dropdown="">
+								<a href="">{{basename(@dir)}}</a>
+								<div class="uk-dropdown uk-dropdown-navbar">
+									<ul class="uk-nav uk-nav-navbar">
+										<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+											<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+										</repeat>
+									</ul>
+								</div>
+								</li>
+							</repeat>
 						</repeat>
 						<!--//pages-automation-->
 
@@ -116,21 +133,25 @@
         				</div>				
 						<ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
                             <!--pages-einzeln-->                       
-                        	<repeat group="{{glob(@templatepath.'/pages/*.html')}}" value="{{@template}}">
-								<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+                        	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
+									<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+								</repeat>
 							</repeat>
 							<!--//pages-einzeln--> 
 
 							<!--pages-automation-->
-                    		<repeat group="{{glob(@templatepath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
-							<li class="uk-parent">
-                            	<a href="#">{{basename(@dir)}}</a>
-								<ul class="uk-nav-sub">
-									<repeat group="{{glob(@templatepath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
-										<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
-									</repeat>
-				 				</ul>
-                         	</li>
+                    		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+								<li class="uk-parent">
+									<a href="#">{{basename(@dir)}}</a>
+									<ul class="uk-nav-sub">
+										<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+											<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+										</repeat>
+									</ul>
+								</li>
+								</repeat>
 							</repeat>
 							<!--//pages-automation-->
 
@@ -201,7 +222,7 @@
 			<div class="uk-width-medium-1-1">
 			
 					<!--article-infos-->
-					<article class="uk-article" data-permalink="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
+					<article class="uk-article" id="article-{{@item.slug}}" data-permalink="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
 
         				<!--date-->
     					<div id="date" class="tm-article-date">
@@ -249,12 +270,6 @@
 							</check>
 							<!--//shownotes-->
 							
-							<!--episode template-->
-							<repeat group="{{glob(@templatepath.'/episode/*.html')}}" value="{{@template}}">
-								<include href="{{'episode/'.basename(@template)}}"/>
-							</repeat>
-							<!--//episode template-->
-			
 							<hr />
 							
 							<!--episode downloads-->
@@ -291,8 +306,20 @@
 								<include href="disqus.html"/>
 							</check>
 							<!--//comments button-->
-
+							<!--episode template-->
+							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/episode/*.html')}}" value="{{@template}}">
+									<include href="{{'episode/'.basename(@template)}}"/>
+								</repeat>
+							</repeat>
+							<!--//episode template-->
+							<!--append extensions output-->
+								<check if="{{isset(@item.append)}}">
+									{{@item.append | raw}}
+								</check>
+							<!--//append extensions output-->
 						</div>
+			
 					</article>
 					<br>
 					<!--//article-content-->
@@ -416,6 +443,12 @@
 			</p>
 			<p style="margin-top: -20px;"><small id="c-footer"><check if="{{@feedattr.licensename}}"><a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></check> - 2014 {{@feedattr.title}}. </small></p>
 		</div>
+		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+			<repeat group="{{glob(@tpath.'/footer/*.html')}}" value="{{@template}}">
+				<include href="{{'footer/'.basename(@template)}}"/>
+			 </repeat>
+		</repeat>
+	
 	</footer>
 	<!--//page-footer-->
 </div>
@@ -460,8 +493,19 @@ QuorX Version: 1.0.4a
 <!---------//firtz Information --------->	
 <script src="{{@BASEURL}}src/pwp/libs/html5shiv.js"></script>	
 <script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
-
 <include href="quorx/quorx.js"/>
+
+<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+	<repeat group="{{glob(@tpath.'/foot/*.html')}}" value="{{@template}}">
+		<include href="{{'foot/'.basename(@template)}}"/>
+	 </repeat>
+</repeat>
+
+<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+	<repeat group="{{glob(@tpath.'/foot/*.js')}}" value="{{@template}}">
+		<script src="{{'/'.@tpath.'foot/'.basename(@template)}}"></script>
+	 </repeat>
+</repeat>
   
 <script>
   window.podcastData = {
@@ -491,7 +535,7 @@ QuorX Version: 1.0.4a
 				});
 			</script>
 		</check>
-</check>
+	</check>
 </body>
 </html>
 

@@ -327,7 +327,11 @@
 			if ($item['chapters']) usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
 
 			if (strpos($item['duration'],'.')!==FALSE) $item['duration'] = substr($item['duration'],0,strpos($item['duration'],'.'));
+
+			$item['append']='';
+			$item['prepend']='';
 			$this->item=$item;
+			
 		}
 		
 		public function renderRSS2($audioformat) {

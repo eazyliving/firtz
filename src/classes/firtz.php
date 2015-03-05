@@ -11,11 +11,11 @@
 		public $data = array();
 		public $extensions = array();
 		public $attr = array();
-		
+		public $main = "";
 		function __construct($main) {
 			
 			$this->markdown = new Markdown();
-
+			$this->main = $main;
 			$this->BASEURL ="http://".$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
 

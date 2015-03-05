@@ -112,8 +112,8 @@
 				$main->set('BASEURL',$attr['cloneurl']);
 			}
 			
-			if (isset($templatevars)) $main->set('templatevars',$templatevars);
-			if (isset($attr['template'])) $main->set('templatepath','templates/'.$attr['template']);
+			$main->set('templatevars',$templatevars);
+			if ($attr['template']!="") $main->set('templatepath','templates/'.$attr['template']);
 			$attr['categories']=$categories;
 			if ($attr['baseurl']!="" && substr($attr['baseurl'],-1)== "/") $attr['baseurl'] = substr($attr['baseurl'],0,-1);
 			$attr['slug']=$slug;
@@ -174,12 +174,14 @@
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
 			
+			$ui = $main->get('UI');
+			
 			if ($attr['template']!='') {
-				$main->set('UI','templates/'.$attr['template'].'/ | templates/default/');
+				$main->set('UI',$ui.',templates/'.$attr['template'].'/,templates/default/');
 				$this->loadTemplateConfig($attr['template']);
 			
 			} else {
-				$main->set('UI','templates/default/');
+				$main->set('UI',$ui.',templates/default/');
 				$this->loadTemplateConfig('default');
 			}
 			
@@ -618,7 +620,7 @@
 		}
 		
 		public function renderHTML($ret=false,$pagename="") {
-		
+
 			/* render standard html template */
 			$main = $this->main;
 			$main->set('feedattr',$this->attr);

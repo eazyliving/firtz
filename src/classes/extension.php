@@ -62,7 +62,7 @@
 			}
 			
 			fclose($fh);
-			$ui = $main->get('UI')." ; ./ext/".$this->slug."/ ";
+			$ui = $main->get('UI').",ext/".$this->slug."/";
 			$main->set('UI',$ui);
 			$this->route = $this->slug."/".$route;
 			
