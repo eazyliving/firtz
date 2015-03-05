@@ -54,7 +54,17 @@
 							if (file_exists($EXTDIR.'/'.$script)) include_once($EXTDIR.'/'.$script);
 						}
 					}
-					
+
+					if ($thisattr=='vars') { 
+							
+							/* extension variables go to @ext['extslug']*/
+							
+							if (!isset($thisextvars)) $thisextvars = array();
+							$var = explode(' ',$line)[0];
+							$value = substr($line,strpos($line,' ')+1);
+							$thisextvars[$var]=$value;
+							
+					}
 					if ($thisattr == "slug" ) $this->slug = $line;
 					if ($thisattr == "type" ) $this->type = $line;
 				}
@@ -62,6 +72,12 @@
 			}
 			
 			fclose($fh);
+			
+			if (isset($thisextvars)) {
+				$extvars = $main->get('extvars');
+				$extvars[$this->slug] = $thisextvars;
+				$main->set('extvars',$extvars);
+			}
 			$ui = $main->get('UI').",ext/".$this->slug."/";
 			$main->set('UI',$ui);
 			$this->route = $this->slug."/".$route;

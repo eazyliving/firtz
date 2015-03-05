@@ -135,7 +135,6 @@
 						}
 					}
 					$this->extensions[$extension->slug]=$extension;
-						
 				}
 			}
 			
