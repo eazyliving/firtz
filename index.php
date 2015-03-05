@@ -8,8 +8,8 @@ $main->set('FEEDDIR','./feeds');
 
 $main->set('UI','');
 $main->set('templatepath','templates/default/');
-$main->set('version',1);
-$main->set('revision',5);
+$main->set('version',2);
+$main->set('revision',0);
 $main->set('generator','firtz podcast publisher v'.$main->get('version').".".$main->get('revision'));
 $main->set('pager','');
 $main->set('BASEURL',"http://".str_replace("/","",$main->get('HOST')).dirname($_SERVER['SCRIPT_NAME']));
@@ -24,6 +24,7 @@ $main->set('epi','');
 $main->set('og',array());
 $main->set('clonemode',false);
 $main->set('extxml','');
+$main->set('extvars',array());
 $main->set('exthtml','');
 $main->set('LOCALES','src/dict/');
 $main->set('rfc5005','');
