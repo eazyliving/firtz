@@ -301,11 +301,6 @@
 							</check>
 							<!--//episode downloads-->
 							
-							<!--comments button-->	
-							<check if="{{@feedattr.disqus}}">
-								<include href="disqus.html"/>
-							</check>
-							<!--//comments button-->
 							<!--episode template-->
 							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 								<repeat group="{{glob(@tpath.'/episode/*.html')}}" value="{{@template}}">
@@ -526,16 +521,7 @@ QuorX Version: 1.0.4a
 </script>
 <script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="" data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
 
-	<check if="{{@feedattr.disqus}}">
-	<include href="disqus_multiple.js"/>
-		<check if="{{@singlepage==true && isset(@item)}}">
-			<script type="text/javascript">
-				jQuery(function() { 
-					loadDisqus(jQuery('#comment_{{@item.slug}}'), '{{@item.guid}}', '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}');
-				});
-			</script>
-		</check>
-	</check>
+	
 </body>
 </html>
 
