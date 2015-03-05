@@ -19,7 +19,7 @@ $main->set('showpage',false);
 $main->set('AUTOLOAD','src/classes/');
 $main->set('CDURATION',3600);
 $main->set('page',0);
-$main->set('DEBUG',3);
+$main->set('DEBUG',2);
 $main->set('epi','');
 $main->set('og',array());
 $main->set('clonemode',false);
