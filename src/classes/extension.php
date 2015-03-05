@@ -30,7 +30,7 @@
 			while (!(feof($fh))) {
 				
 				$line = trim(fgets($fh));
-				
+
 				if (substr($line,0,2)=="#:" || $line =="") continue;
 				if (substr($line,-1)==":" && ( in_array(substr($line,0,-1),$main->get('extattr')) )) {
 				
@@ -72,7 +72,6 @@
 			}
 			
 			fclose($fh);
-			
 			if (isset($thisextvars)) {
 				$extvars = $main->get('extvars');
 				$extvars[$this->slug] = $thisextvars;
