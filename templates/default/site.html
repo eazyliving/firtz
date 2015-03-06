@@ -436,7 +436,20 @@
 				Powered by <a class="tm-secondary-color" href="#firtz-design" data-uk-modal>Firtz</a> | Design by <a href="http://podunion.com/podcaster/6214/michael-mccouman-jr" target="_blank">Michael McCouman Jr.</a>
 			  </small>
 			</p>
-			<p style="margin-top: -20px;"><small id="c-footer"><check if="{{@feedattr.licensename}}"><a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a></check> - 2014 {{@feedattr.title}}. </small></p>
+			<p style="margin-top: -20px;"><small id="c-footer">
+				<check if="{{@feedattr.licenseimage}}">
+					<true>
+						<a href="{{@feedattr.licenseurl}}"><img src="{{@feedattr.licenseimage}}" title="{{@@feedattr.licensename}}"></a></a>
+					</true>
+					<false>
+					<check if="{{@feedattr.licensename}}">
+						<a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a>
+					</check>
+					</false>
+				</check>
+				
+
+			- 2014 {{@feedattr.title}}. </small></p>
 		</div>
 		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 			<repeat group="{{glob(@tpath.'/footer/*.html')}}" value="{{@template}}">
