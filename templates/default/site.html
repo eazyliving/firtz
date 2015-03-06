@@ -45,12 +45,13 @@
 	<!--[if lt IE 9]>
   		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->	
-	
-	
 	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
-		<repeat group="{{glob(@tpath.'/head/*.html')}}" value="{{@template}}">
-   	   		<include href="{{@tpath.'head/'.basename(@template)}}"/>
-   		 </repeat>
+			<repeat group="{{glob(@tpath.'/head/*.html')}}" value="{{@template}}">
+					<include href="{{'head/'.basename(@template)}}"/>
+			</repeat>
+	</repeat>	
+	
+		 
     </repeat>
 	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 		<!-- tpath: {{@tpath.'head/*.js'}} -->
@@ -62,7 +63,6 @@
 	
 </head>
 <body class="tm-sidebar-a-right tm-sidebars-1 tm-isblog tm-article-panel tm-sticky-navbar">
-<!-- ext : {{print_r(@extvars)}} -->
 <!----------------------top-------------------------->
 <div class="tm-block-top">
 		<div class="uk-container uk-container-center">				
