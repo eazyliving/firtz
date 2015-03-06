@@ -73,6 +73,12 @@ version="2.0">
 			</repeat>
 		</check>
 		
+		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+				<repeat group="{{glob(@tpath.'/rss_feed/*.xml')}}" value="{{@template}}">
+					<include href="{{'rss_feed/'.basename(@template)}}"/>
+				</repeat>
+		</repeat>
+		
 		<check if="{{@items}}">
 		<repeat group="@items" value="@item">
 			<item>
@@ -85,7 +91,11 @@ version="2.0">
 			<check if="{{@feedattr.flattrid}}">
 				<atom:link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}" type="text/html" />
 			</check>
-			
+			<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+				<repeat group="{{glob(@tpath.'/rss_episode/*.xml')}}" value="{{@template}}">
+					<include href="{{'rss_episode/'.basename(@template)}}"/>
+				</repeat>
+			</repeat>
 			<check if="{{@item.enclosure}}">
 				<check if="{{@item.chapters}}">
 				<psc:chapters version="1.1">

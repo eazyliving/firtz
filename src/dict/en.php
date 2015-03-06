@@ -1,5 +1,6 @@
 <?php
 return array(
+	'dict_searchtext'=>'Search',
 	'dict_keywords'=>'keywords',
 	'dict_subscribe'=>'subscribe',
 	'dict_pubdate'=>'{0,date}',

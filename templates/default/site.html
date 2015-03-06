@@ -176,7 +176,19 @@
 								</div>
 							<!--//handy-unterstützen-->
         				</div>
-    					<!--//handy-infos-->
+        				
+        				<div class="uk-panel">
+        					<h5 align="center" style="font-size: 17px; line-height: 10px;" 
+        						class="uk-panel-title"><b>{{@dict_searchtext}}</b></h5>
+					 			 <br><br>
+        						<div align="center" class"uk-form">
+        								<input id="tagsearch-keyword" type="text" name="search" placeholder="Stichwörter">
+									<button id="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
+								
+								</div>
+						</div>
+        				
+	    					<!--//handy-infos-->
                     </div>
                 </div>
 				<!--//handy-nav-->
@@ -198,7 +210,7 @@
 			<ul class="uk-breadcrumb">
 				<li><a href="{{@BASEURL}}">Home</a></li>
 				<check if="{{@search}}">
-					<li>Suche: {{@search}}</li>
+					<li>{{@dict_searchtext}}: {{@search}}</li>
 				</check>
 				<check if="{{!@showpage}}">
 					<true>
@@ -418,16 +430,14 @@
 			</div>
 			<div class="tm-sidebar-b uk-panel uk-hidden-medium uk-hidden-small widget_text">
 				<div style="padding-top: 20px" align="center">
-					<h4>Suche</h4>
+					<h4>{{@dict_searchtext}}</h4>
 				</div>
 				<hr />
 				<div style="padding: 2px 30px;" align="center">
-					<p> Suche nach Schlüsselwörtern
-					</p>
 					<p>
 					 <div class="uk-form">
 						<input id="tagsearch-keyword" type="text" name="search" placeholder="Stichwörter">
-						<button id="tagsearch" type="submit" class="uk-button">Suchen</button>
+						<button id="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
 					</div>
 					</p>
 				</div>
