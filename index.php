@@ -34,8 +34,8 @@ $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','licenseimage','rfc5005','baseurl','adntoken','feedalias','articles-per-page','template','template-vars'));
 
-$main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','adnthread','location'));
-$main->set('extattr',array('slug','template','arguments','prio','script','type','vars')); 
+$main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','location'));
+$main->set('extattr',array('slug','template','arguments','prio','script','type','vars','episode-vars','feed-vars')); 
 
 $main->set('mimetypes',array('mp3'=>'audio/mpeg','torrent'=>'application/x-bittorrent','mpg'=>'video/mpeg','m4a'=>'audio/mp4','m4v'=>'video/mp4','oga'=>'audio/ogg','ogg'=>'audio/ogg','ogv'=>'video/ogg','webma'=>'audio/webm','webm'=>'video/webm','flac'=>'audio/flac','opus'=>'audio/ogg;codecs=opus','mka'=>'audio/x-matroska','mkv'=>'video/x-matroska','pdf'=>'application/pdf','epub'=>'application/epub+zip','png'=>'image/png','jpg'=>'image/jpeg','mobi'=>'application/x-mobipocket-ebook'));
 
@@ -53,6 +53,15 @@ $main->set('feeds',$feeds);
 function sortByPubDate($a,$b) {
 	if (strtotime($a->item['pubDate']) == strtotime($b->item['pubDate'])) return ($a->item['slug'] < $b->item['slug'] );
 	return (strtotime($a->item['pubDate']) < strtotime($b->item['pubDate']) );
+
+}
+
+function strip_article($text, $allowed_tags=array()) {
+ 
+  $rtext=preg_replace_callback('/<\/?([^>\s]+)[^>]*>/i', function ($matches) use (&$allowed_tags) {       
+    return in_array(strtolower($matches[1]),$allowed_tags)?$matches[0]:'';
+  },$text);
+  return $rtext;
 }
 
 function firtz_markdown($text) {

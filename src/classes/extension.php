@@ -54,7 +54,7 @@
 							if (file_exists($EXTDIR.'/'.$script)) include_once($EXTDIR.'/'.$script);
 						}
 					}
-
+					
 					if ($thisattr=='vars') { 
 							
 							/* extension variables go to @ext['extslug']*/
@@ -65,8 +65,20 @@
 							$thisextvars[$var]=$value;
 							
 					}
+					
+					if ($thisattr=='episode-vars') { 
+							
+							/* these are vars, this extension adds to episodes */
+							
+							if (!isset($episodevars)) $episodevars = array();
+							$episodevars[]=$line;
+							
+					}
+					
+					
 					if ($thisattr == "slug" ) $this->slug = $line;
 					if ($thisattr == "type" ) $this->type = $line;
+					
 				}
 			
 			}
@@ -77,9 +89,19 @@
 				$extvars[$this->slug] = $thisextvars;
 				$main->set('extvars',$extvars);
 			}
+		
+			if (isset($episodevars)) {
+				$itemattr = $main->get('itemattr');
+				foreach ($episodevars as $evar)	$itemattr[]=$evar;
+				$main->set('itemattr',$itemattr);
+			}
+			
 			$ui = $main->get('UI').",ext/".$this->slug."/";
 			$main->set('UI',$ui);
 			$this->route = $this->slug."/".$route;
+			
+			$dict = $main->get('LOCALES').",ext/".$this->slug."/dict/";
+			$main->set('LOCALES',$dict);
 			
 		}
 	

@@ -223,7 +223,11 @@
 			
 					<!--article-infos-->
 					<article class="uk-article" id="article-{{@item.slug}}" data-permalink="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
-
+						<!--prepend extensions output-->
+								<check if="{{isset(@item.prepend)}}">
+									{{@item.prepend | raw}}
+								</check>
+						<!--//prepend extensions output-->
         				<!--date-->
     					<div id="date" class="tm-article-date">
 							<span class="tm-article-date-day">{{date ('d . m' , strtotime(@item.date))}}</span>
@@ -266,11 +270,19 @@
 							<h2>Shownotes</h2>
 							<check if="{{(trim(@item.article)!='')}}">
 								{{@item.article | raw}}
-								
 							</check>
 							<!--//shownotes-->
 							
 							<hr />
+							
+							<!--episode template-->
+							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/episode/*.html')}}" value="{{@template}}">
+									<include href="{{'episode/'.basename(@template)}}"/>
+									<hr />
+								</repeat>
+							</repeat>
+							<!--//episode template-->
 							
 							<!--episode downloads-->
 							<check if="{{@item.noaudio==''}}">
@@ -301,13 +313,7 @@
 							</check>
 							<!--//episode downloads-->
 							
-							<!--episode template-->
-							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
-								<repeat group="{{glob(@tpath.'/episode/*.html')}}" value="{{@template}}">
-									<include href="{{'episode/'.basename(@template)}}"/>
-								</repeat>
-							</repeat>
-							<!--//episode template-->
+						
 							<!--append extensions output-->
 								<check if="{{isset(@item.append)}}">
 									{{@item.append | raw}}
