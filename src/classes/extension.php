@@ -20,7 +20,7 @@
 		public $prio=99;
 		
 		function __construct($main,$EXTDIR) {
-		
+			
 			if (!file_exists($EXTDIR."/ext.cfg")) return false;
 			$this->dir = $EXTDIR;
 			
@@ -98,13 +98,14 @@
 			
 			$ui = $main->get('UI').",ext/".$this->slug."/";
 			$main->set('UI',$ui);
+		
 			$this->route = $this->slug."/".$route;
-			
+		
 			$dict = $main->get('LOCALES').",ext/".$this->slug."/dict/";
 			$main->set('LOCALES',$dict);
 			
 		}
 	
 	}
-
+	
 ?>

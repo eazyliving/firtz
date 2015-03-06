@@ -197,6 +197,9 @@
 			<!--breadcamp-->
 			<ul class="uk-breadcrumb">
 				<li><a href="{{@BASEURL}}">Home</a></li>
+				<check if="{{@search}}">
+					<li>Suche: {{@search}}</li>
+				</check>
 				<check if="{{!@showpage}}">
 					<true>
 					<repeat group="@items" value="{{@item}}">
@@ -215,6 +218,13 @@
 	
 	<check if="{{!@showpage}}">
 		<true>
+			<check if="{{count(@items)==0}}">
+			<div class="uk-grid" data-uk-grid-match="" data-uk-grid-margin="">
+				<div class="uk-width-medium-1-1">
+				<article class="uk-article">Keine Folgen gefunden</article>
+				</div>
+			</div>
+			</check>
 			<repeat group="@items" value="{{@item}}">
 			
 			<!--article-->
@@ -274,6 +284,14 @@
 							<!--//shownotes-->
 							
 							<hr />
+							<!--keywords-->
+							<h2>{{@dict_keywords}}</h2>
+							<repeat group="{{explode(',',@item.keywords)}}" value="{{@keyword}}">
+								<a href="/{{@feedattr.slug}}/show/search/{{@keyword}}"> {{@keyword}}</a> / 
+							</repeat>
+							<!--//keywords-->
+							
+							<hr />
 							
 							<!--episode template-->
 							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
@@ -313,7 +331,6 @@
 							</check>
 							<!--//episode downloads-->
 							
-						
 							<!--append extensions output-->
 								<check if="{{isset(@item.append)}}">
 									{{@item.append | raw}}
@@ -399,6 +416,32 @@
 					</p>
 				</div>
 			</div>
+			<div class="tm-sidebar-b uk-panel uk-hidden-medium uk-hidden-small widget_text">
+				<div style="padding-top: 20px" align="center">
+					<h4>Suche</h4>
+				</div>
+				<hr />
+				<div style="padding: 2px 30px;" align="center">
+					<p> Suche nach Schlüsselwörtern
+					</p>
+					<p>
+					 <div class="uk-form">
+						<input id="tagsearch-keyword" type="text" name="search" placeholder="Stichwörter">
+						<button id="tagsearch" type="submit" class="uk-button">Suchen</button>
+					</div>
+					</p>
+				</div>
+			</div>
+			<!--sidebar template-->
+				
+				<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+					<repeat group="{{glob(@tpath.'/sidebar/*.html')}}" value="{{@template}}">
+						<include href="{{'sidebar/'.basename(@template)}}"/>
+						<hr />
+					</repeat>
+				</repeat>
+			<!--//sidebar template-->
+			
 		</aside>
 		<!---------//sidebar --------->	
 	</div>
@@ -537,6 +580,24 @@ QuorX Version: 1.0.4a
 	  </repeat>
     ]
   }
+  
+ 
+	$('#tagsearch').click(
+		function() {
+			var keyword = $('#tagsearch-keyword').val();
+			if (keyword!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword;
+	});
+	$('#tagsearch-keyword').keydown(
+		function(e) {
+			if (e.keyCode==13) {
+				var keyword = $('#tagsearch-keyword').val();
+				if (keyword!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword;
+			}
+	});
+
+
+
+  
 </script>
 <script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="" data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
 

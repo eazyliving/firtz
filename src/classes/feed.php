@@ -400,15 +400,21 @@
 		
 			# Sort episodes by pubDate
 			
-			
 			uasort($this->episodes,'sortByPubDate');
 			
 			/* find the latest episode to fill in data in rss and atom feeds (<updated>) */
 			
 			$lastupdate = 0;
 			$firtz = $main->get('firtz');
-			foreach ($this->episodes as $episode) {
+			
+			foreach ($this->episodes as $key=>$episode) {
 				
+				if ($main->get('search')!="") {
+					if (!in_array(trim($main->get('search')),explode(",",$episode->item['keywords']))) {
+						unset($this->episodes[$key]);
+						continue;
+					}
+				}
 				# find last update time. cache stuff and feed info
 				$update = strtotime($episode->item['pubDate']);
 				if ($update>$lastupdate) $lastupdate = $update;
@@ -417,8 +423,8 @@
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
 				$episode->item['article'] =  $this->markdown->convert(strip_article($episode->item['article']));
 				
-				$episode->item['description'] =  strip_tags($this->markdown->convert($episode->item['description']),"<a>");
-				$episode->item['summary'] =  strip_tags($episode->item['article']);
+				$episode->item['description'] =  strip_article($this->markdown->convert($episode->item['description']),array("<a>"));
+				$episode->item['summary'] =  strip_article($episode->item['article']);
 				
 				foreach ($firtz->extensions as $extslug => $ext) {
 					#if ($ext->type!="content") continue;

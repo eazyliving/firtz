@@ -29,6 +29,7 @@ $main->set('exthtml','');
 $main->set('LOCALES','src/dict/');
 $main->set('rfc5005','');
 $main->set('audio','');
+$main->set('search','');
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
@@ -394,7 +395,33 @@ $main->route('GET|HEAD /@feed/showbare/@epi',
 	}, $main->get('CDURATION')
 
 );
+$main->route('GET|HEAD /@feed/show/search',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$main->reroute('/'.$slug.'/show');
+		
+	}, $main->get('CDURATION')
 
+);
+
+$main->route('GET|HEAD /@feed/show/search/@tag',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		if ($params['tag']=="") $main->reroute('/'.$slug.'/show');
+		$main->set('search',$params['tag']);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		$feed->findEpisodes();
+		$feed->loadEpisodes();
+		$feed->renderHTML();
+	}, $main->get('CDURATION')
+
+);
 
 $main->route('GET|HEAD /@feed/show/@epi/@ignore',
 	function ($main,$params) {
