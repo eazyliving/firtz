@@ -247,7 +247,8 @@ entweder yes oder no, wirkt sich vor allem auf iTunes aus.
 Ist der Podcast bereits bei iTunes erreichbar, steht hier der komplette Link zur iTunes-Seite. (firtz: [https://itunes.apple.com/de/podcast/firtz/id604449399](https://itunes.apple.com/de/podcast/firtz/id604449399))
   
 **disqus:**  
-Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter [http://disqus.com/for-websites/](http://disqus.com/for-websites/) und [https://disqus.com/admin/signup/](https://disqus.com/admin/signup/)
+~~Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter [http://disqus.com/for-websites/](http://disqus.com/for-websites/) und [https://disqus.com/admin/signup/](https://disqus.com/admin/signup/)~~
+Disqus wurde mit Version 2.0 aus der Standarddistribution herausgenommen. Disqus ist nun eine Extension, die Ihr Euch im [Repository der Extensions](https://github.com/eazyliving/firtz-extensions/) besorgen könnt.
  
 **bitlove:**  
 Wenn Du bei [bitlove](http://bitlove.org) Deine Feeds torrentifizierst, kannst Du hier - allerdings ausschließlich für das Webseitentemplate - Downloadlinks dafür konfigurieren. Das Format sieht wie folgt aus:
