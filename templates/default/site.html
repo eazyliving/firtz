@@ -297,10 +297,13 @@
 							
 							<hr />
 							<!--keywords-->
+							<check if="{{@item.keywords}}">
 							<h2>{{@dict_keywords}}</h2>
 							<repeat group="{{explode(',',@item.keywords)}}" value="{{@keyword}}">
 								<a href="/{{@feedattr.slug}}/show/search/{{@keyword}}"> {{@keyword}}</a> / 
 							</repeat>
+							</check>
+							
 							<!--//keywords-->
 							
 							<hr />
