@@ -84,7 +84,7 @@
 						
 							break;
 						
-						case 'template-vars': 
+						case 'templatevars': 
 							
 							/* template variables go to @templatevars */
 							
@@ -111,7 +111,7 @@
 			if ($main->get('clonemode')===true) {
 				$main->set('BASEURL',$attr['cloneurl']);
 			}
-			
+			if (!isset($templatevars)) $templatevars = array();
 			$main->set('templatevars',$templatevars);
 			if ($attr['template']!="") $main->set('templatepath','templates/'.$attr['template']);
 			$attr['categories']=$categories;
