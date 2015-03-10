@@ -1,16 +1,17 @@
 <?php
 
 /*
-	Copyright (c) 2009-2013 F3::Factory/Bong Cosca, All rights reserved.
 
-	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
+	Copyright (c) 2009-2015 F3::Factory/Bong Cosca, All rights reserved.
 
-	THE SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF
-	ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-	IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-	PURPOSE.
+	This file is part of the Fat-Free Framework (http://fatfreeframework.com).
 
-	Please see the license.txt file for more information.
+	This is free software: you can redistribute it and/or modify it under the
+	terms of the GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or later.
+
+	Please see the LICENSE file for more information.
+
 */
 
 //! Unit test kit
@@ -23,7 +24,7 @@ class Test {
 		FLAG_Both=2;
 	//@}
 
-	private
+	protected
 		//! Test results
 		$data=array();
 
@@ -37,15 +38,13 @@ class Test {
 
 	/**
 	*	Evaluate condition and save test result
-	*	@return NULL
+	*	@return object
 	*	@param $cond bool
 	*	@param $text string
 	**/
 	function expect($cond,$text=NULL) {
 		$out=(bool)$cond;
-		if ($this->level==self::FLAG_True && $out ||
-			$this->level==self::FLAG_False && !$out ||
-			$this->level==self::FLAG_Both) {
+		if ($this->level==$out || $this->level==self::FLAG_Both) {
 			$data=array('status'=>$out,'text'=>$text,'source'=>NULL);
 			foreach (debug_backtrace() as $frame)
 				if (isset($frame['file'])) {
@@ -55,6 +54,7 @@ class Test {
 				}
 			$this->data[]=$data;
 		}
+		return $this;
 	}
 
 	/**

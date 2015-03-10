@@ -1,16 +1,17 @@
 <?php
 
 /*
-	Copyright (c) 2009-2013 F3::Factory/Bong Cosca, All rights reserved.
 
-	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
+	Copyright (c) 2009-2015 F3::Factory/Bong Cosca, All rights reserved.
 
-	THE SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF
-	ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-	IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-	PURPOSE.
+	This file is part of the Fat-Free Framework (http://fatfreeframework.com).
 
-	Please see the license.txt file for more information.
+	This is free software: you can redistribute it and/or modify it under the
+	terms of the GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or later.
+
+	Please see the LICENSE file for more information.
+
 */
 
 //! Authorization/authentication plug-in
@@ -22,7 +23,7 @@ class Auth {
 		E_SMTP='SMTP connection failure';
 	//@}
 
-	private
+	protected
 		//! Auth storage
 		$storage,
 		//! Mapper object
@@ -40,7 +41,7 @@ class Auth {
 	protected function _jig($id,$pw,$realm) {
 		return (bool)
 			call_user_func_array(
-				array($this->mapper,'findone'),
+				array($this->mapper,'load'),
 				array(
 					array_merge(
 						array(
@@ -65,7 +66,7 @@ class Auth {
 	**/
 	protected function _mongo($id,$pw,$realm) {
 		return (bool)
-			$this->mapper->findone(
+			$this->mapper->load(
 				array(
 					$this->args['id']=>$id,
 					$this->args['pw']=>$pw
@@ -85,7 +86,7 @@ class Auth {
 	protected function _sql($id,$pw,$realm) {
 		return (bool)
 			call_user_func_array(
-				array($this->mapper,'findone'),
+				array($this->mapper,'load'),
 				array(
 					array_merge(
 						array(
@@ -190,10 +191,14 @@ class Auth {
 	function basic($func=NULL) {
 		$fw=Base::instance();
 		$realm=$fw->get('REALM');
+		$hdr=NULL;
 		if (isset($_SERVER['HTTP_AUTHORIZATION']))
+			$hdr=$_SERVER['HTTP_AUTHORIZATION'];
+		elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+			$hdr=$_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+		if (!empty($hdr))
 			list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'])=
-				explode(':',base64_decode(
-					substr($_SERVER['HTTP_AUTHORIZATION'],6)));
+				explode(':',base64_decode(substr($hdr,6)));
 		if (isset($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) &&
 			$this->login(
 				$_SERVER['PHP_AUTH_USER'],
@@ -217,8 +222,7 @@ class Auth {
 	**/
 	function __construct($storage,array $args=NULL) {
 		if (is_object($storage) && is_a($storage,'DB\Cursor')) {
-			$ref=new ReflectionClass(get_class($storage));
-			$this->storage=basename(dirname($ref->getfilename()));
+			$this->storage=$storage->dbtype();
 			$this->mapper=$storage;
 			unset($ref);
 		}
