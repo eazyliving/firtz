@@ -161,6 +161,7 @@
 			if ($attr['articles-per-page']=="") $attr['articles-per-page']=3;
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
+			if (version_compare(PHP_VERSION, '5.4.0') >= 0) $attr['title']=htmlentities($attr['title'],ENT_XML1);
 			$this->attr = $attr;
 			
 		}
