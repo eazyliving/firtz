@@ -325,7 +325,6 @@
 			
 			/* who says, chapters are in order? sort them! */
 			if ($item['chapters']) usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
-			if (version_compare(PHP_VERSION, '5.4.0') >= 0) $item['title']=htmlentities($item['title'],ENT_XML1);
 		
 			if (strpos($item['duration'],'.')!==FALSE) $item['duration'] = substr($item['duration'],0,strpos($item['duration'],'.'));
 			$this->item=$item;

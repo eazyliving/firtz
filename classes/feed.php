@@ -161,7 +161,6 @@
 			if ($attr['articles-per-page']=="") $attr['articles-per-page']=3;
 			
 			if ($attr['auphonic-mode']=='') $attr['auphonic-mode']='off';
-			if (version_compare(PHP_VERSION, '5.4.0') >= 0) $attr['title']=htmlentities($attr['title'],ENT_XML1);
 			$this->attr = $attr;
 			
 		}
@@ -587,6 +586,8 @@
 			
 			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
+			if (version_compare(PHP_VERSION, '5.4.0') >= 0) $this->attr['title']=htmlentities($this->attr['title'],ENT_XML1);
+
 			$main->set('feedattr',$this->attr);
 
 			/* collect episodes */
@@ -603,9 +604,12 @@
 				}
 				#$item['description'] = str_replace("&","&amp;amp;",$item['description']);
 				#$item['summary'] = str_replace("&","&amp;",$item['summary']);
+				if (version_compare(PHP_VERSION, '5.4.0') >= 0) $item['title']=htmlentities($item['title'],ENT_XML1);
+				
 				$items[]=$item;
 			
 			}
+			
 			$main->set('items',$items);
 		
 			/*	render or return template 
