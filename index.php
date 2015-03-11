@@ -379,22 +379,6 @@ $main->route('GET|HEAD /@feed/show/@epi',
 
 );
 
-$main->route('GET|HEAD /@feed/showbare/@epi',
-	function ($main,$params) {
-		$slug = $params['feed'];
-		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
-		
-		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
-		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
-		$main->set('singlepage',true);
-		$main->set('epi',$params['epi']);
-		$feed = new feed($main,$slug,$FEEDCONFIG);
-		$feed->findEpisodes();
-		$feed->loadEpisodes($params['epi']);
-		$feed->renderHTMLbare();
-	}, $main->get('CDURATION')
-
-);
 $main->route('GET|HEAD /@feed/show/search',
 	function ($main,$params) {
 		$slug = $params['feed'];

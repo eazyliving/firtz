@@ -185,6 +185,7 @@
 				$this->loadTemplateConfig('default');
 			}
 			
+			
 			$this->attr = $attr;
 			
 		}
@@ -508,9 +509,12 @@
 				$items[]=$item;
 				
 			}
+			
 			$main->set('items',$items);
+			$this->setOpenGraph();
 			
 			/* render plugins template */
+			$extension->runInit();
 			
 			echo Template::instance()->render($extension->template['file'],$extension->template['type']);
 			
@@ -594,6 +598,8 @@
 			
 			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
+			if (version_compare(PHP_VERSION, '5.4.0') >= 0) $this->attr['title']=htmlentities($this->attr['title'],ENT_XML1);
+
 			$main->set('feedattr',$this->attr);
 
 			/* collect episodes */
@@ -610,11 +616,13 @@
 				}
 				#$item['description'] = str_replace("&","&amp;amp;",$item['description']);
 				#$item['summary'] = str_replace("&","&amp;",$item['summary']);
+				if (version_compare(PHP_VERSION, '5.4.0') >= 0) $item['title']=htmlentities($item['title'],ENT_XML1);
+				#str_replace(array("&","\""),array("&amp;amp;","&amp;quot;"),$chapter['title'])
 				$items[]=$item;
 			
 			}
 			$main->set('items',$items);
-		
+			
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
 			*/
@@ -678,9 +686,9 @@
 			*/
 						
 			if ($ret===false) {
-				echo Template::instance()->render("site_episode.html");
+				echo Template::instance()->render("embed.html");
 			} else {
-				return Template::instance()->render("site_episode.html");
+				return Template::instance()->render("embed.html");
 			}
 		}
 		

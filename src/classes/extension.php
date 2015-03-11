@@ -18,12 +18,13 @@
 		public $script = "";
 		public $type="";
 		public $prio=99;
+		public $main = "";
 		
 		function __construct($main,$EXTDIR) {
 			
 			if (!file_exists($EXTDIR."/ext.cfg")) return false;
 			$this->dir = $EXTDIR;
-			
+			$this->main = $main;
 			$route = "";
 			$fh = fopen($EXTDIR."/ext.cfg",'r');
 			$thisattr = "";
@@ -46,7 +47,12 @@
 					}
 					
 					if ($thisattr == "template") {
-						list($this->template['file'],$this->template['type']) = explode(" ",$line);
+						if (sizeof(explode(" ",$line))==2) {
+							list($this->template['file'],$this->template['type']) = explode(" ",$line);
+						} else {
+							$this->template['file'] = chop($line);
+							$this->template['type'] = "text/html";
+						}
 					}
 					
 					if ($thisattr == "script") {
@@ -84,6 +90,7 @@
 			}
 			
 			fclose($fh);
+			
 			if (isset($thisextvars)) {
 				$extvars = $main->get('extvars');
 				$extvars[$this->slug] = $thisextvars;
@@ -105,7 +112,12 @@
 			$main->set('LOCALES',$dict);
 			
 		}
-	
+		
+		function runInit() {
+			$init_func = $this->slug."_init";
+			if (function_exists($init_func)) $init_func();
+		}
+		
 	}
 	
 ?>

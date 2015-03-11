@@ -182,8 +182,8 @@
         						class="uk-panel-title"><b>{{@dict_searchtext}}</b></h5>
 					 			 <br><br>
         						<div align="center" class"uk-form">
-        								<input id="tagsearch-keyword" type="text" name="search" placeholder="Stichwörter">
-									<button id="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
+        								<input id="tagsearch-keyword-handy" type="text" name="search" placeholder="Stichwörter" value="{{@search}}">
+									<button class="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
 								
 								</div>
 						</div>
@@ -302,11 +302,11 @@
 							<repeat group="{{explode(',',@item.keywords)}}" value="{{@keyword}}">
 								<a href="/{{@feedattr.slug}}/show/search/{{@keyword}}"> {{@keyword}}</a> / 
 							</repeat>
+							<hr />
 							</check>
 							
 							<!--//keywords-->
 							
-							<hr />
 							
 							<!--episode template-->
 							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
@@ -439,8 +439,8 @@
 				<div style="padding: 2px 30px;" align="center">
 					<p>
 					 <div class="uk-form">
-						<input id="tagsearch-keyword" type="text" name="search" placeholder="Stichwörter">
-						<button id="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
+						<input id="tagsearch-keyword-handy" type="text" name="search" placeholder="Stichwörter" value="{{@search}}">
+						<button class="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
 					</div>
 					</p>
 				</div>
@@ -577,7 +577,7 @@ QuorX Version: 1.0.4a
 	 </repeat>
 </repeat>
   
-<script>
+<script type="text/javascript">
   window.podcastData = {
     "title": {{json_encode(@feedattr.title) | raw}},
     "subtitle": {{json_encode(@feedattr.description) | raw}},
@@ -593,27 +593,24 @@ QuorX Version: 1.0.4a
 	  </repeat>
     ]
   }
-  
- 
-	$('#tagsearch').click(
+</script>
+<script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="" data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
+<script type="text/javascript">
+	
+	$('.tagsearch').click(
 		function() {
-			var keyword = $('#tagsearch-keyword').val();
+			var keyword = $('#tagsearch-keyword').val()+$('#tagsearch-keyword-handy').val();
 			if (keyword!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword;
 	});
-	$('#tagsearch-keyword').keydown(
-		function(e) {
+	$('.tagsearch-keyword .tagsearch-keyword-handy').keydown(
+		function(e) { 
 			if (e.keyCode==13) {
-				var keyword = $('#tagsearch-keyword').val();
+				var keyword = $('#tagsearch-keyword').val()+$('#tagsearch-keyword-handy').val();
 				if (keyword!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword;
 			}
 	});
-
-
-
-  
+		
 </script>
-<script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="" data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
-
 	
 </body>
 </html>

@@ -333,6 +333,7 @@
 			$item['keywords'] = implode(',',$newkeywords);
 			$item['append']='';
 			$item['prepend']='';
+			
 			$this->item=$item;
 			
 		}
