@@ -1,5 +1,7 @@
 <?php
 
+# RC1
+
 ini_set('auto_detect_line_endings',true);
 
 $main=require('src/lib/base.php');
