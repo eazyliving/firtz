@@ -84,19 +84,19 @@ foreach ($firtz->attr['feedalias'] as $alias) {
 	}
 );
 
-
 }
 
 
 foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
 	$slug = $extension->slug;
+	$extension->init();
 	$main->route("GET|HEAD /@feed/$slug/*",
 		function($main,$params) use ($slug) {
-				
+					
 			$firtz = $main->get('firtz');
 			$extension = $firtz->extensions[$slug];
-			
+
 			$arguments = array();
 			$arguments_ext = $extension->arguments;
 			$arguments_get = explode("/",$params[2]);
@@ -106,6 +106,8 @@ foreach ($firtz->extensions as $slug => $extension) {
 					$argname = $arguments_ext[$key];
 					$arguments[$argname] = $val;
 					$main->set($argname,$val);
+				} else {
+					$main->set($argname,'');
 				}
 			
 			}

@@ -514,7 +514,7 @@
 			$this->setOpenGraph();
 			
 			/* render plugins template */
-			$extension->runInit();
+			$extension->run();
 			
 			echo Template::instance()->render($extension->template['file'],$extension->template['type']);
 			

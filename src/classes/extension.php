@@ -113,9 +113,17 @@
 			
 		}
 		
-		function runInit() {
-			$init_func = $this->slug."_init";
-			if (function_exists($init_func)) $init_func();
+		function init() {
+			
+			$run_func = $this->slug."_init";
+			if (function_exists($run_func)) $run_func();
+			
+			
+		}
+		
+		function run() {
+			$run_func = $this->slug."_run";
+			if (function_exists($run_func)) $run_func();
 		}
 		
 	}
