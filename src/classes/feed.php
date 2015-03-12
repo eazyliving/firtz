@@ -516,7 +516,8 @@
 			/* render plugins template */
 			$extension->run();
 			
-			echo Template::instance()->render($extension->template['file'],$extension->template['type']);
+			if (file_exists($extension->template['file']) && $extension->template['file']!="") Template::instance()->render($extension->template['file'],$extension->template['type']);
+			
 			
 		}
 		

@@ -28,6 +28,8 @@
 			$route = "";
 			$fh = fopen($EXTDIR."/ext.cfg",'r');
 			$thisattr = "";
+			$this->template['file'] = "";
+			$this->template['type'] = "";
 			while (!(feof($fh))) {
 				
 				$line = trim(fgets($fh));

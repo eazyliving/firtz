@@ -25,7 +25,7 @@ $main->set('DEBUG',2);
 $main->set('epi','');
 $main->set('og',array());
 $main->set('clonemode',false);
-$main->set('extxml','');
+$main->set('extxml','');	
 $main->set('extvars',array());
 $main->set('exthtml','');
 $main->set('LOCALES','src/dict/');
@@ -93,6 +93,7 @@ foreach ($firtz->extensions as $slug => $extension) {
 	if ($extension->type != 'output') continue;
 	$slug = $extension->slug;
 	$extension->init();
+	
 	$main->route("GET|HEAD /@feed/$slug/*",
 		function($main,$params) use ($slug) {
 					
@@ -529,7 +530,7 @@ $main->route('GET|HEAD /@feed/show/page/@dir/@page',
 	}, $main->get('CDURATION')
 );
 
-$main->route('GET /@feed/adnthread/@postid',
+$main->route('GET /@feed/adnthreadx/@postid',
 
 	function($main,$params) {
 	
