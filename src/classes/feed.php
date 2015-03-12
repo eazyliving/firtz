@@ -89,7 +89,8 @@
 							/* template variables go to @templatevars */
 							
 							if (!isset($templatevars)) $templatevars = array();
-							$var = explode(' ',$line)[0];
+							$varline = explode(' ',$line);
+							$var = $varline[0];
 							$value = substr($line,strpos($line,' ')+1);
 							$templatevars[$var]=$value;
 							
@@ -203,7 +204,8 @@
 				$line = trim(fgets($fh));
 				if ($line=="" || substr($line,0,2)=="#:") continue;
 				
-				$var = explode(' ',$line)[0];
+				$varline = explode(' ',$line);
+				$var = $varline[0];
 				$value = substr($line,strpos($line,' ')+1);
 				
 				if (!isset($templatevars[$var])) $templatevars[$var]=$value;
