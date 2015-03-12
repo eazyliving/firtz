@@ -439,7 +439,7 @@
 				<div style="padding: 2px 30px;" align="center">
 					<p>
 					 <div class="uk-form">
-						<input id="tagsearch-keyword-handy" type="text" name="search" placeholder="Stichwörter" value="{{@search}}">
+						<input id="tagsearch-keyword" type="text" name="search" placeholder="Stichwörter" value="{{@search}}">
 						<button class="tagsearch" type="submit" class="uk-button-primary">{{@dict_searchtext}}</button>
 					</div>
 					</p>
@@ -599,14 +599,19 @@ QuorX Version: 1.0.4a
 	
 	$('.tagsearch').click(
 		function() {
-			var keyword = $('#tagsearch-keyword').val()+$('#tagsearch-keyword-handy').val();
+			var keyword = $('#tagsearch-keyword').val();
+			var keyword_handy = $('#tagsearch-keyword-handy').val();
 			if (keyword!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword;
+			if (keyword_handy!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword_handy;
 	});
 	$('.tagsearch-keyword .tagsearch-keyword-handy').keydown(
 		function(e) { 
 			if (e.keyCode==13) {
-				var keyword = $('#tagsearch-keyword').val()+$('#tagsearch-keyword-handy').val();
+				
+				var keyword = $('#tagsearch-keyword').val();
+				var keyword_handy = $('#tagsearch-keyword-handy').val();
 				if (keyword!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword;
+				if (keyword_handy!='') window.location.href='{{@BASEURL}}{{@feedattr.slug}}/show/search/'+keyword_handy
 			}
 	});
 		
