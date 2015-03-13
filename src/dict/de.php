@@ -8,7 +8,7 @@ return array(
 	'dict_showcomments'=>'Kommentare',
 	'dict_show_adn_thread'=>'Thread auf App.net anzeigen',
 	'dict_license'=>'Lizenz',
-	'dict_older'=>'&auml;lter',
+	'dict_older'=>'älter',
 	'dict_newer'=>'neuer',
 	'dict_reply'=>'antworten'
 );
