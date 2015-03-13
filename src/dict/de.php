@@ -10,6 +10,6 @@ return array(
 	'dict_license'=>'Lizenz',
 	'dict_older'=>'älter',
 	'dict_newer'=>'neuer',
-	'dict_reply'=>'antworten'
+	'dict_reply'=>'antworten',
 );
 ?>
