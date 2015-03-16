@@ -68,7 +68,7 @@
 		<div class="uk-container uk-container-center">				
 				<!--logo-->
 				<a class="tm-logo uk-visible-large" href="{{@BASEURL}}">
-					<img height=50 width=50 src="{{@feedattr.image}}" alt="{{@feedattr.title}}">
+					<img height=50 width=50 src="{{@feedattr.image}}" alt="{{@feedattr.title}}" style="margin-right:1em">
 				</a>
 				<!--logo-->
 				
@@ -420,9 +420,8 @@
 				</div>
 				<hr />
 				<div style="padding: 2px 30px;" align="center">
-					<p><!--//Dein Text hier...-->
-					 Dies ist ein kostenloser Podcast. Du kannst ihn über Flattr unterstützen. 
-					 So bleibt das Angebot weiterhin am Leben.
+					<p>
+					{{@dict_flattrmarketing}}
 					</p>
 					<p>
 					  <check if="{{@feedattr.flattrid}}">
@@ -544,17 +543,15 @@ QuorX Version: 1.0.4a
         	<hr />
         <div class="uk-grid">
     		<div class="uk-width-7-10">
-    			<p><b>Einfach und schnell podcasten mit Firtz. Entwickelt von <a href="http://hoersuppe.de/">Christian Bednarek</a>
-    			um als Podcast Publisher die Welt zu erobern.</b></p>
-    									
-    			<p>Das QuorX-Design wurde von <a href="http://podunion.com/podcaster/6214/michael-mccouman-jr">Michael McCouman Jr.</a> entwickelt.</b></p>
+    			<p><b>{{@dict_firtzmarketing | raw}}</b></p>
+    			<p>{{@dict_quorxmarketing | raw}}</b></p>
     		</div>
     		<div class="uk-width-3-10">
     			<img src="{{@BASEURL}}images/firtz-design.png">
     		</div>
 		</div>
         	<br>
-        <a class="uk-button uk-button-primary uk-button" href="http://firtz.org">Mehr erfahren</a>
+        <a class="uk-button uk-button-primary uk-button" href="http://firtz.org">{{@dict_learnmore}}</a>
         						 
         <a target="_blank" href="https://github.com/McCouman/Firtz-QuorX-Design" class="uk-float-right uk-button"><i class="uk-icon-github"></i> Firtz + QuorX</a>
         <a target="_blank" style="margin-right: 5px;" href="https://github.com/eazyliving/firtz/" class="uk-float-right uk-button uk-button-danger"><i class="uk-icon-github"></i> Firtz</a>  						

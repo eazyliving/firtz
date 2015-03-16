@@ -186,7 +186,7 @@
 				$this->loadTemplateConfig('default');
 			}
 			
-			
+			if ($attr['language']!="") $main->set('LANGUAGE',$attr['language']);
 			$this->attr = $attr;
 			
 		}
