@@ -13,7 +13,7 @@ return array(
 	'dict_reply'=>'reply',
 	'dict_learnmore'=>'mehr erfaren',
 	'dict_firtzinfo'=>'firtz - A Podcast Publisher',
-	'dict_flattrmarketing'=>'This podcast is for free. You can support it by flattr to keep it alive.',
+	'dict_flattrmarketing'=>'This podcast is for free. To keep it alive, you can support it by flattr.',
 	'dict_firtzmarketing'=>'quick podcast publishing with firtz. Developed by <a href="http://hoersuppe.de/">Christian Bednarek</a>.',
 	'dict_quorxmarketing'=>'Das QuorX-Design wurde von <a href="http://podunion.com/podcaster/6214/michael-mccouman-jr">Michael McCouman Jr.</a> entwickelt.'
 

@@ -24,11 +24,12 @@ Immer noch hier? Keine Lust auf Wordpress? Sicherheitslücken, Datenbanken, Wart
 
 Ok, vielleicht kommen wir ins Geschäft. Ich hab da nämlich den firtz. Der firtz ist ein kleiner, flotter Podcast Publisher, der ohne CMS, ohne Datenbank, ohne Authentifizierung und all den sonst üblichen Kram daher kommt. Der firtz ernährt sich ausschließlich von einer zentralen Konfigurationsdatei (Klartext) und ebensolchen Konfigurationsdateien für jede Episode. 
 
-Aus diesen Dateien erzeugt der firtz automatisch eine Webseite und natürlich Feeds. Um der Wahrheit die Ehre zu geben, stand ursprünglich der Feed im Vordergrund, die Webseite war ein automatisch erzeugtes Bonbon, auf das ich wenig Wert legte.
+Aus diesen Dateien erzeugt der firtz automatisch eine Webseite und natürlich Feeds. Um der Wahrheit die Ehre zu geben, stand ursprünglich der Feed im Vordergrund, die Webseite war ein automatisch erzeugtes Bonbon, auf das ich wenig Wert legte. Das hat sich geändert, glücklicherweise ;)
 
 Was brauchts Du für den firtz? Platz in diesem Internet (z.B. bei [uberspace](http://uberspace.de)), php und den firtz selbst. Fertig. Aus. Ende.
 
-Alle sonstigen Dateien, die der firtz zum Erstellen von Seite und Feed benötigt werden mitgeliefert und sind im Standard gut brauchbar.
+Alle sonstigen Dateien, die der firtz zum Erstellen von Seite und Feed benötigt, werden mitgeliefert und sind im Standard gut brauchbar.
 
 Wer jetzt noch auphonic nutzt und ein klein wenig Ahnung hat (kennst Du den Unterschied zwischen einem Pfad im Dateisystem und einer URL? Glückwunsch!), für den habe ich eine noch bessere Nachricht: Ab sofort kannst Du automatisch aus auphonic heraus veröffentlichen. Wirf Deine Daten auf auphonic, lass die für Dich arbeiten und kurz danach erscheint, wenn alles korrekt konfiguriert ist, auf Deiner Podcastseite.
 
+So viel zur Entscheidungshilfe. Wenn Du ein klein wenig experimentierfreudig bist, mit der Konsole halbwegs Frieden geschlossen hast oder zumindest einen grafischen (S)FTP-Client bedienen kannst, dann willkommen: hier bist Du richtig!
