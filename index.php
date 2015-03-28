@@ -28,6 +28,11 @@ $main->set('exthtml','');
 $main->set('LOCALES','dict/');
 $main->set('rfc5005','');
 $main->set('audio','');
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!="") {
+	$main->set('scheme','https');
+} else {
+	$main->set('scheme','http');
+}
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 

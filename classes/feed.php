@@ -125,11 +125,11 @@
 			
 			/* fishy - might take a look into that */
 			if ($main->get('clonemode')===false) {
-				$attr['baserel']=$main->fixslashes('http://'.$main->get('HOST').'/'.$slug.'/');
+				$attr['baserel']=$main->fixslashes($main->get('scheme') . '://'.$main->get('HOST').'/'.$slug.'/');
 				$attr['instacast']=$main->fixslashes('podcast://'.$main->get('HOST').'/'.$slug);
 			} else {
 				$attr['baserel']=$main->fixslashes($attr['cloneurl'].$slug.'/');
-				$attr['instacast']=str_replace("http://","podcast://",$main->fixslashes($attr['cloneurl'].$slug));
+				$attr['instacast']=str_replace($main->get('scheme')."://","podcast://",$main->fixslashes($attr['cloneurl'].$slug));
 			}
 			
 			if (file_exists(dirname($configfile)."/".$slug.".css")) {
