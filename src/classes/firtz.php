@@ -16,7 +16,7 @@
 			
 			$this->markdown = new Markdown();
 			$this->main = $main;
-			$this->BASEURL ="http://".$main->get('HOST');
+			$this->BASEURL =$main->get('scheme').'://'.$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
 
 			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=trim(dirname($_SERVER['SCRIPT_NAME']),"/");

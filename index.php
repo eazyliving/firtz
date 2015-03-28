@@ -33,6 +33,13 @@ $main->set('rfc5005','');
 $main->set('audio','');
 $main->set('search','');
 
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!="") {
+        $main->set('scheme','https');
+} else {
+        $main->set('scheme','http');
+}
+
+
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','licenseimage','rfc5005','baseurl','adntoken','feedalias','articles-per-page','template','templatevars'));
