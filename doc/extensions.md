@@ -73,9 +73,10 @@ Wenden wir uns der ext.cfg zu. Die Notation orientiert sich an der für die feed
 
 Das erste Attribut das benötigt wird ist der slug der Extension. Dies ist grob gesagt ihr Name. Nennen wir sie *myext*.
 
-`slug:
-
-myext`
+```
+slug:
+myext
+```
 
 Es gibt viele Stellen, an denen dieser Slug wichtig wird, wähle ihn weise und vermeide unnötige Zeichen, denn der Slug wird auch in Funktionsnamen auftauchen :)
 
