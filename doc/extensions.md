@@ -79,5 +79,15 @@ Wenn Du das kannst: Dann melde Dich bitte. Das ist etwas, das traue ich mir im G
 
 ##Das Innenleben der Extensions
 
-Eine Extension besteht aus einigen benötigten und einigen optionalen Dateien. Alle diese müssen sich in einem Unterordner von *ext/* befinden, dessen Name gleichzeitig der slug, die eindeutige Identifizierung dieser Extension ist. Nennen wir sie für diesen Fall mal 
+Eine Extension besteht aus einigen benötigten und einigen optionalen Dateien. Alle diese müssen sich in einem Unterordner von *ext/* befinden, dessen Name gleichzeitig der slug, die eindeutige Identifizierung dieser Extension ist. Nennen wir sie myext.
+
+```
+slug:
+myext
+```
+
+Es gibt viele Stellen, an denen dieser Slug wichtig wird, wähle ihn weise und vermeide unnötige Zeichen, denn der Slug wird auch in Funktionsnamen auftauchen :)
+
+Ist für die Extension Code nötig (und das muss nicht unbedingt so sein), dann kannst Du mit dem script-Attribut angeben, welche php-Datei im Ordner aufgerufen werden soll.
+
 
