@@ -18,9 +18,6 @@ Es gibt im Wesentlichen dreieinhalb Wege, in die Ausgabe des firtz hineinzugreif
 
 4. Ein komplett neues Template erzeugen, das über einen bestimmten URL aufgerufen wird. Hier erwähne ich gerne die ATOM-Extension, die über http://supicast.de/sc/atom/mp3 z.B. den mp3-Feed als ATOM ausgibt.
 
-
-
-
 Das ist weniger kompliziert, als es sich anhört. Es gilt nur, sich an ein paar Regeln zu halten, vor allem wenn es um die Hooks geht, die Namenskonventionen entsprechen müssen, um gefunden zu werden.
 
 Fangen wir mit der einfachsten Methode an: 
@@ -28,9 +25,11 @@ Fangen wir mit der einfachsten Methode an:
 ##Child-Templates
 
 Der Standardordner des Templates ist unter *templates/default/* zu finden. Nun kann man durchaus an Ort und Stelle Änderungen vornehmen. Beim nächsten Update des firtz ist das dann aber wieder weg, wenn man nicht vorher ein Backup macht.
+
 Besser ist es, im Ordner *templates/* einen zweiten Ordner anzulegen, nennen wir ihn *child*. In der *feed.cfg* muss dieses Template nun mittels des Attributes ´template:´ angemeldet werden.
 
 Jede Datei, die in diesem Ordner zu finden ist, hat höhere Priorität als eine gleichnamige Datei im Standardordner. 
+
 
 ##Templatehooks
 
@@ -44,6 +43,11 @@ Diese Dateien werden in den Kopf der HTML-Datei inkludiert, also zwischen &lt;he
 *header/*
 
 Diese Dateien werden in den Kopf der Seite inkludiert.
+
+
+*pages/*
+
+Diese Dateien und die jeweilige Ordnerstruktur wird im Menü am Kopf abgebildet. Dateien sind Menüpunkte, Ordner ergeben Untermenüs.
 
 *episode/*
 
@@ -63,21 +67,17 @@ Diese Dateien werden in den Fuß der HTML-Seite, also kurz vor dem &lt;/body&gt;
 
 Inkludiert werden .html-Dateien. In diesen Dateien können direkte Templateanweisungen vorkommen. Außerdem werden .js-Dateien inkludiert, allerdings nicht direkt in den Quelltext wie .html, sondern per script-Anweisung. Wenn javascript direkt in den Quelltext hineingelangen soll, dann inkludiert ihn in einer html-Datei mit script-Tags.
 
-Das ist die "einfache" Art und Weise, in die Ausgaben der Webseite hineinzugreifen. Kommen wir aber zu den etwas komplexeren, echten Extensions, die es ermöglichen, mittels php echt fiese Dinge anzustellen :)
+Achtung! Beim Mischen von Templatehooks und Childtemplates gibt's Ärger. Wenn z.B. in beiden Ordnern, also dem Haupt- und dem Childtemplate in den pages-Ordnern gleiche Dateien liegen, dann werden _beide_ inkludiert und Ihr habt doppelte Einträge in den Menüs. Ich habe bis heute keine gute Idee, wie ich das im Template verhindern kann und so lange müsst Ihr Euch drum kümmern. Ein Problem sehe ich da aber nicht wirklich.
 
-Eine Extension findet sich immer als Unterordner in *ext/*. Möchtest Du sie deaktivieren, stelle einen Unterstrich vor den Namen. So ignoriert firtz diesen Ordner.
+##Skripthooks
 
-In diesem Ordner finden sich immer eine Datei namens *ext.cfg*. In ihr findet der firtz wichtige Informationen, wie die Extension zu behandeln ist, welche Dateien und Voreinstellungen wichtig sind. Ich werde im Folgenden eine Extension beschreiben, deren Funktion ich beim Schreiben dieser Dokumentation noch nicht komplett zusammen haben. Sie wird aber von allem ein wenig tun :)
+Die Details zu den Skripthooks kommen etwas später bei der Erklärung, wie eine echte Extension funktioniert. Skripthooks funktionieren ähnlich wie Templatehooks, aber bringen hier keine Templatesnippets ein, sondern php-Skripte, die an den bestimmten Stellen ausgeführt werden. Diese Skripte erzeugen selbst keine Ausgabe, können aber die Inhalte manipulieren. Im Moment ist das vor allem bei Episoden sinnvoll. Dazu aber später mehr.
 
-Wenden wir uns der ext.cfg zu. Die Notation orientiert sich an der für die feed.cfg und den .epi-Dateien, Ihr stellt also erst den Namen des Attributes mit einem Doppelpunkt in eine Zeile und darunter die Daten.
+##eigene Templates
 
-Das erste Attribut das benötigt wird ist der slug der Extension. Dies ist grob gesagt ihr Name. Nennen wir sie *myext*.
+Wenn Du das kannst: Dann melde Dich bitte. Das ist etwas, das traue ich mir im Grunde selbst nicht zu. Viel HTML, viel CSS. Nicht eine Stärke. Nimm das default-Template als Grundlage und schau selbst nach. Ich werde das vielleicht, aber selbst dann nur dünn dokumentieren.
 
-```
-slug:
-myext
-```
+##Das Innenleben der Extensions
 
-Es gibt viele Stellen, an denen dieser Slug wichtig wird, wähle ihn weise und vermeide unnötige Zeichen, denn der Slug wird auch in Funktionsnamen auftauchen :)
+Eine Extension besteht aus einigen benötigten und einigen optionalen Dateien. Alle diese müssen sich in einem Unterordner von *ext/* befinden, dessen Name gleichzeitig der slug, die eindeutige Identifizierung dieser Extension ist. Nennen wir sie für diesen Fall mal 
 
-Ist für die Extension Code nötig (und das muss nicht unbedingt so sein), dann kannst Du mit dem script-Attribut angeben, welche php-Datei im Ordner aufgerufen werden soll. 
