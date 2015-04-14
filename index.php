@@ -181,6 +181,15 @@ foreach ($firtz->extensions as $slug => $extension) {
 	
 */
 
+$main->route('GET|HEAD /@feed/debug',
+
+	function($main,$params) {
+	
+		$firtz = $main->get('firtz');
+		echo "<pre>".print_r($firtz->extensions,1)."</pre>";	
+	
+	},$main->get('CDURATION')
+);
 
 $main->route('GET|HEAD /@feed/@audio',
 	function ($main,$params) {
