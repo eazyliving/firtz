@@ -187,6 +187,17 @@ $main->route('GET|HEAD /@feed/debug',
 	
 		$firtz = $main->get('firtz');
 		echo "<pre>".print_r($firtz->extensions,1)."</pre>";	
+		
+		if (!file_exists($main->get('BASEPATH').'ext/')) {
+			echo "no ext dir";
+		} else {
+			echo "Basepath: ".$main->get('BASEPATH')."<br>";
+			$dirs = glob($main->get('BASEPATH').'ext/*',GLOB_ONLYDIR);
+			echo "<pre>".print_r($dirs,1)."</pre>";
+		
+		}
+		
+		
 	
 	},$main->get('CDURATION')
 );
