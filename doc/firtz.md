@@ -550,7 +550,7 @@ _attribut:Inhalt
 
 Unterstrich, Name, Doppelpunkt, Inhalt. Das wäre es schon. So kannst Du z.B. ein zukünftiges Publikationsdatum angeben:
 
-_date:2014-12-12 20:15:00
+_date:2014-12-31 20:15:00
 
 ####Dem firtz erklären, wo auphonic den Most holt
 
