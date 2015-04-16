@@ -120,9 +120,9 @@
 			
 		function loadAllTheExtensions($main) {
 		
-			if (!file_exists($main->get('BASEPATH').'ext/')) return;
+			if (!file_exists($main->get('EXTDIR'))) return;
 			
-			foreach (glob($main->get('BASEPATH').'ext/*',GLOB_ONLYDIR) as $dir) {
+			foreach (glob($main->get('EXTDIR').'/*',GLOB_ONLYDIR) as $dir) {
 				if (substr(basename($dir),0,1)=="_") continue;
 				$extension = new extension ($main,$dir);
 				

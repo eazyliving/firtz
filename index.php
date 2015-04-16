@@ -7,6 +7,7 @@ ini_set('auto_detect_line_endings',true);
 $main=require('src/lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
+$main->set('EXTDIR','./ext');
 
 $main->set('UI','');
 $main->set('templatepath','templates/default/');
