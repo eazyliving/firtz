@@ -50,7 +50,7 @@ version="2.0">
 		<check if="{{@feedattr.itunesblock=='yes'}}">
 			<itunes:block>{{@feedattr.itunesblock}}</itunes:block>
 		</check>	
-		<itunes:author>{{@feedattr.author | raw}}</itunes:author>
+		<itunes:author>{{@feedattr.author}}</itunes:author>
 		<itunes:summary>{{@feedattr.summary | raw}}</itunes:summary>
 		<itunes:image href="{{@feedattr.image}}" />
 		<itunes:subtitle>{{@feedattr.description | raw}}</itunes:subtitle>
@@ -60,7 +60,7 @@ version="2.0">
 	
 		<itunes:owner>
 			<itunes:email>{{@feedattr.email | raw}}</itunes:email>
-			<itunes:name>{{@feedattr.author | raw}}</itunes:name>
+			<itunes:name>{{@feedattr.author}}</itunes:name>
 		</itunes:owner>
 		<check if="{{@feedattr.categories}}">
 			<repeat group="@feedattr.categories" value="@category">
@@ -125,7 +125,7 @@ version="2.0">
 				<itunes:subtitle>{{ htmlspecialchars(@item.description)}}</itunes:subtitle>
 				<itunes:summary>{{ htmlspecialchars(@item.summary)}}</itunes:summary>
 				<itunes:keywords>{{@item.keywords | raw}}</itunes:keywords>
-				<itunes:author>{{@feedattr.author | raw}}</itunes:author>
+				<itunes:author>{{@feedattr.author}}</itunes:author>
 				<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 			</check>
 			</item>
