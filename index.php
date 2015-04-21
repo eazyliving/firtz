@@ -40,7 +40,6 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!="") {
         $main->set('scheme','http');
 }
 
-
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
 $main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','disqus','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','licenseimage','rfc5005','baseurl','adntoken','feedalias','articles-per-page','template','templatevars'));
@@ -181,27 +180,6 @@ foreach ($firtz->extensions as $slug => $extension) {
 	direct call for a specified feed/audio-combination
 	
 */
-
-$main->route('GET|HEAD /@feed/debug',
-
-	function($main,$params) {
-	
-		$firtz = $main->get('firtz');
-		echo "<pre>".print_r($firtz->extensions,1)."</pre>";	
-		
-		if (!file_exists($main->get('BASEPATH').'ext/')) {
-			echo "no ext dir";
-		} else {
-			echo "Basepath: ".$main->get('BASEPATH')."<br>";
-			$dirs = glob($main->get('BASEPATH').'ext/*',GLOB_ONLYDIR);
-			echo "<pre>".print_r($dirs,1)."</pre>";
-		
-		}
-		
-		
-	
-	},$main->get('CDURATION')
-);
 
 $main->route('GET|HEAD /@feed/@audio',
 	function ($main,$params) {
