@@ -1,0 +1,203 @@
+<check if="{{@templatevars.player == 'on'}} ">
+<style>
+/** 
+ *	QuorX II - Tagbox
+ *	@design QuorX II
+ *	@dev Michael McCouman Jr.
+ *	@date 19.04.2015
+ *	@version 2.0 Buy
+*/
+.firtz-player-box {
+	margin-top:20px;
+	border-left:4px solid {{@templatevars.color}};
+	border-right:4px solid {{@templatevars.color}};
+}
+.firtz-player-tag-border {
+	padding: 5px 10px 7px 10px;
+	background: {{@templatevars.color}};
+	margin-top: -35px;
+}
+<check if="{{@templatevars.color}}"> 
+/** 
+ *	QuorX II - Podlove Webplayer
+ *	@design QuorX II
+ *	@dev Michael McCouman Jr.
+ *	@function player on
+ *	@date 19.04.2015
+ *	@version 2.0 Buy
+*/ 
+.podlovewebplayer_meta h3.episodetitle a:focus, 
+.podlovewebplayer_meta h3.episodetitle a:hover, 
+.podlovewebplayer_meta h3episodetitle a:active {
+  color: #FcFcFc !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_chapterbox .chaptername a {
+ display: inline !important;
+}
+.podlovewebplayer_wrapper {
+	background: transparent !important;
+}
+.mejs-button.mejs-volume-button button, 
+.mejs-controls .mejs-mute button { color: #ffffff !important; }
+.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
+	background: #e6e6e6 !important;
+}
+.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+	background: {{@templatevars.dark}} !important;
+}
+.podlovewebplayer_wrapper .mejs-container .mejs-inner .mejs-controls .mejs-time-rail .mejs-time-total 
+.mejs-time-loaded { 
+	background: {{@templatevars.light}} !important; 
+}
+.mejs-controls .mejs-time-rail .mejs-time-total {
+	background: {{@templatevars.dark}} !important; 
+}
+.mejs-controls .mejs-time-rail .mejs-time-current {
+	background: #e6e6e6 !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_meta,.podlovewebplayer_wrapper 
+.podlovewebplayer_meta .subtitle,.podlovewebplayer_wrapper 
+.podlovewebplayer_meta h3,.podlovewebplayer_wrapper .podlovewebplayer_meta h3 a,
+.podlovewebplayer_meta + .summary,.podlovewebplayer_wrapper .podlovewebplayer_controlbox,
+.podlovewebplayer_wrapper .podlovewebplayer_meta .togglers{
+	color: #ffffff !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_top,.podlovewebplayer_wrapper .podlovewebplayer_meta{
+	background: {{@templatevars.color}} !important;
+}
+.podlovewebplayer_meta .bigplay{
+	color: #ffffff;
+	border-color: #ffffff !important;
+} 
+.podlovewebplayer_meta .bigplay:hover,
+.podlovewebplayer_meta .bigplay:active,
+.podlovewebplayer_meta .bigplay.playing:hover,
+.podlovewebplayer_meta .bigplay:focus,
+.podlovewebplayer_meta .bigplay:hover,
+.podlovewebplayer_meta .bigplay:active {
+	border: 5px solid #ffffff !important;
+	-webkit-text-shadow: 0px 0px 10px #ffffff !important;
+	-moz-text-shadow: 0px 0px 10px #ffffff !important;
+	-o-text-shadow: 0px 0px 10px #ffffff !important;
+	text-shadow: 0px 0px 10px #ffffff !important;
+}  
+.podlovewebplayer_meta .bigplay {
+	color: #ffffff !important;
+} 
+.podlovewebplayer_meta .bigplay.playing:active {
+	color:#ffffff !important; 
+	border-color:#ffffff !important;
+	text-shadow:0px 0px 4px #ffffff !important;
+	text-decoration:none;
+	filter:dropshadow(color=#ffffff,offx=0,offy=0);cursor:pointer;
+}
+.podlovewebplayer_meta .togglers .infobuttons,.podlovewebplayer_meta .togglers .infobuttons a,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons a{
+	color:#ffffff;
+	text-shadow:0px 0px 1px #ffffff !important; 
+	text-decoration:none;
+}
+.podlovewebplayer_meta .togglers .infobuttons:hover,
+.podlovewebplayer_meta .togglers .infobuttons a:hover,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons:hover,
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons a:hover{
+	text-shadow:0px 0px 4px #ffffff !important; 
+	text-decoration:none;
+	filter:dropshadow(color=#ffffff,offx=0,offy=0);cursor:pointer;
+}
+.podlovewebplayer_meta + .summary,.podlovewebplayer_wrapper .podlovewebplayer_controlbox{
+	background: {{@templatevars.color}} !important;
+	border-left:3px {{@templatevars.color}} !important;
+	border-right:3px {{@templatevars.color}} !important;
+}
+/*hier*/
+.podlovewebplayer_wrapper .mejs-container .mejs-inner .mejs-controls .mejs-time-rail .mejs-time-total .mejs-time-loaded {
+	background: {{@templatevars.light}}!important;
+}
+
+
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox{
+	background: {{@templatevars.dark}} !important;
+	border-left:3px {{@templatevars.dark}} solid !important;
+	border-right:3px {{@templatevars.dark}} solid !important;
+}
+.mejs-controls .mejs-play button{
+	background-position:0 0;
+}
+.mejs-controls .mejs-pause button{
+	background-position:0 -16px;
+}
+.mejs-controls .mejs-stop button{
+	background-position:-112px 0;
+}
+.mejs-controls .mejs-fullscreen-button button{
+	background-position:-32px 0;
+}
+.mejs-controls .mejs-unfullscreen button{background-position:-32px -16px;}
+.mejs-controls .mejs-mute button{background-position:-16px -16px;}
+.mejs-controls .mejs-unmute button{background-position:-16px 0;}
+.mejs-controls .mejs-captions-button button{background-position:-48px 0;}
+.mejs-controls .mejs-loop-off button{background-position:-64px -16px;}
+.mejs-controls .mejs-loop-on button{background-position:-64px 0;}
+.mejs-controls .mejs-backlight-off button{background-position:-80px -16px;}
+.mejs-controls .mejs-backlight-on button{background-position:-80px 0;}
+.mejs-controls .mejs-sourcechooser-button button{background-position:-128px 0;}
+.podlovewebplayer_wrapper .mejs-container .mejs-inner .mejs-controls {
+	background: {{@templatevars.color}} !important;
+	-webkit-box-shadow: 0px 1px transparent !important;
+	-moz-box-shadow: 0px 1px transparent !important;
+	box-shadow: 0px 1px transparent !important;
+}
+.mejs-container .mejs-controls .mejs-time span{
+	color:#111;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_chapterbox{
+	border:0px {{@templatevars.dark}} solid !important;
+	border-bottom:0px {{@templatevars.dark}} solid !important;
+	margin-top: 3px;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_tableend{
+	background: {{@templatevars.color}} !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_chapters tr {
+	background: #FFF !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_chapters tr.active, 
+.podlovewebplayer_wrapper .podlovewebplayer_chapters tr.active:hover {
+	background: {{@templatevars.light}} !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_tableend {
+	background: transparent !important;
+	border: 0px !important;
+	 box-shadow: 0px 0px transparent !important;
+	 -moz-box-shadow: 0px 0px transparent !important;
+	-webkit-box-shadow: 0px 0px transparent !important;
+}
+.podlovewebplayer_meta .bigplay, 
+.podlovewebplayer_meta .togglers .infobuttons, 
+.podlovewebplayer_meta .togglers .infobuttons a, 
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons, 
+.podlovewebplayer_wrapper .podlovewebplayer_controlbox .infobuttons a {
+	color: #ffffff !important;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_meta .bigplay {
+	border: 5px solid #ffffff !important;
+}
+.mejs-container .mejs-controls .mejs-time span{
+	color: #ffffff !important;
+}
+.podlovewebplayer_chapters * {
+	height: 40px;
+}
+.podlovewebplayer_wrapper .podlovewebplayer_top, .podlovewebplayer_wrapper .podlovewebplayer_meta {
+	-webkit-border-top-left-radius: 0px !important;
+	-webkit-border-top-right-radius: 0px !important;
+	-moz-border-radius-topleft: 0px !important;
+	-moz-border-radius-topright:  0px !important;
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+}
+</style>
+</check>
+</check>

@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="{{ substr(@feedattr.language,0,2) }}" dir="ltr" class="firtz-notouch">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php
+	/**
+	 *	Meta Daten des Blogs
+	 */ 
+	?>	
+	<title>{{@feedattr.title}}<check if="{{@showpage}}"> - {{basename(@showpage,'.html')}}</check></title>
+    <meta name="description" content="{{@feedattr.description}}"/>
+    <meta name="author" content="{{@feedattr.author | raw}}"/>
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+		<link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@format}} Audio)" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+    <check if="{{@feedattr.image}}">
+      <meta property="og:image" content="{{@feedattr.image}}"/>
+    </check>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<check if="{{!@showpage}}"><true>{{@og.title}}</true><false>{{basename(@showpage,'.html')}}</false></check>"/>
+    <meta property="og:url" content="<check if="{{!@showpage}}"><true>{{@og.url}}</true><false>{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@showpage)}}</false></check>"/>
+    <meta property="og:site_name" content="{{@feedattr.title}}"/>
+    <check if="{{@og.audio}}">
+      <meta property="og:{{@og.audio.typename}}" content="{{@og.audio.url}}"/>
+      <meta propertyp="og:{{@og.audio.typename}}:type" content="{{@og.audio.type}}"/>
+    </check> 
+    <?php
+	/**
+	 *	Multifavicons 
+	 *	Dies kann über die Datei cover-creator.php erstellt werden ;)
+	 *  
+	 */
+	?>
+    <check if="{{@templatevars.multifavs == 'on'}}">
+    	<true>
+    		<link rel="apple-touch-icon" sizes="57x57" href="{{@BASEURL}}images/multifavs/cover-57x57.jpg"> 
+    		<link rel="apple-touch-icon" sizes="60x60" href="{{@BASEURL}}images/multifavs/cover-60x60.png"> 
+    		<link rel="apple-touch-icon" sizes="60x60" href="{{@BASEURL}}images/multifavs/cover-60x60.png"> 
+     		<link rel="apple-touch-icon" sizes="72x72" href="{{@BASEURL}}images/multifavs/cover-72x72.png"> 
+     		<link rel="apple-touch-icon" sizes="76x76" href="{{@BASEURL}}images/multifavs/cover-76x76.png"> 
+    		<link rel="apple-touch-icon" sizes="114x114" href="{{@BASEURL}}images/multifavs/cover-114x114.png">
+    		<link rel="apple-touch-icon" sizes="120x120" href="{{@BASEURL}}images/multifavs/cover-120x120.png"> 
+    		<link rel="apple-touch-icon" sizes="144x144" href="{{@BASEURL}}images/multifavs/cover-144x144.png"> 
+    		<link rel="apple-touch-icon" sizes="152x152" href="{{@BASEURL}}images/multifavs/cover-152x152.png"> 
+    		<link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
+    		<link rel="icon" type="image/png" href="{{@BASEURL}}images/multifavs/cover-16x16.jpg" sizes="16x16"> 
+    		<link rel="icon" type="image/png" href="{{@BASEURL}}images/multifavs/cover-32x32.jpg" sizes="32x32">  
+    		<link rel="icon" type="image/png" href="{{@BASEURL}}images/multifavs/cover-96x96.png" sizes="96x96">
+    		<link rel="icon" type="image/png" href="{{@BASEURL}}images/multifavss/cover-160x160.png" sizes="160x160">
+ 			<link rel="icon" type="image/png" href="{{@BASEURL}}images/multifavs/cover-196x196.png" sizes="196x196"> 
+    		<link rel="shortcut icon" href="{{@feedattr.image}}">
+    	</true>
+    	<false>
+    	 <check if="{{@feedattr.image}}">
+    		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}">
+    		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
+    		<link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
+    		<link rel="shortcut icon" href="{{@feedattr.image}}">
+    	 </check>
+    	</false>
+    </check>
+    <?php
+	/**
+	 *	Ausgabe aller Feeds dieses Podcasts
+	 */ 
+	?>
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+		<link rel="alternate" type="application/rss+xml" title="Podcast Feed: {{@feedattr.title}} {{@format}}" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+	<?php
+	/**
+	 *	font-awesome
+	 *
+	 *	@tag icon fonts
+	 *	@info hier werden die icon fonts von font-awesome eingebunden. Du kannst damit dein Firtz weitere 
+	 *		Icons schenken. Aber Achtung! Nix ist ätzender als eine reine Button- und Icon-Wüste. 
+	 *		Sprich: weniger ist mehr :)
+	 */ 
+	?>    
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <?php
+	/**
+	 *	Podlove Webplayer CSS
+	 */ 
+	?>
+	<link href="{{@BASEURL}}src/pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+    <?php
+	/**
+	 *	quorx include css / js
+	 *
+	 *	@tag include style
+	 *	@info hier kommen die Designs von QuorX. Welche Designs hier am Ende auch genutzt werden, 
+	 *		kann durch die template.cfg festgelegt werden.
+	 */ 
+	?>
+    <repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<repeat group="{{glob(@tpath.'/quorx/*.html')}}" value="{{@template}}">
+   	   		<include href="{{'quorx/'.basename(@template)}}"/>
+   		 </repeat>
+    </repeat>
+    <?php
+	/**
+	 *	jQuery
+	 */ 
+	?>
+	<script src="{{@BASEURL}}/src/js/jquery.js"></script>
+    <?php
+	/**
+	 *	quorxJS
+	 *
+	 *	@tag include script
+	 *	@info hier kommt die quorxJS. Welche  benötigt wird um das Designs dynamisch zu machen.
+	 *		Beachte: es darf nicht im Footer eingebunden werden, damit das parsing richtig funktioniert!
+	 */ 
+	?>
+	<include href="quorx/quorx.js"/>
+	<!--[if lt IE 9]>
+  		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<?php
+	/**
+	 *	Templates: /head/
+	 *	
+	 *	@info hier werden alle templates geladen, die im Ordner "head" eingelegt wurden 
+	 */ 
+	?>
+	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<repeat group="{{glob(@tpath.'/head/*.html')}}" value="{{@template}}">
+			<include href="{{'head/'.basename(@template)}}"/>
+		</repeat>
+	</repeat>	
+	<?php
+	/**
+	 *	Child Templates: /head/
+	 *	
+	 *	@info hier werden ???  o.O DIE CHILD THEMES GELADEN 
+	 */ 
+	?>
+	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<!-- tpath: {{@tpath.'head/*.js'}} -->
+		<repeat group="{{glob(@tpath.'head/*.js')}}" value="{{@template}}">
+			<!-- temp: {{@template}} -->
+			<script src="{{'/'.@tpath.'head/'.basename(@template)}}"></script>
+   		 </repeat>
+    </repeat>
+</head>
+<body class="firtz-sidebar-a-right firtz-sidebars-1 firtz-isblog firtz-article-panel firtz-sticky-navbar">
+<?php
+/**
+*	head tab-navigation 
+*
+*	@info Dies ist die Navigation von QuorX und bindet dein Podcast Cover ein.
+*		Er erstellt für QuorX zu dem, eine Tab-Navigation und liest dein erstellten Seiten aus.
+*		Ändere hier nur bedingt etwas (wenn Du auch weist was Du da machst), wenn Du nicht möchtest, 
+*		das dein QuorX am Ende irgend wie komisch aussieht.			
+*/ 
+?>
+<div class="firtz-block-top">
+	<div class="firtz-container firtz-container-center">		
+				<?php 
+				/**
+				 *	head cover
+				 *
+				 *  @class firtz-logo,firtz-visible-large
+				 *	@info Hier wird dein Podcast Logo (1400x1400px) genommen und in die Tab-Navigation gepackt.
+				 *		(Noch wird hier das Original Cover genutz. Da dies aus Gründen der Ladezeit wenig Sinn macht,
+				 *		Wird sich hier sicher noch einiges in der nächsten Version ändern.)
+				 */ 
+				?>
+					<a class="firtz-logo firtz-visible-large" href="{{@BASEURL}}{{@feedattr.slug}}/show">
+						<img class="firtz-podcast-logo" width="55" src="{{@feedattr.image}}" alt="{{@feedattr.title}}">
+					</a>
+				<?php 
+				/*--------- //head cover -------*/ 
+				?>
+				
+				<?php 
+				/**
+				 *	navigation tabbar
+				 *
+				 *  @class firtz-navbar
+				 *	@info Dies ist die Navigations Bar, welche im Web- und Tablet-View angezeigt wird.
+				 */ 
+				?>
+				<nav class="firtz-navbar">
+                    <ul class="firtz-navbar-nav firtz-hidden-small">
+						<?php 
+						/**
+				 		 *	tablinks - only pages
+				 		 *
+				 		 *  @templates pages
+				 		 *	@info liest automatisch alle einzelseiten unter dem Ordner "pages" aus und 
+				 		 * 		erstellt jeweils einen Tab mit der verlinkten Seite.
+				 		 */ 
+						?>
+						<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+							<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
+    						 <li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+ 							</repeat>
+						</repeat>
+						<?php 
+						 /*--------- //tablinks - only pages -------*/ 
+						?>
+
+            	        <?php 
+						/**
+				 		 *	collapsed tablinks - file pages
+				 		 *
+				 		 *  @templates pages
+				 		 *	@info liest automatisch alle Seiten als Aufklappmenü aus, 
+				 		 *		die in einem Order unter "pages" hinterlegt sind.
+				 		 * 		(jquery - mousover effect)
+				 		 */ 
+						?>
+                    	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+							<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+								<check if="{{basename(@dir)}} != 'footer' ">
+								<li class="firtz-parent" data-firtz-dropdown="">
+								<a href="">{{basename(@dir)}}</a>
+								<div class="firtz-dropdown firtz-dropdown-navbar">
+									<ul class="firtz-nav firtz-nav-navbar">
+										<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+											<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+										</repeat>
+									</ul>
+								</div>
+								</li>
+								</check>
+							</repeat>
+						</repeat>
+						<?php 
+						 /*--------- //collapsed tablinks - file pages -------*/ 
+						?>
+
+						<?php 
+						/**
+				 		 *	podlove subscribe-button - link
+				 		 *
+				 		 *  @function Podlove CDN iframe
+				 		 *	@info startet 2nd Window und ermöglicht das abonnieren des Feeds.
+				 		 *
+				 		 *	@quorx design: QuorX nutzt ein Redesign des PSB der über die template.cfg ein, wie auch 
+				 		 *				wieder abgeschaltet werden kann, um das Standard Design zu nutzen.
+				 		 *
+				 		 *	@quorx style web/tablet: öffnet 2nd-Window mittig zentriert 
+				 		 *	@quorx style phone: 2nd-Window nutzt im phone View die komplette Breite des Devices.
+				 		 *
+				 		 *	@quorx function: psb on, psb off
+				 		 */ 
+						?>
+                        <li>
+							<a href="#" class="podlove-subscribe-button-{{@feedattr.slug}}">Abonnieren</a>
+                        </li>
+                        <?php 
+						 /*--------- //podlove subscribe-button - link -------*/ 
+						?>
+                    </ul>
+                    
+                    <?php
+					/**
+			 		 *	HOOK: navi (extension/templates)
+			 		 * 	@path /navi/
+			 		 *	@position right
+			 		 */ 
+					?>
+					<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+						<repeat group="{{glob(@tpath.'/navi/*.html')}}" value="{{@template}}">
+							<?php 
+							/**
+				 		 	 *	header tag search (extension/hook)
+				 		 	 *
+				 		 	 *	@extension search
+				 		 	 *	@hook navi
+				 		 	 *	@class firtz-navbar-flip
+				 		 	 *	@info: wird erst im vollem Umfang durch die search Extension möglich!
+				 		 	 *	
+				 		 	 *	@helper: Es gibt zur Zeit nur eine einfache Hilfe extension die es ermöglicht
+				 		 	 *			die Suche als Formular hier einzubinden. Sie sendet die Daten an die search.php
+				 		 	 *			und verwendet eine Weiterleitung + Daten für die Suchergebnis-Seite
+				 		 	 */ 
+							?>
+							<include href="{{'navi/'.basename(@template)}}"/>
+							<?php 
+							 /*--------- //header tag search -------*/ 
+							?>
+						</repeat>
+					</repeat>
+					<?php 
+					/*--------- //HOOK: navi -------*/ 
+					?>
+					
+					<?php 
+					/**
+				 	 *	phone bar
+				 	 *
+				 	 *	@class firtz-navbar-toggle, firtz-visible-small
+				 	 *	@info dies ist der header tab für den phone view und wird "hoffentlich" 
+				 	 *		auch nur einem phone device angezeigt. //Ausnahmen bestätigen... - Du weist schon! 
+				 	 */ 
+					?>
+                    <a href="#offcanvas-1" class="firtz-navbar-toggle firtz-visible-small" data-firtz-offcanvas=""></a>
+                    <div class="firtz-navbar-content firtz-navbar-center firtz-hidden-large">
+						<a class="firtz-logo-small" href="{{@BASEURL}}">
+							<img src="{{@feedattr.image}}" width="40" alt="{{@feedattr.title}}">
+						</a>
+					</div>
+					<?php 
+					 /*--------- //phone bar -------*/ 
+					?>
+                </nav>
+				<?php 
+				 /*--------- //navigation tabbar -------*/ 
+				?>
+		
+				<?php 
+				/**
+				 *	phone navigation tabbar
+				 *
+				 *  @class offcanvas-1, firtz-offcanvas-bar
+				 *	@info Dies ist die Navigation, die im Web- und Tablet View angezeigt wird.
+				 */ 
+				?>
+				<div id="offcanvas-1" class="firtz-offcanvas">
+                	<div class="firtz-offcanvas-bar">			
+						<ul class="firtz-nav firtz-nav-offcanvas firtz-nav-parent-icon" data-firtz-nav>
+                            <?php 
+							 /**
+				 		 	  *	phone headering
+				 		 	  *
+				 		 	  * @class firtz-navigation-device
+				 		 	  *	@info gibt in der phone sidebar (im Kopf), den Namen und die Beschreibung deines Podcasts aus.
+				 		 	  */ 
+							?>
+                            <li class="firtz-navigation-device">
+                            	<a href="#" class="podlove-subscribe-button-{{@feedattr.slug}}">
+                              		<div class="firtz-panel" align="center">
+        								<h4 style="margin-bottom: 7px;" class="firtz-panel-title">{{@feedattr.title}}</h4>
+        					 				<b>{{@feedattr.description}}</b>
+					  		 			<br>
+					  					<img style="padding-top:10px; width: 80px;" alt="{{@feedattr.title}}" src="{{@BASEURL}}images/inc/schnirkel.png">
+        								<br>
+        					  		</div>
+        					  	</a>
+                            </li> 
+                            <?php 
+						 	  /*--------- //phone headering -------*/ 
+							?>
+                                                       
+                            <?php 
+							 /**
+				 		 	  *	phone tablinks - only pages
+				 		 	  *
+				 		 	  * @templates pages
+				 		 	  *	@info liest automatisch alle einzelseiten unter dem Ordner "pages" aus und 
+				 		 	  * 	erstellt jeweils einen Tab mit der verlinkten Seite.
+				 		 	  */ 
+							?>                     
+                        	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
+									<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}"><b>{{basename(@template,'.html')}}</b></a></li>
+								</repeat>
+							</repeat>
+							<?php 
+						 	  /*--------- //phone tablinks - only pages -------*/ 
+							?>
+
+							<?php 
+							/**
+				 		 	 *	phone collapsed tablinks - file pages
+				 		 	 *
+				 		 	 *  @templates pages
+				 		 	 *	@info liest automatisch alle Seiten als Aufklappmenü aus, 
+				 		 	 *		die in einem Order unter "pages" hinterlegt sind.
+				 		 	 * 		(jquery - mousover effect)
+				 		 	 */ 
+							?>
+                    		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+								<check if="{{basename(@dir)}} != 'footer' ">
+								<li class="firtz-parent">
+									<a href="#">{{basename(@dir)}}</a>
+									<ul class="firtz-nav-sub">
+										<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+											<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}"><b>{{basename(@template,'.html')}}</b></a></li>
+										</repeat>
+									</ul>
+								</li>
+								</check>
+								</repeat>
+							</repeat>
+							<?php 
+						 	  /*--------- //phone collapsed tablinks - file pages -------*/ 
+							?>
+
+							<?php 
+							 /**
+				 		 	 *	phone podlove-subscribe-button link 
+				 		 	 */ 
+							?> 
+                            <li><a href="#" class="podlove-subscribe-button-{{@feedattr.slug}}"><b>Abonnieren</b></a></li>
+                            <?php 
+						 	  /*--------- //phone podlove-subscribe-button link -------*/ 
+							?>
+							
+                            <?php
+							/**
+			 	 		 	 *	HOOK: phone (extension/templates)
+			 	 		 	 *	@path	/phone/
+			 	 			 */ 
+							?>
+							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/phone/*.html')}}" value="{{@template}}">
+									<?php 
+							  		/**
+				 		 			 *	phone tag search (extension/hook)
+				 		 			 *
+				 		 			 *	@extension search
+				 		 			 *	@class firtz-handy-search
+				 		 			 *	@info suchen mit ok button für den phone view.
+				 		 			 *	@helper: Es gibt zur Zeit nur eine einfache Hilfe extension die es ermöglicht
+				 		 			 *			die Suche als Formular hier einzubinden. Sie sendet die Daten an die search.php
+				 		 			 *			und verwendet eine Weiterleitung + Daten für die Suchergebnis-Seite.
+				 		 			 */ 
+									?>
+									<include href="{{'phone/'.basename(@template)}}"/>
+									<?php 
+						 	  		 /*--------- //phone tag search -------*/ 
+									?>
+								</repeat>
+							</repeat>
+                        	<?php 
+						 	  /*--------- //HOOK: phone -------*/ 
+							?>
+                            
+                            <?php 
+							 /**
+				 		 	  *	flattr infos
+				 		 	  *	
+				 		 	  *	@class firtz-panel
+				 		 	  */ 
+							?>
+                            <li>
+        					  <div class="firtz-panel">
+        						<h5 align="center" style="font-size: 17px; line-height: 10px;" class="firtz-panel-title"><b>Unterstützen</b></h5>
+					 			<center>Dies ist ein kostenloser Podcast. Du kannst {{@feedattr.title}} über Flattr unterstützen. So bleibt das Angebot weiterhin am Leben.</center>
+					 		   <br>
+        						<div align="center">
+        							<check if="{{@feedattr.flattrid}}">
+										<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+									</check>
+								</div>
+        					  </div>
+                            </li>
+                        	<?php 
+						 	  /*--------- //flattr infos -------*/ 
+							?>
+							
+							<?php 
+							/**
+				 		 	 *	phone collapsed tablinks - legal file pages
+				 		 	 *
+				 		 	 *  @templates pages
+				 		 	 *	@info liest automatisch alle Seiten als Aufklappmenü aus, 
+				 		 	 *		die in einem Order unter "pages" hinterlegt sind.
+				 		 	 * 		(jquery - mousover effect)
+				 		 	 */ 
+							?>
+                    		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+								<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
+								<check if="{{basename(@dir)}} == 'footer' ">
+									<li>
+									<br>
+									<br>
+									<center>
+										<small>
+											<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+												<a style="padding:5px;" href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a> 
+											</repeat>
+										</small>
+									</center>
+									<br>
+									</li>
+								</check>
+								</repeat>
+							</repeat>
+							<?php 
+						 	  /*--------- //phone collapsed tablinks - file pages -------*/ 
+							?>
+                        </ul>
+                    </div>
+                </div>
+				<?php 
+				/*--------- //phone navigation tabbar -------*/ 
+				?>
+	</div>
+</div>
+<?php 
+ /*--------- //head tab-navigation  -------*/ 
+?>
+
+
+<?php
+ /**
+ * container
+ */ 
+?>
+<div class="firtz-container firtz-container-center" id="firtz-handy-artikel">
+	<?php
+	/**
+	 *	site content
+	 */ 
+	?>	
+	<div class="firtz-grid" data-firtz-grid-match="" data-firtz-grid-margin="">
+		<?php
+		/**
+		 *	left site: article
+		 */ 
+		?>	
+		<div class="firtz-width-medium-3-4" style="min-height: 2946px;">
+		<main class="firtz-content">
+			<?php
+			/**
+	 		 *	HOOK: breadcrumb
+	 		 * 	@position: articles: head
+	 		 * 	@path /breadcrumb/
+	 		 *	@extension breadcrumb
+ 	 		 */
+			?>
+			<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+				<repeat group="{{glob(@tpath.'/breadcrumb/*.html')}}" value="{{@template}}">
+					<?php
+					 /**
+					  *	 breadcrumb extension (extension/hook)
+					  *	 @hook artikel: head
+					  *	 @extension breadcrumb
+				      *	 @class firtz-breadcrumb
+				      *	 @info Zeigt eine Breadcrumb an, auf welcher Seite wo Du dich gerade befindest.
+					  */
+					?>
+					<include href="{{'breadcrumb/'.basename(@template)}}"/>
+					<?php
+					 /*---------//breadcrumb extension---------*/
+					?>
+				</repeat>
+			</repeat>
+			<?php
+			 /*---------//HOOK: article: head ---------*/ 
+			?>
+	
+			<check if="{{!@showpage}}">
+				<true>
+					<div <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-left', repeat: false}"</check>>
+					<?php
+					/**
+					 *	search result
+					 */ 
+					?>
+					<check if="{{count(@items)==0}}">
+						<div class="firtz-grid" data-firtz-grid-match="" data-firtz-grid-margin="">
+							<div class="firtz-width-medium-1-1">
+								<article class="firtz-article">Keine Folgen gefunden</article>
+							</div>
+						</div>
+					</check>
+					<?php
+					 /*---------//search result ---------*/ 
+					?>
+			
+					<?php
+					/**
+					 *	Home: Loop: Episodes
+					 */ 
+					?>	
+					<repeat group="@items" value="{{@item}}">
+					<div class="firtz-grid" data-firtz-grid-match="" data-firtz-grid-margin="">
+					<div class="firtz-width-medium-1-1">
+				
+						<!--episode-->
+						<article class="firtz-article firtz-handy-artikel" id="article-{{@item.slug}}" data-permalink="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
+
+							<!--prepend extensions output-->
+							<check if="{{isset(@item.prepend)}}">
+								{{@item.prepend | raw}}
+							</check>
+							<!--//prepend extensions output-->
+        				
+        					<!--date-->
+    						<div id="date" class="firtz-article-date" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+								<span class="firtz-article-date-day">{{date ('d . m' , strtotime(@item.date))}}</span>
+								<span class="firtz-article-date-year">{{date ('Y' , strtotime(@item.date))}}</span>
+    						</div>
+    						<!--//date-->
+    					
+    						<!--title-->
+    						<h1 id="title" class="firtz-article-title" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check> style="font-size:30px;">
+    							<a href="<check if="{{@singlepage==false}}">{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}</check>" title="{{@item.slug}}" name="{{@item.slug}}">{{@item.title}}</a>
+    						</h1>
+							<!--//title-->
+						
+							<!--handy-date-->
+							<div id="hdate" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+								{{date ('d . m' , strtotime(@item.date))}} . {{date ('Y' , strtotime(@item.date))}}
+							</div>
+							<!--//handy-date-->
+
+        					<!--flattr-->
+							<check if="{{@feedattr.flattrid}}">
+								<div id="flattr" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+									<iframe id="flattr" src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;title={{@item.flattrtitle | raw}}&amp;popout=0&amp;button=compact"
+										class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
+									</iframe>
+								</div>
+							</check>
+							<!--//flattr-->
+							
+							<div class="firtz-player-box" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>	
+								<!--article-player-->
+								<check if="{{@item.noaudio==''}}">
+									<include href="podlove-player.html"/>
+								</check>
+								<!--//article-player-->
+
+								<!--keywords-->
+								<check if="{{@item.keywords}}">
+									<div class="firtz-player-tag-border">
+										<repeat group="{{explode(',',@item.keywords)}}" value="{{@keyword}}">
+											<a <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check> class=firtz-badge firtz-badge-grey" href="/{{@feedattr.slug}}/show/search/{{@keyword}}">
+												<i class="firtz-icon-tags"></i> {{@keyword}}
+											</a>
+										</repeat>
+									</div>
+								</check>
+								<!--//keywords-->
+							</div>
+					
+							<div class="firtz-width-medium-1-1" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+								
+								<?php
+								/**
+						 		 *	HOOK: contributors (Testweise)
+						 		 * 	@position: article
+						 		 * 	@path /contributors/
+						 		 *	@extension contributors
+						 		 *	@info M.C.: Leider weis ich noch nicht, wie wir die Con.Extensions über die Shownotes
+						 		 *				bekommen, ohne einen neuen Hook einzusetzen? Mir gefällt das noch nicht ganz.
+						 		 *				Man könnte eine if Abfrage machen (template.cfg): 
+						 		 *				=> shownotes top/bottom
+					 	 		 */
+								?>
+								<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+									<repeat group="{{glob(@tpath.'/contributors/*.html')}}" value="{{@template}}">
+										<include href="{{'contributors/'.basename(@template)}}"/>
+									</repeat>
+								</repeat>
+								<?php
+					 				/*---------//HOOK: contributors (Testweise) ---------*/ 
+								?>
+								
+								<!-- shownotes -->
+								<h3 class="firtz-episode-title" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>Shownotes</h3>
+								<div <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+									<check if="{{(trim(@item.article)!='')}}">{{@item.article | raw}}</check>
+								</div>
+								<!-- //shownotes -->
+							
+								<!--episode downloads-->
+								<check if="{{@item.noaudio==''}}">
+									<!--download-->
+									<div class="firtz-button-dropdown" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check> data-firtz-dropdown>
+										<button class="firtz-button firtz-button-primary firtz-button-large"><i class="firtz-icon-download"></i> <span class="bico">Download</span></button>
+    									<div class="firtz-dropdown firtz-dropdown-small">
+        									<ul class="firtz-nav firtz-nav-dropdown">
+											<repeat group="{{@item.audiofiles}}" value="{{@audiofile}}" key="{{@audiotype}}">
+												<li><a title="download {{@audiotype}} - size: {{ceil(@audiofile.length / 1048576)}} MByte" href="{{@audiofile.link}}">{{@audiotype}}</a></li>
+											</repeat>
+											</ul>
+    									</div>
+									</div>
+									<!--download torrents-->		
+									<check if="{{@feedattr.bitlove}}">
+										<div class="firtz-button-dropdown" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check> data-firtz-dropdown>
+											<button class="firtz-button firtz-button-danger firtz-button-large"><i class="firtz-icon-cloud-download"></i> <span class="bico">Torrents</span></button>
+    										<div class="firtz-dropdown firtz-dropdown-small">
+        										<ul class="firtz-nav firtz-nav-dropdown">
+												<repeat group="{{@feedattr.bitlove}}" value="{{@bitlove}}" key="{{@audiotype}}">
+													<li><a title="bitlove torrent {{@audiotype}}" href="http://bitlove.org/{{@bitlove.user}}/{{@bitlove.feed}}/{{@item.slug}}.{{@audiotype}}.torrent">{{@audiotype}}</a></li>
+												</repeat>
+												</ul>
+    										</div>
+										</div>
+									</check>
+								</check>
+								<!--//episode downloads-->
+								
+
+								<?php
+								/**
+						 		 *	HOOK: episode (templates)
+						 		 * 	@position: article: middle
+						 		 * 	@path /episode/
+						 		 *	@info standard Hook für Erweiterungen die in der Episode ausgegeben werden können.
+					 	 		 */
+								?>
+								<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+									<repeat group="{{glob(@tpath.'/episode/*.html')}}" value="{{@template}}">
+										<include href="{{'episode/'.basename(@template)}}"/>
+									</repeat>
+								</repeat>
+								<?php
+					 				/*---------//HOOK: episode (templates) ---------*/ 
+								?>
+
+								<?php
+								/**
+						 		 *	append extensions output
+						 		 * 	@info macht irgend was??? (M.C. sagt: keine Ahnung, bitte ergenzen! :D )
+					 	 		 */
+								?>
+								<check if="{{isset(@item.append)}}">
+									{{@item.append | raw}}
+								</check>
+								<?php
+					 				/*---------//append extensions output ---------*/ 
+								?>					
+
+							</div>
+							<!--//episode-content-->
+					
+						</article>
+						<!--//episode-->
+
+					</div>
+					</div>
+					</repeat>
+					<!--//article-->
+    				
+    				</div>
+    			</true>
+				<false>
+					<!--page-->
+					<article class="firtz-article firtz-page" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+						<include href="{{@showpage}}"/>
+					</article>
+					<!--page-->
+				</false>
+			</check>
+			<?php
+			/**
+			 *	page pagination
+			 * 	@info zeigt Weiter und Zurück Buttons auf der Homesite an.
+			 */
+			?>
+			<check if="{{@page!=0}}">
+    			<check if="{{@page>1}}">
+					<true>
+					<ul class="firtz-breadcrumb" id="pagi_right" 
+					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-right', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+						<li> 
+						 <a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{@page-1}}">
+						  {{@dict_newer}}
+						 </a>
+						</li>
+					</ul>
+					</true>
+					<false>
+					<ul class="firtz-breadcrumb" id="pagi_right-false" 
+					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-right', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+						<li>{{@dict_newer}}</li>
+					</ul>
+					</false>
+				</check>
+    			<check if="{{@page<@maxpage}}">
+					<true>
+					<ul class="firtz-breadcrumb" id="pagi_left" 
+					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-left', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+						<li> 
+						 <a href="{{@BASEURL}}{{@feedattr.slug}}/show/pager/{{@page+1}}">
+						  {{@dict_older}}
+						 </a>
+						</li>
+					</ul>
+					</true>
+					<false>
+					<ul class="firtz-breadcrumb" id="pagi_left-false" 
+					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-left', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+						<li>{{@dict_older}}</li>
+					</ul>
+					</false>
+				</check>
+			</check>
+			<?php
+			 /*---------//append extensions output ---------*/ 
+			?>	
+    	</main>
+		</div>
+		<?php 
+		 /*---------//left site: article ---------*/ 
+		?>	
+
+		
+		<?php 
+		/**
+		 *	right site: sidebar
+		 */ 
+		?>	
+		<aside class="firtz-sidebar-a firtz-width-medium-1-4 firtz-handy-sidebar" style="min-height: 2946px;">
+			<!--über den Podcast-->
+			<div class="firtz-sidebar-b firtz-panel firtz-hidden-medium firtz-hidden-small widget_text" 
+			<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-right', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+				<div class="sideline" align="center">				
+					<h3 style="color:#fff;">{{@feedattr.title}}</h3>
+				</div>
+				<div align="center" style="padding: 25px 30px;">
+					<p style="margin-top: -10px;">
+					  <b>{{@feedattr.description}}</b>
+					</p>
+					<hr />
+					<p>
+					 {{@feedattr.summary}}
+					</p>					
+					<img alt="{{@feedattr.title}}" src="{{@feedattr.image}}" width="200" height="200" border="0">        			
+				</div>
+			</div>
+			<!--//über den Podcast-->
+			
+			<!--unterstützen-->
+			<div class="firtz-sidebar-b firtz-panel firtz-hidden-medium firtz-hidden-small widget_text" style="margin-bottom: 22px;" 
+			<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-right', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
+				<div style="padding-top: 20px" align="center">
+					<h4>Unterstützen</h4>
+				</div>
+				<hr />
+				<div style="padding: 2px 30px;" align="center">
+					<p><!--//Dein Text hier...-->
+					 Dies ist ein kostenloser Podcast. Du kannst ihn über Flattr unterstützen. 
+					 So bleibt das Angebot weiterhin am Leben.
+					</p>
+					<p>
+					  <check if="{{@feedattr.flattrid}}">
+						<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+					  </check>
+					</p>
+				</div>
+			</div>
+			<!--//unterstützen-->
+			
+			<?php
+			/**
+	 		 *	HOOK: sidebar (templates)
+			 * 	@position: page: right
+			 * 	@path /sidebar/
+			 *	@info Über diesen Hook könne Erweiterungen eingebunden werden. Sie können im QuorX Design auch 
+			 *		direkt unter /templates/default/sidebar/ erstellt und abgelegt werden.
+	 		 */
+			?>
+			<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+				<repeat group="{{glob(@tpath.'/sidebar/*.html')}}" value="{{@template}}">
+					<include href="{{'sidebar/'.basename(@template)}}"/>
+				</repeat>
+			</repeat>
+			<?php
+			 /*---------//HOOK: sidebar (templates) ---------*/ 
+			?>	
+		</aside>
+		<?php 
+		 /*---------//right site: sidebar ---------*/ 
+		?>
+	</div>
+	<?php 
+	 /*------- //content -------*/ 
+	?>	
+	
+
+<?php 
+/**
+ *	QuorX: footer
+ */ 
+?>
+	<?php 
+	/**
+	 *	footer-breadcramp
+	 */ 
+	?>
+	<section class="firtz-bottom-b firtz-grid" style="margin-bottom: -30px;">
+	<div class="firtz-width-1-1">
+		<div class="firtz-panel firtz-panel-box widget_text" id="firtz-footer-camp">
+			<div class="firtz-grid">
+				<div class="firtz-width-1-1 firtz-width-medium-2-3">
+					<ul class="firtz-subnav firtz-subnav-line firtz-subnav">
+						<?php 
+						/**
+	 					 *	legal pages
+	 					 *	@info In Deutschland gibt es die Impressums Pflicht! Diese werden meist im Footer ausgegeben.
+	 					 *		Damit diese Seiten jedoch nicht auch in der Header navigation landen, kannst Du durch erstellen 
+	 					 *		des Ordners "footer" (unter /pages/), alle Seiten unterbringen, die vom Gesetzgeber erwünscht sind.
+	 					 *		Diese werden nun richtig im Web und Phone View, hier in der Breadcrumb im Footer ausgelesen.
+						 */ 
+						?>                      
+						<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+							<check if="{{basename(@dir)}} == 'footer'">
+    						 	<true>
+    						 		<repeat group="{{glob(@tpath.'/pages/footer/*.html')}}" value="{{@template}}">
+    						 			<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/footer/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+ 							 		</repeat>
+ 							 	</true>
+ 							 	<false>
+ 							 		<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
+ 							 			<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+ 							 		</repeat>
+ 							 	</false>
+ 							</check>
+						</repeat>
+						<?php 
+	 					 /*------- //legal pages -------*/ 
+						?>
+					</ul>
+				</div>
+		
+				<div class="firtz-width-1-1 firtz-width-medium-1-3">
+					<?php 
+					/**
+	 				 *	social icon links
+	 				 *	@info hier werden nun alle Social Icons die Du in der feed.cfg als Link oder Username eingefügt hast
+	 				 *		interpretiert und ausgegeben.
+					 */ 
+					?> 
+					<ul class="firtz-float-right firtz-social-icons">	
+						<check if="{{@feedattr.email}}">
+		 					<li><a href="mailto:{{@feedattr.email}}"><i class="firtz-icon-envelope-o"></i></a></li>
+						</check>
+						<check if="{{@feedattr.twitter}}">
+		 					<li><a href="https://twitter.com/{{@feedattr.twitter}}"><i class="firtz-icon-twitter"></i></a></li>
+						</check>
+						<check if="{{@feedattr.adn}}">
+							<li><a href="https://alpha.app.net/{{@feedattr.adn}}" rel="me"><i class="firtz-icon-adn"></i></a><li>
+						</check>
+					</ul>
+					<?php 
+	 				 /*------- //social icon links -------*/ 
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	<?php 
+	 /*------- //footer-breadcramp --------*/ 
+	?>
+
+	<?php 
+	/**
+	 *	footer-license
+	 */ 
+	?>
+	<footer class="firtz-footer firtz-handy-footer" id="firtz-handy-footer">
+		<a class="firtz-totop-scroller" data-firtz-smooth-scroll="{offset: 90}" href="#"></a>
+		<div class="firtz-panel widget_text">
+			<p>
+				<b>{{@feedattr.title}}</b> 2015 by {{@feedattr.author | raw}} <br>
+			</p>
+			<p>
+				<small id="c-footer">
+					<?php
+					/**
+	 				 *	license informations
+					 *	@info Je nach Angaben die Du in der feed.cfg getätigt hast, werden hier zum Ende der Seite
+					 *		deine Lizens (vielleicht sogar mit nem Bildchen) verlinkt und mit Namen ausgegeben.
+	 				 */
+					?>
+					<check if="{{@feedattr.licenseimage}}">
+						<true>
+							<a href="{{@feedattr.licenseurl}}"><img src="{{@feedattr.licenseimage}}" title="{{@@feedattr.licensename}}"></a></a>
+						</true>
+						<false>
+							<check if="{{@feedattr.licensename}}">
+								<a href="{{@feedattr.licenseurl}}">{{@feedattr.licensename}}</a>
+							</check>
+						</false>
+					</check>
+					<?php 
+					 /*------- //license informations --------*/ 
+					?>
+				</small>
+				<?php
+				/**
+	 			 *	HOOK: footer (templates)
+				 * 	@position: page: footer
+				 * 	@path /footer/
+				 *	@info Über diesen Hook könne Erweiterungen eingebunden werden. Sie können im QuorX Design auch 
+				 *		direkt unter /templates/default/footer/ erstellt und abgelegt werden.
+	 			 */
+				?>
+				<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+					<repeat group="{{glob(@tpath.'/footer/*.html')}}" value="{{@template}}">
+						<include href="{{'footer/'.basename(@template)}}"/>
+			 		</repeat>
+				</repeat>
+				<?php 
+				 /*------- //HOOK: footer (templates) --------*/ 
+				?>
+			</p>
+		</div>
+	</footer>
+	<?php 
+	 /*------- //footer-license --------*/ 
+	?>
+	
+	<?php 
+	/**
+	 *	QuorX: footer-informations
+	 */ 
+	?>
+	<section class="firtz-bottom-b firtz-grid" id="firtz-section-informations">
+	<div class="firtz-width-1-1">
+		<div class="firtz-panel firtz-panel-box widget_text" style="padding: 0px;">
+			<div class="firtz-grid" >
+				<div class="firtz-width-1-1">
+					<div id="firtz-footer-informations">
+					<center><small><?php
+					/**
+					 *
+					 *	firtz link informations
+					 *	-------------------------
+					 *	Bleib anständig und ändere diese Informationen nicht! 
+					 *	Firtz ist für uns alle kostenlos. Das solle im Standardumfang auch so bleiben.
+					 *	Gebe auch anderen die Chance das Firtz kennen zu lernen ;)
+					*/
+					?><a href="#firtz-design" data-firtz-modal><b>Firtz</b></a> - Podcast Publisher by <a 
+					href="http://hörsuppe.de" target="_blank"><b>Christian Bednarek</b></a> |
+				 	<a href="http://firtz-designs.wikibyte.org" target="_blank">QuorX II</a> - Design by <a href="http://podunion.com/podcaster/6214/michael-mccouman-jr" target="_blank"><b>Michael McCouman Jr.</b></a></small></center><?php
+					/*----------- firtz link informations ---------*/ 
+					?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	<?php 
+	 /*------- //QuorX: footer-informations --------*/ 
+	?>			
+	
+  <?php 
+   /*------- //footer --------*/ 
+ ?>
+
+</div>
+<?php 
+ /*--------- //container -------*/ 
+?>						
+
+
+<?php
+/**
+*
+*	Firtz Information
+*	------------------
+*	Bleib anständig und ändere diese Informationen nicht! 
+*	Firtz ist für uns alle kostenlos, gebe auch anderen die Chance es kennen zu lernen ;)
+*
+*	@version QuorX II (Paker)
+*   @design by Michael McCouman Jr.
+*	@info mccouman@wikibyte.org
+**/
+/*----------- firtz informations ---------*/ ?>						
+<div id="firtz-design" class="firtz-modal">
+   <div class="firtz-modal-dialog">
+        <a class="firtz-modal-close firtz-close"></a>
+        <h3>Firtz - Ein Podcast Publisher</h3>
+        <hr />
+        <div class="firtz-grid">
+     		<div class="firtz-width-1-1 firtz-width-medium-3-10 firtz-width-large-3-10">
+    			<center><img src="{{@BASEURL}}images/inc/firtz.png"></center>
+    		</div>   		
+    		<div class="firtz-width-1-1 firtz-width-medium-7-10 firtz-width-large-7-10">
+    			<div class="firtz-grid">
+    				<div class="firtz-width-1-1 firtz-width-medium-1-1 firtz-width-large-7-10">
+    					<h5 id="firtz-info-firtz"><b>Das Firtz 2.0</b></h5>
+    					<p><b>Einfach und schnell podcasten mit Firtz. Entwickelt von 
+    					<a id="firtz-info-link" href="http://hoersuppe.de/">Christian Bednarek</a> 
+    					um als Podcast Publisher die Welt zu erobern.</b></p>
+    				</div>
+    				<div class="firtz-width-1-1 firtz-width-medium-1-1 firtz-width-large-3-10">
+    					<center>
+    						<img id="firtz-info-christian"
+    						src="https://pbs.twimg.com/profile_images/2185128768/twit_400x400.png" 
+    						title="Christian Bednarek">
+    						<br>
+    						<a id="firtz-info-link" href="http://hoersuppe.de/">Christian Bednarek</a>
+    					</center>
+    				</div>
+    			</div>
+    		</div>
+		</div>
+		<hr />
+        <div class="firtz-grid">
+     		<div class="firtz-width-1-1 firtz-width-medium-3-10 firtz-width-large-3-10">
+    			<center><img src="{{@BASEURL}}images/inc/firtz-designs-cover.png"></center>
+    		</div>   		
+    		<div class="firtz-width-1-1 firtz-width-medium-7-10 firtz-width-large-7-10">
+    			<div class="firtz-grid">
+    				<div class="firtz-width-1-1 firtz-width-medium-1-1 firtz-width-large-7-10">
+    					<h5 id="firtz-info-quorx"><b>Firtz-Designs: QuorX II</b></h5>
+    					<p>Das QuorX-Design wurde von <a id="firtz-info-link" 
+    					href="http://podunion.com/podcaster/6214/michael-mccouman-jr">Michael Kaufmann</a> 
+    					(aka Michael McCouman Jr.) entwickelt.</b></p>
+    				</div>
+    				<div class="firtz-width-1-1 firtz-width-medium-1-1 firtz-width-large-3-10">
+    					<center>
+    						<img id="firtz-info-michael" 
+    						src="https://avatars0.githubusercontent.com/u/3239082?v=3&s=460" 
+    						title="Michael McCouman Jr.">
+    						<br>
+    						<a id="firtz-info-link" href="http://wikibyte.org">Michael Kaufmann</a>
+    					</center>
+    				</div>
+    			</div>
+    		</div>
+		</div>		
+		
+        <hr />
+        <a class="firtz-button firtz-button-primary firtz-button" href="http://firtz.org">Mehr erfahren</a>
+    </div>
+</div>
+<?php 
+/*--------- //firtz informations -------*/ 
+?>			
+
+
+<?php 
+/*--------- firtz scripts -------*/ 
+?>	
+<!--firtz scripts-->
+<?php 
+/*--firtz scripts--*/ 
+?>
+<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+	<repeat group="{{glob(@tpath.'/foot/*.html')}}" value="{{@template}}">
+		<include href="{{'foot/'.basename(@template)}}"/>
+	 </repeat>
+</repeat>
+<?php 
+/*--//firtz scripts--*/ 
+
+
+/*--template scripts--*/ 
+?>
+<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+	<repeat group="{{glob(@tpath.'/foot/*.js')}}" value="{{@template}}">
+		<script src="{{'/'.@tpath.'foot/'.basename(@template)}}"></script>
+	</repeat>
+</repeat>
+<?php 
+/*--//template scripts--*/ 
+?>
+<!--//firtz scripts-->
+
+<!--podlove scripts-->
+<script src="{{@BASEURL}}src/pwp/static/html5shiv.js"></script>	
+<script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
+<!--//podlove scripts-->
+
+<!--podlove-sub-button-->  
+<script type="text/javascript">
+  window.podcastData = {
+    "title": {{json_encode(@feedattr.title) | raw}},
+    "subtitle": {{json_encode(@feedattr.description) | raw}},
+	"description": {{json_encode(@feedattr.summary) | raw}},
+    "cover": "{{@feedattr.image}}",
+    "feeds": [
+		<repeat group="@feedattr.audioformats" value="{{@format}}">
+	  	{
+		"type":"{{explode('/',@mimetypes[@format])[0]}}",
+        "format": "{{@format}}",
+        "url": "{{@feedattr.baserel}}{{@format}}{{@extxml}}",
+      	},
+	  	</repeat>
+    ]
+  }
+</script>
+<script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="{{@templatevars.color}};{{@templatevars.dark}};{{@templatevars.color}};;;;#fff;{{@templatevars.color}};; " data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
+<!--//podlove-sub-button-->
+<?php 
+/*--------- //firtz scripts -------*/ 
+?>	
+</body>
+</html>

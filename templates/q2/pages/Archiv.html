@@ -1,0 +1,98 @@
+<div class="row-fluid marketing">
+<div class="firtz-overflow-container">
+	
+	<h2>Das Podcastarchiv</h2>
+	<p>Dies sind alle bisher erschienenen Ausgaben von {{@feedattr.title}}. Bisher gibt es "<b>XXX</b>" Episoden.</p>
+	
+     <table class="firtz-table firtz-table-striped">
+        <thead>
+         <tr>
+           <th>Cover</th>
+           <th>Produziert</th>
+           <th>Episoden</th>
+           <th>{{@dict_contributors}}</th>
+         </tr>
+         </thead>
+        <tbody>
+         <repeat group="@items" value="{{@item}}">
+           <tr>
+              <td class="firtz-text-middle">
+              	<a class="uk-text-middle" href="/{{@feedattr.slug}}/show/{{@item.slug}}" name="{{@item.slug}}">
+              		<img class="media-object pull-left" src="{{@item.image}}" style="width:50px;">
+              	</a>
+              </td>
+              <td class="firtz-text-middle">
+                Vom: {{@dict_pubdate,strtotime(@item.pubDate) | format}}<br>
+                <small><check if="{{@item.duration}}">{{@dict_duration}}: {{@item.duration}}</check></small>
+              </td>
+              <td class="firtz-text-middle">
+				<b><a class="uk-text-middle" href="/{{@feedattr.slug}}/show/{{@item.slug}}" name="{{@item.slug}}">{{@item.title}}</a></b></br>
+				<small>{{@item.description}}</small>
+			  </td>
+			  <td>
+			  	<check if="{{isset(@item.contributors_data)}}">
+			    	<true>
+			    	<repeat group="{{@item.contributors_data}}" value="{{@con}}" key="{{@nick}}">
+        			
+        				<check if="{{isset(@con.image)}}">
+                			<true>
+                				<check if="{{isset(@con.url)}}">
+                    				<true>
+                    					<a title="Das ist {{@con.name}}" alt="Blog von {{@con.name}}" href="{{@con.url}}">
+                    						<img style="width:25px;" alt="Das ist {{@con.name}}" src="{{@con.image}}">
+                    					</a>
+                    				</true>
+									<false>
+										<img style="width:25px;" alt="Das ist {{@con.name}}" src="{{@con.image}}">
+									</false>
+								</check>
+							</true>
+							<false>
+								<check if="{{isset(@con.url)}}">
+                    				<true>
+                    					<a title="Das ist {{@con.name}}" alt="Blog von {{@con.name}}" href="{{@con.url}}">
+            								<img alt="Leider hat {{@con.name}} kein Avatar" 
+            								style="width:25px;" src="{{@BASEURL}}/ext/contributors/avatar.png">
+            							</a>
+                    				</true>
+									<false>
+										<img alt="Leider hat {{@con.name}} kein Avatar" 
+										style="width:25px;" src="{{@BASEURL}}/ext/contributors/avatar.png">
+									</false>
+								</check>
+							</false>
+						</check>
+						
+						<check if="{{isset(@con.flattr)}}">
+            				<iframe style="margin: 5px 1px -6px 0px;" src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;
+            				url={{@item.flattrlink | raw}}/{{@nick}}&amp;
+            				title={{@item.flattrtitle | raw}}&amp;
+            				popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+        				</check>
+   						<br> 
+    		  		</repeat>
+    		  		
+    		  		
+    		  		</true>
+   					<false>
+   						<check if="{{@feedattr.flattrid}}">
+							<iframe style="margin: 5px 1px -6px 0px;" src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;
+							url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;
+							title={{@feedattr.flattrtitle | raw}}&amp;
+							description={{@feedattr.flattrdescription | raw}}&amp;
+							tags={{@feedattr.flattrkeywords | raw}}&amp;
+							popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+					  	</check>
+					  	<br> 
+   					</false>
+    		  		
+				</check>
+			  </td>
+          </tr>                        
+		</repeat>
+	 </tbody>
+    </table>
+
+</div>
+</div>
+<style>article.firtz-article.firtz-scrollspy-init-inview.firtz-scrollspy-inview.firtz-animation-fade { margin-bottom: 20px; } </style>
