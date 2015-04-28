@@ -196,11 +196,20 @@
 				 		 * 		erstellt jeweils einen Tab mit der verlinkten Seite.
 				 		 */ 
 						?>
+						<set pagearr="{{ array() }}" />
+
 						<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 							<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
-    						 <li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+								<check if="{{!in_array(basename(@template),@pagearr)}}">
+									
+										<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+										<?php /* avoid multiple inclusion  */ ?>
+										<set pagearr="{{array_merge(@pagearr,array(basename(@template)))}}" />
+									
+								</check>
  							</repeat>
 						</repeat>
+					
 						<?php 
 						 /*--------- //tablinks - only pages -------*/ 
 						?>
@@ -215,19 +224,25 @@
 				 		 * 		(jquery - mousover effect)
 				 		 */ 
 						?>
+						<set pagearr="{{ array() }}" />
+						
                     	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 							<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
 								<check if="{{basename(@dir)}} != 'footer' ">
-								<li class="firtz-parent" data-firtz-dropdown="">
-								<a href="">{{basename(@dir)}}</a>
-								<div class="firtz-dropdown firtz-dropdown-navbar">
-									<ul class="firtz-nav firtz-nav-navbar">
-										<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
-											<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
-										</repeat>
-									</ul>
-								</div>
-								</li>
+									<check if="{{!in_array(basename(@dir),@pagearr)}}">
+										<li class="firtz-parent" data-firtz-dropdown="">
+										<a href="">{{basename(@dir)}}</a>
+										<div class="firtz-dropdown firtz-dropdown-navbar">
+											<ul class="firtz-nav firtz-nav-navbar">
+												<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+													<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}">{{basename(@template,'.html')}}</a></li>
+												</repeat>
+											</ul>
+										</div>
+										</li>
+										<?php /* avoid multiple inclusion  */ ?>
+										<set pagearr="{{array_merge(@pagearr,array(basename(@dir)))}}" />
+									</check>
 								</check>
 							</repeat>
 						</repeat>
@@ -357,10 +372,14 @@
 				 		 	  *	@info liest automatisch alle einzelseiten unter dem Ordner "pages" aus und 
 				 		 	  * 	erstellt jeweils einen Tab mit der verlinkten Seite.
 				 		 	  */ 
-							?>                     
+							?>    
+							<set pagearr="{{ array() }}" />
                         	<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 								<repeat group="{{glob(@tpath.'/pages/*.html')}}" value="{{@template}}">
-									<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}"><b>{{basename(@template,'.html')}}</b></a></li>
+									<check if="{{!in_array(basename(@template),@pagearr)}}">
+										<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@template,'.html')}}{{@exthtml}}"><b>{{basename(@template,'.html')}}</b></a></li>
+										<set pagearr="{{array_merge(@pagearr,array(basename(@template)))}}" />
+									</check>
 								</repeat>
 							</repeat>
 							<?php 
@@ -377,17 +396,21 @@
 				 		 	 * 		(jquery - mousover effect)
 				 		 	 */ 
 							?>
-                    		<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+                    		<set pagearr="{{ array() }}" />
+							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 								<repeat group="{{glob(@tpath.'/pages/*',GLOB_ONLYDIR)}}" value="{{@dir}}">
 								<check if="{{basename(@dir)}} != 'footer' ">
-								<li class="firtz-parent">
-									<a href="#">{{basename(@dir)}}</a>
-									<ul class="firtz-nav-sub">
-										<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
-											<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}"><b>{{basename(@template,'.html')}}</b></a></li>
-										</repeat>
-									</ul>
-								</li>
+									<check if="{{!in_array(basename(@template),@pagearr)}}">
+									<li class="firtz-parent">
+										<a href="#">{{basename(@dir)}}</a>
+										<ul class="firtz-nav-sub">
+											<repeat group="{{glob(@tpath.'/pages/'.basename(@dir).'/*.html')}}" value="{{@template}}">
+												<li><a href="{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@dir)}}/{{basename(@template,'.html')}}{{@exthtml}}"><b>{{basename(@template,'.html')}}</b></a></li>
+											</repeat>
+										</ul>
+									</li>
+									<set pagearr="{{array_merge(@pagearr,array(basename(@dir)))}}" />
+									</check>
 								</check>
 								</repeat>
 							</repeat>
