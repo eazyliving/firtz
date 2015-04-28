@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="{{@feedattr.language}}"
+>
+	<title type="text">{{@feedattr.title}}</title>
+	<subtitle type="text">{{@feedattr.description}}</subtitle>
+	
+	<updated>{{@feedattr.lastupdate}}</updated>
+
+	<check if="{{@feedattr.alternate}}">
+		<repeat group="@feedattr.alternate" value="@alttype">
+			<check if="{{@feedattr.audioformat != @alttype}}">
+			<link rel="alternate" type="application/atom+xml" title="({{@alttype}})" href="{{@feedattr.baserel}}atom/{{@alttype}}/" />
+			</check>
+		</repeat>
+	</check>
+	
+	<id>{{@feedattr.self}}</id>
+	<link rel="self" type="application/atom+xml" href="{{@feedattr.self}}" />
+	<check if="{{@feedattr.flattrid}}">
+		<link rel="payment" title="Flattr this!"
+			href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}" type="text/html" />
+	</check>
+	<generator uri="http://firtz.hoersuppe.de/" version="{{@version}}.{{@revision}}">{{@generator}}</generator>
+	
+	<logo>{{@feedattr.image}}</logo>
+	<rights>{{@feedattr.author}}</rights>
+	
+	<link rel="license" type="text/html" href="" />
+	
+	<check if="{{@items}}">
+		<repeat group="@items" value="@item">
+			
+		
+	<entry>
+		<author>
+			<name>{{@feedattr.author}}</name>
+		</author>
+		<title type="html"><![CDATA[{{@item.title | raw}}]]></title>
+		<link rel="alternate" type="text/html" href="{{@item.pagelink}}" />
+		<id>{{@item.pagelink}}</id>
+		<updated>{{ date('c', strtotime(@item.pubDate)) }}</updated>
+		<published>{{ date('c', strtotime(@item.pubDate)) }}</published>
+		<summary type="html"><![CDATA[{{@item.description | raw}}]]></summary>
+		<content type="html"><![CDATA[{{@item.article | raw}}]]></content>
+		<check if="{{@feedattr.flattrid}}">
+				<link rel="payment" title="Flattr this!" href="https://flattr.com/submit/auto?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;;language={{@feedattr.flattrlanguage | raw}}&amp;category=audio&amp;title={{@item.flattrtitle | raw}}&amp;description={{@item.flattrdescription | raw}}&amp;tags={{@item.flattrkeywords | raw}}" type="text/html" />
+		</check>
+		
+		<check if="{{@item.chapters}}">
+			<psc:chapters version="1.1"  xmlns:psc="http://podlove.org/simple-chapters">
+			<repeat group="@item.chapters" value="@chapter">
+				<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"/>
+			</repeat>	
+			</psc:chapters>
+		</check>
+		
+		<check if="{{@item.enclosure}}"><link rel="enclosure" type="{{ @item.enclosure.type }}" href="{{ @item.enclosure.link }}" length="{{ @item.enclosure.length }}" /></check>
+		
+	</entry>
+	
+		</repeat>
+	</check>
+	
+</feed>

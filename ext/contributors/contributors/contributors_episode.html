@@ -1,0 +1,312 @@
+<!--contributors-->
+<check if="{{isset(@item.contributors_data)}}">
+		
+	<h3 style="margin-top:30px;" class="firtz-episode-title" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>{{@dict_contributors}}</h3>
+									
+		<?php 
+		 /*---------- desktop view ---------*/ 
+		?>
+		<table class="firtz-table firtz-table-hover firtz-con-table handy-none" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+			<tbody> 
+				<hr id="firtz-contributors-hr" class="handy-none" />                                   	
+				<repeat group="{{@item.contributors_data}}" value="{{@con}}" key="{{@nick}}">
+					<tr class="firtz-contributors-line firtz-contributors-tab">
+    					<td class="firtz-text-middle">
+    						<check if="{{isset(@con.image)}}">
+                				<true>
+                					<?php 
+                						/*---- Avatar vorhanden ------*/ 
+                					?>
+                					<check if="{{isset(@con.description)}}">
+                    					<true>
+                    						<?php 
+                    							/*---- Infos zum Podcaster vorhanden ------*/ 
+                    						?>
+                    						<a id="firtz-podcaster-infos" class="firtz-text-middle" title="Das ist {{@con.name}}" alt="Avatar von {{@con.name}}" data-firtz-toggle="{target:'.my', animation:'firtz-animation-slide-left, firtz-animation-slide-bottom'}">
+                    							<img class="img-con img-handy" src="{{@con.image}}">
+                    						</a>
+                    						<?php 
+                    							/*---- Infos zum Podcaster vorhanden ------*/ 
+                    						?>
+										</true>
+										<false>
+											<?php 
+											 /*---- keine Infos zum Podcaster vorhanden ------*/ 
+											?>
+											<check if="{{isset(@con.url)}}">
+                    							<true>
+                    								<?php 
+                    								 /*---- Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+                    								<a title="Das ist {{@con.name}}" alt="Blog von {{@con.name}}" href="{{@con.url}}">
+                    									<img class="img-con img-handy" alt="Das ist {{@con.name}}" src="{{@con.image}}">
+                    								</a>
+                    								<?php 
+                    								 /*---- //Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+												</true>
+												<false>
+													<?php 
+													 /*---- keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+														<img class="img-con img-handy" alt="Das ist {{@con.name}}" src="{{@con.image}}">
+													<?php 
+													 /*---- //keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+												</false>
+											</check>
+											<?php 
+											 /*---- //keine Infos zum Podcaster vorhanden ------*/ 
+											?>
+										</false>
+									</check>
+									<?php 
+									 /*---- //Avatar vorhanden ------*/ 
+									?>
+								</true>
+								<false>
+									<?php 
+									 /*---- kein Avatar vorhanden ------*/ 
+									?>
+									<check if="{{isset(@con.description)}}">
+                    					<true>
+                    						 <?php 
+                    						  /*---- Desc. zum Podcaster vorhanden ------*/ 
+                							 ?>
+    	    									<a id="firtz-podcaster-infos" class="firtz-text-middle" title="Das ist {{@con.name}}" alt="Avatar von {{@con.name}}" data-firtz-toggle="{target:'.my', animation:'firtz-animation-slide-left, firtz-animation-slide-bottom'}">
+                    								<img alt="Leider hat {{@con.name}} kein Avatar" class="img-con img-handy" src="{{@BASEURL}}/ext/contributors/avatar.png">
+                    							</a>
+                    						<?php 
+                    						 /*---- Desc. zum Podcaster vorhanden ------*/ 
+                    						?>
+										</true>
+										<false>
+											<?php 
+											 /*---- keine Desc.  zum Podcaster vorhanden ------*/ 
+											?>
+											<check if="{{isset(@con.url)}}">
+                    							<true>
+                    								<?php 
+                    								 /*---- Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+                    								<a title="Das ist {{@con.name}}" alt="Blog von {{@con.name}}" href="{{@con.url}}">
+                    									<img alt="Leider hat {{@con.name}} kein Avatar" class="img-con img-handy" src="{{@BASEURL}}/ext/contributors/avatar.png">
+                    								</a>
+                    								<?php 
+                    								 /*---- //Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+												</true>
+												<false>
+													<?php 
+													 /*---- keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+													<img alt="Leider hat {{@con.name}} kein Avatar" class="img-con img-handy" src="{{@BASEURL}}/ext/contributors/avatar.png">
+													<?php 
+													 /*---- //keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+												</false>
+											</check>
+											<?php 
+											 /*---- //keine Desc.  zum Podcaster vorhanden ------*/ 
+											?>
+										</false>
+									</check>
+									<?php 
+									 /*---- //kein Avatar vorhanden ------*/ 
+									?>
+								</false>
+							</check>
+						</td>	
+						<td class="firtz-text-middle firtz-contributors-tab">
+							<check if="{{isset(@con.description)}}">
+                				<true>
+                 					<a id="firtz-podcaster-infos" class="firtz-text-middle" title="Klicke hier um mehr über {{@con.name}} zu erfahren!" alt="{{@con.name}}" data-firtz-toggle="{target:'.my', animation:'firtz-animation-slide-left, firtz-animation-slide-bottom'}">
+                    					{{@con.name}}
+                    				</a>
+                    				<div class="my firtz-hidden">{{@con.description}}</div>
+								</true>
+								<false>
+									<span class="firtz-text-middle">{{@con.name}}</span>
+								</false>
+							</check>
+						</td>
+     					<td class="firtz-text-middle firtz-contributors-tab">
+							<check if="{{isset(@con.twitter)}}">
+								<a class="firtz-button cont-twitter" href="https://twitter.com/{{@con.twitter}}"><span class="fa fa-twitter"></span></a>
+							</check>
+							<check if="{{isset(@con.adn)}}">
+								<a class="firtz-button cont-adn" href="https://alpha.app.net/{{@con.adn}}"><span class="fa fa-adn"></span></a>
+							</check>
+							<check if="{{isset(@con.mail)}}">
+								<a class="firtz-button cont-mail" href="mailto:{{@con.mail}}"><span class="fa fa-envelope"></span></a>
+							</check>
+							<check if="{{isset(@con.url)}}">
+								<a class="firtz-button cont-url" href="{{@con.url}}"><span class="fa fa-globe"></span></a>
+							</check>                           
+       					</td>
+       					<td class="firtz-text-middle firtz-contributors-tab">
+           					<check if="{{isset(@con.flattr)}}">
+               					<iframe src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;url={{@item.flattrlink | raw}}/{{@nick}}&amp;title={{@item.flattrtitle | raw}}&amp;popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+							</check>
+						</td>
+					</tr>
+				</repeat>
+			</tbody>
+     	</table>
+     	<?php 
+     	 /*---------- //desktop view ---------*/ 
+     	?>							
+     								
+     	<?php 
+     	 /*---------- phone view ---------*/ 
+     	?>
+     	<table class="firtz-table desktop-none" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+			<tbody>
+				<repeat group="{{@item.contributors_data}}" value="{{@con}}" key="{{@nick}}">
+					<tr class="firtz-contributors-tab firtz-contributors-tab-top">
+    					<td class="firtz-text-middle">
+    						<check if="{{isset(@con.image)}}">
+                				<true>
+                					<?php 
+                					 /*---- Avatar vorhanden ------*/ 
+                					?>
+                					<check if="{{isset(@con.description)}}">
+                    					<true>
+                    						<?php 
+                    						 /*---- Infos zum Podcaster vorhanden ------*/ 
+                    						?>
+                    						<a id="firtz-podcaster-infos" class="firtz-text-middle" title="Das ist {{@con.name}}" alt="Avatar von {{@con.name}}" data-firtz-toggle="{target:'.my', animation:'firtz-animation-slide-left, firtz-animation-slide-bottom'}">
+                    							<img class="img-con img-handy" src="{{@con.image}}">
+                    						</a>
+                    						<?php 
+                    						 /*---- Infos zum Podcaster vorhanden ------*/ 
+                    						?>
+										</true>
+										<false>
+											<?php 
+											 /*---- keine Infos zum Podcaster vorhanden ------*/ 
+											?>
+											<check if="{{isset(@con.url)}}">
+                    							<true>
+                    								<?php 
+                    								 /*---- Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+                    								<a title="Das ist {{@con.name}}" alt="Blog von {{@con.name}}" href="{{@con.url}}">
+                    									<img class="img-con img-handy" alt="Das ist {{@con.name}}" src="{{@con.image}}">
+                    								</a>
+                    								<?php 
+                    								 /*---- //Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+												</true>
+												<false>
+													<?php 
+													 /*---- keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+														<img class="img-con img-handy" alt="Das ist {{@con.name}}" src="{{@con.image}}">
+													<?php 
+													 /*---- //keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+												</false>
+											</check>
+											<?php 
+											 /*---- //keine Infos zum Podcaster vorhanden ------*/ 
+											?>
+										</false>
+									</check>
+									<?php 
+									 /*---- //Avatar vorhanden ------*/ 
+									?>
+								</true>
+								<false>
+									<?php 
+									 /*---- kein Avatar vorhanden ------*/ 
+									?>
+									<check if="{{isset(@con.description)}}">
+                    					<true>
+                    						<?php 
+                    						 /*---- Desc. zum Podcaster vorhanden ------*/ 
+                    						?>
+                    						<a id="firtz-podcaster-infos" class="firtz-text-middle" title="Das ist {{@con.name}}" alt="Avatar von {{@con.name}}" data-firtz-toggle="{target:'.my', animation:'firtz-animation-slide-left, firtz-animation-slide-bottom'}">
+                    							<img alt="Leider hat {{@con.name}} kein Avatar"  class="img-con img-handy" src="{{@BASEURL}}/ext/contributors/avatar.png">
+                    						</a>
+                    						<?php 
+                    						 /*---- Desc. zum Podcaster vorhanden ------*/ 
+                    						?>
+										</true>
+										<false>
+											<?php 
+											 /*---- keine Desc.  zum Podcaster vorhanden ------*/ 
+											?>
+											<check if="{{isset(@con.url)}}">
+                    							<true>
+                    								<?php 
+                    								 /*---- Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+                    								<a title="Das ist {{@con.name}}" alt="Blog von {{@con.name}}" href="{{@con.url}}">
+                    									<img alt="Leider hat {{@con.name}} kein Avatar" class="img-con img-handy" src="{{@BASEURL}}/ext/contributors/avatar.png">
+                    								</a>
+                    								<?php 
+                    								 /*---- //Blog URL des Podcaster vorhanden ------*/ 
+                    								?>
+												</true>
+												<false>
+													<?php 
+													 /*---- keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+													<img alt="Leider hat {{@con.name}} kein Avatar" class="img-con img-handy" src="{{@BASEURL}}/ext/contributors/avatar.png">
+													<?php 
+													 /*---- //keine Blog URL des Podcaster vorhanden ------*/ 
+													?>
+												</false>
+											</check>
+											<?php 
+											 /*---- //keine Desc.  zum Podcaster vorhanden ------*/ 
+											?>
+										</false>
+									</check>
+									<?php 
+									 /*---- //kein Avatar vorhanden ------*/ 
+									?>
+								</false>
+							</check>
+						</td>
+						<td>
+							<check if="{{isset(@con.description)}}">
+                				<true>
+                 					<h4 class="firtz-contributors-handy-header"><a id="firtz-podcaster-infos" class="firtz-text-middle" title="{{@con.name}}" alt="{{@con.name}}">{{@con.name}}</a></h4>
+                 					{{@con.description}}
+								</true>
+								<false>
+									<span class="firtz-text-middle">{{@con.name}}</span>
+								</false>
+							</check>                           
+       					</td>
+					</tr>
+					<tr class="firtz-contributors-line firtz-contributors-line-bottom firtz-contributors-tab-bottom">
+						<td class="firtz-text-middle">
+							<check if="{{isset(@con.flattr)}}">
+               					<iframe src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;url={{@item.flattrlink | raw}}/{{@nick}}&amp;title={{@item.flattrtitle | raw}}&amp;popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+							</check>
+						</td>
+						<td class="firtz-text-middle">
+							<check if="{{isset(@con.twitter)}}">
+								<a class="firtz-button cont-twitter" href="https://twitter.com/{{@con.twitter}}"><span class="fa fa-twitter"></span></a>
+							</check>
+							<check if="{{isset(@con.adn)}}">
+								<a class="firtz-button cont-adn" href="https://alpha.app.net/{{@con.adn}}"><span class="fa fa-adn"></span></a>
+							</check>
+							<check if="{{isset(@con.mail)}}">
+								<a class="firtz-button cont-mail" href="mailto:{{@con.mail}}"><span class="fa fa-envelope"></span></a>
+							</check>
+							<check if="{{isset(@con.url)}}">
+								<a class="firtz-button cont-url" href="{{@con.url}}"><span class="fa fa-globe"></span></a>
+							</check>
+						</td>
+					</tr>
+     			</repeat>
+			</tbody>
+     	</table>
+     	<?php 
+     	 /*---------- //phone view ---------*/ 
+     	?>
+</check>

@@ -1,0 +1,31 @@
+<style type="text/css">
+	.adnthread {background-color:none;}
+	.adnpost {padding:10px;margin-top:0px !important;display:block;clear:both;margin-bottom:10px !important;}
+	.adncontent {margin-left:70px}
+	.adntext a {font-weight:bold}
+	.adntext {padding-bottom:1em}
+	.adntime {font-weight:bold}
+	.adnfirst {}
+	.adnpic {display:block;margin-right:10px;}
+	.adnhead a {font-weight:bold;}
+</style>
+<repeat group="{{@adnposts}}" value="{{@post}}" key="{{@key}}">
+	<div class="well well-small adnpost<check if="{{@key}}"><false> adnfirst</false></check>">
+		<div class="adnpic">
+			<a class="pull-left" href="https://alpha.app.net/{{@post.user.username}}/">
+			<img class="" src="{{@post.user.avatar_image.url}}" width=57></a>
+		</div>
+		<div class="adncontent">
+		<div class="adnhead"><a href="https://alpha.app.net/{{@post.user.username}}/">{{@post.user.username}}</a></div>
+			<div class="adntext">{{@post.html | raw}}</div>
+				<div class="">
+					<small>
+					<span>
+					<a title="{{@post.created_at}}" href="https://alpha.app.net/{{@post.user.username}}/post/{{@post.id}}">
+					<i class="icon-time"></i>{{@firtz->time_difference(@post.created_at)}}</a>
+					&nbsp;<a title="{{@dict_reply}}" href="https://alpha.app.net/{{@post.user.username}}/post/{{@post.id}}"><i class="icon-share-alt"></i>{{@dict_reply}}
+					</small>
+				</div>
+			</div>
+		</div>
+</repeat>

@@ -1,0 +1,9 @@
+<check if="{{isset(@item.contributors_data)}}">
+	<repeat group="{{@item.contributors_data}}" value="{{@con}}" key="{{@nick}}">
+		<atom:contributor>
+			<atom:name>{{@con.name}}</atom:name>
+			<check if="{{@con.url}}"><atom:uri>{{@con.url}}/</atom:uri></check>
+			<check if="{{@con.mail}}"><atom:email>{{@con.mail}}/</atom:email></check>
+		</atom:contributor>
+	</repeat>
+</check>
