@@ -442,18 +442,20 @@
 				 		 	  *	@class firtz-panel
 				 		 	  */ 
 							?>
-                            <li>
+                           <check if="{{@feedattr.flattrid}}">
+
+				 <li>
         					  <div class="firtz-panel">
         						<h5 align="center" style="font-size: 17px; line-height: 10px;" class="firtz-panel-title"><b>Unterstützen</b></h5>
 					 			<center>Dies ist ein kostenloser Podcast. Du kannst {{@feedattr.title}} über Flattr unterstützen. So bleibt das Angebot weiterhin am Leben.</center>
 					 		   <br>
         						<div align="center">
-        							<check if="{{@feedattr.flattrid}}">
 										<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
-									</check>
 								</div>
         					  </div>
                             </li>
+				</check>
+
                         	<?php 
 						 	  /*--------- //flattr infos -------*/ 
 							?>
