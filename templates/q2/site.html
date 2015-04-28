@@ -755,9 +755,9 @@
 			 * 	@info zeigt Weiter und Zurück Buttons auf der Homesite an.
 			 */
 			?>
+			
 			<check if="{{@page!=0}}">
     			<check if="{{@page>1}}">
-					<true>
 					<ul class="firtz-breadcrumb" id="pagi_right" 
 					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-right', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
 						<li> 
@@ -766,16 +766,9 @@
 						 </a>
 						</li>
 					</ul>
-					</true>
-					<false>
-					<ul class="firtz-breadcrumb" id="pagi_right-false" 
-					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-right', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
-						<li>{{@dict_newer}}</li>
-					</ul>
-					</false>
+					
 				</check>
     			<check if="{{@page<@maxpage}}">
-					<true>
 					<ul class="firtz-breadcrumb" id="pagi_left" 
 					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-left', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
 						<li> 
@@ -784,13 +777,7 @@
 						 </a>
 						</li>
 					</ul>
-					</true>
-					<false>
-					<ul class="firtz-breadcrumb" id="pagi_left-false" 
-					<check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-left', <check if="{{@templatevars.repeat == 'on'}} ">repeat: true</check><check if="{{@templatevars.repeat == 'off'}} ">repeat: false</check>}"</check>>
-						<li>{{@dict_older}}</li>
-					</ul>
-					</false>
+					
 				</check>
 			</check>
 			<?php
