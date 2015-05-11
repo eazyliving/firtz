@@ -413,7 +413,10 @@
 			foreach ($this->episodes as $key=>$episode) {
 				
 				if ($main->get('search')!="") {
-					if (!in_array(trim($main->get('search')),explode(",",$episode->item['keywords']))) {
+					if (
+						!in_array(trim($main->get('search')),explode(",",$episode->item['keywords'])) &&
+						strpos(strtolower($episode->item['title']),strtolower($main->get('search'))) === false
+					) {
 						unset($this->episodes[$key]);
 						continue;
 					}
