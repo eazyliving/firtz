@@ -54,7 +54,7 @@ version="2.0">
 		<itunes:summary>{{@feedattr.summary | raw}}</itunes:summary>
 		<itunes:image href="{{@feedattr.image}}" />
 		<itunes:subtitle>{{@feedattr.description | raw}}</itunes:subtitle>
-		<itunes:keywords>{{@feedattr.keywords | raw}}</itunes:keywords>
+		<itunes:keywords>{{ htmlspecialchars(@feedattr.keywords)}}</itunes:keywords>
 		<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 		<language>{{@feedattr.language}}</language>
 	
@@ -122,9 +122,9 @@ version="2.0">
 				<check if="{{@item.image}}">
 					<itunes:image href="{{@item.image}}" />
 				</check>
-				<itunes:subtitle>{{ htmlspecialchars(@item.description)}}</itunes:subtitle>
-				<itunes:summary>{{ htmlspecialchars(@item.summary)}}</itunes:summary>
-				<itunes:keywords>{{@item.keywords | raw}}</itunes:keywords>
+				<itunes:subtitle>{{htmlspecialchars(@item.description)}}</itunes:subtitle>
+				<itunes:summary>{{htmlspecialchars(@item.summary)}}</itunes:summary>
+				<itunes:keywords>{{htmlspecialchars(@item.keywords)}}</itunes:keywords>
 				<itunes:author>{{@feedattr.author | raw}}</itunes:author>
 				<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 			</check>
