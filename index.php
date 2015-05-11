@@ -418,6 +418,36 @@ $main->route('GET|HEAD /@feed/show/search/@tag',
 
 );
 
+$main->route('GET|HEAD /@feed/show/search/@tag/@audio',
+	function ($main,$params) {
+		$slug = $params['feed'];
+		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
+		
+		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
+		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
+		if ($params['tag']=="") $main->reroute('/'.$slug.'/show');
+		$main->set('search',$params['tag']);
+		$feed = new feed($main,$slug,$FEEDCONFIG);
+		
+		$main->set('audio',$params['audio']);
+
+		$feed->findEpisodes();
+		$feed->loadEpisodes();
+		if ($feed->attr['rfc5005']=="on") {
+			$main->set('rfc5005','on');
+			$main->set('maxpage',ceil(sizeof($feed->episodes) / 10) );
+			$feed->episodes = array_slice($feed->episodes,0,10);
+		}
+		
+		
+		$feed->renderRSS2($params['audio']);
+		
+	}, $main->get('CDURATION')
+
+);
+
+
+
 $main->route('GET|HEAD /@feed/show/@epi/@ignore',
 	function ($main,$params) {
 		$slug = $params['feed'];
