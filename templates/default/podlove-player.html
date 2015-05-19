@@ -1,15 +1,8 @@
 	<p>
-<<<<<<< HEAD:templates/default/podlove-player.html
 	<!-- {{@mf=''}} -->
 	<repeat group="@item.audiofiles" value="@audio" key="{{@audiotype}}">
 		<check if="({{substr(@audio.type,0,5)}}=='audio' || {{substr(@audio.type,0,5)}}=='video') && {{@mf==''}}">
 			<!-- set main display type to the first playable mediatype:	 {{@mf=substr(@audio.type,0,5);}} -->
-=======
-	<!-- {{@mf='';}} -->
-	<repeat group="@item.audiofiles" value="@audio" key="{{@audiotype}}">
-		<check if="({{substr(@audio.type,0,5)}}=='audio' || {{substr(@audio.type,0,5)}}=='video') && {{@mf==''}}">
-			<!-- set main display type to: {{@mf=substr(@audio.type,0,5);}} -->
->>>>>>> origin/master:templates/podlove-player.html
 		</check>
 	</repeat>
 	

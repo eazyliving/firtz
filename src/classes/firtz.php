@@ -15,13 +15,8 @@
 		function __construct($main) {
 			
 			$this->markdown = new Markdown();
-<<<<<<< HEAD:src/classes/firtz.php
 			$this->main = $main;
 			$this->BASEURL =$main->get('scheme').'://'.$main->get('HOST');
-=======
-
-			$this->BASEURL = $main->get('scheme')."://".$main->get('HOST');
->>>>>>> origin/master:classes/firtz.php
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';
 
 			if (dirname($_SERVER['SCRIPT_NAME']) != "/") $this->BASEURL.=trim(dirname($_SERVER['SCRIPT_NAME']),"/");

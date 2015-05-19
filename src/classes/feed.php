@@ -139,19 +139,11 @@
 			
 			/* fishy - might take a look into that */
 			if ($main->get('clonemode')===false) {
-<<<<<<< HEAD:src/classes/feed.php
 				$attr['baserel']=$main->fixslashes($main->get('scheme').'://'.$main->get('HOST').'/'.$slug.'/');
 				$attr['instacast']=$main->fixslashes('podcast://'.$main->get('HOST').'/'.$slug);
 			} else {
 				$attr['baserel']=$main->fixslashes($attr['cloneurl'].$slug.'/');
 				$attr['instacast']=str_replace($main->get('scheme').'://','podcast://',$main->fixslashes($attr['cloneurl'].$slug));
-=======
-				$attr['baserel']=$main->fixslashes($main->get('scheme') . '://'.$main->get('HOST').'/'.$slug.'/');
-				$attr['instacast']=$main->fixslashes('podcast://'.$main->get('HOST').'/'.$slug);
-			} else {
-				$attr['baserel']=$main->fixslashes($attr['cloneurl'].$slug.'/');
-				$attr['instacast']=str_replace($main->get('scheme')."://","podcast://",$main->fixslashes($attr['cloneurl'].$slug));
->>>>>>> origin/master:classes/feed.php
 			}
 			
 			if (file_exists(dirname($configfile)."/".$slug.".css")) {
@@ -631,15 +623,10 @@
 				#$item['description'] = str_replace("&","&amp;amp;",$item['description']);
 				#$item['summary'] = str_replace("&","&amp;",$item['summary']);
 				if (version_compare(PHP_VERSION, '5.4.0') >= 0) $item['title']=htmlentities($item['title'],ENT_XML1);
-<<<<<<< HEAD:src/classes/feed.php
 				#str_replace(array("&","\""),array("&amp;amp;","&amp;quot;"),$chapter['title'])
-=======
-				
->>>>>>> origin/master:classes/feed.php
 				$items[]=$item;
 			
 			}
-			
 			$main->set('items',$items);
 			
 			/*	render or return template 
