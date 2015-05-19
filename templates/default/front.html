@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ @frontlanguage }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{@fronttitle}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="{{@frontauthor}}">
+
+
+    <link href="{{@BASEURL}}css/bootstrap.min.css" rel="stylesheet">
+	
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      } 
+    </style>
+    <link href="{{@BASEURL}}css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="./favicon.png">
+	</head>
+
+	<script src="{{@BASEURL}}js/jquery.js"></script>
+
+ 
+  <body>
+
+    <div class="container-narrow">
+		<h2>This site hosts the following podcasts</h2>
+		<div class="row-fluid marketing">
+
+		<repeat group="@frontfeeds" value="@feed">
+
+			<div class="media">
+				<a target="_blank" class="pull-left" href="{{@feed.baseurl}}/{{@feed.slug}}/show/">
+					<img class="media-object" src="{{@feed.image}}" width=100>
+				</a>
+				<div class="media-body">
+					<h2><a target="_blank" href="{{@feed.baseurl}}/{{@feed.slug}}/show/">{{@feed.title}}</a></h2>
+					<h4>{{@feed.description}}</h4>
+				</div>
+			</div>
+			<hr>
+		</repeat>
+
+		</div>
+		<div class="footer">
+		</div>
+    </div>
+    
+	
+  </body>
+</html>

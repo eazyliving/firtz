@@ -1,0 +1,141 @@
+<check if="{{@templatevars.psb == 'on'}} "><check if="{{@templatevars.color}}"><style>
+/** 
+ *	Podlove Sub-Button CSS-Hacks 
+ *	@design QuorX II
+ *	@dev Michael McCouman Jr.
+ *	@function pbs on/off
+ *	@date 19.04.2015
+ *	@version 2.0 Free
+*/
+#podlove-subscribe-popup #podlove-subscribe-popup-modal {
+	padding: 0px 0px 30px !important;
+	border-radius: 0px !important;
+  	box-shadow: 0 0 58px 0 {{@templatevars.dark}} !important;
+}
+div#podlove-subscribe-panel-finish div h1 {
+  	line-height: 30px !important;
+}
+div.podlove-subscribe-button-help-panel-content h2 {
+	color: {{@templatevars.color}};
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .device-cloud-switch button.active {
+  	background: {{@templatevars.dark}} !important;
+  	color: #FFF;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .device-cloud-switch button {
+  	border: 1px solid {{@templatevars.dark}} !important;
+  	color: {{@templatevars.dark}} !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .device-cloud-switch button.active {
+	color: #FFF !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .top-bar .podlove-subscribe-back-button {
+  	margin-top: -7px !important;
+  	margin-left: 2px !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-popup-close-button, 
+#podlove-subscribe-popup #podlove-subscribe-popup-help-button {
+  	background: #FFF !important;
+  	border-radius: 0px !important;
+  	color: #1A1A1A !important;
+  	cursor: pointer !important;
+  	font-size: 41px !important;
+  	line-height: 18px! important;
+  	padding: 11px 10px 11px 9px !important;
+  	position: absolute !important;
+  	right: 0px !important;
+  	top: 10px !important;
+ 	z-index: 10 !important;
+  	margin-top: -10px !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-popup-help-button {
+  	font-size: 25px !important;
+  	font-weight: 700!important;
+  	left: 15px !important;
+  	padding-left: 18px !important;
+  	padding-top: 11px !important;
+  	width: 22px !important;
+  	margin-left: -15px !important;
+  	padding-right: 27px !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-podcast .top-bar, 
+#podlove-subscribe-popup #podlove-subscribe-panel-format .top-bar, 
+#podlove-subscribe-popup #podlove-subscribe-panel-type .top-bar, 
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .top-bar, 
+#podlove-subscribe-popup #podlove-subscribe-panel-finish .top-bar {
+  	background: #FFF !important;
+  	color: #222 !important;
+  	font-size: 18px !important;
+  	font-weight: 300 !important;
+  	height: 41px !important;
+  	left: 0 !important;
+  	padding: 7px 0 0 0px !important;
+  	position: absolute !important;
+  	text-align: center !important;
+  	top: 0px !important;
+  	width: 100% !important;
+  	z-index: 1 !important;
+  	border-bottom: 1px solid #EEE !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-podcast .top-bar .podlove-subscribe-back-button, 
+#podlove-subscribe-popup #podlove-subscribe-panel-format .top-bar .podlove-subscribe-back-button, 
+#podlove-subscribe-popup #podlove-subscribe-panel-type .top-bar .podlove-subscribe-back-button, 
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .top-bar .podlove-subscribe-back-button{
+  	padding: 15px;
+  	font-size: 39px !important;
+  	margin-left: 11px;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .top-bar .podlove-subscribe-back-button{
+	top: -3px !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-finish .top-bar .podlove-subscribe-back-button {
+  	padding: 15px;
+  	font-size: 39px !important;
+  	margin-left: 0px;
+  	margin-top: -8px !important; /*#fixed 2145 - windows*/
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-podcast, 
+#podlove-subscribe-popup #podlove-subscribe-panel-format, 
+#podlove-subscribe-popup #podlove-subscribe-panel-type, 
+#podlove-subscribe-popup #podlove-subscribe-panel-clients, 
+#podlove-subscribe-popup #podlove-subscribe-panel-finish {
+  	background-color: #F7F7F7 !important;
+}
+@media (max-width: 767px) {
+	#podlove-subscribe-popup #podlove-subscribe-popup-modal {
+		padding: 0px !important;
+  		background-color: #fff !important;
+  		border-radius: 0px !important;
+  		box-shadow: 0 0 5px 0 #FFF !important;
+  		height: inherit !important;
+  		margin: 0 !important;
+		padding: 0px 0px 31px !important;
+  		overflow: hidden !important;
+  		position: initial !important;
+  		/*top: 50% !important; fixed*/
+  		top: 0% !important;
+  		width: 100% !important;
+	}
+	
+	#podlove-subscribe-popup #podlove-subscribe-popup-modal .podlove-logo {
+  		border-top: 1px solid #EEE !important;
+  	}	
+}
+#podlove-subscribe-popup #podlove-subscribe-button-help-panel {
+  	background: rgba(249, 249, 249, 0.98) !important;
+  	color: #000 !important;
+}
+#podlove-subscribe-popup #podlove-subscribe-panel-podcast .top-bar img, 
+#podlove-subscribe-popup #podlove-subscribe-panel-format .top-bar img, 
+#podlove-subscribe-popup #podlove-subscribe-panel-type .top-bar img, 
+#podlove-subscribe-popup #podlove-subscribe-panel-clients .top-bar img, 
+#podlove-subscribe-popup #podlove-subscribe-panel-finish .top-bar img {
+  	opacity: 9 !important;
+  	background: {{@templatevars.color}} !important;
+  	padding: 4px !important;
+  	border-radius: 50% !important;
+}
+#podlove-subscribe-popup {
+  background: rgba(34, 34, 34, 0.8) !important;
+}
+</style></check></check>

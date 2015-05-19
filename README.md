@@ -1,11 +1,8 @@
-Mit der 1.4 vom 21.9.2014 benötigt firtz php 5.4.0 oder höher. Da diese Version über zwei Jahre alt ist, sollte das eigentlich kein Problem darstellen. Wer drunter ist, der hat ganz andere Probleme. Also seht zu, dass Ihr das auf 5.5.x bekommt.
-
-
 #firtz
 
 
 *firtz podcast publisher*  
-*Version 1.4*
+*Version 2.0*
 
 ## Über
 
@@ -92,7 +89,7 @@ Wenn Du mehrere Audioformate nutzt, kannst Du auch z.B.
 
 Eine Webseite gibt's als Bonus. Die kannst Du für diesen Feed so erreichen: `http://tollerneuerpodcast.de/demo/show`
 
-Für jede Episode gibt's dann einen eigenen [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player), [flattr](http://flattr.com)-Buttons und auch einen [disqus](http://disqus.com)-Thread, so denn disqus in der Konfiguration des Feeds angegeben wurde.
+Für jede Episode gibt's dann einen eigenen [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) und [flattr](http://flattr.com)-Buttons.
 
 Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (praktisch der Dateiname ohne Endung) angehangen wird: `http://tollerneuerpodcst.de/demo/show/001`.
 
@@ -194,7 +191,8 @@ When you're using several audio formats you also can use:
 
 `http://mynewsuperawesomepodcast.de/feed/mp3`
 
-As a bonus a website will be generated. For this feed you can access it via: `mynewsuperawesomepodcast.de/feed/show`. Each episode has its own [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player), [flattr](http://flattr.com) buttons and a [disqus](http://disqus.com) thread as long as it is specified in the configuration of the feed. 
+As a bonus a website will be generated. For this feed you can access it via: `mynewsuperawesomepodcast.de/feed/show`. Each episode has its own [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) and [flattr](http://flattr.com) buttons.
+
 Single episodes are also linkable just by adding the slug of the episode (the file name without the suffix): 
 `mynewsuperawesomepodcast.de/demo/show/001`
 

@@ -1,0 +1,32 @@
+	<!-- {{@mf=''}} -->
+	<repeat group="@item.audiofiles" value="@audio" key="{{@audiotype}}">
+		<check if="({{substr(@audio.type,0,5)}}=='audio' || {{substr(@audio.type,0,5)}}=='video') && {{@mf==''}}">
+			<!-- set main display type to the first playable mediatype:	 {{@mf=substr(@audio.type,0,5);}} -->
+		</check>
+	</repeat>
+	
+	<{{@mf}} id="player-{{@item.slug}}" preload="none">
+		<repeat group="@item.audiofiles" value="@audio" key="{{@audiotype}}">
+			<check if="{{substr(@audio.type,0,5)}}=='audio' || {{substr(@audio.type,0,5)}}=='video'">
+				<source src="{{@audio.link}}" type="{{@audio.type}}"></source>
+			</check>
+		</repeat>
+	</{{@mf}}>
+
+	<script>
+		$(document).ready( function() {
+			jQuery('#player-{{@item.slug}}').podlovewebplayer({
+				title: '{{@item.title}}',
+				permalink: '{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}',
+				duration: '{{@item.duration}}',
+				alwaysShowHours: true,
+				startVolume: 0.8,
+				preload: 'none',
+				width: '320',
+				summaryVisible: false,
+				timecontrolsVisible: false,
+				pluginPath: '../../pwp/static/',
+				chaptersVisible: false,
+			});
+		});
+	</script>

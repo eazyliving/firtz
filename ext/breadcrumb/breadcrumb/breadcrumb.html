@@ -1,0 +1,17 @@
+<ul class="firtz-breadcrumb" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-slide-top', repeat: false}"</check>>
+	<li><a href="{{@BASEURL}}">Home</a></li>		
+	<check if="{{@search}}">
+		<li>{{@dict_searchtext}}: {{@search}}</li>
+	</check>			
+	<check if="{{!@showpage}}">
+		<true>
+			<repeat group="@items" value="{{@item}}">
+				<check if="{{@singlepage==true}}"><li>{{@item.title}}</li></check>
+				<check if="{{@showpage}}"><li> {{basename(@showpage,'.html')}} </li></check>
+			</repeat>
+		</true>
+		<false>
+			<check if="{{@showpage}}"><li> {{basename(@showpage,'.html')}} </li></check>
+		</false>
+	</check>
+</ul>

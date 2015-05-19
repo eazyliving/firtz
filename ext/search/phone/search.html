@@ -1,0 +1,15 @@
+<li class="firtz-handy-search">
+   	<div class="firtz-panel firtz-search-device">
+    <form action="{{@BASEURL}}ext/search/search.php" method="get">
+       <input type="text" style="display:none;" value="{{@BASEURL}}{{@feedattr.slug}}" name="r">
+    	<div class="firtz-grid">
+   			<div class="firtz-width-7-10">
+    			<input class="firtz-search-field firtz-form-width-small" type="text" value="" name="s" placeholder="{{@dict_searchtext}}..." autocomplete="off">
+    		</div>
+    		<div class="firtz-width-3-10">
+    			<button class="tagsearch firtz-button-search" type="submit"><i style="margin-left: -7px;" class="firtz-icon-search"></i></button>
+    		</div>
+		</div>
+    </form>
+   </div>
+</li>

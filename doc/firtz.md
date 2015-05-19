@@ -247,7 +247,8 @@ entweder yes oder no, wirkt sich vor allem auf iTunes aus.
 Ist der Podcast bereits bei iTunes erreichbar, steht hier der komplette Link zur iTunes-Seite. (firtz: [https://itunes.apple.com/de/podcast/firtz/id604449399](https://itunes.apple.com/de/podcast/firtz/id604449399))
   
 **disqus:**  
-Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter [http://disqus.com/for-websites/](http://disqus.com/for-websites/) und [https://disqus.com/admin/signup/](https://disqus.com/admin/signup/)
+~~Disqus stellt externe Kommentarfunktionen zur Verfügung, ohne dass man sich um Datenbanken und Nutzerverwaltung kümmern muss. Hier den Forenname eintragen, damit auf den Webseiten des Feeds Kommentarfunktionen freigeschaltet werden. Nähere Informationen dazu finden sich unter [http://disqus.com/for-websites/](http://disqus.com/for-websites/) und [https://disqus.com/admin/signup/](https://disqus.com/admin/signup/)~~
+Disqus wurde mit Version 2.0 aus der Standarddistribution herausgenommen. Disqus ist nun eine Extension, die Ihr Euch im [Repository der Extensions](https://github.com/eazyliving/firtz-extensions/) besorgen könnt.
  
 **bitlove:**  
 Wenn Du bei [bitlove](http://bitlove.org) Deine Feeds torrentifizierst, kannst Du hier - allerdings ausschließlich für das Webseitentemplate - Downloadlinks dafür konfigurieren. Das Format sieht wie folgt aus:
@@ -431,11 +432,11 @@ http://supicast.de/supicast/show/001
 
 wenn die Episode den Slug 001 (Dateiname: *001.epi*) trägt. So kannst Du auch an beliebigen Stellen im Netz auf diese Folge verweisen.
 
-Seitenpaginierung mit einer bestimmten Menge an Episoden existiert noch nicht, wird aber bis Version 1.0 implementiert.
+Wenn Dein Podcast schon viele Episoden hat, gibt es auch eine Paginierung. Wieviele Episoden auf einer Seite zu finden sind, gibst Du mittels des Attributes **articles-per-page:** an. Default ist hier, drei Episoden anzuzeigen.
 
 #### Die Seite modifizieren
 
-Wesentlichen Beitrag zum Aufbau und Aussehen der Seite leisten [bootstrap](http://twitter.github.com/bootstrap/) für die Gestaltung, der [podlove webplayer](https://github.com/gerritvanaaken/podlove-web-player) für den Audioplayer und die Template-Engine des [fatfree frameworks](https://github.com/bcosca/fatfree).
+Wesentlichen Beitrag zum Aufbau und Aussehen der Seite leistete bis Version 2.0 [bootstrap](http://twitter.github.com/bootstrap/) für die Gestaltung, Seit der 2.0 nutze ich [quorx](https://github.com/McCouman/Firtz-QuorX-Design/tree/master/Firtz_Quorx). Darüber hinaus findet der [podlove webplayer](https://github.com/gerritvanaaken/podlove-web-player) für den Audioplayer und die Template-Engine des [fatfree frameworks](https://github.com/bcosca/fatfree) Anwendung.
 
 Wenn Du also am Aussehen der Seite schrauben willst, wirst Du eine oder mehrere dieser Komponenten zumindest in Ansätzen kennen und verstehen müssen. Schaue Dir das Seitentemplate an, ich glaube, der Aufbau erschließt sich dem halbwegs ambitionierten Amateur von selbst.
 
@@ -473,17 +474,26 @@ Klickt der Besucher Deiner Seite auf diesen Menüpunkt, gelangt er zur URL `http
 
 Um dem ganzen etwas Struktur zu geben, ist es möglich, Unterordner in pages/ anzulegen. Diese ergeben dann im Kopf der Seite ein Dropdown-Menu. Verschachtelte Ordnerstrukturen sind nicht möglich. Der Name des Ordners wird als Titel des Dropdownmenus gesetzt.
 
-Gestaltungsänderungen sind auch möglich, ohne gleich wahnsinnig zu werden. Für den ganzen CSS-Kram wird bootstrap genutzt. Für bootstrap gibt es ein paar freie Themes, die Du auf zwei Arten in das System hineinbringen kannst:
+Templates sind seit Version 2.0 durch Child-Themes ersetzbar. Im Grunde ist dies nichts als ein "Zwei-Ordner"-Prinzip. Es gibt einen default-Theme Ordner, in dem sich ein voll funktionsfähiges Template befindet. In einem zweiten Ordner, den Ihr in der *feed.cfg* mittels **template:** angegeben könnt (bitte nur den Ordnernamen, firtz sucht diesen dann unter *template/*), könnt Ihr Dateien werfen, die Dateien des default-Themes ersetzen sollen. Das wird im Wesentlichen die site.html sein.
 
-**Austausch der Standard CSS-Datei:**  
-Die findet sich im Ordner css. Eigentlich sind es zwei Dateien, einmal für den Desktop, einmal als responsive Version für mobile Geräte. Auf z.B. [Bootswatch](http://bootswatch.com/) oder auch bei [bootstrap selbst](http://twitter.github.com/bootstrap/getting-started.html#examples) gibt es freie Themes, die genutzt werden können.
+Zusätzlich kann sich im Template-Ordner eine template.cfg befinden, in der Ihr bestimmte Variablen setzen könnt, die innerhalb des Templates genutzt werden können:
 
-Lade die entsprechenden CSS-Dateien herunter und ersetze die Standard-Dateien. Diese Dateien gelten für alle angelegten Podcasts!
+`color #555
+dark #333
+light #aaa`
 
-**Individuelle Styles für einen Podcast:**  
-Wenn Du nur einem Podcast eine bestimmte Gestaltung zukommen lassen möchtest, dann lege die CSS-Datei in den Ordner mit der Feedkonfiguration des Podcasts und nenne sie <feed-slug>.css. In unserem SupiCast-Beispiel hieße die Datei also supicast.css.
+z.B. definiert drei Variablen mit den Namen color, dark und light, die dann in ein Array geworfen werden. Dieses könnt Ihr im Template mittels @templatevars erreichen. Um also z.B. dark ins Template einzufügen braucht's dann nur noch z.B.:
 
-Findet firtz eine solche Datei, wird diese anstelle der Standard-Datei genutzt. Zusätzlich kannst (und solltest) Du eine responsive-Datei nutzen, die dann supicast-responsive.css heißen muss.
+`<span 'style=color:{{@templatevars.dark}}'>`
+
+Wer auf die template.cfg verzichten möchte, kann die Variablen auch in der feed.cfg unterbringen:
+
+**template-vars:**
+`color #555
+dark #333
+light #aaa`
+
+Alles klar? Nicht? Naja, Ihr wisst schon...
 
 So viel (oder wenig) zur Webseite. Naturgemäß liegt hier das größte Potential für die Individualisierung Deines Podcasts, Feeds sehen schließlich immer gleich aus. Wenn Du weißt, was zu tun ist und Spaß an solchen Sachen hast, wird Dir die Standard-Template-Datei sicher hilfreich sein, das System zu verstehen.
 
@@ -514,7 +524,7 @@ Nehmen wir mal an, Du hast alle für Auphonic nötigen Grundvoraussetzungen erf�
 ### Komm zur Sache!
 Nun muss firtz eigentlich nichts von Auphonic wissen. Wenn in einer episoden-Datei die URL zu den Audiodateien stecken, reicht das im Grunde.
 
-Wenn Du aber, wie ich, zu den extrem Faulen Zeitgenossen gehörst oder einfach einen automatischen Workflow bevorzugst, dann ist das Deine Chance!
+Wenn Du aber, wie ich, zu den extrem faulen Zeitgenossen gehörst oder einfach einen automatischen Workflow bevorzugst, dann ist das Deine Chance!
 
 Ich sag's direkt: Wenn Du nicht ein wenig Erfahrung im Umgang mit Servern und *nix hast, wird das hier nicht so ganz einfach. Vielleicht kann Dir jemand dabei helfen? Fragen kostet nichts!
 
@@ -538,15 +548,15 @@ Solche Attribute kannst Du in den Tags mitgeben. Das Format dafür sieht so aus:
 
 _attribut:Inhalt
 
-Unterstricht, Name, Doppelpunkt, Inhalt. Das wäre es schon. So kannst Du z.B. ein zukünftiges Publikationsdatum angeben:
+Unterstrich, Name, Doppelpunkt, Inhalt. Das wäre es schon. So kannst Du z.B. ein zukünftiges Publikationsdatum angeben:
 
-_date:2014-12-12 20:15:00
+_date:2014-12-31 20:15:00
 
 ####Dem firtz erklären, wo auphonic den Most holt
 
 Die im Abschnitt [Feed](#der-feed) erklärten Auphonic-Attribute sind von zentraler Bedeutung. Ich erwähne hier nur noch ein paar zusätzliche Kniffe und Bedingungen, die an erster Stelle etwas kurz gekommen sind.
 
-Bisher (v0.5) sind nur lokal zugängliche Auphonic-Daten für firtz interessant. Liegen die Dateien, die die Produktionen beschreiben auf einem anderen Server, der nicht über ein lokales Filesystem erreichbar ist, ist an dieser Stelle für Dich Schluss. Ich hoffe bis zur 1.0 den remote mode für Auphonic fertig zu haben.
+Bisher sind nur lokal zugängliche Auphonic-Daten für firtz interessant. Liegen die Dateien, die die Produktionen beschreiben auf einem anderen Server, der nicht über ein lokales Filesystem erreichbar ist, ist an dieser Stelle für Dich Schluss. Ich hoffte bis zur 1.0 den remote mode für Auphonic fertig zu haben, habe mich aber dagegen entschlossen. Hier wären Authentifizierung nötig und sowas will ich aus dem firtz heraus halten.
 
 Nehmen wir also an, die Dateien lägen auf dem gleichen Server wie der SupiCast und dort im Verzeichnis */home/supicast/audio/*. Nehmen wir weiterhin an, eine Episode mit dem slug 001 wäre über auphonic gelaufen und alle Dateien, die dazu gehören wären in diesem Ordner angekommen.
 
@@ -642,4 +652,4 @@ Cloning ist im Moment das jüngste Feature und weitgehend ungetestet. Ich habe d
 
 ## Ende gut alles gut?
 
-Ich bin an dieser Stelle mit der ersten, sehr groben Version der Dokumentation fertig. Es werden Lücken und Fehler enthalten sein, die über die Zeit ausgemerzt werden. Für Hilfe und Hinweise bin ich immer dankbar!
+Ich bin an dieser Stelle mit der Dokumentation fertig. Es werden Lücken und Fehler enthalten sein, die über die Zeit ausgemerzt werden. Für Hilfe und Hinweise bin ich immer dankbar!

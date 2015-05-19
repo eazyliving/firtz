@@ -11,3 +11,22 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule .* index.php [L,QSA]
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresDefault "access plus 7 days"
+  <FilesMatch "\.(css|jpg|jpeg|png|gif|js)$">
+  </FilesMatch>
+        Header append Vary User-Agent env=!dont-vary
+</IfModule>
+<IfModule mod_deflate.c>
+    <IfModule mod_headers.c>
+        Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+        AddOutputFilterByType DEFLATE text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/html text/richtext image/svg+xml te$
+    <IfModule mod_mime.c>
+        # DEFLATE by extension
+        AddOutputFilter DEFLATE js css htm html xml
+    </IfModule>
+</IfModule>
+

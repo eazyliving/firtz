@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{ substr(@feedattr.language,0,2) }}" dir="ltr">
+<head>
+	<!--page-metas-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--page title-->
+	<title>{{@feedattr.title}}<check if="{{@showpage}}"> - {{basename(@showpage,'.html')}}</check></title>
+    <meta name="description" content="{{@feedattr.description}}"/>
+    <meta name="author" content="{{@feedattr.author | raw}}"/>
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+	<link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@format}} Audio)" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+    <check if="{{@feedattr.image}}">
+      <meta property="og:image" content="{{@feedattr.image}}"/>
+    </check>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<check if="{{!@showpage}}"><true>{{@og.title}}</true><false>{{basename(@showpage,'.html')}}</false></check>"/>
+    <meta property="og:url" content="<check if="{{!@showpage}}"><true>{{@og.url}}</true><false>{{@BASEURL}}{{@feedattr.slug}}/show/page/{{basename(@showpage)}}</false></check>"/>
+    <meta property="og:site_name" content="{{@feedattr.title}}"/>
+    <check if="{{@og.audio}}">
+      <meta property="og:{{@og.audio.typename}}" content="{{@og.audio.url}}"/>
+      <meta propertyp="og:{{@og.audio.typename}}:type" content="{{@og.audio.type}}"/>
+    </check>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{@feedattr.image}}">
+    <link rel="apple-touch-icon-precomposed" href="{{@feedattr.image}}">
+    <link rel="shortcut icon" href="{{@BASEURL}}hoersuppe.png">
+	<repeat group="@feedattr.audioformats" value="{{@format}}">
+		<link rel="alternate" type="application/rss+xml" title="Podcast Feed: {{@feedattr.title}} {{@format}}" href="{{@feedattr.baserel}}{{@format}}{{@extxml}}" />
+	</repeat>
+    <!--quorx - css-->
+    <repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+		<repeat group="{{glob(@tpath.'/quorx/*.html')}}" value="{{@template}}">
+   	   		<include href="{{'quorx/'.basename(@template)}}"/>
+   		 </repeat>
+    </repeat>
+    
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="{{@BASEURL}}src/pwp/static/podlove-web-player.css" rel="stylesheet" media="screen" type="text/css" />
+	<!--quorx - js-->
+	<script src="{{@BASEURL}}/src/js/jquery.js"></script>
+	<!--[if lt IE 9]>
+  		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->	
+	<style type="text/css">
+		.podlovewebplayer_tableend,.podlovewebplayer_tableend:after {height:0px !important;}
+	</style>	
+		 	
+</head>
+<body  style="background-image:none;padding:0;margin:0;">
+
+	<div style="max-width:320px;margin:0;padding:0"
+		<repeat group="@items" value="{{@item}}">
+		<article class="uk-article" style="padding:0;margin:0;" id="article-{{@item.slug}}" data-permalink="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
+			<check if="{{@item.noaudio==''}}">
+				<include href="podlove-player-embed.html"/>
+			</check>
+		</article>
+		</repeat>
+	</div>
+	
+<script src="{{@BASEURL}}src/pwp/static/html5shiv.js"></script>	
+<script src="{{@BASEURL}}src/pwp/static/podlove-web-player.js"></script>
+
+</body>
+</html>
+

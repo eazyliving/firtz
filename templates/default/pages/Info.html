@@ -1,0 +1,26 @@
+		<div class="row-fluid marketing">
+			<h2>{{@feedattr.title}}</h2>
+			<p>{{@feedattr.description}}</p>
+			<p>{{@feedattr.summary}}</p>
+				<check if="{{@feedattr.author}}">
+					<p>Dieser Podcast wird produziert von {{@feedattr.author}}.</p>
+				</check>
+			<p>
+				<check if="{{@feedattr.email}}">
+					<div>Mail: <a href="mailto:{{@feedattr.email}}">{{@feedattr.email}}</a></div>
+				</check>
+				<check if="{{@feedattr.twitter}}">
+					<div>Twitter: <a href="https://twitter.com/{{@feedattr.twitter}}">@{{@feedattr.twitter}}</a></div>
+				</check>
+			</p>
+			<p>
+				Folgende Feeds dieses Podcasts können abonniert werden:
+				<repeat group="@feedattr.audioformats" value="{{@format}}">
+					<div><a href="{{@feedattr.baserel}}{{@format}}{{@extxml}}">{{@format}} ({{explode('/',@mimetypes[@format])[0]}})</a></div>
+				</repeat>
+			</p>
+			<hr>
+			<p>
+				Diese Seiten werden mit dem <a href="http://firtz.org">Podcastpublisher firtz</a> erzeugt.<br>
+			</p>
+		</div>

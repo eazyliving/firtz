@@ -1,0 +1,4 @@
+<atom:contributor>
+	<atom:name>{{@feedattr.author}}</atom:name>
+	<atom:uri>{{@BASEURL}}</atom:uri>
+</atom:contributor>
