@@ -317,12 +317,11 @@
 
 			if ($item['image']=="") $item['image']=$feedattrs['image'];
 			
-			if ($feedattrs['flattrid']!="") {
-				$item['flattrdescription'] = rawurlencode($item['description']);
-				$item['flattrkeywords'] = rawurlencode($item['keywords']);
-				$item['flattrlink'] = rawurlencode($item['pagelink']);
-				$item['flattrtitle'] = rawurlencode($item['title']);
-			}
+			$item['flattrdescription'] = rawurlencode($item['description']);
+			$item['flattrkeywords'] = rawurlencode($item['keywords']);
+			$item['flattrlink'] = rawurlencode($item['pagelink']);
+			$item['flattrtitle'] = rawurlencode($item['title']);
+		
 			
 			/* who says, chapters are in order? sort them! */
 			if ($item['chapters']) usort($item['chapters'],function ($a,$b) {return ($a['start']>$b['start']);} );
