@@ -34,11 +34,7 @@ $main->set('rfc5005','');
 $main->set('audio','');
 $main->set('search','');
 
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!="") {
-        $main->set('scheme','https');
-} else {
-        $main->set('scheme','http');
-}
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!="") $main->set('scheme','https'); else $main->set('scheme','http');
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
