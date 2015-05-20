@@ -421,6 +421,7 @@
 						continue;
 					}
 				}
+
 				# find last update time. cache stuff and feed info
 				$update = strtotime($episode->item['pubDate']);
 				if ($update>$lastupdate) $lastupdate = $update;
