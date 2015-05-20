@@ -66,6 +66,7 @@ Im Demo-Ordner sind zwei Dateien: `feed.cfg` und `001.epi`. Das nicht syntaktisc
 Attribute werden wie folgt notiert:
 
 `attribute:`
+
 `value`
 
 Achtet bitte darauf, dass die Attribut-Zeile alleine steht. Leerzeilen werden ignoriert, es sei denn, es geht um eine Textfeld wie summary.
