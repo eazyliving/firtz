@@ -2,7 +2,7 @@
 <div class="firtz-overflow-container">
 	
 	<h2>Das Podcastarchiv</h2>
-	<p>Dies sind alle bisher erschienenen Ausgaben von {{@feedattr.title}}. Bisher gibt es <b>{{sizeof(@items)}}</b> Episoden.</p>
+	<p>Dies sind alle bisher erschienenen Ausgaben von {{@feedattr.title}}. Bisher gibt es <b>{{sizeof(@items)}}</b><check if="{{sizeof(@items)}}>1"><true>Episoden</true><false> Episode</false></check>.</p>
 	
      <table class="firtz-table firtz-table-striped">
         <thead>
