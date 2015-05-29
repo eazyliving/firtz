@@ -649,15 +649,16 @@
 								<!--//article-player-->
 
 								<!--keywords-->
-								<check if="{{@item.keywords}}">
 									<div class="firtz-player-tag-border">
-										<repeat group="{{explode(',',@item.keywords)}}" value="{{@keyword}}">
+										<check if="{{@item.keywords}}">
+											<repeat group="{{explode(',',@item.keywords)}}" value="{{@keyword}}">
 											<a <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check> class=firtz-badge firtz-badge-grey" href="/{{@feedattr.slug}}/show/search/{{@keyword}}">
 												<i class="firtz-icon-tags"></i> {{@keyword}}
 											</a>
-										</repeat>
+											</repeat>
+										</check>
 									</div>
-								</check>
+
 								<!--//keywords-->
 							</div>
 					
