@@ -538,6 +538,7 @@ $main->route('GET|HEAD /@feed/show/page/@page',
 		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
 		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
 		$main->set('singlepage',true);
+		$main->set('pagename',$params['page']);
 		$feed = new feed($main,$slug,$FEEDCONFIG);
 		$feed->findEpisodes();
 		$feed->loadEpisodes();
