@@ -50,17 +50,19 @@ version="2.0">
 		<check if="{{@feedattr.itunesblock=='yes'}}">
 			<itunes:block>{{@feedattr.itunesblock}}</itunes:block>
 		</check>	
-		<itunes:author>{{@feedattr.author | raw}}</itunes:author>
-		<itunes:summary>{{substr(@feedattr.summary,0,4000) | raw}}</itunes:summary>
+		
+	
+		<itunes:author>{{@feedattr.author}}</itunes:author>
+		<itunes:summary>{{substr(@feedattr.summary,0,4000)}}</itunes:summary>
 		<itunes:image href="{{@feedattr.image}}" />
-		<itunes:subtitle>{{htmlspecialchars(substr(@feedattr.description,0,255))}}</itunes:subtitle>
-		<itunes:keywords>{{htmlspecialchars(substr(@feedattr.keywords,0,255))}}</itunes:keywords>
+		<itunes:subtitle>{{substr(@feedattr.description,0,255)}}</itunes:subtitle>
+		<itunes:keywords>{{substr(@feedattr.keywords,0,255)}}</itunes:keywords>
 		<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 		<language>{{@feedattr.language}}</language>
 	
 		<itunes:owner>
-			<itunes:email>{{@feedattr.email | raw}}</itunes:email>
-			<itunes:name>{{@feedattr.author | raw}}</itunes:name>
+			<itunes:email>{{@feedattr.email}}</itunes:email>
+			<itunes:name>{{@feedattr.author}}</itunes:name>
 		</itunes:owner>
 		<check if="{{@feedattr.categories}}">
 			<repeat group="@feedattr.categories" value="@category">
@@ -100,16 +102,9 @@ version="2.0">
 				<check if="{{@item.chapters}}">
 				<psc:chapters version="1.1">
 				<repeat group="@item.chapters" value="@chapter">
-					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title | raw}}"
-					<check if="{{@chapter.href}}">
-						<check if="{{version_compare(PHP_VERSION, '5.4.0') >= 0}}">
-							<true> href="{{htmlentities(@chapter.href,ENT_XML1)}}"</true>
-							<false>href="{{@chapter.href}}"</false>
-						</check>
-					</check>
-					<check if="{{@chapter.image}}">
-						image="{{@chapter.image}}"
-					</check> 
+					<psc:chapter start="{{@chapter.start}}" title="{{@chapter.title}}"
+					<check if="{{@chapter.href}}">href="{{@chapter.href}}"</check>
+					<check if="{{@chapter.image}}">image="{{@chapter.image}}"</check> 
 					/>
 				</repeat>	
 				</psc:chapters>
@@ -123,10 +118,10 @@ version="2.0">
 					<itunes:image href="{{@item.image}}" />
 				</check>
 				
-				<itunes:subtitle>{{htmlspecialchars(substr(@item.description,0,255))}}</itunes:subtitle>
-				<itunes:summary>{{htmlspecialchars(substr(@item.summary,0,4000))}}</itunes:summary>
-				<itunes:keywords>{{htmlspecialchars(substr(@item.keywords,0,255))}}</itunes:keywords>
-				<itunes:author>{{@feedattr.author | raw}}</itunes:author>
+				<itunes:subtitle>{{substr(@item.description,0,255)}}</itunes:subtitle>
+				<itunes:summary>{{substr(@item.summary,0,4000)}}</itunes:summary>
+				<itunes:keywords>{{substr(@item.keywords,0,255)}}</itunes:keywords>
+				<itunes:author>{{@feedattr.author}}</itunes:author>
 				<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 				
 			</check>

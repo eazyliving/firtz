@@ -8,7 +8,7 @@ $main=require('src/lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
 $main->set('EXTDIR','./ext');
-
+$main->set('BITMASK',ENT_COMPAT|ENT_XML1);
 $main->set('UI','');
 $main->set('templatepath','templates/default/');
 $main->set('version',2);
@@ -55,6 +55,12 @@ foreach (glob($main->get('FEEDDIR').'/*',GLOB_ONLYDIR) as $dir) {
 }
 
 $main->set('feeds',$feeds);
+
+function firtzConvertAmp($content) {
+	echo preg_replace('/&([^#])(?![a-z1-4]{1,8};)/i', '&#038;$1', $content);
+}
+
+
 
 function sortByPubDate($a,$b) {
 	if (strtotime($a->item['pubDate']) == strtotime($b->item['pubDate'])) return ($a->item['slug'] < $b->item['slug'] );
