@@ -51,10 +51,10 @@ version="2.0">
 			<itunes:block>{{@feedattr.itunesblock}}</itunes:block>
 		</check>	
 		<itunes:author>{{@feedattr.author | raw}}</itunes:author>
-		<itunes:summary>{{@feedattr.summary | raw}}</itunes:summary>
+		<itunes:summary>{{substr(@feedattr.summary,0,4000) | raw}}</itunes:summary>
 		<itunes:image href="{{@feedattr.image}}" />
-		<itunes:subtitle>{{@feedattr.description | raw}}</itunes:subtitle>
-		<itunes:keywords>{{ htmlspecialchars(@feedattr.keywords)}}</itunes:keywords>
+		<itunes:subtitle>{{htmlspecialchars(substr(@feedattr.description,0,255))}}</itunes:subtitle>
+		<itunes:keywords>{{htmlspecialchars(substr(@feedattr.keywords,0,255))}}</itunes:keywords>
 		<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 		<language>{{@feedattr.language}}</language>
 	
@@ -122,11 +122,13 @@ version="2.0">
 				<check if="{{@item.image}}">
 					<itunes:image href="{{@item.image}}" />
 				</check>
-				<itunes:subtitle>{{htmlspecialchars(@item.description)}}</itunes:subtitle>
-				<itunes:summary>{{htmlspecialchars(@item.summary)}}</itunes:summary>
-				<itunes:keywords>{{htmlspecialchars(@item.keywords)}}</itunes:keywords>
+				
+				<itunes:subtitle>{{htmlspecialchars(substr(@item.description,0,255))}}</itunes:subtitle>
+				<itunes:summary>{{htmlspecialchars(substr(@item.summary,0,4000))}}</itunes:summary>
+				<itunes:keywords>{{htmlspecialchars(substr(@item.keywords,0,255))}}</itunes:keywords>
 				<itunes:author>{{@feedattr.author | raw}}</itunes:author>
 				<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
+				
 			</check>
 			</item>
 		</repeat>
