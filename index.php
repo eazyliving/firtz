@@ -3,7 +3,7 @@
 # RC1
 
 ini_set('auto_detect_line_endings',true);
-
+include_once("src/classes/Parsedown.php");
 $main=require('src/lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
@@ -176,6 +176,7 @@ foreach ($firtz->extensions as $slug => $extension) {
 	);
 
 }
+
 
 
 /*
