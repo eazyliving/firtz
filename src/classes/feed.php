@@ -434,9 +434,9 @@
 				
 				# no feed image? take the first found episode image...
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
-				$episode->item['article'] =  $this->markdown->text(strip_article($episode->item['article']));
+				$episode->item['article'] =  $this->markdown->text($episode->item['article']);
 				
-				$episode->item['description'] =  strip_article($episode->item['description'],array("<a>"));
+				$episode->item['description'] =  strip_article($this->markdown->text($episode->item['description']),array("<a>"));
 				$episode->item['summary'] =  strip_article($episode->item['article']);
 				
 				foreach ($firtz->extensions as $extslug => $ext) {
@@ -611,7 +611,7 @@
 			
 			if ($audioformat == '') $audioformat = $this->attr['audioformats'][0];
 			$this->attr['audioformat']=$audioformat;
-			if (version_compare(PHP_VERSION, '5.4.0') >= 0) $this->attr['title']=htmlentities($this->attr['title'],ENT_XML1);
+			
 
 			$main->set('feedattr',$this->attr);
 
@@ -627,10 +627,7 @@
 						}
 					}
 				}
-				#$item['description'] = str_replace("&","&amp;amp;",$item['description']);
-				#$item['summary'] = str_replace("&","&amp;",$item['summary']);
-				if (version_compare(PHP_VERSION, '5.4.0') >= 0) $item['title']=htmlentities($item['title'],ENT_XML1);
-				#str_replace(array("&","\""),array("&amp;amp;","&amp;quot;"),$chapter['title'])
+				
 				$items[]=$item;
 			
 			}

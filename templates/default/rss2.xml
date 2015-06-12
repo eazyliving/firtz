@@ -6,27 +6,27 @@
 version="2.0">
 
 	<channel>
-		<title>{{@feedattr.title | raw}}</title>
+		<title>{{@feedattr.title}}</title>
 		<link>{{@feedattr.link | raw}}</link>
 		<description>{{@feedattr.description}}</description>
-		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.selfrel}}{{@extxml}}" />
+		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.selfrel}}{{@extxml}}" />
 
 		<check if="{{@feedattr.alternate}}">
 			<repeat group="@feedattr.alternate" value="@alttype">
 				<check if="{{@feedattr.audioformat != @alttype}}">
-				<atom:link rel="alternate" type="application/rss+xml" title="{{@feedattr.title | raw}} ({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}{{@extxml}}" />
+				<atom:link rel="alternate" type="application/rss+xml" title="{{@feedattr.title}} ({{@alttype}})" href="{{@feedattr.baserel}}{{@alttype}}{{@extxml}}" />
 				</check>
 			</repeat>
 		</check>
 		
 		<check if="{{@rfc5005}}">
-		<atom:link rel="first" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/first" />
-		<atom:link rel="last" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/last" />
+		<atom:link rel="first" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/first" />
+		<atom:link rel="last" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/last" />
 		<check if="{{@page < @maxpage}}">
-			<atom:link rel="next" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/{{@page + 1}}" />
+			<atom:link rel="next" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/{{@page + 1}}" />
 		</check>
 		<check if="{{@page > 1}}">
-			<atom:link rel="prev" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/{{@page - 1}}" />
+			<atom:link rel="prev" type="application/rss+xml" title="{{@feedattr.title}}" href="{{@feedattr.self}}{{@extxml}}<check if="{{@audio}}">/</check>page/{{@page - 1}}" />
 		</check>
 		</check>
 		
@@ -41,7 +41,7 @@ version="2.0">
 		
 		<image>
 			<url>{{@feedattr.image}}</url>
-			<title>{{@feedattr.title | raw}}</title>
+			<title>{{@feedattr.title}}</title>
 			<link>{{@feedattr.link | raw}}</link>
 			<width>144</width>
 			<height>144</height>
@@ -84,7 +84,7 @@ version="2.0">
 		<check if="{{@items}}">
 		<repeat group="@items" value="@item">
 			<item>
-			<title>{{@item.title | raw}}</title>
+			<title>{{@item.title}}</title>
 			<link>{{@item.pagelink}}</link>
 			<pubDate>{{@item.pubDate}}</pubDate>
 			<guid isPermaLink="false">{{@item.guid}}</guid>
