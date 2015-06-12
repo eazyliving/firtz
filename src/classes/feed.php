@@ -436,7 +436,7 @@
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
 				$episode->item['article'] =  $this->markdown->text($episode->item['article']);
 								
-				$episode->item['description'] = strip_article($this->markdown->text($episode->item['description'])));
+				$episode->item['description'] = strip_article($this->markdown->text($episode->item['description']));
 				
 				$episode->item['summary'] =  strip_article($episode->item['article']);
 					
