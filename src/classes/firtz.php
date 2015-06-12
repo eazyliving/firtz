@@ -14,7 +14,7 @@
 		public $main = "";
 		function __construct($main) {
 			
-			$this->markdown = new Markdown();
+			$this->markdown = new Parsedown();
 			$this->main = $main;
 			$this->BASEURL =$main->get('scheme').'://'.$main->get('HOST');
 			if (substr($this->BASEURL,-1) != "/") $this->BASEURL.='/';

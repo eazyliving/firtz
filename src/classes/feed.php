@@ -19,7 +19,7 @@
 		
 		public function __construct($main,$slug,$configfile) {
 		
-			$this->markdown = new Markdown();
+			$this->markdown = new Parsedown();
 		
 			if (!file_exists($configfile)) {
 				echo "Config for $slug not found (missing $configfile)";
@@ -121,7 +121,13 @@
 			$attr['link'] = $main->get('BASEURL').$attr['slug'].'/show';
 			$attr['self'] = $main->get('REALM');
 			$attr['selfrel'] = (substr($attr['self'],-1)== "/") ? substr($attr['self'],0,-1) : $attr['self'];
-
+	
+			$attr['summary'] = substr(strip_tags($attr['summary']),0,4000);
+			$attr['keywords'] = substr($attr['keywords'],0,255);
+			
+			if ($attr['description']=="") $attr['description'] = $attr['summary'];
+			$attr['description'] = substr(strip_tags($attr['description']),0,255);
+			
 			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
 
 			if ($attr['flattrid']!="") {
@@ -428,9 +434,9 @@
 				
 				# no feed image? take the first found episode image...
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
-				$episode->item['article'] =  $this->markdown->convert(strip_article($episode->item['article']));
+				$episode->item['article'] =  $this->markdown->text(strip_article($episode->item['article']));
 				
-				$episode->item['description'] =  strip_article($this->markdown->convert($episode->item['description']),array("<a>"));
+				$episode->item['description'] =  strip_article($episode->item['description'],array("<a>"));
 				$episode->item['summary'] =  strip_article($episode->item['article']);
 				
 				foreach ($firtz->extensions as $extslug => $ext) {

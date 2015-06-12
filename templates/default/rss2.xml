@@ -8,7 +8,7 @@ version="2.0">
 	<channel>
 		<title>{{@feedattr.title | raw}}</title>
 		<link>{{@feedattr.link | raw}}</link>
-		<description>{{@feedattr.description | raw}}</description>
+		<description>{{@feedattr.description}}</description>
 		<atom:link rel="self" type="application/rss+xml" title="{{@feedattr.title | raw}}" href="{{@feedattr.selfrel}}{{@extxml}}" />
 
 		<check if="{{@feedattr.alternate}}">
@@ -53,10 +53,10 @@ version="2.0">
 		
 	
 		<itunes:author>{{@feedattr.author}}</itunes:author>
-		<itunes:summary>{{substr(@feedattr.summary,0,4000)}}</itunes:summary>
+		<itunes:summary>{{@feedattr.summary}}</itunes:summary>
 		<itunes:image href="{{@feedattr.image}}" />
-		<itunes:subtitle>{{substr(@feedattr.description,0,255)}}</itunes:subtitle>
-		<itunes:keywords>{{substr(@feedattr.keywords,0,255)}}</itunes:keywords>
+		<itunes:subtitle>{{@feedattr.description}}</itunes:subtitle>
+		<itunes:keywords>{{@feedattr.keywords}}</itunes:keywords>
 		<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 		<language>{{@feedattr.language}}</language>
 	
@@ -118,9 +118,9 @@ version="2.0">
 					<itunes:image href="{{@item.image}}" />
 				</check>
 				
-				<itunes:subtitle>{{substr(@item.description,0,255)}}</itunes:subtitle>
-				<itunes:summary>{{substr(@item.summary,0,4000)}}</itunes:summary>
-				<itunes:keywords>{{substr(@item.keywords,0,255)}}</itunes:keywords>
+				<itunes:subtitle>{{@item.description}}</itunes:subtitle>
+				<itunes:summary>{{@item.summary}}</itunes:summary>
+				<itunes:keywords>{{@item.keywords}}</itunes:keywords>
 				<itunes:author>{{@feedattr.author}}</itunes:author>
 				<itunes:explicit>{{@feedattr.explicit}}</itunes:explicit>
 				

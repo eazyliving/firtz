@@ -310,11 +310,11 @@
 			$item['slug'] = $slug;
 			if ($item['guid']=="") $item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
+			if ($item['description']=="") $item['description'] = $item['article'];
+			$item['description'] =substr( strip_tags($item['description']),0,255);
 			
-			$item['description']=chop(strip_tags( (substr($item['description'],0,200)?:substr(strip_tags($item['article']),0,200))));
-			$item['summary'] = strip_tags($item['article']);
+			$item['summary'] = substr( strip_tags($item['article']),0,4000);
 			
-
 			if ($item['image']=="") $item['image']=$feedattrs['image'];
 			
 			$item['flattrdescription'] = rawurlencode($item['description']);
@@ -329,7 +329,7 @@
 			if (strpos($item['duration'],'.')!==FALSE) $item['duration'] = substr($item['duration'],0,strpos($item['duration'],'.'));
 			$newkeywords = array();
 			foreach (explode(",",$item['keywords']) as $key) $newkeywords[]=trim($key);
-			$item['keywords'] = implode(',',$newkeywords);
+			$item['keywords'] = substr( implode(',',$newkeywords),0,255);
 			$item['append']='';
 			$item['prepend']='';
 			
