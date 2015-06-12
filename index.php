@@ -3,6 +3,7 @@
 # RC1
 
 ini_set('auto_detect_line_endings',true);
+
 include_once("src/classes/Parsedown.php");
 $main=require('src/lib/base.php');
 
@@ -79,7 +80,7 @@ function strip_article($text, $allowed_tags=array()) {
 function firtz_markdown($text) {
 	global $main;
 	$f = $main->get('firtz');
-	return $f->markdown->convert($text);
+	return $f->markdown->text($text);
 }
 
 foreach ($firtz->attr['feedalias'] as $alias) {
