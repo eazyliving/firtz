@@ -147,7 +147,7 @@
 					$chap = array('start'=>'','title'=>'','image'=>'','href'=>'');
 					if (isset($chapreg[1]) && isset($chapreg[6])) {
 						$chap['start'] = $chapreg[1];	
-						$chap['title'] = $chapreg[6];	
+						$chap['title'] = trim($chapreg[6]);	
 					
 						if (isset($chapreg[8])) {
 							$chap['href']=$chapreg[8];
@@ -311,7 +311,7 @@
 			if ($item['guid']=="") $item['guid'] = $feedattrs['slug'] . "-" . $item['slug']; 
 			
 			
-			$item['description']=chop(strip_tags( ($item['description']?:substr(strip_tags($item['article']),0,255))));
+			$item['description']=chop(strip_tags( (substr($item['description'],0,200)?:substr(strip_tags($item['article']),0,200))));
 			$item['summary'] = strip_tags($item['article']);
 			
 
