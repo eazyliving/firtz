@@ -211,7 +211,6 @@ $main->route('GET|HEAD /@feed/@audio',
 			$feed->episodes = array_slice($feed->episodes,0,10);
 		}
 		
-		
 		$feed->renderRSS2($params['audio']);
 		
 	}, $main->get('CDURATION')

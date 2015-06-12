@@ -4,7 +4,8 @@
 	
 		public $item=array();
 		public $main = "";
-				
+		public $markdown = "";	
+		
 		public function parseAuphonic($main,$filename,$feedattrs) {
 			
 			/* parse a json production description file */
@@ -256,7 +257,7 @@
 				$this->item=array();
 				return;
 			}
-			
+			$this->markdown = new Parsedown();
 			$this->main = $main;
 			$this->destroy = false;
 			
@@ -313,7 +314,7 @@
 			if ($item['description']=="") $item['description'] = $item['article'];
 			$item['description'] =substr( strip_tags($item['description']),0,255);
 			
-			$item['summary'] = substr( strip_tags($item['article']),0,4000);
+			$item['summary'] = substr(strip_tags($this->markdown->text($item['article'])),0,4000);
 			
 			if ($item['image']=="") $item['image']=$feedattrs['image'];
 			

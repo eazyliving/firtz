@@ -437,8 +437,6 @@
 				$episode->item['article'] =  $this->markdown->text($episode->item['article']);
 								
 				$episode->item['description'] = strip_article($this->markdown->text($episode->item['description']));
-				
-				$episode->item['summary'] =  strip_article($episode->item['article']);
 					
 				foreach ($firtz->extensions as $extslug => $ext) {
 					#if ($ext->type!="content") continue;
