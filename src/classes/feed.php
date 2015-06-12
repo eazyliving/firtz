@@ -435,10 +435,11 @@
 				# no feed image? take the first found episode image...
 				if ($this->attr['image']=="" && $episode->item['image']!="") $this->attr['image']=$episode->item['image'];
 				$episode->item['article'] =  $this->markdown->text($episode->item['article']);
+								
+				$episode->item['description'] = strip_article($this->markdown->text($episode->item['description'])));
 				
-				$episode->item['description'] =  strip_article($this->markdown->text($episode->item['description']),array("<a>"));
 				$episode->item['summary'] =  strip_article($episode->item['article']);
-				
+					
 				foreach ($firtz->extensions as $extslug => $ext) {
 					#if ($ext->type!="content") continue;
 					$efunc = $extslug."_episode";

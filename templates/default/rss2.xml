@@ -116,7 +116,7 @@ version="2.0">
 				
 				<check if="{{@item.image}}">
 					<itunes:image href="{{@item.image}}" />
-				</check>
+				</check> 
 				
 				<itunes:subtitle>{{@item.description}}</itunes:subtitle>
 				<itunes:summary>{{@item.summary}}</itunes:summary>

@@ -1275,7 +1275,8 @@ class Parsedown
 
     protected function inlineSpecialCharacter($Excerpt)
     {
-        if ($Excerpt['text'][0] === '&' and ! preg_match('/^&#?\w+;/', $Excerpt['text']))
+		#return array('markup'=>$Excerpt['text'],'extent'=>1);
+		if ($Excerpt['text'][0] === '&' and ! preg_match('/^&#?\w+;/', $Excerpt['text']))
         {
             return array(
                 'markup' => '&',
@@ -1283,12 +1284,12 @@ class Parsedown
             );
         }
 
-        $SpecialCharacter = array('>' => 'gt', '<' => 'lt', '"' => 'quot');
+        $SpecialCharacter = array('>' => '>', '<' => '<', '"' => '"');
 
         if (isset($SpecialCharacter[$Excerpt['text'][0]]))
         {
             return array(
-                'markup' => '&'.$SpecialCharacter[$Excerpt['text'][0]].';',
+                'markup' => $SpecialCharacter[$Excerpt['text'][0]],
                 'extent' => 1,
             );
         }

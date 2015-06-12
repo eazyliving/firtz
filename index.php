@@ -4,12 +4,11 @@
 
 ini_set('auto_detect_line_endings',true);
 
-include_once("src/classes/Parsedown.php");
 $main=require('src/lib/base.php');
 
 $main->set('FEEDDIR','./feeds');
 $main->set('EXTDIR','./ext');
-$main->set('BITMASK',ENT_COMPAT|ENT_XML1);
+$main->set('BITMASK',ENT_NOQUOTES|ENT_XML1);
 $main->set('UI','');
 $main->set('templatepath','templates/default/');
 $main->set('version',2);
