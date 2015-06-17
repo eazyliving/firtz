@@ -49,6 +49,7 @@
 					}
 					
 					if ($thisattr == "template") {
+						
 						if (sizeof(explode(" ",$line))==2) {
 							list($this->template['file'],$this->template['type']) = explode(" ",$line);
 						} else {

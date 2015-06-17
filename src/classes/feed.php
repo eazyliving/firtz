@@ -163,15 +163,7 @@
 				$attr['sitecss']=$main->get('BASEURL').'css/bootstrap.min.css';
 			}
 			
-			if (file_exists(dirname($configfile)."/".$slug.".html")) {
-				/*	yet undocumented and non working;) 
-					if a $slug.html file exists in feed directory, this one replaces the
-					standard site.html template
-				*/
-				$main->set('sitetemplate',$slug.".html");
-			} else {
-				$main->set('sitetemplate','site.html');
-			}
+			$main->set('sitetemplate','site.html');
 			
 			if ($attr['rfc5005']=="") $attr['rfc5005'] = 'off';
 			
@@ -194,7 +186,7 @@
 			
 			if ($attr['language']!="") $main->set('LANGUAGE',$attr['language']);
 			$this->attr = $attr;
-			
+			$main->set('curfeed',$this);
 		}
 		
 		public function loadTemplateConfig($template) {
@@ -525,6 +517,7 @@
 			$this->setOpenGraph();
 			
 			/* render plugins template */
+			
 			$extension->run();
 			echo Template::instance()->render($extension->template['file'],$extension->template['type']);
 			
