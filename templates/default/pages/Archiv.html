@@ -64,11 +64,13 @@
 						</check>
 						
 						<check if="{{isset(@con.flattr)}}">
-            				<iframe style="margin: 5px 1px -6px 0px;" src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;
-            				url={{@item.flattrlink | raw}}/{{@nick}}&amp;
-            				title={{@item.flattrtitle | raw}}&amp;
-            				popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
-        				</check>
+            				<a class="FlattrButton" 
+										title="{{@item.title}}"
+										data-flattr-uid="{{@con.flattr}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}/{{@nick}}">
+								</a>
+            			</check>
    						<br> 
     		  		</repeat>
     		  		
@@ -76,13 +78,12 @@
     		  		</true>
    					<false>
    						<check if="{{@feedattr.flattrid}}">
-							<iframe style="margin: 5px 1px -6px 0px;" src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;
-							url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;
-							title={{@feedattr.flattrtitle | raw}}&amp;
-							description={{@feedattr.flattrdescription | raw}}&amp;
-							tags={{@feedattr.flattrkeywords | raw}}&amp;
-							popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
-					  	</check>
+							<a class="FlattrButton" style="display:none;"
+										title="{{@feedattr.title}}"
+										data-flattr-uid="{{@feedattr.flattrid}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/">
+									</a></check>
 					  	<br> 
    					</false>
     		  		
