@@ -146,7 +146,12 @@
        					</td>
        					<td class="firtz-text-middle firtz-contributors-tab">
            					<check if="{{isset(@con.flattr)}}">
-               					<iframe src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;url={{@item.flattrlink | raw}}/{{@nick}}&amp;title={{@item.flattrtitle | raw}}&amp;popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+               					<a class="FlattrButton" 
+										title="{{@item.title}}"
+										data-flattr-uid="{{@con.flattr}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}/{{@nick}}">
+									</a>
 							</check>
 						</td>
 					</tr>
@@ -285,7 +290,13 @@
 					<tr class="firtz-contributors-line firtz-contributors-line-bottom firtz-contributors-tab-bottom">
 						<td class="firtz-text-middle">
 							<check if="{{isset(@con.flattr)}}">
-               					<iframe src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;url={{@item.flattrlink | raw}}/{{@nick}}&amp;title={{@item.flattrtitle | raw}}&amp;popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+	              					<a class="FlattrButton" 
+										title="{{@item.title}}"
+										data-flattr-uid="{{@con.flattr}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}/{{@nick}}">
+									</a>
+
 							</check>
 						</td>
 						<td class="firtz-text-middle">
