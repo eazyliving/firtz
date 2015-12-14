@@ -1207,7 +1207,8 @@
     ]
   }
 </script>
-<script type="text/javascript">
+<check if="{{@feedattr.flattrid}}">
+	<script type="text/javascript">
 		
 		(function() {
 			var s = document.createElement('script');
@@ -1221,6 +1222,7 @@
 		 })();
 
 </script>
+</check>
 <script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="{{@templatevars.color}};{{@templatevars.dark}};{{@templatevars.color}};;;;#fff;{{@templatevars.color}};; " data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
 <!--//podlove-sub-button-->
 <?php 
