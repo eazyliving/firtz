@@ -473,7 +473,12 @@
 					 			<center>Dies ist ein kostenloser Podcast. Du kannst {{@feedattr.title}} über Flattr unterstützen. So bleibt das Angebot weiterhin am Leben.</center>
 					 		   <br>
         						<div align="center">
-										<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;category=audio&amp;title={{@feedattr.flattrtitle | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+									<a class="FlattrButton" style="display:none;"
+										title="{{@feedattr.title}}"
+										data-flattr-uid="{{@feedattr.flattrid}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/">
+									</a>
 								</div>
         					  </div>
                             </li>
@@ -634,9 +639,12 @@
         					<!--flattr-->
 							<check if="{{@feedattr.flattrid}}">
 								<div id="flattr" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
-									<iframe id="flattr" src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@item.flattrlink | raw}}&amp;title={{@item.flattrtitle | raw}}&amp;popout=0&amp;button=compact"
-										class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true">
-									</iframe>
+									<a class="FlattrButton" 
+										title="{{@item.title}}"
+										data-flattr-uid="{{@feedattr.flattrid}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}">
+									</a>
 								</div>
 							</check>
 							<!--//flattr-->
@@ -853,8 +861,12 @@
 					 So bleibt das Angebot weiterhin am Leben.
 					</p>
 					<p>
-						<iframe src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;title={{@feedattr.flattrtitle | raw}}&amp;description={{@feedattr.flattrdescription | raw}}&amp;tags={{@feedattr.flattrkeywords | raw}}&amp;" class="FlattrButton" width="56" height="63" frameborder="0" scrolling="no" title="Flattr" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
-					</p>
+					<a class="FlattrButton" style="display:none;"
+										title="{{@feedattr.title}}"
+										data-flattr-uid="{{@feedattr.flattrid}}"
+										data-flattr-button="compact"
+										href="{{@BASEURL}}{{@feedattr.slug}}/show/">
+									</a></p>
 				</div>
 			</div>
 			</check>
@@ -1194,6 +1206,20 @@
 	  	</repeat>
     ]
   }
+</script>
+<script type="text/javascript">
+		
+		(function() {
+			var s = document.createElement('script');
+			var t = document.getElementsByTagName('script')[0];
+
+			s.type = 'text/javascript';
+			s.async = true;
+			s.src = '//api.flattr.com/js/0.6/load.js?mode=auto';
+
+			t.parentNode.insertBefore(s, t);
+		 })();
+
 </script>
 <script class="podlove-subscribe-button" src="https://cdn.podlove.org/subscribe-button/javascripts/app.js" data-language="de" data-size="small" data-json-data="podcastData" data-colors="{{@templatevars.color}};{{@templatevars.dark}};{{@templatevars.color}};;;;#fff;{{@templatevars.color}};; " data-buttonid="{{@feedattr.slug}}" data-hide="true"></script>
 <!--//podlove-sub-button-->
