@@ -10,7 +10,13 @@
 	terms of the GNU General Public License as published by the Free Software
 	Foundation, either version 3 of the License, or later.
 
-	Please see the LICENSE file for more information.
+	Fat-Free Framework is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with Fat-Free Framework.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -86,7 +92,11 @@ class Mongo {
 	*	@param $args array
 	**/
 	function __call($func,array $args) {
-		return call_user_func_array(array($this->db,$func),$args);
+		return call_user_func_array([$this->db,$func],$args);
+	}
+
+	//! Prohibit cloning
+	private function __clone() {
 	}
 
 	/**
@@ -98,7 +108,7 @@ class Mongo {
 	function __construct($dsn,$dbname,array $options=NULL) {
 		$this->uuid=\Base::instance()->hash($this->dsn=$dsn);
 		$class=class_exists('\MongoClient')?'\MongoClient':'\Mongo';
-		$this->db=new \MongoDB(new $class($dsn,$options?:array()),$dbname);
+		$this->db=new \MongoDB(new $class($dsn,$options?:[]),$dbname);
 		$this->setprofilinglevel(2);
 	}
 

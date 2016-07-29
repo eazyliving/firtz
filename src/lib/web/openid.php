@@ -10,7 +10,13 @@
 	terms of the GNU General Public License as published by the Free Software
 	Foundation, either version 3 of the License, or later.
 
-	Please see the LICENSE file for more information.
+	Fat-Free Framework is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with Fat-Free Framework.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -23,7 +29,7 @@ class OpenID extends \Magic {
 		//! OpenID provider endpoint URL
 		$url,
 		//! HTTP request parameters
-		$args=array();
+		$args=[];
 
 	/**
 	*	Determine OpenID provider
@@ -44,7 +50,7 @@ class OpenID extends \Magic {
 			(isset($url['query'])?('?'.$url['query']):'');
 		// HTML-based discovery of OpenID provider
 		$req=\Web::instance()->
-			request($this->args['identity'],array('proxy'=>$proxy));
+			request($this->args['identity'],['proxy'=>$proxy]);
 		if (!$req)
 			return FALSE;
 		$type=array_values(preg_grep('/Content-Type:/',$req['headers']));
@@ -83,7 +89,7 @@ class OpenID extends \Magic {
 						preg_match_all('/\b(rel|href)\h*=\h*'.
 							'(?:"(.+?)"|\'(.+?)\')/s',$parts[1],$attr,
 							PREG_SET_ORDER)) {
-						$node=array();
+						$node=[];
 						foreach ($attr as $kv)
 							$node[$kv[1]]=isset($kv[2])?$kv[2]:$kv[3];
 						if (isset($node['rel']) &&
@@ -134,7 +140,7 @@ class OpenID extends \Magic {
 	*	@param $attr array
 	*	@param $reqd string|array
 	**/
-	function auth($proxy=NULL,$attr=array(),array $reqd=NULL) {
+	function auth($proxy=NULL,$attr=[],array $reqd=NULL) {
 		$fw=\Base::instance();
 		$root=$fw->get('SCHEME').'://'.$fw->get('HOST');
 		if (empty($this->args['trust_root']))
@@ -151,7 +157,7 @@ class OpenID extends \Magic {
 				$this->args['ax.required']=is_string($reqd)?
 					$reqd:implode(',',$reqd);
 			}
-			$var=array();
+			$var=[];
 			foreach ($this->args as $key=>$val)
 				$var['openid.'.$key]=$val;
 			$fw->reroute($this->url.'?'.http_build_query($var));
@@ -173,16 +179,16 @@ class OpenID extends \Magic {
 			$this->args['mode']!='error' &&
 			$this->url=$this->discover($proxy)) {
 			$this->args['mode']='check_authentication';
-			$var=array();
+			$var=[];
 			foreach ($this->args as $key=>$val)
 				$var['openid.'.$key]=$val;
 			$req=\Web::instance()->request(
 				$this->url,
-				array(
+				[
 					'method'=>'POST',
 					'content'=>http_build_query($var),
 					'proxy'=>$proxy
-				)
+				]
 			);
 			return (bool)preg_match('/is_valid:true/i',$req['body']);
 		}

@@ -10,7 +10,13 @@
 	terms of the GNU General Public License as published by the Free Software
 	Foundation, either version 3 of the License, or later.
 
-	Please see the LICENSE file for more information.
+	Fat-Free Framework is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with Fat-Free Framework.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -30,7 +36,7 @@ class F3 {
 	static function __callstatic($func,array $args) {
 		if (!self::$fw)
 			self::$fw=Base::instance();
-		return call_user_func_array(array(self::$fw,$func),$args);
+		return call_user_func_array([self::$fw,$func],$args);
 	}
 
 }

@@ -10,9 +10,16 @@
 	terms of the GNU General Public License as published by the Free Software
 	Foundation, either version 3 of the License, or later.
 
-	Please see the LICENSE file for more information.
+	Fat-Free Framework is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with Fat-Free Framework.  If not, see <http://www.gnu.org/licenses/>.
 
 */
+
 
 //! Authorization/authentication plug-in
 class Auth {
@@ -41,19 +48,19 @@ class Auth {
 	protected function _jig($id,$pw,$realm) {
 		return (bool)
 			call_user_func_array(
-				array($this->mapper,'load'),
-				array(
+				[$this->mapper,'load'],
+				[
 					array_merge(
-						array(
+						[
 							'@'.$this->args['id'].'==? AND '.
 							'@'.$this->args['pw'].'==?'.
 							(isset($this->args['realm'])?
 								(' AND @'.$this->args['realm'].'==?'):''),
 							$id,$pw
-						),
-						(isset($this->args['realm'])?array($realm):array())
+						],
+						(isset($this->args['realm'])?[$realm]:[])
 					)
-				)
+				]
 			);
 	}
 
@@ -67,12 +74,12 @@ class Auth {
 	protected function _mongo($id,$pw,$realm) {
 		return (bool)
 			$this->mapper->load(
-				array(
+				[
 					$this->args['id']=>$id,
 					$this->args['pw']=>$pw
-				)+
+				]+
 				(isset($this->args['realm'])?
-					array($this->args['realm']=>$realm):array())
+					[$this->args['realm']=>$realm]:[])
 			);
 	}
 
@@ -86,19 +93,19 @@ class Auth {
 	protected function _sql($id,$pw,$realm) {
 		return (bool)
 			call_user_func_array(
-				array($this->mapper,'load'),
-				array(
+				[$this->mapper,'load'],
+				[
 					array_merge(
-						array(
+						[
 							$this->args['id'].'=? AND '.
 							$this->args['pw'].'=?'.
 							(isset($this->args['realm'])?
 								(' AND '.$this->args['realm'].'=?'):''),
 							$id,$pw
-						),
-						(isset($this->args['realm'])?array($realm):array())
+						],
+						(isset($this->args['realm'])?[$realm]:[])
 					)
-				)
+				]
 			);
 	}
 
@@ -122,7 +129,7 @@ class Auth {
 			@ldap_close($dc)) {
 			return $info[0]['uid'][0]==$id;
 		}
-		user_error(self::E_LDAP);
+		user_error(self::E_LDAP,E_USER_ERROR);
 	}
 
 	/**
@@ -169,7 +176,7 @@ class Auth {
 			fclose($socket);
 			return (bool)preg_match('/^235 /',$reply);
 		}
-		user_error(self::E_SMTP);
+		user_error(self::E_SMTP,E_USER_ERROR);
 	}
 
 	/**
