@@ -38,7 +38,7 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!="") $main->set('scheme','http
 
 $main->set('firtzattr_default',array('feedalias','baseurlredirect'));
 
-$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','adn','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','licenseimage','rfc5005','baseurl','adntoken','feedalias','articles-per-page','template','templatevars'));
+$main->set('feedattr_default',array('title','description','formats','flattrid','author','summary','image','keywords','category','email','language','explicit','itunes','auphonic-path','auphonic-glob','auphonic-url','auphonic-mode','twitter','itunesblock','mediabaseurl','mediabasepath','redirect','bitlove','cloneurl','clonepath','licenseurl','licensename','licenseimage','rfc5005','baseurl','feedalias','articles-per-page','template','templatevars'));
 
 $main->set('itemattr',array('title','description','link','guid','article','payment','chapters','enclosure','duration','keywords','image','date','noaudio','location'));
 $main->set('extattr',array('slug','template','arguments','prio','script','type','vars','episode-vars','feed-vars')); 
@@ -568,51 +568,6 @@ $main->route('GET|HEAD /@feed/show/page/@dir/@page',
 		
 	}, $main->get('CDURATION')
 );
-
-$main->route('GET /@feed/adnthreadx/@postid',
-
-	function($main,$params) {
-	
-		$slug = $params['feed'];
-		if (!in_array($slug,$main->get('feeds'))) $main->error(404);
-		
-		$BASEPATH = $main->get('FEEDDIR').'/'.$slug;
-		$FEEDCONFIG = $BASEPATH.'/feed.cfg';
-		$feed = new feed($main,$slug,$FEEDCONFIG);
-		if (file_exists($feed->feedDir."/templates")) {
-			$ui = $feed->feedDir."/templates/ ; ".$main->get('UI');
-			$main->set('UI',$ui);
-			$main->set('templatepath',$feed->feedDir."/templates");
-		}
-		$main->set('feedattr',$feed->attr);
-		$stream = "https://alpha-api.app.net/stream/0/posts/";
-
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $stream.$params['postid'].'/replies');
-		curl_setopt($curl, CURLOPT_TIMEOUT, 15);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Bearer '.$feed->attr['adntoken']));
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-		$return= curl_exec($curl);
-		curl_close($curl);
-		$x = json_decode($return,true);
-		
-		foreach ($x['data'] as $key=>$post) {
-			$x['data'][$key]['html'] = preg_replace('/([^a-zA-Z0-9])\@([a-zA-Z0-9_]+)/','\1<a href="http://alpha.app.net/\2" rel="nofollow" target="_blank" title="View \2\'s ADN Profile">@\2</a>\3',$x['data'][$key]['html']);
-			$x['data'][$key]['html'] = preg_replace('/(^|\s)#(\w+)/',
-			'\1#<a href="https://alpha.app.net/hashtags/\2" rel="nofollow" target="_blank" title="Posts tagged with \2">\2</a>',$x['data'][$key]['html']);
-			
-		}
-		$main->set('adnposts',array_reverse($x['data']));
-		echo Template::instance()->render('adnthread.html');
-		
-	
-	}, $main->get('CDURATION')
-);
-
 
 $main->route('GET|HEAD /@feed/raw/@epi',
 	function ($main,$params) {
