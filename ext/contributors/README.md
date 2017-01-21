@@ -33,8 +33,6 @@ http://eazy-living.de/
 image:
 https://pbs.twimg.com/profile_images/2185128768/twit_400x400.png
 
-adn:
-eazyliving
 ```
 
 Dieses Beispiel zeigt nun auch, was bisher möglich ist. Das template ist noch nicht schön, tut aber was es soll.
