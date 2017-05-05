@@ -646,12 +646,14 @@
 			/* collect episodes */
 			$items = array();
 			if ($main->exists('epi') && $main->get('epi')!="") {
-				$items = array ( $this->episodes[$main->get('epi')]->item );
+				if (isset($this->episodes[$main->get('epi')]))
+					$items = array ( $this->episodes[$main->get('epi')]->item );
 			} else {
 				foreach ($this->episodes as $episode) $items[]=$episode->item;
 			}
 		
 			$main->set('items',$items);
+			
 			$this->setOpenGraph();
 			/*	render or return template 
 				return rendered data will be used in clone mode, which will be used for static site clones
