@@ -35,8 +35,9 @@ Gib hier ein paar sinnvolle, kommagetrennte Stichwörter zu Deinem Podcast an. D
 **category**
 Die Kategorien orientieren sich an den Vorgaben Apples für iTunes. Es gibt Hauptkategorien und jeweils mehrere Unterkategorien, die aber keine weiteren Kategorien unter sich haben. Um dies an dieser Stelle einigermaßen einfach konfigurieren zu können, wird entweder eine Hauptkategorie einzeln angegeben oder eine solche mit Unterkategorie durch -> verbunden:
 
-`Society & Culture  
-Technology -> Podcasting`
+`Society & Culture`
+
+`Technology -> Podcasting`
 
 Diese Konfiguration würde den Podcast sowohl in die Hauptkategorie *Society & Culture* ohne weitere Unterkategorie setzen und in die Unterkategorie *Podcasting* in der Kategorie *Technology*. Die einzelne Angabe der Hauptkategorie *Technology* ohne *Podcasting* ist in diesem Falle nicht nötig. 
 Details zu den Kategorien finden sich [hier](http://www.apple.com/itunes/podcasts/specs.html#categories).
