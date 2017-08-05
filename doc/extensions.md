@@ -1,4 +1,5 @@
-#Extensions für den firtz2
+
+# Extensions für den firtz2
 
 Um den firtz zu erweitern, gibt es bereits seit einer der ersten Versionen ein System für Extensions.
 
@@ -22,7 +23,7 @@ Das ist weniger kompliziert, als es sich anhört. Es gilt nur, sich an ein paar 
 
 Fangen wir mit der einfachsten Methode an: 
 
-##Child-Templates
+## Child-Templates
 
 Der Standardordner des Templates ist unter *templates/default/* zu finden. Nun kann man durchaus an Ort und Stelle Änderungen vornehmen. Beim nächsten Update des firtz ist das dann aber wieder weg, wenn man nicht vorher ein Backup macht.
 
@@ -31,14 +32,16 @@ Besser ist es, im Ordner *templates/* einen zweiten Ordner anzulegen, nennen wir
 Jede Datei, die in diesem Ordner zu finden ist, hat höhere Priorität als eine gleichnamige Datei im Standardordner. 
 
 
-##Templatehooks
+## Templatehooks
 
 Innerhalb des Standardtemplates (site.html) wird an bestimmten Stellen Dateien inkludiert, die in besonderen Unterordnern des template-Ordners liegen. Zu jeder Episode z.B. wird in den Ordner *episodes/* geschaut und dort liegende HTML-Dateien inkludiert.
 Solche Hooks gibt es für folgende Punkte:
 
+
 *head/*
 
 Diese Dateien werden in den Kopf der HTML-Datei inkludiert, also zwischen &lt;head&gt; und &lt;/head&gt;.
+
 
 *header/*
 
@@ -69,15 +72,15 @@ Inkludiert werden .html-Dateien. In diesen Dateien können direkte Templateanwei
 
 Achtung! Beim Mischen von Templatehooks und Childtemplates gibt's Ärger. Wenn z.B. in beiden Ordnern, also dem Haupt- und dem Childtemplate in den pages-Ordnern gleiche Dateien liegen, dann werden _beide_ inkludiert und Ihr habt doppelte Einträge in den Menüs. Ich habe bis heute keine gute Idee, wie ich das im Template verhindern kann und so lange müsst Ihr Euch drum kümmern. Ein Problem sehe ich da aber nicht wirklich.
 
-##Skripthooks
+## Skripthooks
 
 Die Details zu den Skripthooks kommen etwas später bei der Erklärung, wie eine echte Extension funktioniert. Skripthooks funktionieren ähnlich wie Templatehooks, aber bringen hier keine Templatesnippets ein, sondern php-Skripte, die an den bestimmten Stellen ausgeführt werden. Diese Skripte erzeugen selbst keine Ausgabe, können aber die Inhalte manipulieren. Im Moment ist das vor allem bei Episoden sinnvoll. Dazu aber später mehr.
 
-##eigene Templates
+## Eigene Templates
 
 Wenn Du das kannst: Dann melde Dich bitte. Das ist etwas, das traue ich mir im Grunde selbst nicht zu. Viel HTML, viel CSS. Nicht eine Stärke. Nimm das default-Template als Grundlage und schau selbst nach. Ich werde das vielleicht, aber selbst dann nur dünn dokumentieren.
 
-##Das Innenleben der Extensions
+## Das Innenleben der Extensions
 
 Eine Extension besteht aus einigen benötigten und einigen optionalen Dateien. Alle diese müssen sich in einem Unterordner von *ext/* befinden, dessen Name gleichzeitig der slug, die eindeutige Identifizierung dieser Extension ist. Nennen wir sie myext.
 
