@@ -1,16 +1,26 @@
-changelog:
+Changelog:
+
+RC 2.1 firtz + podlove webplayer 4
+    - remove search extension and include in firtz (redirect)
+    - new extension "webplayer" with podlove webplayer version 4 (standrad include)
+    - fixed opus file and other minimalistics
+    - create share rendering function in feed.php
+    - new endpoint for serach requests
+    - new endpoint to send sharing request
+    - fixed weblayer css and positions
+
+RC 2.0
 
 1.5 so far:
-	cleaned structure:
-		lib, pwp, js, dict and classes moved to src-folder
-		
-	changed way templating works: 
-		main template-folder contains default template (now quorx!)
-		additional folders inside template-folder can contain additional files, overriding files inside default folder
-		feed.cfg needs template: attribute
-		feed.cfg can contain template-vars (go to @templatevars)
-		template.cfg inside template-folder can contain default template-vars
-		
+cleaned structure:
+	lib, pwp, js, dict and classes moved to src-folder
+
+changed way templating works:
+	main template-folder contains default template (now quorx!)
+	additional folders inside template-folder can contain additional files, overriding files inside default folder
+	feed.cfg needs template: attribute
+	feed.cfg can contain template-vars (go to @templatevars)
+	template.cfg inside template-folder can contain default template-vars
 	
 1.3 update to podlove webplayer v2.0.13 and support images in mp4chaps
 1.2 enabled rfc5005 inside standard feed (until now only by special urls...)
