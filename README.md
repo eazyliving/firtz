@@ -97,12 +97,13 @@ Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (
 ## Kontakt
 
 - [@firtz](https://twitter.com/the_firtz) (project)
-- [@eazy](https://twitter.com/eazyliving), [@mccouman](https://twitter.com/mccouman)
+- [@eazy](https://twitter.com/eazyliving)
+- [@mccouman](https://twitter.com/mccouman)
 
 
 ## Links
 
 - [fatfree framework](https://github.com/bcosca/fatfree)
-- [QuorX II](https://github.com/Firtz-Designs/firtz-rc3.0)
+- [QuorX II](https://github.com/Firtz-Designs/QuorX-II)
 - [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player)
-- [Artikel von Hirnbloggade zur Installation](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/)
+- [Ein guter Artikel von Hirnbloggade zur firtz Installation](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/)
