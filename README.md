@@ -2,7 +2,7 @@
 
 
 *firtz podcast publisher*  
-*Version 2.0*
+*Version 2.1*
 
 ## Über
 
@@ -32,16 +32,16 @@ Wer es ganz einfach haben möchte, verbündet sich mit auphonic und überlässt 
 
 Aber fangen wir vorne an. Was brauchst Du?
 
-Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig. Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: **php ab Version 5.4.0** muss ausgeführt werden können. 
+Du brauchst irgendwo Platz im Web. Das ist dann doch noch nötig. Dieser Platz im Web muss im Grunde nur eine Bedingung erfüllen: **php ab Version 5.4.0** muss ausgeführt werden können.
 
 Datenbanken und anderen Kram braucht es nicht, allerdings muss der ausführende Nutzer des Webservers in der Lage, Verzeichnisse zu erzeugen und Dateien in diese hineinzuschreiben.
 
 Sollte der firtz in einem Unterverzeichnis der genutzten Domain betrieben werden, musst Du noch die .htaccess korrigieren und die
-RewriteBase von 
+RewriteBase von
 
 `RewriteBase /`
 
-auf 
+auf
 
 `RewriteBase /UNTERORDNER`
 
@@ -71,7 +71,7 @@ Attribute werden wie folgt notiert:
 
 Achtet bitte darauf, dass die Attribut-Zeile alleine steht. Leerzeilen werden ignoriert, es sei denn, es geht um eine Textfeld wie summary.
 
-An's Ende der Konfiguration kannst Du in einer neuen Zeile ein 
+An's Ende der Konfiguration kannst Du in einer neuen Zeile ein
 
 `---end---`
 
@@ -85,7 +85,7 @@ Nehmen wir an, Du hast das soweit fertig. Wie erreichst du den Feed? Angenommen 
 
 `http://tollerneuerpodcast.de/demo`
 
-Wenn Du mehrere Audioformate nutzt, kannst Du auch z.B. 
+Wenn Du mehrere Audioformate nutzt, kannst Du auch z.B.
 `http://tollerneuerpodcast.de/demo/mp3` nutzen.
 
 Eine Webseite gibt's als Bonus. Die kannst Du für diesen Feed so erreichen: `http://tollerneuerpodcast.de/demo/show`
@@ -96,12 +96,13 @@ Einzelne Episoden sind auch verlinkbar, indem an den Pfad der Slug der Episode (
 
 ## Kontakt
 
-Melde Dich. Entweder per [Mail](mailto:info@hoersuppe.de), auf [Twitter](https://twitter.com/the_firtz) oder [app.net](https://alpha.app.net/firtz) oder natürlich hier auf github in den issues.
+- [@firtz](https://twitter.com/the_firtz) (project)
+- [@eazy](https://twitter.com/eazyliving), [@mccouman](https://twitter.com/mccouman)
+
 
 ## Links
 
-Ich habe firtz mit [fatfree framework](https://github.com/bcosca/fatfree) und [bootstrap](http://twitter.github.com/bootstrap/) zusammengeschraubt.
-
-Weiterhin hilft der [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player) massiv dazu bei, dass alles halbwegs hübsch aussieht :)
-
-[Stefan Thesing](https://alpha.app.net/hirnbloggade) hat einen knackigen [Artikel](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/) verfasst, in dem er seine Installationserfahrungen niedergeschrieben hat. Vielleicht kann Euch das weiterhelfen.
+- [fatfree framework](https://github.com/bcosca/fatfree)
+- [QuorX II](https://github.com/Firtz-Designs/firtz-rc3.0)
+- [Podlove Webplayer](https://github.com/gerritvanaaken/podlove-web-player)
+- [Artikel von Hirnbloggade zur Installation](http://www.hirnbloggade.de/2013/04/26/der-firtz-und-ich/)

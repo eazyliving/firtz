@@ -719,6 +719,83 @@
 						
 			echo Template::instance()->render("raw.html");
 		}
-	}
+
+        //---------------------------
+
+        /**
+         * Render Share Page for Podlove-Player4.
+         *
+         * @param bool $ret
+         * @param string $pagename
+         */
+        public function renderShare($ret = false, $pagename = "")
+        {
+            /* render standard html template */
+            $main = $this->main;
+            $main->set('feedattr', $this->attr);
+
+            /* single page from pages template? */
+            if ($pagename != "") $main->set('showpage', 'pages/' . $pagename . '.html');
+
+            /* collect episodes */
+            $items = array();
+            if ($main->exists('epi') && $main->get('epi') != "") {
+                $items = array($this->episodes[$main->get('epi')]->item);
+            } else {
+                foreach ($this->episodes as $episode) $items[] = $episode->item;
+            }
+            $main->set('items', $items);
+
+            if ($items[0]['image']) {
+                $imageJson = $items[0]['image'];
+            } else {
+                $imageJson = $this->attr['image'];
+            }
+
+            $audio = array();
+            foreach ($items[0]['audiofiles'] as &$audiofiles) {
+                $audio[] = array(
+                    "url" => $audiofiles['link'],
+                    "mimeType" => $audiofiles['type'],
+                    "size" => $audiofiles['length'],
+                    "title" => "Audio ".strtoupper(preg_replace("/(audio\/)+/","",$audiofiles['type'])),
+                );
+            }
+
+            $json = array(
+                "show" => array(
+                    "title" => $this->attr['title'],
+                    "subtitle" => $this->attr['title'] .' - '. $this->attr['description'],
+                    "summary" => $this->attr['description'],
+                    "poster" => $this->attr['image']
+                ),
+                "title" => $items[0]['title'],
+                "subtitle" => $items[0]['description'],
+                "summary" => $items[0]['summary'],
+                "publicationDate" => date('Y-d-m', strtotime($items[0]['date'])) . 'T' . date('H:m:s+00:00', strtotime($items[0]['date'])),
+                "poster" => $imageJson,
+                "duration" => $items[0]['duration'],
+                "audio" => $audio,
+                "reference" => array(
+                    "base" => $main->get('BASEURL') . 'ext/webplayer/',
+                    "share" => $main->get('BASEURL') . 'share',
+                    "config" => $main->get('BASEURL') . $this->attr['slug'] . '/share/' . $items[0]['slug']
+                ),
+                "chapters" => $items[0]['chapters'],
+                "theme" => array(
+                    'main' => $main['templatevars']['color']
+                ),
+                "runtime" => array(
+                    "platform" => 'desktop',
+                    "language" => $main['FALLBACK']
+                )
+            );
+
+            #var_dump($json);
+            header('Content-Type: application/json');
+            echo json_encode($json, True);
+
+        }
+    }
 	
 ?>

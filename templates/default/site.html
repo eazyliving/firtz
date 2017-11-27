@@ -101,6 +101,29 @@
    	   		<include href="{{'quorx/'.basename(@template)}}"/>
    		 </repeat>
     </repeat>
+    <style>
+        @font-face {
+            font-family: Fira Sans;
+            src: url({{@BASEURL}}ext/webplayer/fonts/FiraSans-Light.eot?fa487cca520cc7f78a271cb182a29c03) format("eot"),
+            url({{@BASEURL}}ext/webplayer/fonts/FiraSans-Light.woff?620af15165ec011b7982f308eb48c34e) format("woff"),
+            url({{@BASEURL}}ext/webplayer/fonts/FiraSans-Light.woff2?315ad98e0cb4208b2a002dad0f5b92e8) format("woff2");
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: Fira Sans;
+            src: url({{@BASEURL}}ext/webplayer/fonts/FiraSans-Regular.eot?bfcf38c3c6170588e22046f671c26fc9) format("eot"),
+            url({{@BASEURL}}ext/webplayer/fonts/FiraSans-Regular.woff?abbc4d42c352d94dd0a00856769ebc5a) format("woff"),
+            url({{@BASEURL}}ext/webplayer/fonts/FiraSans-Regular.woff2?26f9ff8eb3877040b5f2f0e36759192f) format("woff2");
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: Fira Mono;
+            src: url({{@BASEURL}}ext/webplayer/fonts/FiraMono-Regular.eot?8d876c180eb01a79be6d1d8bc121919f) format("eot"),
+            url({{@BASEURL}}ext/webplayer/fonts/FiraMono-Regular.woff?f25e0dfc5b508f34f63724d7ff607384) format("woff"),
+            url({{@BASEURL}}ext/webplayer/fonts/FiraMono-Regular.woff2?fe92bd266274aa44e22e48ca0317ff98) format("woff2");
+            font-weight: 500;
+        }
+    </style>
     <?php
 	/**
 	 *	jQuery
@@ -281,6 +304,19 @@
 			 		 *	@position right
 			 		 */ 
 					?>
+                    <div class="firtz-navbar-flip">
+                        <div class="firtz-navbar-content firtz-hidden-small">
+                            <form class="firtz-search" id="search-3" action="{{@BASEURL}}search" method="get" role="search">
+                                <input type="text" style="display:none;"
+                                       value="{{@BASEURL}}{{@feedattr.slug}}" name="r">
+
+                                <input class="firtz-search-field" type="text" value=""
+                                       name="s" placeholder="search..." autocomplete="off">
+
+                                <input type="submit" style="display:none;" value="Submit">
+                            </form>
+                        </div>
+                    </div>
 					<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 						<repeat group="{{glob(@tpath.'/navi/*.html')}}" value="{{@template}}">
 							<?php 
@@ -434,6 +470,21 @@
 			 	 		 	 *	@path	/phone/
 			 	 			 */ 
 							?>
+                            <li class="firtz-handy-search">
+                                <div class="firtz-panel firtz-search-device">
+                                    <form action="{{@BASEURL}}search" method="get">
+                                        <input type="text" style="display:none;" value="{{@BASEURL}}{{@feedattr.slug}}" name="r">
+                                        <div class="firtz-grid">
+                                            <div class="firtz-width-7-10">
+                                                <input class="firtz-search-field firtz-form-width-small" type="text" value="" name="s" placeholder="{{@dict_searchtext}}..." autocomplete="off">
+                                            </div>
+                                            <div class="firtz-width-3-10">
+                                                <button class="tagsearch firtz-button-search" type="submit"><i style="margin-left: -7px;" class="firtz-icon-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
 							<repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
 								<repeat group="{{glob(@tpath.'/phone/*.html')}}" value="{{@template}}">
 									<?php 
@@ -466,8 +517,7 @@
 				 		 	  */ 
 							?>
                            <check if="{{@feedattr.flattrid}}">
-
-				 <li>
+				            <li>
         					  <div class="firtz-panel">
         						<h5 align="center" style="font-size: 17px; line-height: 10px;" class="firtz-panel-title"><b>Unterstützen</b></h5>
 					 			<center>Dies ist ein kostenloser Podcast. Du kannst {{@feedattr.title}} über Flattr unterstützen. So bleibt das Angebot weiterhin am Leben.</center>
@@ -482,7 +532,7 @@
 								</div>
         					  </div>
                             </li>
-				</check>
+				            </check>
 
                         	<?php 
 						 	  /*--------- //flattr infos -------*/ 
@@ -649,11 +699,13 @@
 							</check>
 							<!--//flattr-->
 							
-							<div class="firtz-player-box" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>	
-								<!--article-player-->
-								<check if="{{@item.noaudio==''}}">
-									<include href="podlove-player.html"/>
-								</check>
+							<div class="firtz-player-box" <check if="{{@templatevars.animation == 'on'}} ">data-firtz-scrollspy="{cls:'firtz-animation-fade', repeat: false}"</check>>
+                                <!--article-player-->
+                                <repeat group="{{explode(',',@UI)}}" value="{{@tpath}}">
+                                    <repeat group="{{glob(@tpath.'/player/*.html')}}" value="{{@template}}">
+                                        <include href="{{'player/'.basename(@template)}}"/>
+                                    </repeat>
+                                </repeat>
 								<!--//article-player-->
 
 								<!--keywords-->
@@ -666,7 +718,6 @@
 											</repeat>
 										</check>
 									</div>
-
 								<!--//keywords-->
 							</div>
 					

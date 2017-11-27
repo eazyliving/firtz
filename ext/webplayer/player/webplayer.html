@@ -6,13 +6,13 @@
         podlovePlayer("#player-{{@item.slug}}", {
             show: {
                 title: '{{@feedattr.title}}',
-                subtitle: '{{@feedattr.subtitle}}',
+                subtitle: '{{@feedattr.title}} - {{@feedattr.description}}',
                 summary: '{{@feedattr.description}}',
                 poster: '{{@feedattr.image}}',
                 link: '{{@BASEURL}}'
             },
             title: {{json_encode(@item.title)}},
-            subtitle: '{{@item.subtitle}}',
+            subtitle: '{{@item.description}}',
             summary:  {{json_encode(@item.summary)}},
             <check if="{{ @feedattr.language =='de-DE' }}"><true>
             publicationDate: "{{date('Y-m-d', strtotime(@item.date))}}T{{date('H:m:s+00:00', strtotime(@item.date))}}",
