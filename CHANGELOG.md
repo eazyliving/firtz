@@ -1,5 +1,11 @@
 Changelog:
 
+RC 2.1 Beta 2
+- fixed site.html
+- fixed extension (description as JSON output)
+- fix share json
+- fix feed class
+
 RC 2.1 firtz + podlove webplayer 4  
 - remove search extension and include in firtz (redirect)
 - new extension "webplayer" with podlove webplayer version 4 (standrad include)
@@ -21,7 +27,7 @@ changed way templating works:
 - feed.cfg needs template: attribute
 - feed.cfg can contain template-vars (go to @templatevars)
 - template.cfg inside template-folder can contain default template-vars
-	
+
 1.3 update to podlove webplayer v2.0.13 and support images in mp4chaps
 
 1.2 enabled rfc5005 inside standard feed (until now only by special urls...)
@@ -59,7 +65,7 @@ changed way templating works:
 
 0.3 added first draft of extension class. atm only extends output templates (example: atom-extension. look into ext/atom/)
 - changed website URL from /show/$feed to $feed/show to keep consistancy
-	
+
 0.2 major and minor fuckups fixed. thanks to all contributors!
 
 0.1 let the world take a look

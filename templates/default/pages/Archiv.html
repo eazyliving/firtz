@@ -1,7 +1,8 @@
 <div class="row-fluid marketing">
 <div class="firtz-overflow-container">
-    <h2>Das Podcastarchiv</h2>
-	<p>Dies sind alle bisher erschienenen Ausgaben von {{@feedattr.title}}. Bisher gibt es <b>{{sizeof(@items)}}</b><check if="{{sizeof(@items)}}>1"><true>Episoden</true><false> Episode</false></check>.</p>
+	
+	<h2>Das Podcastarchiv</h2>
+	<p>Dies sind alle bisher erschienenen Ausgaben von {{@feedattr.title}}. Bisher gibt es <check if="{{sizeof(@items)}}>1"><true>Episoden</true><false> Episode</false></check>.</p>
 	
      <table class="firtz-table firtz-table-striped">
         <thead>
@@ -63,13 +64,11 @@
 						</check>
 						
 						<check if="{{isset(@con.flattr)}}">
-            				<a class="FlattrButton" 
-										title="{{@item.title}}"
-										data-flattr-uid="{{@con.flattr}}"
-										data-flattr-button="compact"
-										href="{{@BASEURL}}{{@feedattr.slug}}/show/{{@item.slug}}/{{@nick}}">
-								</a>
-            			</check>
+            				<iframe style="margin: 5px 1px -6px 0px;" src="http://api.flattr.com/button/view/?user_id={{@con.flattr}}&amp;
+            				url={{@item.flattrlink | raw}}/{{@nick}}&amp;
+            				title={{@item.flattrtitle | raw}}&amp;
+            				popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+        				</check>
    						<br> 
     		  		</repeat>
     		  		
@@ -77,12 +76,13 @@
     		  		</true>
    					<false>
    						<check if="{{@feedattr.flattrid}}">
-							<a class="FlattrButton" style="display:none;"
-										title="{{@feedattr.title}}"
-										data-flattr-uid="{{@feedattr.flattrid}}"
-										data-flattr-button="compact"
-										href="{{@BASEURL}}{{@feedattr.slug}}/show/">
-									</a></check>
+							<iframe style="margin: 5px 1px -6px 0px;" src="http://api.flattr.com/button/view/?user_id={{@feedattr.flattrid}}&amp;
+							url={{@feedattr.flattrlink | raw}}&amp;language={{@feedattr.flattrlanguage | raw}}&amp;
+							title={{@feedattr.flattrtitle | raw}}&amp;
+							description={{@feedattr.flattrdescription | raw}}&amp;
+							tags={{@feedattr.flattrkeywords | raw}}&amp;
+							popout=0&amp;button=compact" class="FlattrButton" width="110" height="20" frameborder="0" scrolling="no" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+					  	</check>
 					  	<br> 
    					</false>
     		  		

@@ -124,10 +124,10 @@
 	
 			$attr['summary'] = substr(strip_tags($attr['summary']),0,4000);
 			$attr['keywords'] = substr($attr['keywords'],0,255);
-			
+
 			if ($attr['description']=="") $attr['description'] = $attr['summary'];
 			$attr['description'] = substr(strip_tags($attr['description']),0,255);
-			
+
 			if ($attr['cloneurl']!='' && substr($attr['cloneurl'],-1)!='/') $attr['cloneurl'].='/';
 
 			if ($attr['flattrid']!="") {
@@ -766,7 +766,7 @@
                 "show" => array(
                     "title" => $this->attr['title'],
                     "subtitle" => $this->attr['title'] .' - '. $this->attr['description'],
-                    "summary" => $this->attr['description'],
+                    "summary" => str_replace("\n", "", $this->attr['description']),
                     "poster" => $this->attr['image']
                 ),
                 "title" => $items[0]['title'],
