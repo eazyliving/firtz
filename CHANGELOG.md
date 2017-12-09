@@ -5,6 +5,7 @@ RC 2.1 Beta 2
 - fixed extension (description as JSON output)
 - fix share json
 - fix feed class
+- remove pwp folder (obsolet!)
 
 RC 2.1 firtz + podlove webplayer 4  
 - remove search extension and include in firtz (redirect)
