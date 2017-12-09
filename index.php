@@ -1,7 +1,5 @@
 <?php
-
-# RC1
-
+# RC 2.1 Beta 2
 ini_set('auto_detect_line_endings', true);
 
 $main = require('src/lib/base.php');
@@ -12,7 +10,7 @@ $main->set('BITMASK', ENT_NOQUOTES | ENT_XML1);
 $main->set('UI', '');
 $main->set('templatepath', 'templates/default/');
 $main->set('version', 2);
-$main->set('revision', 0);
+$main->set('revision', 1);
 $main->set('generator', 'firtz podcast publisher v' . $main->get('version') . "." . $main->get('revision'));
 $main->set('pager', '');
 $main->set('BASEURL', "http://" . str_replace("/", "", $main->get('HOST')) . dirname($_SERVER['SCRIPT_NAME']));
@@ -37,12 +35,9 @@ $main->set('search', '');
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != "") $main->set('scheme', 'https'); else $main->set('scheme', 'http');
 
 $main->set('firtzattr_default', array('feedalias', 'baseurlredirect'));
-
 $main->set('feedattr_default', array('title', 'description', 'formats', 'flattrid', 'author', 'summary', 'image', 'keywords', 'category', 'email', 'language', 'explicit', 'itunes', 'auphonic-path', 'auphonic-glob', 'auphonic-url', 'auphonic-mode', 'twitter', 'itunesblock', 'mediabaseurl', 'mediabasepath', 'redirect', 'bitlove', 'cloneurl', 'clonepath', 'licenseurl', 'licensename', 'licenseimage', 'rfc5005', 'baseurl', 'feedalias', 'articles-per-page', 'template', 'templatevars'));
-
 $main->set('itemattr', array('title', 'description', 'link', 'guid', 'article', 'payment', 'chapters', 'enclosure', 'duration', 'keywords', 'image', 'date', 'noaudio', 'location'));
 $main->set('extattr', array('slug', 'template', 'arguments', 'prio', 'script', 'type', 'vars', 'episode-vars', 'feed-vars'));
-
 $main->set('mimetypes',
     array(
         'mp3' => 'audio/mpeg',
@@ -82,7 +77,6 @@ function firtzConvertAmp($content)
 {
     echo preg_replace('/&([^#])(?![a-z1-4]{1,8};)/i', '&#038;$1', $content);
 }
-
 
 function sortByPubDate($a, $b)
 {
