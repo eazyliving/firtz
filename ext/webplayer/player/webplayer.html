@@ -6,8 +6,8 @@
         podlovePlayer("#player-{{@item.slug}}", {
             show: {
                 title: '{{@feedattr.title}}',
-                subtitle: '{{@feedattr.title}} - {{@feedattr.description}}',
-                summary: '{{@feedattr.description}}',
+                subtitle: {{json_encode(@feedattr.description)}},
+                summary: {{json_encode(@feedattr.summary)}},
                 poster: '{{@feedattr.image}}',
                 link: '{{@BASEURL}}'
             },
