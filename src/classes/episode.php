@@ -62,7 +62,7 @@
 		
 			foreach ($prod->output_files as $output) {
 				
-				if (sizeof($output->outgoing_services)==0) continue;
+				if (count($output->outgoing_services)==0) continue;
 				
 				
 				$service = "";
@@ -112,7 +112,7 @@
 			/* if item is given, it's a reparsing for overwriting data from an auphonic-episode */
 			
 			$mime = $main->get('mimetypes');
-			if (sizeof($item)==0) 
+			if (is_array($item) && count($item)==0) 
 			{ 
 				foreach ($main->get('itemattr') as $var) $item[$var]="";
 			} 
@@ -181,7 +181,7 @@
 					
 						/* mimetype not found in presets */
 						
-						if (sizeof($audio)==3) {
+						if (count($audio)==3) {
 							
 							/* maybe it's in the .epi? */
 							
@@ -198,7 +198,7 @@
 						$mimetype = $mime[$thisattr];
 					}
 					
-					if (sizeof($audio)>1) {
+					if (count($audio)>1) {
 						/* that's great: length of file is given */
 						
 						$item[$thisattr] = array ( 'link' => $audio[0] , 'length' => $audio[1] , 'type' => $mimetype);
@@ -268,7 +268,7 @@
 			
 			$reparse = false;
 			
-			if (sizeof($item)==0) {
+			if (is_array($item) && count($item)==0) {
 				/* new item, set attributes */
 				
 			} else {

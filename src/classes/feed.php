@@ -67,7 +67,7 @@
 							/* append a category line */
 					
 							$thiscat = explode("->",$line);
-							if (sizeof($thiscat)>1) {
+							if (count($thiscat)>1) {
 								$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => trim($thiscat[1])) ;
 							} else {
 								$categories[]=array ( 'a'=>trim($thiscat[0]), 'b' => '');
@@ -80,7 +80,7 @@
 							/* bitlove information */
 
 							$bitlove = explode(" ",$line);
-							if (sizeof($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
+							if (count($bitlove)==3) $attr['bitlove'][$bitlove[0]] = array('format'=>$bitlove[0],'user'=>$bitlove[1],'feed'=>$bitlove[2]);
 						
 							break;
 						
@@ -277,7 +277,7 @@
 			
 			$main = $this->main;
 			$maxPubDate = "";
-			if (sizeof($slug)!=0) {
+			if (is_array($slug) && count($slug)!=0) {
 				
 				/*	reduce slugs array to this one episode
 					happens for /$feed/show/$episodeslug/
@@ -344,7 +344,7 @@
 							
 							if ($episode->item) {
 								foreach ($episode->item as $key => $val) {
-									if ($val!="" && sizeof($val)!=0) $old_episode->item[$key]=$val;
+									if (is_array($val) && count($val)!=0) $old_episode->item[$key]=$val;
 								}
 							}
 							
@@ -387,7 +387,7 @@
 							}
 							if ($epi_episode->item) {
 								foreach ($epi_episode->item as $key => $val) {
-									if ($val!="" && sizeof($val)!=0) $episode->item[$key]=$val;
+									if (is_array($val) && count($val)!=0) $episode->item[$key]=$val;
 								}
 							}
 							
@@ -529,7 +529,7 @@
 			
 			$og = array();
 			$og['url'] = $main->get('BASEURL').$this->attr['slug'].'/show';
-			if (sizeof($this->episodes)==1) {
+			if (count($this->episodes)==1) {
 				
 				$episode = reset($this->episodes);
 			
@@ -540,7 +540,7 @@
 			}
 			$og['audio']=array();
 			foreach ($this->episodes as $episode) {
-				if (sizeof($episode->item['audiofiles'])==0) continue;
+				if (count($episode->item['audiofiles'])==0) continue;
 				$format = $this->attr['audioformats'][0];
 				if (!isset($episode->item['audiofiles'][$format]['type'])) continue;
 				$og['audio']['typename'] = substr($episode->item['audiofiles'][$format]['type'],0,5);
