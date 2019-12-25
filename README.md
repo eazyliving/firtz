@@ -4,7 +4,7 @@
 *firtz podcast publisher*  
 *Version 2.1*
 
-**INFO: Da wir die Version 2.1 behalten wollen, haben wir für die RC 3.0 einen neuen Ort hinterlegt. Damit könnt Ihr euch für eine Version entscheiden. Die Version 2.9 (Beta) findet Ihr nun unter: https://github.com/Firtz-Designs/firtz3.0.**
+**INFO: Da wir die Version 2.1 behalten wollen, haben wir für die RC 3.0 einen neuen Ort hinterlegt. Damit könnt Ihr euch für eine der Versionen entscheiden. Die vorläufige Version 2.9 (Beta RC 3.0) enthält mehr Metadaten, ein neuen QuorX Design und ist mit der PHP Version 7.3.x lauffähig. Ihr findet sie unter: https://github.com/Firtz-Designs/firtz3.0.**
 
 ## Über
 
