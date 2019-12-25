@@ -4,6 +4,8 @@
 *firtz podcast publisher*  
 *Version 2.1*
 
+**INFO: Da wir die Version 2.1 behalten wollen, haben wir für die RC 3.0 einen neuen Ort hinterlegt. Damit könnt Ihr euch für eine Version entscheiden. Die Version 2.9 (Beta) findet Ihr nun unter: https://github.com/Firtz-Designs/firtz3.0.**
+
 ## Über
 
 Du hast offensichtlich den Drang, entweder diesen Kram hier auszuprobieren, oder einen Podcast aus der Taufe zu heben.
