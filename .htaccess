@@ -4,6 +4,12 @@ deny from all
 <FilesMatch "\.epi$">
 deny from all
 </FilesMatch>
+<FilesMatch "\.html$">
+deny from all
+</FilesMatch>
+<FilesMatch "\.xml$">
+deny from all
+</FilesMatch>
 
 RewriteEngine On
 RewriteBase /
