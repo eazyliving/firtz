@@ -2,7 +2,7 @@
 
 /*
 
-	Copyright (c) 2009-2015 F3::Factory/Bong Cosca, All rights reserved.
+	Copyright (c) 2009-2019 F3::Factory/Bong Cosca, All rights reserved.
 
 	This file is part of the Fat-Free Framework (http://fatfreeframework.com).
 
@@ -55,7 +55,7 @@ class Geo extends \Prefab {
 		$fw=\Base::instance();
 		$web=\Web::instance();
 		if (!$ip)
-			$ip=$fw->get('IP');
+			$ip=$fw->IP;
 		$public=filter_var($ip,FILTER_VALIDATE_IP,
 			FILTER_FLAG_IPV4|FILTER_FLAG_IPV6|
 			FILTER_FLAG_NO_RES_RANGE|FILTER_FLAG_NO_PRIV_RANGE);
@@ -64,8 +64,11 @@ class Geo extends \Prefab {
 			$out=@geoip_record_by_name($ip)) {
 			$out['request']=$ip;
 			$out['region_code']=$out['region'];
-			$out['region_name']=geoip_region_name_by_code(
-				$out['country_code'],$out['region']);
+			$out['region_name']='';
+			if (!empty($out['country_code']) && !empty($out['region']))
+				$out['region_name']=geoip_region_name_by_code(
+					$out['country_code'],$out['region']
+				);
 			unset($out['country_code3'],$out['region'],$out['postal_code']);
 			return $out;
 		}
