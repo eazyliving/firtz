@@ -3,9 +3,8 @@
 **Der gute alte firtz hat ein paar Anpassungen bekommen, damit das auch unter php8.x laufen kann. Aber Achtung! Das ist nicht wirklich behoben, ich habe nur das Error-Reporting stillgelegt. Die wirkliche Arbeit kommt erst noch.**
 
 *firtz podcast publisher*  
-*Version 2.1 (nur bis PHP Version 7.0 lauffähig!)*
 
-**INFO: Da wir die Version 2.1 behalten wollen, haben wir für die kommende RC 3.0 einen neuen Ort gewählt. Damit könnt Ihr euch für eine der Versionen entscheiden. Die vorläufige Version 2.9.2 (Beta) enthält jedoch mehr Metadaten, ein neues Design: QuorX 3 und ist ebenfalls mit den PHP Versionen 7.3.x bis 8.0 lauffähig. Ihr findet das neue firtz als Pre-Release unter: https://github.com/Firtz-Designs/firtz3.0.**
+** ALTE INFO: Da wir die Version 2.1 behalten wollen, haben wir für die kommende RC 3.0 einen neuen Ort gewählt. Damit könnt Ihr euch für eine der Versionen entscheiden. Die vorläufige Version 2.9.2 (Beta) enthält jedoch mehr Metadaten, ein neues Design: QuorX 3 und ist ebenfalls mit den PHP Versionen 7.3.x bis 8.0 lauffähig. Ihr findet das neue firtz als Pre-Release unter: https://github.com/Firtz-Designs/firtz3.0.**
 
 ## Über
 
