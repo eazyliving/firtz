@@ -151,6 +151,7 @@
 					preg_match('#((\d+:)?(\d\d?):(\d\d?)(?:\.(\d+))?) ([^<>\r\n]{3,}) ?(<([^<>\r\n]*)>\s*(<([^<>\r\n]*)>\s*)?)?\r?#',$line,$chapreg );
 				
 					$chap = array('start'=>'','title'=>'','image'=>'','href'=>'');
+					$item['chapters']=[];
 					if (isset($chapreg[1]) && isset($chapreg[6])) {
 						$chap['start'] = $chapreg[1];	
 						$chap['title'] = trim($chapreg[6]);	
