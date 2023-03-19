@@ -1,5 +1,6 @@
 # firtz
 
+**Der gute alte firtz hat ein paar Anpassungen bekommen, damit das auch unter php8.x laufen kann. Aber Achtung! Das ist nicht wirklich behoben, ich habe nur das Error-Reporting stillgelegt. Die wirkliche Arbeit kommt erst noch.**
 
 *firtz podcast publisher*  
 *Version 2.1 (nur bis PHP Version 7.0 lauffähig!)*
